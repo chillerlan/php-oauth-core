@@ -22,7 +22,7 @@ mysql:
 before_install:
   - |
     if [[ $setup = 'sodium_ext' ]]; then
-      phpenmod sodium
+      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
     fi
 
 install:
