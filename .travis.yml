@@ -11,8 +11,8 @@ matrix:
   include:
     - php: 7.2
       env: setup=no_encryption
-#    - php: 7.2
-#      env: setup=sodium_ext
+    - php: 7.2
+      env: setup=sodium_ext
 
 mysql:
   database: dbtest
@@ -22,7 +22,7 @@ mysql:
 before_install:
   - |
     if [[ $setup = 'sodium_ext' ]]; then
-      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+      phpenmod sodium
     fi
 
 install:
