@@ -1,0 +1,35 @@
+language: php
+
+env:
+  global:
+    - setup=no_encryption
+
+php:
+  - 7.2
+
+matrix:
+  include:
+    - php: 7.2
+      env: setup=no_encryption
+#    - php: 7.2
+#      env: setup=sodium_ext
+
+mysql:
+  database: dbtest
+  username: root
+  encoding: utf8
+
+before_install:
+  - |
+    if [[ $setup = 'sodium_ext' ]]; then
+      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+    fi
+
+install:
+  - travis_retry composer install --no-interaction --prefer-source
+  - mysql -e 'create database dbtest;'
+  - php bin/dbstorage_create.php
+
+script: vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
+
+after_success: bash <(curl -s https://codecov.io/bash)

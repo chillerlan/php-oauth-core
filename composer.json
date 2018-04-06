@@ -1,0 +1,47 @@
+{
+	"name": "chillerlan/php-oauth-core",
+	"description": "A PHP7.2+ OAuth1/2 and API client",
+	"homepage": "https://github.com/chillerlan/php-oauth-core",
+	"license": "MIT",
+	"type": "library",
+	"minimum-stability": "stable",
+	"keywords": [
+		"oauth", "oauth2", "client"
+	],
+	"authors": [
+		{
+			"name": "smiley",
+			"email": "smiley@chillerlan.net",
+			"homepage": "https://github.com/codemasher"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/chillerlan/php-oauth-core/issues",
+		"source": "https://github.com/chillerlan/php-oauth-core"
+	},
+	"require": {
+		"php": "^7.2",
+		"chillerlan/php-traits": "^1.1",
+		"chillerlan/php-httpinterface": "^1.0",
+		"psr/log": "^1.0",
+		"psr/simple-cache": "^1.0"
+	},
+	"require-dev": {
+		"chillerlan/php-log": "^1.0",
+		"chillerlan/php-cache": "^1.0",
+		"chillerlan/php-curl": "^1.0",
+		"chillerlan/php-database": "^2.0",
+		"guzzlehttp/guzzle": "^6.3",
+		"phpunit/phpunit": "^7.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"chillerlan\\OAuth\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"chillerlan\\OAuthTest\\": "tests/"
+		}
+	}
+}
