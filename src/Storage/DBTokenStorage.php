@@ -60,14 +60,15 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function storeAccessToken(string $service, Token $token):TokenStorageInterface{
+		$providers = $this->getProviders();
 
-		if(!isset($this->getProviders()[$service])){
+		if(empty($providers) || !isset($providers[$service])){
 			throw new TokenStorageException('unknown service');
 		}
 
 		$values = [
 			$this->options->dbTokenTableUser       => $this->options->dbUserID,
-			$this->options->dbTokenTableProviderID => $this->getProviders()[$service][$this->options->dbProviderTableID],
+			$this->options->dbTokenTableProviderID => $providers[$service][$this->options->dbProviderTableID],
 			$this->options->dbTokenTableToken      => $this->toStorage($token),
 			$this->options->dbTokenTableExpires    => $token->expires,
 		];
