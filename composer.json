@@ -23,6 +23,7 @@
 		"php": "^7.2",
 		"chillerlan/php-traits": "^1.1",
 		"chillerlan/php-httpinterface": "^1.0",
+		"chillerlan/php-magic-apiclient": "^1.0",
 		"psr/log": "^1.0",
 		"psr/simple-cache": "^1.0"
 	},
@@ -36,12 +37,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"chillerlan\\OAuth\\": "src/"
+			"chillerlan\\OAuth\\": "src/",
+			"chillerlan\\OAuthTest\\": "tests/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"chillerlan\\OAuthTest\\": "tests/",
 			"chillerlan\\OAuthExamples\\": "examples/"
 		}
 	}
