@@ -1,5 +1,7 @@
 <?php
 /**
+ * @todo
+ *
  * @filesource   dbstorage_create.php
  * @created      23.10.2017
  * @author       Smiley <smiley@chillerlan.net>
@@ -16,7 +18,7 @@ use chillerlan\Traits\DotEnv;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-const CFGDIR         = __DIR__.'/../config';
+$CFGDIR         = __DIR__.'/../config';
 const TABLE_TOKEN    = 'storagetest';
 const TABLE_PROVIDER = 'storagetest_providers';
 
@@ -51,7 +53,7 @@ $providers = [
 	28 => 'Stripe',
 ];
 
-$env = (new DotEnv(CFGDIR, file_exists(CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
+$env = (new DotEnv($CFGDIR, file_exists($CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 $db = new Database(new DatabaseOptions([
 	'driver'       => MySQLiDrv::class,
