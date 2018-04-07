@@ -192,7 +192,7 @@ abstract class APITestAbstract extends TestCase{
 		$file = $this->STORAGE.'/'.$this->provider->serviceName.'.token';
 
 		if(is_file($file)){
-			return unserialize(file_get_contents($file));
+			return (new Token)->__fromJSON(file_get_contents($file));
 		}
 
 		return new Token(['accessToken' => '']);
