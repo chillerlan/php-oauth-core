@@ -55,11 +55,11 @@ $env = (new DotEnv(CFGDIR, file_exists(CFGDIR.'/.env') ? '.env' : '.env_travis')
 
 $db = new Database(new DatabaseOptions([
 	'driver'       => MySQLiDrv::class,
-	'host'         => $env->get('MYSQL_HOST'),
-	'port'         => $env->get('MYSQL_PORT'),
-	'database'     => $env->get('MYSQL_DATABASE'),
-	'username'     => $env->get('MYSQL_USERNAME'),
-	'password'     => $env->get('MYSQL_PASSWORD'),
+	'host'         => $env->MYSQL_HOST,
+	'port'         => $env->MYSQL_PORT,
+	'database'     => $env->MYSQL_DATABASE,
+	'username'     => $env->MYSQL_USERNAME,
+	'password'     => $env->MYSQL_PASSWORD,
 ]));
 
 $db->connect();
