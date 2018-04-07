@@ -83,11 +83,6 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	protected $apiHeaders = [];
 
 	/**
-	 * @var \stdClass method => [url, method, mandatory_params, params_in_url]
-	 */
-	protected $apiMethods;
-
-	/**
 	 * OAuthProvider constructor.
 	 *
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
@@ -101,14 +96,6 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 		$this->options = $options;
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
-
-		// @todo
-		$file = __DIR__.'/../API/'.$this->serviceName.'.json';
-
-		if(is_file($file)){
-			$this->apiMethods = json_decode(file_get_contents($file));
-		}
-
 	}
 
 	/**
@@ -130,69 +117,6 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	 */
 	public function getStorageInterface():TokenStorageInterface{
 		return $this->storage;
-	}
-
-	/**
-	 * ugly, isn't it?
-	 * @todo WIP
-	 *
-	 * @param string $name
-	 * @param array  $arguments
-	 *
-	 * @return \chillerlan\HTTP\HTTPResponseInterface|null
-	 * @throws \chillerlan\OAuth\API\OAuthAPIClientException
-	 */
-	public function __call(string $name, array $arguments){
-		if(array_key_exists($name, $this->apiMethods)){
-
-			$m = $this->apiMethods->{$name};
-
-			$endpoint      = $m->path ?? '/';
-			$method        = $m->method ?? 'GET';
-			$body          = null;
-			$headers       = isset($m->headers) && is_object($m->headers) ? (array)$m->headers : [];
-			$path_elements = $m->path_elements ?? [];
-			$params_in_url = count($path_elements);
-			$params        = $arguments[$params_in_url] ?? null;
-			$urlparams     = array_slice($arguments,0 , $params_in_url);
-
-			if($params_in_url > 0){
-
-				if(count($urlparams) < $params_in_url){
-					throw new OAuthAPIClientException('too few URL params, required: '.implode(', ', $path_elements));
-				}
-
-				$endpoint = sprintf($endpoint, ...$urlparams);
-			}
-
-			if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
-				$body = $arguments[$params_in_url + 1] ?? $params;
-
-				if($params === $body){
-					$params = null;
-				}
-
-				if(is_array($body) && isset($headers['Content-Type']) && strpos($headers['Content-Type'], 'json') !== false){
-					$body = json_encode($body);
-				}
-
-			}
-
-			$params = $this->checkQueryParams($params);
-			$body   = $this->checkQueryParams($body);
-
-			// twitter is v picky
-			if($this instanceof Twitter){
-				$params = $this->checkQueryParams($params, true);
-				$body   = $this->checkQueryParams($body, true);
-			}
-
-			$this->debug('OAuthProvider::__call() -> '.$this->serviceName.'::'.$name.'()', ['$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers]);
-
-			return $this->request($endpoint, $params, $method, $body, $headers);
-		}
-
-		return null;
 	}
 
 }

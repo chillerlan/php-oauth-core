@@ -134,24 +134,4 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->assertInstanceOf(TokenStorageInterface::class, $this->provider->getStorageInterface());
 	}
 
-	// @todo
-	public function testCall(){
-		$this->setProperty($this->provider, 'apiMethods', json_decode('{"test":{"path":"","method":"POST"}}'));
-
-		$this->assertSame('such data! much wow!', $this->provider->test()->json->data);
-		$this->assertNull($this->provider->foo());
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\API\OAuthAPIClientException
-	 * @expectedExceptionMessage too few URL params, required:
-	 */
-	public function testCallTooFewPathElements(){
-		$this->setProperty($this->provider, 'apiMethods', json_decode('{"test":{"path":"","path_elements":["foo"]}}'));
-
-
-		$this->assertNull($this->provider->test());
-
-	}
-
 }
