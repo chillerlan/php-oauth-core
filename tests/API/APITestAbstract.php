@@ -34,8 +34,9 @@ use Psr\Log\LogLevel;
 
 abstract class APITestAbstract extends TestCase{
 
-	const CFGDIR         = __DIR__.'/../../config';
-	const STORAGE        = __DIR__.'/../../tokenstorage';
+	protected $CFGDIR         = __DIR__.'/../../config';
+	protected $STORAGE        = __DIR__.'/../../tokenstorage';
+
 	const UA             = 'chillerlanPhpOAuth/2.0.0 +https://github.com/chillerlan/php-oauth';
 	const SLEEP_SECONDS  = 1.0;
 	const TABLE_TOKEN    = 'storagetest';
@@ -89,7 +90,7 @@ abstract class APITestAbstract extends TestCase{
 	protected function setUp(){
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$this->env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
+		$this->env = (new DotEnv($this->CFGDIR, file_exists($this->CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 		$options = [
 			'key'              => $this->env->get($this->envvar.'_KEY'),
@@ -101,7 +102,7 @@ abstract class APITestAbstract extends TestCase{
 			'dbUserID'         => 1,
 			'tokenAutoRefresh' => true,
 			// HTTPOptionsTrait
-			'ca_info'          => $this::CFGDIR.'/cacert.pem',
+			'ca_info'          => $this->CFGDIR.'/cacert.pem',
 			'userAgent'        => $this::UA,
 			// DatabaseOptionsTrait
 			'driver'           => MySQLiDrv::class,
@@ -188,7 +189,7 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	protected function getToken():Token{
-		$file = self::STORAGE.'/'.$this->provider->serviceName.'.token';
+		$file = $this->STORAGE.'/'.$this->provider->serviceName.'.token';
 
 		if(is_file($file)){
 			return unserialize(file_get_contents($file));
