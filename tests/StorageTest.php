@@ -71,11 +71,11 @@ class StorageTest extends TestCase{
 			'dbUserID' => 1,
 			// DatabaseOptions
 			'driver'           => MySQLiDrv::class,
-			'host'             => $env->get('MYSQL_HOST'),
-			'port'             => $env->get('MYSQL_PORT'),
-			'database'         => $env->get('MYSQL_DATABASE'),
-			'username'         => $env->get('MYSQL_USERNAME'),
-			'password'         => $env->get('MYSQL_PASSWORD'),
+			'host'             => $env->MYSQL_HOST,
+			'port'             => $env->MYSQL_PORT,
+			'database'         => $env->MYSQL_DATABASE,
+			'username'         => $env->MYSQL_USERNAME,
+			'password'         => $env->MYSQL_PASSWORD,
 		];
 
 		$this->options = new class($options) extends OAuthOptions{

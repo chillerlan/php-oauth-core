@@ -13,11 +13,11 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\{
-	HTTPClientTrait, HTTPClientInterface
+	HTTPClientInterface, HTTPClientTrait
 };
 use chillerlan\Logger\LogTrait;
-use chillerlan\OAuth\Storage\TokenStorageInterface;
 use chillerlan\MagicAPI\ApiClientInterface;
+use chillerlan\OAuth\Storage\TokenStorageInterface;
 use chillerlan\Traits\{
 	ClassLoader, ContainerInterface, Magic
 };
@@ -91,9 +91,8 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options){
 		$this->setHTTPClient($http);
 
-		$this->storage = $storage;
-		$this->options = $options;
-
+		$this->storage     = $storage;
+		$this->options     = $options;
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
 		if($this instanceof ApiClientInterface){

@@ -38,6 +38,7 @@ trait CSRFTokenTrait{
 			throw new ProviderException('invalid CSRF state: '.$this->serviceName.' '.$state);
 		}
 
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return $this;
 	}
 
