@@ -99,7 +99,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function retrieveAccessToken(string $service):Token{
+	public function getAccessToken(string $service):Token{
 
 		$r = $this->db->select
 			->cols([$this->options->dbTokenTableToken])
@@ -162,7 +162,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function storeAuthorizationState(string $service, string $state):TokenStorageInterface{
+	public function storeCSRFState(string $service, string $state):TokenStorageInterface{
 
 		$this->db->update
 			->table($this->options->dbTokenTable)
@@ -179,7 +179,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @return string
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function retrieveAuthorizationState(string $service):string{
+	public function getCSRFState(string $service):string{
 
 		$r = $this->db->select
 			->cols([$this->options->dbTokenTableState])
@@ -199,7 +199,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return bool
 	 */
-	public function hasAuthorizationState(string $service):bool{
+	public function hasCSRFState(string $service):bool{
 
 		$r = $this->db->select
 			->cols([$this->options->dbTokenTableState])
@@ -219,7 +219,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAuthorizationState(string $service):TokenStorageInterface{
+	public function clearCSRFState(string $service):TokenStorageInterface{
 
 		$this->db->update
 			->table($this->options->dbTokenTable)
@@ -233,7 +233,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	/**
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAllAuthorizationStates():TokenStorageInterface{
+	public function clearAllCSRFStates():TokenStorageInterface{
 
 		$this->db->update
 			->table($this->options->dbTokenTable)

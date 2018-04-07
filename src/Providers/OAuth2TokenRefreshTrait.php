@@ -32,7 +32,7 @@ trait OAuth2TokenRefreshTrait{
 	public function refreshAccessToken(Token $token = null):Token{
 
 		if($token === null){
-			$token = $this->storage->retrieveAccessToken($this->serviceName);
+			$token = $this->storage->getAccessToken($this->serviceName);
 		}
 
 		$refreshToken = $token->refreshToken;

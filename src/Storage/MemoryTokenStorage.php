@@ -44,7 +44,7 @@ class MemoryTokenStorage extends TokenStorageAbstract{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function retrieveAccessToken(string $service):Token{
+	public function getAccessToken(string $service):Token{
 
 		if($this->hasAccessToken($service)){
 			return $this->tokens[$service];
@@ -96,7 +96,7 @@ class MemoryTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function storeAuthorizationState(string $service, string $state):TokenStorageInterface{
+	public function storeCSRFState(string $service, string $state):TokenStorageInterface{
 		$this->states[$service] = $state;
 
 		return $this;
@@ -108,9 +108,9 @@ class MemoryTokenStorage extends TokenStorageAbstract{
 	 * @return string
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function retrieveAuthorizationState(string $service):string{
+	public function getCSRFState(string $service):string{
 
-		if($this->hasAuthorizationState($service)){
+		if($this->hasCSRFState($service)){
 			return $this->states[$service];
 		}
 
@@ -122,7 +122,7 @@ class MemoryTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return bool
 	 */
-	public function hasAuthorizationState(string $service):bool {
+	public function hasCSRFState(string $service):bool {
 		return isset($this->states[$service]) && null !== $this->states[$service];
 	}
 
@@ -131,7 +131,7 @@ class MemoryTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAuthorizationState(string $service):TokenStorageInterface{
+	public function clearCSRFState(string $service):TokenStorageInterface{
 
 		if(array_key_exists($service, $this->states)){
 			unset($this->states[$service]);
@@ -143,7 +143,7 @@ class MemoryTokenStorage extends TokenStorageAbstract{
 	/**
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAllAuthorizationStates():TokenStorageInterface{
+	public function clearAllCSRFStates():TokenStorageInterface{
 		$this->states = [];
 
 		return $this;

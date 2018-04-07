@@ -200,7 +200,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
-		$token = $this->storage->retrieveAccessToken($this->serviceName);
+		$token = $this->storage->getAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token
 		if($this->options->tokenAutoRefresh && $this instanceof TokenRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){

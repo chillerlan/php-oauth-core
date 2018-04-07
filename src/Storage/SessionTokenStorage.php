@@ -97,7 +97,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function retrieveAccessToken(string $service):Token{
+	public function getAccessToken(string $service):Token{
 
 		if($this->hasAccessToken($service)){
 			return (new Token)->__fromJSON($_SESSION[$this->sessionVar][$service]);
@@ -149,7 +149,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function storeAuthorizationState(string $service, string $state):TokenStorageInterface{
+	public function storeCSRFState(string $service, string $state):TokenStorageInterface{
 
 		if(isset($_SESSION[$this->stateVar]) && is_array($_SESSION[$this->stateVar])){
 			$_SESSION[$this->stateVar][$service] = $state;
@@ -167,9 +167,9 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * @return string
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function retrieveAuthorizationState(string $service):string{
+	public function getCSRFState(string $service):string{
 
-		if($this->hasAuthorizationState($service)){
+		if($this->hasCSRFState($service)){
 			return $_SESSION[$this->stateVar][$service];
 		}
 
@@ -181,7 +181,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return bool
 	 */
-	public function hasAuthorizationState(string $service):bool{
+	public function hasCSRFState(string $service):bool{
 		return isset($_SESSION[$this->stateVar], $_SESSION[$this->stateVar][$service]);
 	}
 
@@ -190,7 +190,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAuthorizationState(string $service):TokenStorageInterface{
+	public function clearCSRFState(string $service):TokenStorageInterface{
 
 		if(array_key_exists($service, $_SESSION[$this->stateVar])){
 			unset($_SESSION[$this->stateVar][$service]);
@@ -202,7 +202,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	/**
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAllAuthorizationStates():TokenStorageInterface{
+	public function clearAllCSRFStates():TokenStorageInterface{
 		unset($_SESSION[$this->stateVar]);
 
 		return $this;

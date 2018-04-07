@@ -59,7 +59,7 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 			$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
 		}
 
-		$this->storage->storeAuthorizationState($this->provider->serviceName, 'test_state');
+		$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
 	}
 
 	protected function initHttp():HTTPClientInterface{
@@ -135,7 +135,7 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['foo' => 'bar'])])]);
 	}
 
-	public function testCheckState(){
+	public function testCheckCSRFState(){
 
 		if(!$this->provider instanceof CSRFToken){
 			$this->markTestSkipped('N/A');
@@ -165,9 +165,9 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 
 	/**
 	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage invalid authorization state
+	 * @expectedExceptionMessage invalid CSRF state
 	 */
-	public function testCheckStateInvalidAuth(){
+	public function testCheckStateInvalidCSRFState(){
 
 		if(!$this->provider instanceof CSRFToken){
 			$this->markTestSkipped('N/A');

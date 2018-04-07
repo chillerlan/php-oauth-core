@@ -28,14 +28,14 @@ trait CSRFTokenTrait{
 	 */
 	protected function checkState(string $state = null):OAuth2Interface{
 
-		if(empty($state) || !$this->storage->hasAuthorizationState($this->serviceName)){
+		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
 			throw new ProviderException('invalid state for '.$this->serviceName);
 		}
 
-		$knownState = $this->storage->retrieveAuthorizationState($this->serviceName);
+		$knownState = $this->storage->getCSRFState($this->serviceName);
 
 		if(!hash_equals($knownState, $state)){
-			throw new ProviderException('invalid authorization state: '.$this->serviceName.' '.$state);
+			throw new ProviderException('invalid CSRF state: '.$this->serviceName.' '.$state);
 		}
 
 		return $this;
@@ -52,7 +52,7 @@ trait CSRFTokenTrait{
 			$params['state'] = sha1(random_bytes(256));
 		}
 
-		$this->storage->storeAuthorizationState($this->serviceName, $params['state']);
+		$this->storage->storeCSRFState($this->serviceName, $params['state']);
 
 		return $params;
 	}

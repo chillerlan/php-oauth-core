@@ -197,7 +197,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$this->tokenSecret = $tokenSecret;
 
 		if(empty($this->tokenSecret)){
-			$this->tokenSecret = $this->storage->retrieveAccessToken($this->serviceName)->requestTokenSecret;
+			$this->tokenSecret = $this->storage->getAccessToken($this->serviceName)->requestTokenSecret;
 		}
 
 		$body = ['oauth_verifier' => $verifier];
@@ -213,7 +213,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return array
 	 */
 	protected function getAccessTokenHeaders(array $body):array {
-		return $this->requestHeaders($this->accessTokenURL, $body, 'POST', [], $this->storage->retrieveAccessToken($this->serviceName));
+		return $this->requestHeaders($this->accessTokenURL, $body, 'POST', [], $this->storage->getAccessToken($this->serviceName));
 	}
 
 	/**
@@ -276,7 +276,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$body ?? $params,
 			$method,
 			$headers,
-			$this->storage->retrieveAccessToken($this->serviceName)
+			$this->storage->getAccessToken($this->serviceName)
 		);
 
 		return $this->httpRequest($this->apiURL.$path, $params, $method, $body, $headers);

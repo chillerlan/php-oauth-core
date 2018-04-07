@@ -30,7 +30,7 @@ interface TokenStorageInterface{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	public function retrieveAccessToken(string $service):Token;
+	public function getAccessToken(string $service):Token;
 
 	/**
 	 * @param string $service
@@ -57,33 +57,33 @@ interface TokenStorageInterface{
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function storeAuthorizationState(string $service, string $state):TokenStorageInterface;
+	public function storeCSRFState(string $service, string $state):TokenStorageInterface;
 
 	/**
 	 * @param string $service
 	 *
 	 * @return string
 	 */
-	public function retrieveAuthorizationState(string $service):string;
+	public function getCSRFState(string $service):string;
 
 	/**
 	 * @param string $service
 	 *
 	 * @return bool
 	 */
-	public function hasAuthorizationState(string $service):bool;
+	public function hasCSRFState(string $service):bool;
 
 	/**
 	 * @param string $service
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAuthorizationState(string $service):TokenStorageInterface;
+	public function clearCSRFState(string $service):TokenStorageInterface;
 
 	/**
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
-	public function clearAllAuthorizationStates():TokenStorageInterface;
+	public function clearAllCSRFStates():TokenStorageInterface;
 
 	/**
 	 * @param \chillerlan\OAuth\Token $token

@@ -113,14 +113,14 @@ class StorageTest extends TestCase{
 
 		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);
 		$this->assertTrue($this->storage->hasAccessToken(self::SERVICE_NAME));
-		$this->assertSame('foobar', $this->storage->retrieveAccessToken(self::SERVICE_NAME)->accessToken);
+		$this->assertSame('foobar', $this->storage->getAccessToken(self::SERVICE_NAME)->accessToken);
 
-		$this->storage->storeAuthorizationState(self::SERVICE_NAME, 'foobar');
-		$this->assertTrue($this->storage->hasAuthorizationState(self::SERVICE_NAME));
-		$this->assertSame('foobar', $this->storage->retrieveAuthorizationState(self::SERVICE_NAME));
+		$this->storage->storeCSRFState(self::SERVICE_NAME, 'foobar');
+		$this->assertTrue($this->storage->hasCSRFState(self::SERVICE_NAME));
+		$this->assertSame('foobar', $this->storage->getCSRFState(self::SERVICE_NAME));
 
-		$this->storage->clearAuthorizationState(self::SERVICE_NAME);
-		$this->assertFalse($this->storage->hasAuthorizationState(self::SERVICE_NAME));
+		$this->storage->clearCSRFState(self::SERVICE_NAME);
+		$this->assertFalse($this->storage->hasCSRFState(self::SERVICE_NAME));
 
 		$this->storage->clearAccessToken(self::SERVICE_NAME);
 		$this->assertFalse($this->storage->hasAccessToken(self::SERVICE_NAME));
@@ -145,15 +145,15 @@ class StorageTest extends TestCase{
 		}
 
 		foreach($range as $k){
-			$this->assertFalse($this->storage->hasAuthorizationState($k));
-			$this->storage->storeAuthorizationState($k, 'foobar');
-			$this->assertTrue($this->storage->hasAuthorizationState($k));
+			$this->assertFalse($this->storage->hasCSRFState($k));
+			$this->storage->storeCSRFState($k, 'foobar');
+			$this->assertTrue($this->storage->hasCSRFState($k));
 		}
 
-		$this->storage->clearAllAuthorizationStates();
+		$this->storage->clearAllCSRFStates();
 
 		foreach($range as $k){
-			$this->assertFalse($this->storage->hasAuthorizationState($k));
+			$this->assertFalse($this->storage->hasCSRFState($k));
 		}
 
 		$this->storage->clearAllAccessTokens();
@@ -172,10 +172,10 @@ class StorageTest extends TestCase{
 	 *
 	 * @param $storageInterface
 	 */
-	public function testRetrieveAuthorizationStateNotFoundException($storageInterface){
+	public function testRetrieveCSRFStateNotFoundException($storageInterface){
 		$this->initStorage($storageInterface);
 
-		$this->storage->retrieveAuthorizationState('LOLNOPE');
+		$this->storage->getCSRFState('LOLNOPE');
 	}
 
 	/**
@@ -189,7 +189,7 @@ class StorageTest extends TestCase{
 	public function testRetrieveAccessTokenNotFoundException($storageInterface){
 		$this->initStorage($storageInterface);
 
-		$this->storage->retrieveAccessToken('LOLNOPE');
+		$this->storage->getAccessToken('LOLNOPE');
 	}
 
 	/**
