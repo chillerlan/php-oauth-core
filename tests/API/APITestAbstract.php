@@ -106,11 +106,11 @@ abstract class APITestAbstract extends TestCase{
 			'userAgent'        => $this::UA,
 			// DatabaseOptionsTrait
 			'driver'           => MySQLiDrv::class,
-			'host'             => $this->env->get('MYSQL_HOST'),
-			'port'             => $this->env->get('MYSQL_PORT'),
-			'database'         => $this->env->get('MYSQL_DATABASE'),
-			'username'         => $this->env->get('MYSQL_USERNAME'),
-			'password'         => $this->env->get('MYSQL_PASSWORD'),
+			'host'             => $this->env->MYSQL_HOST,
+			'port'             => $this->env->MYSQL_PORT,
+			'database'         => $this->env->MYSQL_DATABASE,
+			'username'         => $this->env->MYSQL_USERNAME,
+			'password'         => $this->env->MYSQL_PASSWORD,
 			// testHTTPClient
 			'testclient'       => 'tinycurl',
 		];
