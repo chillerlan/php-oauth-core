@@ -18,9 +18,9 @@ use chillerlan\Database\{
 use chillerlan\HTTP\{
 	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponseInterface, StreamClient, TinyCurlClient
 };
-use chillerlan\Logger\Log;
-use chillerlan\Logger\LogOptions;
-use chillerlan\Logger\Output\LogOutputAbstract;
+use chillerlan\Logger\{
+	Log, LogOptions, Output\LogOutputAbstract
+};
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\ClientCredentials, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Token
 };
