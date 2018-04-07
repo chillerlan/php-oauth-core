@@ -16,12 +16,11 @@ use chillerlan\HTTP\{
 	HTTPClientTrait, HTTPClientInterface
 };
 use chillerlan\Logger\LogTrait;
-use chillerlan\OAuth\{
-	API\OAuthAPIClientException,
-	Storage\TokenStorageInterface
+use chillerlan\OAuth\Storage\TokenStorageInterface;
+use chillerlan\MagicAPI\ApiClientInterface;
+use chillerlan\Traits\{
+	ClassLoader, ContainerInterface, Magic
 };
-use chillerlan\Traits\ContainerInterface;
-use chillerlan\Traits\Magic;
 use Psr\Log\LoggerAwareInterface;
 use ReflectionClass;
 
@@ -30,7 +29,7 @@ use ReflectionClass;
  * @property string $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
-	use Magic, HTTPClientTrait, LogTrait;
+	use ClassLoader, Magic, HTTPClientTrait, LogTrait;
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -96,6 +95,11 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 		$this->options = $options;
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
+
+		if($this instanceof ApiClientInterface){
+			$this->loadEndpoints();
+		}
+
 	}
 
 	/**
