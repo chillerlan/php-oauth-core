@@ -22,7 +22,7 @@ use chillerlan\Logger\Log;
 use chillerlan\Logger\LogOptions;
 use chillerlan\Logger\Output\LogOutputAbstract;
 use chillerlan\OAuth\{
-	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Token
+	OAuthOptions, Providers\ClientCredentials, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Token
 };
 use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\{
@@ -209,7 +209,7 @@ abstract class APITestAbstract extends TestCase{
 			$this->markTestSkipped('OAuth2 only');
 		}
 
-		if(!$this->provider->supportsClientCredentials){
+		if(!$this->provider instanceof ClientCredentials){
 			$this->markTestSkipped('not supported');
 		}
 
@@ -235,7 +235,7 @@ abstract class APITestAbstract extends TestCase{
 			$this->markTestSkipped('OAuth2 only');
 		}
 
-		if($this->provider->supportsClientCredentials){
+		if($this->provider instanceof ClientCredentials){
 			$this->markTestSkipped('does not apply');
 		}
 
