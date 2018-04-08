@@ -189,7 +189,7 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	protected function getToken():Token{
-		$file = $this->STORAGE.'/'.$this->provider->serviceName.'.token';
+		$file = $this->STORAGE.'/'.$this->provider->serviceName.'.token.json';
 
 		if(is_file($file)){
 			return (new Token)->__fromJSON(file_get_contents($file));
