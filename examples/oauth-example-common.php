@@ -14,7 +14,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptions, LogTrait, Output\LogOutputAbstract
+	Log, LogOptions, LogOptionsTrait, LogTrait, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionTokenStorage
@@ -53,16 +53,19 @@ $options_arr = [
 	// HTTPOptions
 	'ca_info'          => $CFGDIR.'/cacert.pem',
 	'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/codemasher/php-oauth',
+
+	// log
+	'minLogLevel'      => 'debug',
 ];
 
 /** @var \chillerlan\Traits\ContainerInterface $options */
 $options = new class($options_arr) extends OAuthOptions{
-	use DatabaseOptionsTrait;
+	use DatabaseOptionsTrait, LogOptionsTrait;
 };
 
 /** @var \Psr\Log\LoggerInterface $logger */
 $logger = (new Log)->addInstance(
-	new class (new LogOptions(['minLogLevel' => 'debug'])) extends LogOutputAbstract{
+	new class ($options) extends LogOutputAbstract{
 
 		protected function __log(string $level, string $message, array $context = null):void{
 			echo $message.PHP_EOL;

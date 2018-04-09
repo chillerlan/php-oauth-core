@@ -13,24 +13,42 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\HTTP\{
-	HTTPClientAbstract, HTTPOptionsTrait, HTTPResponseInterface, TinyCurlClient
+	HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptions, Output\LogOutputAbstract
+	Log, LogOptions, LogOptionsTrait, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
-	OAuthOptions, Providers\ClientCredentials, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\MemoryTokenStorage, Token
+	OAuthOptions, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
 };
 use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\{
 	ContainerInterface, DotEnv
 };
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 abstract class APITestAbstract extends TestCase{
 
+	/**
+	 * @var string
+	 */
 	protected $CFGDIR    = __DIR__.'/../../config';
+
+	/**
+	 * @var string
+	 */
 	protected $TOKEN_EXT = 'token.json';
+
+	/**
+	 * @var string
+	 */
+	protected $FQCN;
+
+	/**
+	 * @var string
+	 */
+	protected $envvar;
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -53,11 +71,6 @@ abstract class APITestAbstract extends TestCase{
 	protected $http;
 
 	/**
-	 * @var string
-	 */
-	protected $FQCN;
-
-	/**
 	 * @var \chillerlan\Traits\DotEnv
 	 */
 	protected $env;
@@ -68,14 +81,9 @@ abstract class APITestAbstract extends TestCase{
 	protected $options;
 
 	/**
-	 * @var string
+	 * @var \Psr\Log\LoggerInterface
 	 */
-	protected $envvar;
-
-	/**
-	 * @var array
-	 */
-	protected $scopes = [];
+	protected $logger;
 
 	/**
 	 * this is ugly. don't look at it - it works.
@@ -83,27 +91,61 @@ abstract class APITestAbstract extends TestCase{
 	protected function setUp(){
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$this->env = (new DotEnv($this->CFGDIR, file_exists($this->CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
+		$options = $this->getOptions($this->CFGDIR);
 
-		$options = [
-			'key'              => $this->env->get($this->envvar.'_KEY'),
-			'secret'           => $this->env->get($this->envvar.'_SECRET'),
-			'tokenAutoRefresh' => true,
-			// HTTPOptionsTrait
-			'ca_info'          => $this->CFGDIR.'/cacert.pem',
-			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
-			// testHTTPClient
-			'sleep'            => 0.25,
-		];
-
-		$this->options  = new class($options) extends OAuthOptions{
-			use HTTPOptionsTrait;
+		$this->options = new class($options) extends OAuthOptions{
+			use HTTPOptionsTrait, LogOptionsTrait;
 
 			protected $sleep;
 		};
 
-		$logger = (new Log)->addInstance(
-			new class (new LogOptions(['minLogLevel' => 'debug'])) extends LogOutputAbstract{
+		$this->storage  = new MemoryTokenStorage;
+		$this->logger   = $this->initLogger($this->options);
+		$this->http     = $this->initHttp($this->options);
+		$this->provider = $this->initProvider($this->http, $this->storage, $this->options);
+
+		/** @noinspection PhpUndefinedMethodInspection */
+		$this->provider->setLogger($this->logger);
+
+		$tokenfile = $this->CFGDIR.'/'.$this->provider->serviceName.'.'.$this->TOKEN_EXT;
+
+		$token = is_file($tokenfile)
+			? (new Token)->__fromJSON(file_get_contents($tokenfile))
+			: new Token(['accessToken' => '']);
+
+		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+	}
+
+	/**
+	 * @param string $cfgdir
+	 *
+	 * @return array
+	 */
+	protected  function getOptions(string $cfgdir):array {
+		$this->env = (new DotEnv($cfgdir, file_exists($cfgdir.'/.env') ? '.env' : '.env_travis'))->load();
+
+		return [
+			'key'              => $this->env->get($this->envvar.'_KEY'),
+			'secret'           => $this->env->get($this->envvar.'_SECRET'),
+			'tokenAutoRefresh' => true,
+			// HTTPOptionsTrait
+			'ca_info'          => $cfgdir.'/cacert.pem',
+			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
+			// log
+			'minLogLevel'      => 'debug',
+			// testHTTPClient
+			'sleep'            => 0.25,
+		];
+	}
+
+	/**
+	 * @param \chillerlan\Traits\ContainerInterface $options
+	 *
+	 * @return \Psr\Log\LoggerInterface
+	 */
+	protected function initLogger(ContainerInterface $options):LoggerInterface{
+		return (new Log)->addInstance(
+			new class ($options) extends LogOutputAbstract{
 
 				protected function __log(string $level, string $message, array $context = null):void{
 					echo $message.PHP_EOL.print_r($context, true).PHP_EOL;
@@ -112,8 +154,26 @@ abstract class APITestAbstract extends TestCase{
 			},
 			'console'
 		);
+	}
 
-		$this->http = new class($this->options) extends HTTPClientAbstract{
+	/**
+	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
+	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
+	 * @param \chillerlan\Traits\ContainerInterface           $options
+	 *
+	 * @return \chillerlan\OAuth\Providers\OAuthInterface
+	 */
+	protected function initProvider(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options){
+		return new $this->FQCN($http, $storage, $options);
+	}
+
+	/**
+	 * @param \chillerlan\Traits\ContainerInterface $options
+	 *
+	 * @return \chillerlan\HTTP\HTTPClientInterface
+	 */
+	protected function initHttp(ContainerInterface $options):HTTPClientInterface{
+		return new class($options) extends HTTPClientAbstract{
 			protected $client;
 
 			public function __construct(ContainerInterface $options){
@@ -127,22 +187,7 @@ abstract class APITestAbstract extends TestCase{
 				usleep($this->options->sleep * 1000000);
 				return $response;
 			}
-
 		};
-
-		$this->storage  = new MemoryTokenStorage;
-		$this->provider = new $this->FQCN($this->http, $this->storage, $this->options, $this->scopes);
-
-		/** @noinspection PhpUndefinedMethodInspection */
-		$this->provider->setLogger($logger);
-
-		$tokenfile = $this->CFGDIR.'/'.$this->provider->serviceName.'.'.$this->TOKEN_EXT;
-
-		$token = is_file($tokenfile)
-			? (new Token)->__fromJSON(file_get_contents($tokenfile))
-			: new Token(['accessToken' => '']);
-
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 	}
 
 	protected function tearDown(){
@@ -156,48 +201,9 @@ abstract class APITestAbstract extends TestCase{
 		}
 	}
 
-	public function testInstance(){
+	public function testOAuthInstance(){
 		$this->assertInstanceOf(OAuthInterface::class, $this->provider);
 		$this->assertInstanceOf($this->FQCN, $this->provider);
-	}
-
-	public function testRequestCredentialsToken(){
-
-		if(!$this->provider instanceof OAuth2Interface){
-			$this->markTestSkipped('OAuth2 only');
-		}
-
-		if(!$this->provider instanceof ClientCredentials){
-			$this->markTestSkipped('not supported');
-		}
-
-		$token = $this->provider->getClientCredentialsToken();
-
-		$this->assertInstanceOf(Token::class, $token);
-		$this->assertInternalType('string', $token->accessToken);
-
-		if($token->expires !== Token::EOL_NEVER_EXPIRES){
-			$this->assertGreaterThan(time(), $token->expires);
-		}
-
-		print_r($token);
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage not supported
-	 */
-	public function testRequestCredentialsTokenNotSupportedException(){
-
-		if(!$this->provider instanceof OAuth2Interface){
-			$this->markTestSkipped('OAuth2 only');
-		}
-
-		if($this->provider instanceof ClientCredentials){
-			$this->markTestSkipped('does not apply');
-		}
-
-		$this->provider->getClientCredentialsToken();
 	}
 
 }
