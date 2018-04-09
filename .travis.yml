@@ -29,7 +29,6 @@ install:
   - curl -o config/cacert.pem https://curl.haxx.se/ca/cacert.pem
   - travis_retry composer install --no-interaction --prefer-source
   - mysql -e 'create database dbtest;'
-  - php bin/dbstorage_create.php
 
 script: vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
 

@@ -3,44 +3,34 @@
  * Class APITestAbstract
  *
  * @filesource   APITestAbstract.php
- * @created      10.07.2017
+ * @created      09.04.2018
  * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
- * @copyright    2017 Smiley
+ * @copyright    2018 Smiley
  * @license      MIT
  */
 
 namespace chillerlan\OAuthTest\API;
 
-use chillerlan\Database\{
-	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
-};
 use chillerlan\HTTP\{
-	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponseInterface, StreamClient, TinyCurlClient
+	HTTPClientAbstract, HTTPOptionsTrait, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
 	Log, LogOptions, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
-	OAuthOptions, Providers\ClientCredentials, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Token
+	OAuthOptions, Providers\ClientCredentials, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\MemoryTokenStorage, Token
 };
 use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\{
 	ContainerInterface, DotEnv
 };
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LogLevel;
 
 abstract class APITestAbstract extends TestCase{
 
-	protected $CFGDIR         = __DIR__.'/../../config';
-	protected $STORAGE        = __DIR__.'/../../tokenstorage';
-
-	const UA             = 'chillerlanPhpOAuth/2.0.0 +https://github.com/chillerlan/php-oauth';
-	const SLEEP_SECONDS  = 1.0;
-	const TABLE_TOKEN    = 'storagetest';
-	const TABLE_PROVIDER = 'storagetest_providers';
+	protected $CFGDIR    = __DIR__.'/../../config';
+	protected $TOKEN_EXT = 'token.json';
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -87,6 +77,9 @@ abstract class APITestAbstract extends TestCase{
 	 */
 	protected $scopes = [];
 
+	/**
+	 * this is ugly. don't look at it - it works.
+	 */
 	protected function setUp(){
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -95,37 +88,22 @@ abstract class APITestAbstract extends TestCase{
 		$options = [
 			'key'              => $this->env->get($this->envvar.'_KEY'),
 			'secret'           => $this->env->get($this->envvar.'_SECRET'),
-			'callbackURL'      => $this->env->get($this->envvar.'_CALLBACK_URL'),
-			'dbTokenTable'     => $this::TABLE_TOKEN,
-			'dbProviderTable'  => $this::TABLE_PROVIDER,
-			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
-			'dbUserID'         => 1,
 			'tokenAutoRefresh' => true,
 			// HTTPOptionsTrait
 			'ca_info'          => $this->CFGDIR.'/cacert.pem',
-			'userAgent'        => $this::UA,
-			// DatabaseOptionsTrait
-			'driver'           => MySQLiDrv::class,
-			'host'             => $this->env->MYSQL_HOST,
-			'port'             => $this->env->MYSQL_PORT,
-			'database'         => $this->env->MYSQL_DATABASE,
-			'username'         => $this->env->MYSQL_USERNAME,
-			'password'         => $this->env->MYSQL_PASSWORD,
+			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
 			// testHTTPClient
-			'testclient'       => 'tinycurl',
+			'sleep'            => 0.25,
 		];
 
 		$this->options  = new class($options) extends OAuthOptions{
-			use HTTPOptionsTrait, DatabaseOptionsTrait;
+			use HTTPOptionsTrait;
 
-			protected $testclient;
+			protected $sleep;
 		};
-		$this->storage  = new DBTokenStorage($this->options, new Database($this->options));
-		$this->http     = $this->initHTTP();
-		$this->provider = new $this->FQCN($this->http, $this->storage, $this->options, $this->scopes);
 
 		$logger = (new Log)->addInstance(
-			new class (new LogOptions(['minLogLevel' => LogLevel::DEBUG])) extends LogOutputAbstract{
+			new class (new LogOptions(['minLogLevel' => 'debug'])) extends LogOutputAbstract{
 
 				protected function __log(string $level, string $message, array $context = null):void{
 					echo $message.PHP_EOL.print_r($context, true).PHP_EOL;
@@ -135,9 +113,36 @@ abstract class APITestAbstract extends TestCase{
 			'console'
 		);
 
+		$this->http = new class($this->options) extends HTTPClientAbstract{
+			protected $client;
 
+			public function __construct(ContainerInterface $options){
+				parent::__construct($options);
+				$this->client = new TinyCurlClient($this->options, new Request($this->options));
+			}
+
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
+				$args = func_get_args();
+				$response = $this->client->request(...$args);
+				usleep($this->options->sleep * 1000000);
+				return $response;
+			}
+
+		};
+
+		$this->storage  = new MemoryTokenStorage;
+		$this->provider = new $this->FQCN($this->http, $this->storage, $this->options, $this->scopes);
+
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->provider->setLogger($logger);
-		$this->storage->storeAccessToken($this->provider->serviceName, $this->getToken());
+
+		$tokenfile = $this->CFGDIR.'/'.$this->provider->serviceName.'.'.$this->TOKEN_EXT;
+
+		$token = is_file($tokenfile)
+			? (new Token)->__fromJSON(file_get_contents($tokenfile))
+			: new Token(['accessToken' => '']);
+
+		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 	}
 
 	protected function tearDown(){
@@ -149,53 +154,6 @@ abstract class APITestAbstract extends TestCase{
 				? print_r($json)
 				: print_r($this->response->body);
 		}
-	}
-
-	protected function initHTTP():HTTPClientInterface{
-		return new class($this->options) extends HTTPClientAbstract{
-			protected $client;
-
-			public function __construct(ContainerInterface $options){
-				parent::__construct($options);
-				$this->client = call_user_func([$this, $this->options->testclient]);
-			}
-
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
-				$args = func_get_args();
-#	        	print_r($args);
-				$response = $this->client->request(...$args);
-#	        	print_r($response);
-				usleep(APITestAbstract::SLEEP_SECONDS * 1000000);
-				return $response;
-			}
-
-			protected function guzzle(){
-				return new GuzzleClient($this->options, new Client(['cacert' => $this->options->ca_info, 'headers' => ['User-Agent' => $this->options->userAgent]]));
-			}
-
-			protected function tinycurl(){
-				return new TinyCurlClient($this->options, new Request($this->options));
-			}
-
-			protected function curl(){
-				return new CurlClient($this->options);
-			}
-
-			protected function stream(){
-				return new StreamClient($this->options);
-			}
-
-		};
-	}
-
-	protected function getToken():Token{
-		$file = $this->STORAGE.'/'.$this->provider->serviceName.'.token.json';
-
-		if(is_file($file)){
-			return (new Token)->__fromJSON(file_get_contents($file));
-		}
-
-		return new Token(['accessToken' => '']);
 	}
 
 	public function testInstance(){

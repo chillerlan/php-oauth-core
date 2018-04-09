@@ -35,10 +35,10 @@ class StorageTest extends TestCase{
 		'DBTokenStorage'      => [DBTokenStorage::class],
 	];
 
-	const CFGDIR         = __DIR__.'/../config';
-	const SERVICE_NAME   = 'Spotify';
-	const TABLE_TOKEN    = 'storagetest';
-	const TABLE_PROVIDER = 'storagetest_providers';
+	protected const TABLE_TOKEN    = 'dbstoragetest_token';
+	protected const TABLE_PROVIDER = 'dbstoragetest_providers';
+
+	protected $CFGDIR = __DIR__.'/../config';
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -61,12 +61,12 @@ class StorageTest extends TestCase{
 	protected $options;
 
 	protected function setUp(){
-		$env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
+		$env = (new DotEnv($this->CFGDIR, file_exists($this->CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 		$options = [
 			// OAuthOptions
-			'dbTokenTable'     => StorageTest::TABLE_TOKEN,
-			'dbProviderTable'  => StorageTest::TABLE_PROVIDER,
+			'dbTokenTable'     => $this::TABLE_TOKEN,
+			'dbProviderTable'  => $this::TABLE_PROVIDER,
 			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
 			'dbUserID' => 1,
 			// DatabaseOptions
@@ -82,17 +82,44 @@ class StorageTest extends TestCase{
 			use DatabaseOptionsTrait;
 		};
 
-		$this->token   = new Token(['accessToken' => 'foobar']);
+		$this->token = new Token(['accessToken' => 'foobar']);
 	}
 
 	protected function initStorage($storageInterface):void{
-		$p2 = null;
+		$db = null;
 
 		if($storageInterface === DBTokenStorage::class){
-			$p2 = new Database($this->options);
+			$db = new Database($this->options);
+
+			$db->connect();
+			$db->drop->table($this::TABLE_TOKEN)->query();
+			$db->create
+				->table($this::TABLE_TOKEN)
+				->primaryKey('label')
+				->varchar('label', 32, null, false)
+				->int('user_id',10, null, false)
+				->varchar('provider_id', 30, '', false)
+				->text('token', null, true)
+				->text('state')
+				->int('expires',10, null, false)
+				->query();
+
+			$db->drop->table($this::TABLE_PROVIDER)->query();
+			$db->create
+				->table($this::TABLE_PROVIDER)
+				->primaryKey('provider_id')
+				->tinyint('provider_id',10, null, false, 'UNSIGNED AUTO_INCREMENT')
+				->varchar('servicename', 30, '', false)
+				->query();
+
+			$db->insert
+				->into($this::TABLE_PROVIDER)
+				->values(['provider_id' => 42, 'servicename' => 'testService'])
+				->query();
+
 		}
 
-		$this->storage = $this->loadClass($storageInterface, TokenStorageInterface::class, $this->options, $p2);
+		$this->storage = $this->loadClass($storageInterface, TokenStorageInterface::class, $this->options, $db);
 	}
 
 	/**
@@ -111,19 +138,19 @@ class StorageTest extends TestCase{
 	public function testTokenStorage($storageInterface){
 		$this->initStorage($storageInterface);
 
-		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);
-		$this->assertTrue($this->storage->hasAccessToken(self::SERVICE_NAME));
-		$this->assertSame('foobar', $this->storage->getAccessToken(self::SERVICE_NAME)->accessToken);
+		$this->storage->storeAccessToken('testService', $this->token);
+		$this->assertTrue($this->storage->hasAccessToken('testService'));
+		$this->assertSame('foobar', $this->storage->getAccessToken('testService')->accessToken);
 
-		$this->storage->storeCSRFState(self::SERVICE_NAME, 'foobar');
-		$this->assertTrue($this->storage->hasCSRFState(self::SERVICE_NAME));
-		$this->assertSame('foobar', $this->storage->getCSRFState(self::SERVICE_NAME));
+		$this->storage->storeCSRFState('testService', 'foobar');
+		$this->assertTrue($this->storage->hasCSRFState('testService'));
+		$this->assertSame('foobar', $this->storage->getCSRFState('testService'));
 
-		$this->storage->clearCSRFState(self::SERVICE_NAME);
-		$this->assertFalse($this->storage->hasCSRFState(self::SERVICE_NAME));
+		$this->storage->clearCSRFState('testService');
+		$this->assertFalse($this->storage->hasCSRFState('testService'));
 
-		$this->storage->clearAccessToken(self::SERVICE_NAME);
-		$this->assertFalse($this->storage->hasAccessToken(self::SERVICE_NAME));
+		$this->storage->clearAccessToken('testService');
+		$this->assertFalse($this->storage->hasAccessToken('testService'));
 	}
 
 	/**
@@ -135,33 +162,23 @@ class StorageTest extends TestCase{
 	public function testClearAllAccessTokens($storageInterface){
 		$this->initStorage($storageInterface);
 
-		$range = ['Spotify', 'LastFM', 'Twitter'];
 		$this->storage->clearAllAccessTokens();
 
-		foreach($range as $k){
-			$this->assertFalse($this->storage->hasAccessToken($k));
-			$this->storage->storeAccessToken($k, $this->token);
-			$this->assertTrue($this->storage->hasAccessToken($k));
-		}
+		$this->assertFalse($this->storage->hasAccessToken('testService'));
+		$this->storage->storeAccessToken('testService', $this->token);
+		$this->assertTrue($this->storage->hasAccessToken('testService'));
 
-		foreach($range as $k){
-			$this->assertFalse($this->storage->hasCSRFState($k));
-			$this->storage->storeCSRFState($k, 'foobar');
-			$this->assertTrue($this->storage->hasCSRFState($k));
-		}
+		$this->assertFalse($this->storage->hasCSRFState('testService'));
+		$this->storage->storeCSRFState('testService', 'foobar');
+		$this->assertTrue($this->storage->hasCSRFState('testService'));
 
 		$this->storage->clearAllCSRFStates();
 
-		foreach($range as $k){
-			$this->assertFalse($this->storage->hasCSRFState($k));
-		}
+		$this->assertFalse($this->storage->hasCSRFState('testService'));
 
 		$this->storage->clearAllAccessTokens();
 
-		foreach($range as $k){
-			$this->assertFalse($this->storage->hasAccessToken($k));
-		}
-
+		$this->assertFalse($this->storage->hasAccessToken('testService'));
 	}
 
 	/**
