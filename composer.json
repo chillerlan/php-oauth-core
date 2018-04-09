@@ -1,6 +1,6 @@
 {
 	"name": "chillerlan/php-oauth-core",
-	"description": "A PHP7.2+ OAuth client library",
+	"description": "A PHP7.2+ OAuth client core library",
 	"homepage": "https://github.com/chillerlan/php-oauth-core",
 	"license": "MIT",
 	"type": "library",
@@ -41,6 +41,11 @@
 		"psr-4": {
 			"chillerlan\\OAuthExamples\\": "examples/",
 			"chillerlan\\OAuthTest\\": "tests/"
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-v0.1": "dev-master"
 		}
 	}
 }
