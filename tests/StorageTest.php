@@ -25,6 +25,7 @@ use chillerlan\Traits\{
 	ClassLoader, DotEnv
 };
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
 class StorageTest extends TestCase{
 	use ClassLoader;
@@ -89,7 +90,7 @@ class StorageTest extends TestCase{
 		$db = null;
 
 		if($storageInterface === DBTokenStorage::class){
-			$db = new Database($this->options);
+			$db = new Database($this->options, null, new NullLogger);
 
 			$db->connect();
 			$db->drop->table($this::TABLE_TOKEN)->query();
