@@ -23,6 +23,7 @@ use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\{
 	ContainerInterface, DotEnv
 };
+use Psr\Log\NullLogger;
 
 ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -103,12 +104,12 @@ $http = new class($options) extends HTTPClientAbstract{
 
 };
 
-#$http->setLogger($logger);
+$http->setLogger(new NullLogger);
 
 /** @var \chillerlan\Database\Database $db */
 $db = new Database($options);
-#$db->setLogger($logger);
+$db->setLogger(new NullLogger);
 
 /** @var \chillerlan\OAuth\Storage\TokenStorageInterface $storage */
 $storage = new SessionTokenStorage($options); //new DBTokenStorage($options, $db);
-#$storage->setLogger($logger);
+$storage->setLogger(new NullLogger);
