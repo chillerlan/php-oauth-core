@@ -14,7 +14,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptions, LogOptionsTrait, LogTrait, Output\LogOutputAbstract
+	Log, LogOptions, LogOptionsTrait, LogTrait, Output\LogOutputAbstract, Output\NullLogger
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionTokenStorage
@@ -23,7 +23,6 @@ use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\{
 	ContainerInterface, DotEnv
 };
-use Psr\Log\NullLogger;
 
 ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -65,6 +64,9 @@ $options = new class($options_arr) extends OAuthOptions{
 };
 
 /** @var \Psr\Log\LoggerInterface $logger */
+$nullLogger = (new Log)->addInstance(new NullLogger($options), 'nullLog');
+
+/** @var \Psr\Log\LoggerInterface $logger */
 $logger = (new Log)->addInstance(
 	new class ($options) extends LogOutputAbstract{
 
@@ -104,12 +106,12 @@ $http = new class($options) extends HTTPClientAbstract{
 
 };
 
-$http->setLogger(new NullLogger);
+$http->setLogger($nullLogger);
 
 /** @var \chillerlan\Database\Database $db */
 $db = new Database($options);
-$db->setLogger(new NullLogger);
+$db->setLogger($nullLogger);
 
 /** @var \chillerlan\OAuth\Storage\TokenStorageInterface $storage */
 $storage = new SessionTokenStorage($options); //new DBTokenStorage($options, $db);
-$storage->setLogger(new NullLogger);
+$storage->setLogger($nullLogger);
