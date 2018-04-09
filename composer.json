@@ -42,10 +42,5 @@
 			"chillerlan\\OAuthExamples\\": "examples/",
 			"chillerlan\\OAuthTest\\": "tests/"
 		}
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-v0.1": "dev-master-dev"
-		}
 	}
 }
