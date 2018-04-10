@@ -25,7 +25,6 @@ use chillerlan\Traits\{
 	ClassLoader, DotEnv
 };
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
 
 class StorageTest extends TestCase{
 	use ClassLoader;

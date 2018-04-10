@@ -16,7 +16,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptionsTrait, Output\LogOutputAbstract
+	Log, LogOptionsTrait, Output\ConsoleLog, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
@@ -99,8 +99,10 @@ abstract class APITestAbstract extends TestCase{
 			protected $sleep;
 		};
 
+		$this->logger = new Log;
+		$this->logger->addInstance(new ConsoleLog($options), 'console');
+
 		$this->storage  = new MemoryTokenStorage;
-		$this->logger   = $this->initLogger($this->options);
 		$this->http     = $this->initHttp($this->options);
 		$this->provider = $this->initProvider($this->http, $this->storage, $this->options, $this->logger);
 
@@ -133,24 +135,6 @@ abstract class APITestAbstract extends TestCase{
 			// testHTTPClient
 			'sleep'            => 0.25,
 		];
-	}
-
-	/**
-	 * @param \chillerlan\Traits\ContainerInterface $options
-	 *
-	 * @return \Psr\Log\LoggerInterface
-	 */
-	protected function initLogger(ContainerInterface $options):LoggerInterface{
-		return (new Log)->addInstance(
-			new class ($options) extends LogOutputAbstract{
-
-				protected function __log(string $level, string $message, array $context = null):void{
-					echo $message.PHP_EOL.print_r($context, true).PHP_EOL;
-				}
-
-			},
-			'console'
-		);
 	}
 
 	/**

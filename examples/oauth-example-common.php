@@ -14,7 +14,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptionsTrait, Output\LogOutputAbstract
+	Log, LogOptionsTrait, Output\ConsoleLog, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionTokenStorage
@@ -64,21 +64,7 @@ $options = new class($options_arr) extends OAuthOptions{
 };
 
 $logger = new Log;
-
-$logger->addInstance(
-	new class ($options) extends LogOutputAbstract{
-
-		protected function __log(string $level, string $message, array $context = null):void{
-			echo $message.PHP_EOL;
-
-			if(!empty($context)){
-				echo print_r($context, true).PHP_EOL;
-			}
-		}
-
-	},
-	'console'
-);
+$logger->addInstance(new ConsoleLog($options), 'console');
 
 /** @var \chillerlan\HTTP\HTTPClientInterface $http */
 $http = new class($options) extends HTTPClientAbstract{
