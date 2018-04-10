@@ -12,13 +12,14 @@
 
 namespace chillerlan\OAuth\Storage;
 
-use chillerlan\Logger\LogTrait;
 use chillerlan\OAuth\{OAuthOptions, Token};
 use chillerlan\Traits\ContainerInterface;
-use Psr\Log\LoggerAwareInterface;
+use Psr\Log\{
+	LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger
+};
 
 abstract class TokenStorageAbstract implements TokenStorageInterface, LoggerAwareInterface{
-	use LogTrait;
+	use LoggerAwareTrait;
 
 	protected const TOKEN_NONCE = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01";
 
@@ -31,9 +32,11 @@ abstract class TokenStorageAbstract implements TokenStorageInterface, LoggerAwar
 	 * TokenStorageAbstract constructor.
 	 *
 	 * @param \chillerlan\Traits\ContainerInterface|null $options
+	 * @param \Psr\Log\LoggerInterface|null              $logger
 	 */
-	public function __construct(ContainerInterface $options = null){
+	public function __construct(ContainerInterface $options = null, LoggerInterface $logger = null){
 		$this->options = $options ?? new OAuthOptions;
+		$this->logger  = $logger ?? new NullLogger;
 	}
 
 	/**

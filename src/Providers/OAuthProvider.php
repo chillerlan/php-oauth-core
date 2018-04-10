@@ -15,13 +15,14 @@ namespace chillerlan\OAuth\Providers;
 use chillerlan\HTTP\{
 	HTTPClientInterface, HTTPClientTrait
 };
-use chillerlan\Logger\LogTrait;
 use chillerlan\MagicAPI\ApiClientInterface;
 use chillerlan\OAuth\Storage\TokenStorageInterface;
 use chillerlan\Traits\{
 	ClassLoader, ContainerInterface, Magic
 };
-use Psr\Log\LoggerAwareInterface;
+use Psr\Log\{
+	LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger
+};
 use ReflectionClass;
 
 /**
@@ -29,7 +30,7 @@ use ReflectionClass;
  * @property string $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
-	use ClassLoader, Magic, HTTPClientTrait, LogTrait;
+	use ClassLoader, Magic, HTTPClientTrait, LoggerAwareTrait;
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -87,12 +88,15 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
 	 * @param \chillerlan\Traits\ContainerInterface           $options
+	 * @param \Psr\Log\LoggerInterface|null                   $logger
 	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options){
+	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger = null){
 		$this->setHTTPClient($http);
 
 		$this->storage     = $storage;
 		$this->options     = $options;
+		$this->logger      = $logger ?? new NullLogger;
+
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
 		if($this instanceof ApiClientInterface){

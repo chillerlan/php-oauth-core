@@ -16,7 +16,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptions, LogOptionsTrait, Output\LogOutputAbstract
+	Log, LogOptionsTrait, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
@@ -102,10 +102,7 @@ abstract class APITestAbstract extends TestCase{
 		$this->storage  = new MemoryTokenStorage;
 		$this->logger   = $this->initLogger($this->options);
 		$this->http     = $this->initHttp($this->options);
-		$this->provider = $this->initProvider($this->http, $this->storage, $this->options);
-
-		/** @noinspection PhpUndefinedMethodInspection */
-		$this->provider->setLogger($this->logger);
+		$this->provider = $this->initProvider($this->http, $this->storage, $this->options, $this->logger);
 
 		$tokenfile = $this->CFGDIR.'/'.$this->provider->serviceName.'.'.$this->TOKEN_EXT;
 
@@ -160,11 +157,12 @@ abstract class APITestAbstract extends TestCase{
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
 	 * @param \chillerlan\Traits\ContainerInterface           $options
+	 * @param \Psr\Log\LoggerInterface                        $logger
 	 *
 	 * @return \chillerlan\OAuth\Providers\OAuthInterface
 	 */
-	protected function initProvider(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options){
-		return new $this->FQCN($http, $storage, $options);
+	protected function initProvider(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger){
+		return new $this->FQCN($http, $storage, $options, $logger);
 	}
 
 	/**

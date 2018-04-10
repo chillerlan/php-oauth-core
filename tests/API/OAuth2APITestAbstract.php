@@ -17,6 +17,7 @@ use chillerlan\OAuth\{
 	Providers\ClientCredentials, Providers\OAuth2Interface, Storage\TokenStorageInterface, Token
 };
 use chillerlan\Traits\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  */
@@ -30,8 +31,8 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 	/**
 	 * @inheritdoc
 	 */
-	protected function initProvider(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options){
-		return new $this->FQCN($http, $storage, $options, $this->scopes);
+	protected function initProvider(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger){
+		return new $this->FQCN($http, $storage, $options, $logger, $this->scopes);
 	}
 
 	public function testOAuth2Instance(){

@@ -19,6 +19,7 @@ use chillerlan\OAuth\{
 	Token, Storage\TokenStorageInterface
 };
 use chillerlan\Traits\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * from CSRFTokenTrait:
@@ -35,7 +36,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var array
 	 */
-	protected $scopes;
+	protected $scopes = [];
 
 	/**
 	 * @var string
@@ -58,12 +59,16 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
 	 * @param \chillerlan\Traits\ContainerInterface           $options
+	 * @param \Psr\Log\LoggerInterface|null                   $logger
 	 * @param array                                           $scopes
 	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options, array $scopes = null){
-		parent::__construct($http, $storage, $options);
+	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger = null, array $scopes = null){
+		parent::__construct($http, $storage, $options, $logger);
 
-		$this->scopes = $scopes ?? [];
+		if($scopes !== null){
+			$this->scopes = $scopes;
+		}
+
 	}
 
 	/**

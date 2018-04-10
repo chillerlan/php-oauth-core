@@ -90,7 +90,7 @@ class StorageTest extends TestCase{
 		$db = null;
 
 		if($storageInterface === DBTokenStorage::class){
-			$db = new Database($this->options, null, new NullLogger);
+			$db = new Database($this->options);
 
 			$db->connect();
 			$db->drop->table($this::TABLE_TOKEN)->query();
