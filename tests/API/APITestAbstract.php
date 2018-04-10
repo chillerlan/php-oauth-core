@@ -100,7 +100,7 @@ abstract class APITestAbstract extends TestCase{
 		};
 
 		$this->logger = new Log;
-		$this->logger->addInstance(new ConsoleLog($options), 'console');
+		$this->logger->addInstance(new ConsoleLog($this->options), 'console');
 
 		$this->storage  = new MemoryTokenStorage;
 		$this->http     = $this->initHttp($this->options);
