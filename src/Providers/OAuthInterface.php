@@ -18,6 +18,13 @@ use chillerlan\OAuth\Storage\TokenStorageInterface;
 /**
  * @property string $serviceName
  * @property string $userRevokeURL
+ *
+ * from \Psr\Log\LoggerAwareTrait
+ * @property \Psr\Log\LoggerInterface $logger
+ * @method setLogger(\Psr\Log\LoggerInterface $logger)
+ *
+ * from \chillerlan\Traits\Classloader
+ * @method mixed loadClass(string $class, string $type = null, ...$params)
  */
 interface OAuthInterface{
 

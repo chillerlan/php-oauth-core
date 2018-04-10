@@ -14,6 +14,11 @@ namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\Token;
 
+/**
+ * from \Psr\Log\LoggerAwareTrait
+ * @property \Psr\Log\LoggerInterface $logger
+ * @method setLogger(\Psr\Log\LoggerInterface $logger)
+ */
 interface TokenStorageInterface{
 
 	/**

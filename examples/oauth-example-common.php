@@ -14,7 +14,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptions, LogOptionsTrait, LogTrait, Output\LogOutputAbstract, Output\NullLogger
+	Log, LogOptionsTrait, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionTokenStorage
@@ -63,11 +63,9 @@ $options = new class($options_arr) extends OAuthOptions{
 	use DatabaseOptionsTrait, LogOptionsTrait;
 };
 
-/** @var \Psr\Log\LoggerInterface $logger */
-$nullLogger = (new Log)->addInstance(new NullLogger($options), 'nullLog');
+$logger = new Log;
 
-/** @var \Psr\Log\LoggerInterface $logger */
-$logger = (new Log)->addInstance(
+$logger->addInstance(
 	new class ($options) extends LogOutputAbstract{
 
 		protected function __log(string $level, string $message, array $context = null):void{
@@ -84,7 +82,6 @@ $logger = (new Log)->addInstance(
 
 /** @var \chillerlan\HTTP\HTTPClientInterface $http */
 $http = new class($options) extends HTTPClientAbstract{
-	use LogTrait;
 
 	protected $client;
 
@@ -95,10 +92,10 @@ $http = new class($options) extends HTTPClientAbstract{
 
 	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
 		$args = func_get_args();
-		$this->debug('$args', $args);
+		$this->logger->debug('$args', $args);
 
 		$response = $this->client->request(...$args);
-		$this->debug(print_r($response, true));
+		$this->logger->debug(print_r($response, true));
 
 		usleep(100000); // flood protection
 		return $response;
@@ -106,12 +103,12 @@ $http = new class($options) extends HTTPClientAbstract{
 
 };
 
-$http->setLogger($nullLogger);
+#$http->setLogger($logger);
 
 /** @var \chillerlan\Database\Database $db */
 $db = new Database($options);
-$db->setLogger($nullLogger);
+#$db->setLogger($logger);
 
 /** @var \chillerlan\OAuth\Storage\TokenStorageInterface $storage */
 $storage = new SessionTokenStorage($options); //new DBTokenStorage($options, $db);
-$storage->setLogger($nullLogger);
+#$storage->setLogger($logger);
