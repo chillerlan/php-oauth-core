@@ -42,7 +42,7 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 	public function testRequestCredentialsToken(){
 
 		if(!$this->provider instanceof ClientCredentials){
-			$this->markTestSkipped('not supported');
+			$this->markTestSkipped('skipped test: not supported');
 		}
 
 		$token = $this->provider->getClientCredentialsToken();
@@ -55,19 +55,6 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 		}
 
 		print_r($token);
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage not supported
-	 */
-	public function testRequestCredentialsTokenNotSupportedException(){
-
-		if($this->provider instanceof ClientCredentials){
-			$this->markTestSkipped('does not apply');
-		}
-
-		$this->provider->getClientCredentialsToken();
 	}
 
 }
