@@ -12,11 +12,11 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\{
-	OAuthOptions, Providers\ClientCredentials, Providers\CSRFToken, Providers\OAuth2Interface, Providers\TokenRefresh, Token
-};
 use chillerlan\HTTP\{
-	HTTPClientInterface, HTTPClientAbstract, HTTPResponse, HTTPResponseInterface
+	HTTPClientAbstract, HTTPClientInterface, HTTPResponse, HTTPResponseInterface
+};
+use chillerlan\OAuth\{
+	OAuthOptions, Providers\ClientCredentials, Providers\CSRFToken, Providers\TokenRefresh, Token
 };
 
 /**
@@ -59,7 +59,10 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 			$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
 		}
 
-		$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
+		if($this->provider instanceof CSRFToken){
+			$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
+		}
+
 	}
 
 	protected function initHttp():HTTPClientInterface{
@@ -133,49 +136,6 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['foo' => 'bar'])])]);
-	}
-
-	public function testCheckCSRFState(){
-
-		if(!$this->provider instanceof CSRFToken){
-			$this->markTestSkipped('N/A');
-		}
-
-		$provider = $this
-			->getMethod('checkState')
-			->invokeArgs($this->provider, ['test_state']);
-
-		$this->assertInstanceOf(OAuth2Interface::class, $provider);
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage invalid state
-	 */
-	public function testCheckStateInvalid(){
-
-		if(!$this->provider instanceof CSRFToken){
-			$this->markTestSkipped('N/A');
-		}
-
-		$this
-			->getMethod('checkState')
-			->invoke($this->provider);
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage invalid CSRF state
-	 */
-	public function testCheckStateInvalidCSRFState(){
-
-		if(!$this->provider instanceof CSRFToken){
-			$this->markTestSkipped('N/A');
-		}
-
-		$this
-			->getMethod('checkState')
-			->invokeArgs($this->provider, ['invalid_test_state']);
 	}
 
 	public function testRequest(){

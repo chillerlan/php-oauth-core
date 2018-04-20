@@ -18,7 +18,7 @@ use chillerlan\OAuthExamples\OAuth2Testprovider;
  * @property \chillerlan\OAuthExamples\OAuth2Testprovider $provider
  */
 class GenericOAuth2Test extends OAuth2Test{
-	use SupportsOAuth2ClientCredentials, SupportsOAuth2TokenRefresh;
+	use SupportsOAuth2ClientCredentials, SupportsOAuth2TokenRefresh, SupportsCSRFToken;
 
 	protected $FQCN = OAuth2Testprovider::class;
 }
