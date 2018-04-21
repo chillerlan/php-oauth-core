@@ -14,7 +14,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPResponseInterface, TinyCurlClient
 };
 use chillerlan\Logger\{
-	Log, LogOptionsTrait, Output\ConsoleLog, Output\LogOutputAbstract
+	Log, LogOptionsTrait, Output\ConsoleLog
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionStorage
@@ -56,11 +56,16 @@ $options_arr = [
 
 	// log
 	'minLogLevel'      => 'debug',
+
+	// test http client
+	'sleep'            => 0.25,
 ];
 
 /** @var \chillerlan\Traits\ContainerInterface $options */
 $options = new class($options_arr) extends OAuthOptions{
 	use DatabaseOptionsTrait, LogOptionsTrait;
+
+	protected $sleep;
 };
 
 $logger = new Log;
@@ -81,9 +86,9 @@ $http = new class($options) extends HTTPClientAbstract{
 		$this->logger->debug('$args', $args);
 
 		$response = $this->client->request(...$args);
-		$this->logger->debug(print_r($response, true));
+		$this->logger->debug($response->body, (array)$response->headers);
 
-		usleep(100000); // flood protection
+		usleep($this->options->sleep * 1000000);
 		return $response;
 	}
 
