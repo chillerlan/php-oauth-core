@@ -17,7 +17,7 @@ use chillerlan\Logger\{
 	Log, LogOptionsTrait, Output\ConsoleLog, Output\LogOutputAbstract
 };
 use chillerlan\OAuth\{
-	OAuthOptions, Storage\SessionTokenStorage
+	OAuthOptions, Storage\SessionStorage
 };
 use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\{
@@ -95,6 +95,6 @@ $http = new class($options) extends HTTPClientAbstract{
 $db = new Database($options);
 #$db->setLogger($logger);
 
-/** @var \chillerlan\OAuth\Storage\TokenStorageInterface $storage */
-$storage = new SessionTokenStorage($options); //new DBTokenStorage($options, $db);
+/** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
+$storage = new SessionStorage($options); //new DBStorage($options, $db);
 #$storage->setLogger($logger);

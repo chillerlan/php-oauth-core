@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuthExamples;
 
-use chillerlan\OAuth\Providers\{
+use chillerlan\OAuth\Core\{
 	ClientCredentials, CSRFToken, CSRFTokenTrait, OAuth2ClientCredentialsTrait,
 	OAuth2Provider, OAuth2TokenRefreshTrait, TokenExpires, TokenRefresh,
 };

@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuthExamples;
 
-use chillerlan\OAuth\Providers\OAuth1Provider;
+use chillerlan\OAuth\Core\OAuth1Provider;
 
 /**
  *
