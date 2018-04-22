@@ -14,12 +14,10 @@ namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\HTTP\HTTPClientInterface;
 use chillerlan\OAuth\{
-	Core\AccessToken, OAuthOptions, Storage\MemoryStorage, Storage\OAuthStorageInterface
+	Core\AccessToken, Core\OAuthInterface, OAuthOptions, Storage\MemoryStorage, Storage\OAuthStorageInterface
 };
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
+use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
 abstract class ProviderTestAbstract extends TestCase{
 
@@ -119,7 +117,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	}
 
 	public function testInstance(){
-		$this->assertInstanceOf(\chillerlan\OAuth\Core\OAuthInterface::class, $this->provider);
+		$this->assertInstanceOf(OAuthInterface::class, $this->provider);
 	}
 
 	public function testMagicGetServicename(){

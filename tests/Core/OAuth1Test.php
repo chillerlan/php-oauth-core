@@ -42,8 +42,8 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 
 	protected function initHttp():HTTPClientInterface{
 		return new class(new OAuthOptions) extends HTTPClientAbstract{
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
-				return new HTTPResponse(['body' => OAuth1Test::OAUTH1_RESPONSES[$url]]);
+			protected function getResponse():HTTPResponseInterface{
+				return new HTTPResponse(['body' => OAuth1Test::OAUTH1_RESPONSES[$this->requestURL]]);
 			}
 		};
 	}

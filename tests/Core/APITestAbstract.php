@@ -120,9 +120,8 @@ abstract class APITestAbstract extends OAuthTestAbstract{
 				$this->client = new TinyCurlClient($this->options, new Request($this->options));
 			}
 
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
-				$args = func_get_args();
-				$response = $this->client->request(...$args);
+			protected function getResponse():HTTPResponseInterface{
+				$response = $this->client->request($this->requestURL, $this->requestParams, $this->requestMethod, $this->requestBody, $this->requestHeaders);
 				usleep($this->options->sleep * 1000000);
 				return $response;
 			}

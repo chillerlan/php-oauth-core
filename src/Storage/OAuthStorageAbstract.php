@@ -23,8 +23,6 @@ use Psr\Log\{
 abstract class OAuthStorageAbstract implements OAuthStorageInterface, LoggerAwareInterface{
 	use LoggerAwareTrait;
 
-	protected const TOKEN_NONCE = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01";
-
 	/**
 	 * @var \chillerlan\OAuth\OAuthOptions
 	 */

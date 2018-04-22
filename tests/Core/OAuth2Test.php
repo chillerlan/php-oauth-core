@@ -16,7 +16,7 @@ use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPClientInterface, HTTPResponse, HTTPResponseInterface
 };
 use chillerlan\OAuth\{
-	Core\AccessToken, Core\ClientCredentials, Core\TokenRefresh, OAuthOptions
+	Core\AccessToken, Core\ClientCredentials, Core\CSRFToken, Core\TokenRefresh, OAuthOptions
 };
 
 /**
@@ -59,7 +59,7 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 			$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
 		}
 
-		if($this->provider instanceof \chillerlan\OAuth\Core\CSRFToken){
+		if($this->provider instanceof CSRFToken){
 			$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
 		}
 
@@ -67,8 +67,8 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 
 	protected function initHttp():HTTPClientInterface{
 		return new class(new OAuthOptions) extends HTTPClientAbstract{
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
-				return new HTTPResponse(['body' => json_encode(OAuth2Test::OAUTH2_RESPONSES[$url])]);
+			protected function getResponse():HTTPResponseInterface{
+				return new HTTPResponse(['body' => json_encode(OAuth2Test::OAUTH2_RESPONSES[$this->requestURL])]);
 			}
 		};
 	}

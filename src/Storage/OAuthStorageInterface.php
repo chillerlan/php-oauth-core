@@ -16,6 +16,8 @@ use chillerlan\OAuth\Core\AccessToken;
 
 interface OAuthStorageInterface{
 
+	public const TOKEN_NONCE = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01";
+
 	/**
 	 * @param string                             $service
 	 * @param \chillerlan\OAuth\Core\AccessToken $token
