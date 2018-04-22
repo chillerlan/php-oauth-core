@@ -81,14 +81,22 @@ $http = new class($options) extends HTTPClientAbstract{
 		$this->client = new TinyCurlClient($this->options, new Request($this->options));
 	}
 
-	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
-		$args = func_get_args();
-		$this->logger->debug('$args', $args);
+	protected function getResponse():HTTPResponseInterface{
 
-		$response = $this->client->request(...$args);
+		$this->logger->debug('$args', [
+			'$url' => $this->requestURL,
+			'$params' => $this->requestParams,
+			'$method' => $this->requestMethod,
+			'$body' => $this->requestBody,
+			'$headers' => $this->requestHeaders,
+		]);
+
+		$response = $this->client->request($this->requestURL, $this->requestParams, $this->requestMethod, $this->requestBody, $this->requestHeaders);
+
 		$this->logger->debug($response->body, (array)$response->headers);
 
 		usleep($this->options->sleep * 1000000);
+
 		return $response;
 	}
 
