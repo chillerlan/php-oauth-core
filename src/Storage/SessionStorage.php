@@ -59,6 +59,8 @@ class SessionStorage extends OAuthStorageAbstract{
 
 	/**
 	 * Destructor.
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function __destruct(){
 		if($this->options->sessionStart){
