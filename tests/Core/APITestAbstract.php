@@ -135,7 +135,7 @@ abstract class APITestAbstract extends OAuthTestAbstract{
 
 			!empty($json)
 				? $this->logger->debug('tearDown() '.$this->response->url, $json)
-				: $this->logger->debug('tearDown() '.$this->response->url, $this->response->body);
+				: $this->logger->debug('tearDown() '.$this->response->url, (array)$this->response);
 		}
 	}
 
