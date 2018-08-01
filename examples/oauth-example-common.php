@@ -11,7 +11,7 @@ use chillerlan\Database\{
 	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
 };
 use chillerlan\HTTP\{
-	HTTPClientAbstract, HTTPResponseInterface, TinyCurlClient
+	HTTPClientAbstract, HTTPResponseInterface, CurlClient
 };
 use chillerlan\Logger\{
 	Log, LogOptionsTrait, Output\ConsoleLog
@@ -19,7 +19,6 @@ use chillerlan\Logger\{
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionStorage
 };
-use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\{
 	ContainerInterface, DotEnv
 };
@@ -78,7 +77,7 @@ $http = new class($options) extends HTTPClientAbstract{
 
 	public function __construct(ContainerInterface $options){
 		parent::__construct($options);
-		$this->client = new TinyCurlClient($this->options, new Request($this->options));
+		$this->client = new CurlClient($this->options);
 	}
 
 	protected function getResponse():HTTPResponseInterface{

@@ -13,13 +13,12 @@
 namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\HTTP\{
-	HTTPClientAbstract, HTTPClientInterface, HTTPResponseInterface, TinyCurlClient
+	HTTPClientAbstract, HTTPClientInterface, HTTPResponseInterface, CurlClient
 };
 use chillerlan\OAuth\{
 	Core\AccessToken, Core\OAuthInterface, OAuthOptions, Storage\MemoryStorage, Storage\OAuthStorageInterface
 };
 use chillerlan\OAuthTest\OAuthTestAbstract;
-use chillerlan\TinyCurl\Request;
 use chillerlan\Traits\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -117,7 +116,7 @@ abstract class APITestAbstract extends OAuthTestAbstract{
 
 			public function __construct(ContainerInterface $options){
 				parent::__construct($options);
-				$this->client = new TinyCurlClient($this->options, new Request($this->options));
+				$this->client = new CurlClient($this->options);
 			}
 
 			protected function getResponse():HTTPResponseInterface{

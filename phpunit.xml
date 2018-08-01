@@ -15,10 +15,6 @@
 	<testsuites>
 		<testsuite name="php-oauth-core test suite">
 			<directory suffix=".php">./tests</directory>
-			<!--
-			<exclude>./tests/API</exclude>
-			<exclude>./tests/Providers</exclude>
-			-->
 		</testsuite>
 	</testsuites>
 	<filter>
