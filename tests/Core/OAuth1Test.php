@@ -111,7 +111,7 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	public function testRequestHeaders(){
 		$headers = $this
 			->getMethod('requestHeaders')
-			->invokeArgs($this->provider, ['http://localhost/api/whatever', ['oauth_session_handle' => 'nope'], 'GET', [], new AccessToken(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token'])]);
+			->invokeArgs($this->provider, [new AccessToken(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token']), 'http://localhost/api/whatever', 'GET', ['oauth_session_handle' => 'nope'], []]);
 
 		$this->assertContains('OAuth oauth_consumer_key="'.$this->options->key.'", oauth_nonce="', $headers['Authorization']);
 	}

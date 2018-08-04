@@ -212,20 +212,20 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return array
 	 */
 	protected function getAccessTokenHeaders(array $body):array {
-		return $this->requestHeaders($this->accessTokenURL, $body, 'POST', [], $this->storage->getAccessToken($this->serviceName));
+		return $this->requestHeaders($this->storage->getAccessToken($this->serviceName), $this->accessTokenURL, 'POST', $body, []);
 	}
 
 	/**
-	 * @param string                             $url
-	 * @param array|string                       $params
-	 * @param string                             $method
-	 * @param array                              $headers
 	 * @param \chillerlan\OAuth\Core\AccessToken $token
+	 * @param string                             $url
+	 * @param string                             $method
+	 * @param array|string                       $params
+	 * @param array                              $headers
 	 *
 	 * @return array
 	 * @throws \Exception
 	 */
-	protected function requestHeaders(string $url, $params = null, string $method, array $headers = null, AccessToken $token):array{
+	protected function requestHeaders(AccessToken $token, string $url, string $method, $params = null, array $headers = null):array{
 		$this->tokenSecret = $token->accessTokenSecret;
 		$parameters        = $this->requestHeaderParams($token);
 
@@ -252,7 +252,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			'oauth_consumer_key'     => $this->options->key,
 			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
-			'oauth_timestamp'        => (new DateTime())->format('U'),
+			'oauth_timestamp'        => (new DateTime)->format('U'),
 			'oauth_token'            => $token->accessToken,
 			'oauth_version'          => '1.0',
 		];
@@ -271,11 +271,11 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$method = $method ?? 'GET';
 
 		$headers = $this->requestHeaders(
+			$this->storage->getAccessToken($this->serviceName),
 			$this->apiURL.$path,
-			$body ?? $params,
 			$method,
-			$headers,
-			$this->storage->getAccessToken($this->serviceName)
+			$body ?? $params,
+			$headers
 		);
 
 		return $this->httpRequest($this->apiURL.$path, $params, $method, $body, $headers);
