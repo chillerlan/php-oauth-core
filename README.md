@@ -183,9 +183,9 @@ class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRF
 
 ### [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/OAuthStorageInterface.php)
 There are currently 3 different `OAuthStorageInterface`, refer to these for implementation details (extend `OAuthStorageAbstract`):
-- [`MemoryStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/MemoryStorage.php): non-persistent, to store a token during script runtime and then discard it.
-- [`SessionStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/SessionStorage.php): half-persistent, stores a token for as long a user's session is alive.
-- [`DBStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/DBStorage.php): persistent, multi purpose database driven storage with encryption support
+- [`MemoryStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/MemoryStorage.php): non-persistent, to store an existing token during script runtime and then discard it.
+- [`SessionStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/SessionStorage.php): half-persistent, stores a token for as long a user's session is alive, e.g. while authenticating.
+- [`DBStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/DBStorage.php): persistent, multi purpose database driven storage with encryption support (via ext-sodium)
 
 ## API
 ### [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php)
