@@ -55,6 +55,16 @@ abstract class APITestAbstract extends OAuthTestAbstract{
 	protected $http;
 
 	/**
+	 * @var float
+	 */
+	protected $requestDelay = 0.25;
+
+	/**
+	 * @var string
+	 */
+	protected $userAgent = 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth';
+
+	/**
 	 * this is ugly. don't look at it - it works.
 	 */
 	protected function setUp(){
@@ -71,9 +81,9 @@ abstract class APITestAbstract extends OAuthTestAbstract{
 			'tokenAutoRefresh' => true,
 			// HTTPOptionsTrait
 			'ca_info'          => $this->CFGDIR.'/cacert.pem',
-			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
+			'userAgent'        => $this->userAgent,
 			// testHTTPClient
-			'sleep'            => 0.25,
+			'sleep'            => $this->requestDelay,
 		];
 
 		$this->options = new class($options) extends OAuthOptions{
