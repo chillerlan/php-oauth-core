@@ -4,16 +4,18 @@ env:
   global:
     - setup=no_encryption
 
-php:
-  - 7.2
-  - nightly
-
 matrix:
   include:
     - php: 7.2
       env: setup=no_encryption
+    - php: nightly
+      env: setup=no_encryption
     - php: 7.2
       env: setup=sodium_ext
+    - php: nightly
+      env: setup=sodium_ext
+  allow_failures:
+    - php: nightly
 
 mysql:
   database: dbtest
