@@ -32,7 +32,6 @@ install:
   - |
     if [[ $setup = 'sodium_ext' ]]; then
       pecl install libsodium;
-      echo "extension=sodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
     fi
   - curl -o config/cacert.pem https://curl.haxx.se/ca/cacert.pem
   - travis_retry composer install --no-interaction --prefer-source
