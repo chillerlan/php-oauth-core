@@ -6,13 +6,14 @@ env:
 
 php:
   - 7.2
+  - nightly
 
 matrix:
   include:
     - php: 7.2
       env: setup=no_encryption
-#    - php: 7.2
-#      env: setup=sodium_ext
+    - php: 7.2
+      env: setup=sodium_ext
 
 mysql:
   database: dbtest
@@ -20,12 +21,19 @@ mysql:
   encoding: utf8
 
 before_install:
+  # Manually compile the libsodium library. This sucks, Travis. https://github.com/travis-ci/travis-ci/issues/8863
   - |
     if [[ $setup = 'sodium_ext' ]]; then
-      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+      git clone -b stable https://github.com/jedisct1/libsodium.git;
+      cd libsodium && sudo ./configure && sudo make check && sudo make install && cd ..;
     fi
 
 install:
+  - |
+    if [[ $setup = 'sodium_ext' ]]; then
+      pecl install libsodium;
+      echo "extension=sodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+    fi
   - curl -o config/cacert.pem https://curl.haxx.se/ca/cacert.pem
   - travis_retry composer install --no-interaction --prefer-source
   - mysql -e 'create database dbtest;'
