@@ -16,7 +16,7 @@ use chillerlan\HTTP\HTTPClientInterface;
 use chillerlan\OAuth\{
 	Core\OAuth2Interface, Storage\OAuthStorageInterface
 };
-use chillerlan\Traits\ContainerInterface;
+use chillerlan\Traits\ImmutableSettingsInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -31,7 +31,7 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 	/**
 	 * @inheritdoc
 	 */
-	protected function initProvider(HTTPClientInterface $http, OAuthStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger){
+	protected function initProvider(HTTPClientInterface $http, OAuthStorageInterface $storage, ImmutableSettingsInterface $options, LoggerInterface $logger){
 		return new $this->FQCN($http, $storage, $options, $logger, $this->scopes);
 	}
 

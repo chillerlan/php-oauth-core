@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\Traits\{
-	Container, ContainerInterface, Crypto\MemzeroDestructorTrait
+	ImmutableSettingsContainer, ImmutableSettingsInterface, Crypto\MemzeroDestructorTrait
 };
 
 /**
@@ -31,8 +31,8 @@ use chillerlan\Traits\{
  * @property int    $expires
  * @property string $provider
  */
-class AccessToken implements ContainerInterface{
-	use MemzeroDestructorTrait, Container{
+class AccessToken implements ImmutableSettingsInterface{
+	use MemzeroDestructorTrait, ImmutableSettingsContainer{
 		__construct as constructContainer;
 	}
 
@@ -96,9 +96,9 @@ class AccessToken implements ContainerInterface{
 	/**
 	 * AccessToken constructor.
 	 *
-	 * @param array|null $properties
+	 * @param iterable|null $properties
 	 */
-	public function __construct(array $properties = null){
+	public function __construct(iterable $properties = null){
 		$this->constructContainer($properties);
 
 		$this->setExpiry($this->expires);
@@ -112,7 +112,7 @@ class AccessToken implements ContainerInterface{
 	 *
 	 * @return void
 	 */
-	public function __set(string $property, $value){
+	public function __set(string $property, $value):void{
 
 		if(property_exists($this, $property)){
 			$property === 'expires'

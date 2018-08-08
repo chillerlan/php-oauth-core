@@ -15,7 +15,7 @@ namespace chillerlan\OAuth\Storage;
 use chillerlan\OAuth\{
 	Core\AccessToken, OAuthOptions
 };
-use chillerlan\Traits\ContainerInterface;
+use chillerlan\Traits\ImmutableSettingsInterface;
 use Psr\Log\{
 	LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger
 };
@@ -31,10 +31,10 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface, LoggerAwar
 	/**
 	 * OAuthStorageAbstract constructor.
 	 *
-	 * @param \chillerlan\Traits\ContainerInterface|null $options
+	 * @param \chillerlan\Traits\ImmutableSettingsInterface|null $options
 	 * @param \Psr\Log\LoggerInterface|null              $logger
 	 */
-	public function __construct(ContainerInterface $options = null, LoggerInterface $logger = null){
+	public function __construct(ImmutableSettingsInterface $options = null, LoggerInterface $logger = null){
 		$this->options = $options ?? new OAuthOptions;
 		$this->logger  = $logger ?? new NullLogger;
 	}

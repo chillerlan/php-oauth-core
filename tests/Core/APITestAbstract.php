@@ -19,7 +19,7 @@ use chillerlan\OAuth\{
 	Core\AccessToken, Core\OAuthInterface, OAuthOptions, Storage\MemoryStorage, Storage\OAuthStorageInterface
 };
 use chillerlan\OAuthTest\OAuthTestAbstract;
-use chillerlan\Traits\ContainerInterface;
+use chillerlan\Traits\ImmutableSettingsInterface;
 use Psr\Log\LoggerInterface;
 
 abstract class APITestAbstract extends OAuthTestAbstract{
@@ -106,25 +106,25 @@ abstract class APITestAbstract extends OAuthTestAbstract{
 	/**
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
-	 * @param \chillerlan\Traits\ContainerInterface           $options
+	 * @param \chillerlan\Traits\ImmutableSettingsInterface           $options
 	 * @param \Psr\Log\LoggerInterface                        $logger
 	 *
 	 * @return \chillerlan\OAuth\Core\OAuthInterface
 	 */
-	protected function initProvider(HTTPClientInterface $http, OAuthStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger){
+	protected function initProvider(HTTPClientInterface $http, OAuthStorageInterface $storage, ImmutableSettingsInterface $options, LoggerInterface $logger){
 		return new $this->FQCN($http, $storage, $options, $logger);
 	}
 
 	/**
-	 * @param \chillerlan\Traits\ContainerInterface $options
+	 * @param \chillerlan\Traits\ImmutableSettingsInterface $options
 	 *
 	 * @return \chillerlan\HTTP\HTTPClientInterface
 	 */
-	protected function initHttp(ContainerInterface $options):HTTPClientInterface{
+	protected function initHttp(ImmutableSettingsInterface $options):HTTPClientInterface{
 		return new class($options) extends HTTPClientAbstract{
 			protected $client;
 
-			public function __construct(ContainerInterface $options){
+			public function __construct(ImmutableSettingsInterface $options){
 				parent::__construct($options);
 				$this->client = new CurlClient($this->options);
 			}

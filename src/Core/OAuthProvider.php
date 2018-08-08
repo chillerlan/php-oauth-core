@@ -18,7 +18,7 @@ use chillerlan\HTTP\{
 use chillerlan\MagicAPI\ApiClientInterface;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Traits\{
-	ClassLoader, ContainerInterface, Magic
+	ClassLoader, ImmutableSettingsInterface, Magic
 };
 use Psr\Log\{
 	LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger
@@ -87,10 +87,10 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	 *
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
-	 * @param \chillerlan\Traits\ContainerInterface           $options
+	 * @param \chillerlan\Traits\ImmutableSettingsInterface           $options
 	 * @param \Psr\Log\LoggerInterface|null                   $logger
 	 */
-	public function __construct(HTTPClientInterface $http, OAuthStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger = null){
+	public function __construct(HTTPClientInterface $http, OAuthStorageInterface $storage, ImmutableSettingsInterface $options, LoggerInterface $logger = null){
 		$this->setHTTPClient($http);
 
 		$this->storage     = $storage;

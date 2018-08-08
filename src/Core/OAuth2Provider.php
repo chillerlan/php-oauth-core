@@ -18,7 +18,7 @@ use chillerlan\HTTP\{
 use chillerlan\OAuth\{
 	Storage\OAuthStorageInterface
 };
-use chillerlan\Traits\ContainerInterface;
+use chillerlan\Traits\ImmutableSettingsInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -58,11 +58,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
-	 * @param \chillerlan\Traits\ContainerInterface           $options
+	 * @param \chillerlan\Traits\ImmutableSettingsInterface           $options
 	 * @param \Psr\Log\LoggerInterface|null                   $logger
 	 * @param array                                           $scopes
 	 */
-	public function __construct(HTTPClientInterface $http, OAuthStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger = null, array $scopes = null){
+	public function __construct(HTTPClientInterface $http, OAuthStorageInterface $storage, ImmutableSettingsInterface $options, LoggerInterface $logger = null, array $scopes = null){
 		parent::__construct($http, $storage, $options, $logger);
 
 		if($scopes !== null){

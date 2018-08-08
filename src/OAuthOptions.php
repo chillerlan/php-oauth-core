@@ -14,7 +14,7 @@ namespace chillerlan\OAuth;
 
 use chillerlan\HTTP\HTTPOptionsTrait;
 use chillerlan\Traits\{
-	Container, ContainerInterface, Crypto\MemzeroDestructorTrait
+	ImmutableSettingsContainer, ImmutableSettingsInterface, Crypto\MemzeroDestructorTrait
 };
 
 /**
@@ -55,17 +55,17 @@ use chillerlan\Traits\{
  * @property string     $ca_info
  * @property int        $max_redirects
  */
-class OAuthOptions implements ContainerInterface{
-	use OAuthOptionsTrait, HTTPOptionsTrait, MemzeroDestructorTrait, Container{
+class OAuthOptions implements ImmutableSettingsInterface{
+	use OAuthOptionsTrait, HTTPOptionsTrait, MemzeroDestructorTrait, ImmutableSettingsContainer{
 		__construct as protected containerConstruct;
 	}
 
 	/**
 	 * OAuthOptions constructor.
 	 *
-	 * @param array|null $properties
+	 * @param iterable|null $properties
 	 */
-	public function __construct(array $properties = null){
+	public function __construct(iterable $properties = null){
 		// enable encryption by default if possible...
 		$this->useEncryption = extension_loaded('sodium');
 

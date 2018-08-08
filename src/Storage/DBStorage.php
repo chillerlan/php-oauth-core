@@ -14,7 +14,7 @@ namespace chillerlan\OAuth\Storage;
 
 use chillerlan\Database\Database;
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\Traits\ContainerInterface;
+use chillerlan\Traits\ImmutableSettingsInterface;
 
 class DBStorage extends OAuthStorageAbstract{
 
@@ -26,12 +26,12 @@ class DBStorage extends OAuthStorageAbstract{
 	/**
 	 * DBStorage constructor.
 	 *
-	 * @param \chillerlan\Traits\ContainerInterface $options
+	 * @param \chillerlan\Traits\ImmutableSettingsInterface $options
 	 * @param \chillerlan\Database\Database         $db
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function __construct(ContainerInterface $options, Database $db){
+	public function __construct(ImmutableSettingsInterface $options, Database $db){
 		parent::__construct($options);
 
 		if(!$this->options->dbTokenTable || !$this->options->dbProviderTable){
