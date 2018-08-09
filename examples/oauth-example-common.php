@@ -19,9 +19,7 @@ use chillerlan\Logger\{
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionStorage
 };
-use chillerlan\Traits\{
-	ContainerInterface, DotEnv
-};
+use chillerlan\Traits\{DotEnv, ImmutableSettingsInterface};
 
 ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -60,7 +58,7 @@ $options_arr = [
 	'sleep'            => 0.25,
 ];
 
-/** @var \chillerlan\Traits\ContainerInterface $options */
+/** @var \chillerlan\Traits\ImmutableSettingsInterface $options */
 $options = new class($options_arr) extends OAuthOptions{
 	use DatabaseOptionsTrait, LogOptionsTrait;
 
@@ -75,7 +73,7 @@ $http = new class($options) extends HTTPClientAbstract{
 
 	protected $client;
 
-	public function __construct(ContainerInterface $options){
+	public function __construct(ImmutableSettingsInterface $options){
 		parent::__construct($options);
 		$this->client = new CurlClient($this->options);
 	}
