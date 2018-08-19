@@ -4,18 +4,16 @@
  *
  * @filesource   OAuth2APITestAbstract.php
  * @created      09.04.2018
- * @package      chillerlan\OAuthTest\Core
+ * @package      chillerlan\OAuthTest\API
  * @author       smiley <smiley@chillerlan.net>
  * @copyright    2018 smiley
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Core;
+namespace chillerlan\OAuthTest\API;
 
 use chillerlan\HTTP\HTTPClientInterface;
-use chillerlan\OAuth\{
-	Core\OAuth2Interface, Storage\OAuthStorageInterface
-};
+use chillerlan\OAuth\{Core\OAuth2Interface, Storage\OAuthStorageInterface};
 use chillerlan\Traits\ImmutableSettingsInterface;
 use Psr\Log\LoggerInterface;
 

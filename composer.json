@@ -24,11 +24,9 @@
 		"chillerlan/php-traits": "^2.0",
 		"chillerlan/php-httpinterface": "^2.0",
 		"chillerlan/php-magic-apiclient": "^1.1",
-		"psr/log": "^1.0",
-		"psr/simple-cache": "^1.0"
+		"psr/log": "^1.0"
 	},
 	"require-dev": {
-		"chillerlan/php-database": "^2.1",
 		"chillerlan/php-log": "^2.0",
 		"phpunit/phpunit": "^7.3"
 	},

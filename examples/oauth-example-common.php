@@ -7,18 +7,9 @@
  * @license      MIT
  */
 
-use chillerlan\Database\{
-	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
-};
-use chillerlan\HTTP\{
-	HTTPClientAbstract, HTTPResponseInterface, CurlClient
-};
-use chillerlan\Logger\{
-	Log, LogOptionsTrait, Output\ConsoleLog
-};
-use chillerlan\OAuth\{
-	OAuthOptions, Storage\SessionStorage
-};
+use chillerlan\HTTP\{CurlClient, HTTPClientAbstract, HTTPResponseInterface};
+use chillerlan\Logger\{Log, LogOptionsTrait, Output\ConsoleLog};
+use chillerlan\OAuth\{OAuthOptions, Storage\SessionStorage};
 use chillerlan\Traits\{DotEnv, ImmutableSettingsInterface};
 
 ini_set('date.timezone', 'Europe/Amsterdam');
@@ -33,19 +24,7 @@ $options_arr = [
 	'key'              => $env->get($ENVVAR.'_KEY'),
 	'secret'           => $env->get($ENVVAR.'_SECRET'),
 	'callbackURL'      => $env->get($ENVVAR.'_CALLBACK_URL'),
-	'dbUserID'         => 1,
-	'dbTokenTable'     => 'storagetest',
-	'dbProviderTable'  => 'storagetest_providers',
-	'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
 	'tokenAutoRefresh' => true,
-
-	// DatabaseOptions
-	'driver'           => MySQLiDrv::class,
-	'host'             => $env->MYSQL_HOST,
-	'port'             => $env->MYSQL_PORT,
-	'database'         => $env->MYSQL_DATABASE,
-	'username'         => $env->MYSQL_USERNAME,
-	'password'         => $env->MYSQL_PASSWORD,
 
 	// HTTPOptions
 	'ca_info'          => $CFGDIR.'/cacert.pem',
@@ -60,7 +39,7 @@ $options_arr = [
 
 /** @var \chillerlan\Traits\ImmutableSettingsInterface $options */
 $options = new class($options_arr) extends OAuthOptions{
-	use DatabaseOptionsTrait, LogOptionsTrait;
+	use LogOptionsTrait;
 
 	protected $sleep;
 };
@@ -101,10 +80,6 @@ $http = new class($options) extends HTTPClientAbstract{
 
 #$http->setLogger($logger);
 
-/** @var \chillerlan\Database\Database $db */
-$db = new Database($options);
-#$db->setLogger($logger);
-
 /** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
-$storage = new SessionStorage($options); //new DBStorage($options, $db);
+$storage = new SessionStorage($options);
 #$storage->setLogger($logger);

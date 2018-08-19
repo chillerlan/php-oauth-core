@@ -28,7 +28,7 @@
 - PHP 7.2+
 - the [Sodium](http://php.net/manual/book.sodium.php) extension for token encryption
 - cURL, PHP's stream wrapper or a HTTP client library of your choice
-- see [`chillerlan/php-oauth`](https://github.com/chillerlan/php-oauth)
+- see [`chillerlan/php-oauth`](https://github.com/chillerlan/php-oauth) for already implemented providers
 
 ## Getting Started
 In order to instance an [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthInterface.php) you you'll need to invoke a [`HTTPClientInterface`](https://github.com/chillerlan/php-httpinterface/blob/master/src/HTTPClientInterface.php), [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageInterface.php) and `OAuthOptions` (a [`ContainerInterface`](https://github.com/chillerlan/php-traits/blob/master/src/ContainerInterface.php)) objects first:
@@ -182,10 +182,9 @@ class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRF
 ```
 
 ### [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/OAuthStorageInterface.php)
-There are currently 3 different `OAuthStorageInterface`, refer to these for implementation details (extend `OAuthStorageAbstract`):
+There are 2 different `OAuthStorageInterface`, refer to these for implementation details (extend `OAuthStorageAbstract`):
 - [`MemoryStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/MemoryStorage.php): non-persistent, to store an existing token during script runtime and then discard it.
-- [`SessionStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/SessionStorage.php): half-persistent, stores a token for as long a user's session is alive, e.g. while authenticating.
-- [`DBStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/DBStorage.php): persistent, multi purpose database driven storage with encryption support (via ext-sodium)
+- [`SessionStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/SessionStorage.php): (half-)persistent, stores a token for as long a user's session is alive, e.g. while authenticating.
 
 ## API
 ### [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php)

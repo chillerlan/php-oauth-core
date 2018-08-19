@@ -12,15 +12,8 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\Database\{
-	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
-};
-use chillerlan\OAuth\{
-	Core\AccessToken, OAuthOptions
-};
-use chillerlan\OAuth\Storage\{
-	DBStorage, MemoryStorage, OAuthStorageInterface, SessionStorage
-};
+use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface, SessionStorage};
 use chillerlan\OAuthTest\OAuthTestAbstract;
 use chillerlan\Traits\ClassLoader;
 
@@ -30,11 +23,7 @@ class StorageTest extends OAuthTestAbstract{
 	protected const STORAGE_INTERFACES = [
 		'MemoryStorage'  => [MemoryStorage::class],
 		'SessionStorage' => [SessionStorage::class],
-		'DBStorage'      => [DBStorage::class],
 	];
-
-	protected const TABLE_TOKEN    = 'dbstoragetest_token';
-	protected const TABLE_PROVIDER = 'dbstoragetest_providers';
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\OAuthStorageInterface
@@ -49,63 +38,11 @@ class StorageTest extends OAuthTestAbstract{
 	protected function setUp(){
 		parent::setUp();
 
-		$options = [
-			// OAuthOptions
-			'dbTokenTable'     => $this::TABLE_TOKEN,
-			'dbProviderTable'  => $this::TABLE_PROVIDER,
-			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
-			'dbUserID' => 1,
-			// DatabaseOptions
-			'driver'           => MySQLiDrv::class,
-			'host'             => $this->env->MYSQL_HOST,
-			'port'             => $this->env->MYSQL_PORT,
-			'database'         => $this->env->MYSQL_DATABASE,
-			'username'         => $this->env->MYSQL_USERNAME,
-			'password'         => $this->env->MYSQL_PASSWORD,
-		];
-
-		$this->options = new class($options) extends OAuthOptions{
-			use DatabaseOptionsTrait;
-		};
-
-		$this->token = new \chillerlan\OAuth\Core\AccessToken(['accessToken' => 'foobar']);
+		$this->token   = new AccessToken(['accessToken' => 'foobar']);
 	}
 
 	protected function initStorage($storageInterface):void{
-		$db = null;
-
-		if($storageInterface === DBStorage::class){
-			$db = new Database($this->options);
-
-			$db->connect();
-			$db->drop->table($this::TABLE_TOKEN)->query();
-			$db->create
-				->table($this::TABLE_TOKEN)
-				->primaryKey('label')
-				->varchar('label', 32, null, false)
-				->int('user_id',10, null, false)
-				->varchar('provider_id', 30, '', false)
-				->text('token', null, true)
-				->text('state')
-				->int('expires',10, null, false)
-				->query();
-
-			$db->drop->table($this::TABLE_PROVIDER)->query();
-			$db->create
-				->table($this::TABLE_PROVIDER)
-				->primaryKey('provider_id')
-				->tinyint('provider_id',10, null, false, 'UNSIGNED AUTO_INCREMENT')
-				->varchar('servicename', 30, '', false)
-				->query();
-
-			$db->insert
-				->into($this::TABLE_PROVIDER)
-				->values(['provider_id' => 42, 'servicename' => 'testService'])
-				->query();
-
-		}
-
-		$this->storage = $this->loadClass($storageInterface, OAuthStorageInterface::class, $this->options, $db);
+		$this->storage = $this->loadClass($storageInterface, OAuthStorageInterface::class);
 	}
 
 	/**

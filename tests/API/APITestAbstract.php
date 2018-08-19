@@ -4,13 +4,13 @@
  *
  * @filesource   APITestAbstract.php
  * @created      09.04.2018
- * @package      chillerlan\OAuthTest\Core
+ * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2018 Smiley
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Core;
+namespace chillerlan\OAuthTest\API;
 
 use chillerlan\HTTP\{
 	HTTPClientAbstract, HTTPClientInterface, HTTPResponseInterface, CurlClient

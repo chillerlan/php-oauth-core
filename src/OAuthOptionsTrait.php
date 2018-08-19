@@ -52,47 +52,6 @@ trait OAuthOptionsTrait{
 	/**
 	 * @var bool
 	 */
-	protected $useEncryption;
-
-	/**
-	 * a 32 byte string, hex encoded
-	 *
-	 * @see sodium_crypto_box_secretkey()
-	 *
-	 * @var string
-	 */
-	protected $storageCryptoKey;
-
-	/**
-	 * @var bool
-	 */
 	protected $tokenAutoRefresh = false;
-
-	/**
-	 * @var string
-	 */
-	protected $dbLabelHashAlgo = 'md5';
-
-	/**
-	 * @var string
-	 */
-	protected $dbLabelFormat   = '%1$s@%2$s'; // user@service
-
-	/**
-	 * @var int|string
-	 */
-	protected $dbUserID;
-
-	protected $dbTokenTable;
-	protected $dbTokenTableExpires    = 'expires';
-	protected $dbTokenTableLabel      = 'label';
-	protected $dbTokenTableProviderID = 'provider_id';
-	protected $dbTokenTableState      = 'state';
-	protected $dbTokenTableToken      = 'token';
-	protected $dbTokenTableUser       = 'user_id';
-
-	protected $dbProviderTable;
-	protected $dbProviderTableID      = 'provider_id';
-	protected $dbProviderTableName    = 'servicename';
 
 }

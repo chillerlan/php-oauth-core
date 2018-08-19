@@ -1,43 +1,15 @@
 language: php
 
-env:
-  global:
-    - setup=no_encryption
-
 matrix:
   include:
     - php: 7.2
-      env: setup=no_encryption
     - php: nightly
-      env: setup=no_encryption
-    - php: 7.2
-      env: setup=sodium_ext
-    - php: nightly
-      env: setup=sodium_ext
   allow_failures:
     - php: nightly
 
-mysql:
-  database: dbtest
-  username: root
-  encoding: utf8
-
-before_install:
-  # Manually compile the libsodium library. This sucks, Travis. https://github.com/travis-ci/travis-ci/issues/8863
-  - |
-    if [[ $setup = 'sodium_ext' ]]; then
-      git clone -b stable https://github.com/jedisct1/libsodium.git;
-      cd libsodium && sudo ./configure && sudo make check && sudo make install && cd ..;
-    fi
-
 install:
-  - |
-    if [[ $setup = 'sodium_ext' ]]; then
-      pecl install libsodium;
-    fi
   - curl -o config/cacert.pem https://curl.haxx.se/ca/cacert.pem
   - travis_retry composer install --no-interaction --prefer-source
-  - mysql -e 'create database dbtest;'
 
 script: vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
 

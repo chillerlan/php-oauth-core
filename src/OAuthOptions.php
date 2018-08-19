@@ -13,9 +13,7 @@
 namespace chillerlan\OAuth;
 
 use chillerlan\HTTP\HTTPOptionsTrait;
-use chillerlan\Traits\{
-	ImmutableSettingsContainer, ImmutableSettingsInterface, Crypto\MemzeroDestructorTrait
-};
+use chillerlan\Traits\ImmutableSettingsAbstract;
 
 /**
  * OAuthOptionsTrait
@@ -27,25 +25,8 @@ use chillerlan\Traits\{
  * @property bool       $sessionStart
  * @property string     $sessionTokenVar
  * @property string     $sessionStateVar
- * @property bool       $useEncryption
- * @property string     $storageCryptoKey
  * @property bool       $tokenAutoRefresh
  *
- * @property string     $dbLabelHashAlgo
- * @property string     $dbLabelFormat
- * @property string|int $dbUserID
- *
- * @property string     $dbTokenTable
- * @property string     $dbTokenTableExpires
- * @property string     $dbTokenTableLabel
- * @property string     $dbTokenTableProviderID
- * @property string     $dbTokenTableState
- * @property string     $dbTokenTableToken
- * @property string     $dbTokenTableUser
- *
- * @property string     $dbProviderTable
- * @property string     $dbProviderTableID
- * @property string     $dbProviderTableName
  *
  * HTTPOptionsTrait
  *
@@ -55,22 +36,6 @@ use chillerlan\Traits\{
  * @property string     $ca_info
  * @property int        $max_redirects
  */
-class OAuthOptions implements ImmutableSettingsInterface{
-	use OAuthOptionsTrait, HTTPOptionsTrait, MemzeroDestructorTrait, ImmutableSettingsContainer{
-		__construct as protected containerConstruct;
-	}
-
-	/**
-	 * OAuthOptions constructor.
-	 *
-	 * @param iterable|null $properties
-	 */
-	public function __construct(iterable $properties = null){
-		// enable encryption by default if possible...
-		$this->useEncryption = extension_loaded('sodium');
-
-		// ... then load and override the settings
-		$this->containerConstruct($properties);
-	}
-
+class OAuthOptions extends ImmutableSettingsAbstract{
+	use OAuthOptionsTrait, HTTPOptionsTrait;
 }
