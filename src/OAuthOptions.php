@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth;
 
 use chillerlan\HTTP\HTTPOptionsTrait;
-use chillerlan\Traits\ImmutableSettingsAbstract;
+use chillerlan\Settings\SettingsContainerAbstract;
 
 /**
  * OAuthOptionsTrait
@@ -36,6 +36,6 @@ use chillerlan\Traits\ImmutableSettingsAbstract;
  * @property string     $ca_info
  * @property int        $max_redirects
  */
-class OAuthOptions extends ImmutableSettingsAbstract{
+class OAuthOptions extends SettingsContainerAbstract{
 	use OAuthOptionsTrait, HTTPOptionsTrait;
 }

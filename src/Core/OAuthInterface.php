@@ -12,10 +12,13 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\HTTPResponseInterface;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
+ * @property string $accessTokenURL
+ * @property string $authURL
+ * @property string $revokeURL
  * @property string $serviceName
  * @property string $userRevokeURL
  */
@@ -35,9 +38,9 @@ interface OAuthInterface{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\HTTP\HTTPResponseInterface
+	 * @return \Psr\Http\Message\ResponseInterface
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface;
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface;
 
 	/**
 	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface

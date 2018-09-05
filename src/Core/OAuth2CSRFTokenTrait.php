@@ -1,8 +1,8 @@
 <?php
 /**
- * Trait CSRFTokenTrait
+ * Trait OAuth2CSRFTokenTrait
  *
- * @filesource   CSRFTokenTrait.php
+ * @filesource   OAuth2CSRFTokenTrait.php
  * @created      17.03.2018
  * @package      chillerlan\OAuth\Core
  * @author       smiley <smiley@chillerlan.net>
@@ -18,7 +18,7 @@ namespace chillerlan\OAuth\Core;
  * @property string                                          $serviceName
  * @property \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
  */
-trait CSRFTokenTrait{
+trait OAuth2CSRFTokenTrait{
 
 	/**
 	 * @param string|null $state
@@ -47,7 +47,7 @@ trait CSRFTokenTrait{
 	 *
 	 * @return array
 	 */
-	protected function setState(array $params):array {
+	protected function setState(array $params):array{
 
 		if(!isset($params['state'])){
 			$params['state'] = sha1(random_bytes(256));

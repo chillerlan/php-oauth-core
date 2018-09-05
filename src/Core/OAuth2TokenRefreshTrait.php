@@ -18,6 +18,7 @@ namespace chillerlan\OAuth\Core;
  * @property string                                          $refreshTokenURL
  * @property \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
  * @property \chillerlan\OAuth\OAuthOptions                  $options
+ * @property \chillerlan\HTTP\HTTPClientInterface            $http
  */
 trait OAuth2TokenRefreshTrait{
 
@@ -45,8 +46,9 @@ trait OAuth2TokenRefreshTrait{
 		}
 
 		$newToken = $this->parseTokenResponse(
-			$this->httpPOST(
+			$this->http->request(
 				$this->refreshTokenURL ?? $this->accessTokenURL,
+				'POST',
 				[],
 				$this->refreshAccessTokenBody($refreshToken),
 				$this->refreshAccessTokenHeaders()
@@ -67,7 +69,7 @@ trait OAuth2TokenRefreshTrait{
 	 *
 	 * @return array
 	 */
-	protected function refreshAccessTokenBody(string $refreshToken):array {
+	protected function refreshAccessTokenBody(string $refreshToken):array{
 		return [
 			'client_id'     => $this->options->key,
 			'client_secret' => $this->options->secret,

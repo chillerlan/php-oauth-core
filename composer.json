@@ -21,9 +21,9 @@
 	},
 	"require": {
 		"php": "^7.2",
+		"ext-json":"*",
 		"chillerlan/php-traits": "^2.0",
-		"chillerlan/php-httpinterface": "^2.0",
-		"chillerlan/php-magic-apiclient": "^1.1",
+		"chillerlan/php-httpinterface": "dev-master",
 		"psr/log": "^1.0"
 	},
 	"require-dev": {

@@ -12,9 +12,7 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\Traits\{
-	ImmutableSettingsContainer, ImmutableSettingsInterface, Crypto\MemzeroDestructorTrait
-};
+use chillerlan\Settings\SettingsContainerAbstract;
 
 /**
  * Base token implementation for any OAuth version.
@@ -31,10 +29,7 @@ use chillerlan\Traits\{
  * @property int    $expires
  * @property string $provider
  */
-class AccessToken implements ImmutableSettingsInterface{
-	use MemzeroDestructorTrait, ImmutableSettingsContainer{
-		__construct as constructContainer;
-	}
+class AccessToken extends SettingsContainerAbstract{
 
 	/**
 	 * Denotes an unknown end of life time.
@@ -99,9 +94,31 @@ class AccessToken implements ImmutableSettingsInterface{
 	 * @param iterable|null $properties
 	 */
 	public function __construct(iterable $properties = null){
-		$this->constructContainer($properties);
+		parent::__construct($properties);
 
 		$this->setExpiry($this->expires);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function __destruct(){
+
+		if(!function_exists('sodium_memzero')){
+			return; // @codeCoverageIgnore
+		}
+
+		foreach(array_keys(get_object_vars($this)) as $key){
+
+			if(is_scalar($this->{$key})){
+				$this->{$key} = (string)$this->{$key};
+
+				sodium_memzero($this->{$key});
+			}
+
+			unset($this->{$key});
+		}
+
 	}
 
 	/**

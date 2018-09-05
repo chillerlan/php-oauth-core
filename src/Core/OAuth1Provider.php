@@ -12,7 +12,8 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\HTTPResponseInterface;
+use chillerlan\HTTP\Psr7;
+use Psr\Http\Message\ResponseInterface;
 use DateTime;
 
 abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
@@ -32,44 +33,40 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @return string
 	 */
-	public function getAuthURL(array $params = null):string {
+	public function getAuthURL(array $params = null):string{
 
 		$params = array_merge(
 			$params ?? [],
 			['oauth_token' => $this->getRequestToken()->requestToken]
 		);
 
-		return $this->authURL.'?'.$this->httpBuildQuery($params);
+		return $this->authURL.'?'.Psr7\build_http_query($params);
 	}
 
 	/**
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
-	public function getRequestToken():AccessToken {
-		$params   = $this->getRequestTokenHeaderParams();
+	public function getRequestToken():AccessToken{
+		$params  = $this->getRequestTokenHeaderParams();
+		$headers = array_merge($this->authHeaders, [
+			'Authorization' => 'OAuth '.Psr7\build_http_query($params, true, ', ', '"')
+		]);
 
 		return $this->parseTokenResponse(
-			$this->httpPOST(
-				$this->requestTokenURL,
-				[],
-				null,
-				array_merge($this->authHeaders, [
-					'Authorization' => 'OAuth '.$this->httpBuildQuery($params, true, ', ', '"')
-				])
-			),
+			$this->http->request($this->requestTokenURL, 'POST', null, null, $headers),
 			true
 		);
 	}
 
 	/**
-	 * @param \chillerlan\HTTP\HTTPResponseInterface $response
-	 * @param bool|null                              $checkCallbackConfirmed
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 * @param bool|null                           $checkCallbackConfirmed
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	protected function parseTokenResponse(HTTPResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken {
-		parse_str($response->body, $data);
+	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
+		parse_str($response->getBody()->getContents(), $data);
 
 		if(!$data || !is_array($data)){
 			throw new ProviderException('unable to parse token response');
@@ -110,7 +107,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @return string
 	 */
-	protected function nonce():string {
+	protected function nonce():string{
 		$nonce = random_bytes(32);
 
 		// use the sodium extension if available
@@ -120,7 +117,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	/**
 	 * @return array
 	 */
-	protected function getRequestTokenHeaderParams():array {
+	protected function getRequestTokenHeaderParams():array{
 		$params = [
 			'oauth_callback'         => $this->options->callbackURL,
 			'oauth_consumer_key'     => $this->options->key,
@@ -143,7 +140,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return string
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function getSignature(string $url, array $params, string $method = null):string {
+	public function getSignature(string $url, array $params, string $method = null):string{
 		$parseURL = parse_url($url);
 
 		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !in_array($parseURL['scheme'], ['http', 'https'], true)){
@@ -158,7 +155,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$method ?? 'POST'
 		);
 
-		$key = implode('&', $this->rawurlencode([$this->options->secret, $this->tokenSecret ?? '']));
+		$key = implode('&', Psr7\raw_urlencode([$this->options->secret, $this->tokenSecret ?? '']));
 
 		return base64_encode(hash_hmac('sha1', $data, $key, true));
 	}
@@ -179,10 +176,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$data = [
 			strtoupper($method),
 			$signatureURL,
-			$this->httpBuildQuery($signatureParams),
+			Psr7\build_http_query($signatureParams),
 		];
 
-		return implode('&', $this->rawurlencode($data));
+		return implode('&', Psr7\raw_urlencode($data));
 	}
 
 	/**
@@ -192,7 +189,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
-	public function getAccessToken(string $token, string $verifier, string $tokenSecret = null):AccessToken {
+	public function getAccessToken(string $token, string $verifier, string $tokenSecret = null):AccessToken{
 		$this->tokenSecret = $tokenSecret;
 
 		if(empty($this->tokenSecret)){
@@ -202,7 +199,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$body = ['oauth_verifier' => $verifier];
 
 		return $this->parseTokenResponse(
-			$this->httpPOST($this->accessTokenURL, [], $body, $this->getAccessTokenHeaders($body))
+			$this->http->request($this->accessTokenURL, 'POST', null, $body, $this->getAccessTokenHeaders($body))
 		);
 	}
 
@@ -211,7 +208,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @return array
 	 */
-	protected function getAccessTokenHeaders(array $body):array {
+	protected function getAccessTokenHeaders(array $body):array{
 		return $this->requestHeaders($this->storage->getAccessToken($this->serviceName), $this->accessTokenURL, 'POST', $body, []);
 	}
 
@@ -233,11 +230,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		if(isset($params['oauth_session_handle'])){
 			$parameters['oauth_session_handle'] = $params['oauth_session_handle'];
-			unset($params['oauth_session_handle']);
 		}
 
 		return array_merge($headers ?? [], $this->apiHeaders, [
-			'Authorization' => 'OAuth '.$this->httpBuildQuery($parameters, true, ', ', '"')
+			'Authorization' => 'OAuth '.Psr7\build_http_query($parameters, true, ', ', '"')
 		]);
 	}
 
@@ -247,7 +243,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return array
 	 * @throws \Exception
 	 */
-	protected function requestHeaderParams(AccessToken $token):array {
+	protected function requestHeaderParams(AccessToken $token):array{
 		return [
 			'oauth_consumer_key'     => $this->options->key,
 			'oauth_nonce'            => $this->nonce(),
@@ -265,9 +261,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\HTTP\HTTPResponseInterface
+	 * @return \Psr\Http\Message\ResponseInterface
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
 		$method = $method ?? 'GET';
 
 		$headers = $this->requestHeaders(
@@ -278,7 +274,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$headers
 		);
 
-		return $this->httpRequest($this->apiURL.$path, $params, $method, $body, $headers);
+		return $this->http->request($this->apiURL.$path, $method, $params, $body, $headers);
 	}
 
 }

@@ -18,6 +18,7 @@ namespace chillerlan\OAuth\Core;
  * @property string                                          $clientCredentialsTokenURL
  * @property string                                          $accessTokenURL
  * @property \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
+ * @property \chillerlan\HTTP\HTTPClientInterface            $http
  */
 trait OAuth2ClientCredentialsTrait{
 
@@ -26,11 +27,13 @@ trait OAuth2ClientCredentialsTrait{
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
-	public function getClientCredentialsToken(array $scopes = null):AccessToken {
+	public function getClientCredentialsToken(array $scopes = null):AccessToken{
+
 		$token = $this->parseTokenResponse(
-			$this->httpPOST(
+			$this->http->request(
 				$this->clientCredentialsTokenURL ?? $this->accessTokenURL,
-				[],
+				'POST',
+				null,
 				$this->getClientCredentialsTokenBody($scopes ?? []),
 				$this->getClientCredentialsTokenHeaders()
 			)
@@ -46,7 +49,7 @@ trait OAuth2ClientCredentialsTrait{
 	 *
 	 * @return array
 	 */
-	protected function getClientCredentialsTokenBody(array $scopes):array {
+	protected function getClientCredentialsTokenBody(array $scopes):array{
 		return [
 			'grant_type' => 'client_credentials',
 			'scope'      => implode($this->scopesDelimiter, $scopes),
@@ -56,7 +59,7 @@ trait OAuth2ClientCredentialsTrait{
 	/**
 	 * @return array
 	 */
-	protected function getClientCredentialsTokenHeaders():array {
+	protected function getClientCredentialsTokenHeaders():array{
 		return array_merge($this->authHeaders, [
 			'Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret),
 		]);

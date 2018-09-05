@@ -12,14 +12,11 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\{
-	HTTPClientInterface, HTTPResponseInterface
-};
-use chillerlan\OAuth\{
-	Storage\OAuthStorageInterface
-};
-use chillerlan\Traits\ImmutableSettingsInterface;
-use Psr\Log\LoggerInterface;
+use chillerlan\HTTP\HTTPClientInterface;
+use chillerlan\HTTP\Psr7;
+use chillerlan\OAuth\Storage\OAuthStorageInterface;
+use chillerlan\Settings\SettingsContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * from CSRFTokenTrait:
@@ -58,12 +55,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
-	 * @param \chillerlan\Traits\ImmutableSettingsInterface           $options
-	 * @param \Psr\Log\LoggerInterface|null                   $logger
+	 * @param \chillerlan\Settings\SettingsContainerInterface $options
 	 * @param array                                           $scopes
 	 */
-	public function __construct(HTTPClientInterface $http, OAuthStorageInterface $storage, ImmutableSettingsInterface $options, LoggerInterface $logger = null, array $scopes = null){
-		parent::__construct($http, $storage, $options, $logger);
+	public function __construct(HTTPClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options, array $scopes = null){
+		parent::__construct($http, $storage, $options);
 
 		if($scopes !== null){
 			$this->scopes = $scopes;
@@ -72,18 +68,24 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param array $params
+	 * @param array|null $params
 	 *
 	 * @return string
 	 */
 	public function getAuthURL(array $params = null):string{
-		$params = $this->getAuthURLParams($params ?? []);
+		$params = $params ?? [];
+
+		if(isset($params['client_secret'])){
+			unset($params['client_secret']);
+		}
+
+		$params = $this->getAuthURLParams($params);
 
 		if($this instanceof CSRFToken){
 			$params = $this->setState($params);
 		}
 
-		return $this->authURL.'?'.$this->httpBuildQuery($params);
+		return $this->authURL.'?'.Psr7\build_http_query($params);
 	}
 
 	/**
@@ -91,13 +93,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @return array
 	 */
-	protected function getAuthURLParams(array $params):array {
-
-		// this should not be here
-		if(isset($params['client_secret'])){
-			unset($params['client_secret']);
-		}
-
+	protected function getAuthURLParams(array $params):array{
 		return array_merge($params, [
 			'client_id'     => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
@@ -108,13 +104,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param \chillerlan\HTTP\HTTPResponseInterface $response
+	 * @param \Psr\Http\Message\ResponseInterface $response
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	protected function parseTokenResponse(HTTPResponseInterface $response):AccessToken{
-		$data = $response->json_array;
+	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
+		$data = json_decode($response->getBody()->getContents(), true);
 
 		if(!is_array($data)){
 			throw new ProviderException('unable to parse token response');
@@ -159,9 +155,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$token = $this->parseTokenResponse(
-			$this->httpPOST(
+			$this->http->request(
 				$this->accessTokenURL,
-				[],
+				'POST',
+				null,
 				$this->getAccessTokenBody($code),
 				$this->getAccessTokenHeaders()
 			)
@@ -177,7 +174,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @return array
 	 */
-	protected function getAccessTokenBody(string $code):array {
+	protected function getAccessTokenBody(string $code):array{
 		return [
 			'client_id'     => $this->options->key,
 			'client_secret' => $this->options->secret,
@@ -190,7 +187,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @return array
 	 */
-	protected function getAccessTokenHeaders():array {
+	protected function getAccessTokenHeaders():array{
 		return $this->authHeaders;
 	}
 
@@ -201,10 +198,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\HTTP\HTTPResponseInterface
+	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
 		$token = $this->storage->getAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token
@@ -229,10 +226,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new ProviderException('invalid auth type');
 		}
 
-		return $this->httpRequest(
+		return $this->http->request(
 			$this->apiURL.explode('?', $path)[0],
-			$params,
 			$method ?? 'GET',
+			$params,
 			$body,
 			array_merge($this->apiHeaders, $headers)
 		);
