@@ -29,8 +29,6 @@ class AccessTokenTest extends OAuthTestAbstract{
 
 	public function tokenDataProvider(){
 		return [
-			'requestToken'       => ['requestToken',       null, 'REQUEST_TOKEN'],
-			'requestTokenSecret' => ['requestTokenSecret', null, 'REQUEST_TOKEN_SECRET'],
 			'accessTokenSecret'  => ['accessTokenSecret',  null, 'ACCESS_TOKEN'],
 			'accessToken'        => ['accessToken',        null, 'ACCESS_TOKEN_SECRET'],
 			'refreshToken'       => ['refreshToken',       null, 'REFRESH_TOKEN'],
@@ -54,11 +52,11 @@ class AccessTokenTest extends OAuthTestAbstract{
 	public function expiryDataProvider(){
 		return [
 			'EOL_UNKNOWN (null)'        => [null,       AccessToken::EOL_UNKNOWN],
-			'EOL_UNKNOWN (-9001)'       => [-9001, \chillerlan\OAuth\Core\AccessToken::EOL_UNKNOWN],
+			'EOL_UNKNOWN (-9001)'       => [-9001,      AccessToken::EOL_UNKNOWN],
 			'EOL_UNKNOWN (-1)'          => [-1,         AccessToken::EOL_UNKNOWN],
-			'EOL_UNKNOWN (1514309386)'  => [1514309386, \chillerlan\OAuth\Core\AccessToken::EOL_UNKNOWN],
+			'EOL_UNKNOWN (1514309386)'  => [1514309386, AccessToken::EOL_UNKNOWN],
 			'EOL_NEVER_EXPIRES (-9002)' => [-9002,      AccessToken::EOL_NEVER_EXPIRES],
-			'EOL_NEVER_EXPIRES (0)'     => [0, \chillerlan\OAuth\Core\AccessToken::EOL_NEVER_EXPIRES],
+			'EOL_NEVER_EXPIRES (0)'     => [0,          AccessToken::EOL_NEVER_EXPIRES],
 		];
 	}
 
