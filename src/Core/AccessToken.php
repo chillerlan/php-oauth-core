@@ -49,16 +49,6 @@ class AccessToken extends SettingsContainerAbstract{
 	/**
 	 * @var string
 	 */
-	protected $requestToken;
-
-	/**
-	 * @var string
-	 */
-	protected $requestTokenSecret;
-
-	/**
-	 * @var string
-	 */
 	protected $accessTokenSecret;
 
 	/**
@@ -97,28 +87,6 @@ class AccessToken extends SettingsContainerAbstract{
 		parent::__construct($properties);
 
 		$this->setExpiry($this->expires);
-	}
-
-	/**
-	 * @return void
-	 */
-	public function __destruct(){
-
-		if(!function_exists('sodium_memzero')){
-			return; // @codeCoverageIgnore
-		}
-
-		foreach(array_keys(get_object_vars($this)) as $key){
-
-			if(is_scalar($this->{$key})){
-				$this->{$key} = (string)$this->{$key};
-
-				sodium_memzero($this->{$key});
-			}
-
-			unset($this->{$key});
-		}
-
 	}
 
 	/**

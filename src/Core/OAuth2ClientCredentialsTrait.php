@@ -13,12 +13,16 @@
 namespace chillerlan\OAuth\Core;
 
 /**
+ * @implements \chillerlan\OAuth\Core\ClientCredentials
+ *
  * @property array                                           $authHeaders
  * @property string                                          $scopesDelimiter
  * @property string                                          $clientCredentialsTokenURL
  * @property string                                          $accessTokenURL
  * @property \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
  * @property \chillerlan\HTTP\HTTPClientInterface            $http
+ * @property \Psr\Http\Message\RequestFactoryInterface       $requestFactory
+ * @property \Psr\Http\Message\StreamFactoryInterface        $streamFactory
  */
 trait OAuth2ClientCredentialsTrait{
 
@@ -28,41 +32,28 @@ trait OAuth2ClientCredentialsTrait{
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function getClientCredentialsToken(array $scopes = null):AccessToken{
+		$params = ['grant_type' => 'client_credentials'];
 
-		$token = $this->parseTokenResponse(
-			$this->http->request(
-				$this->clientCredentialsTokenURL ?? $this->accessTokenURL,
-				'POST',
-				null,
-				$this->getClientCredentialsTokenBody($scopes ?? []),
-				$this->getClientCredentialsTokenHeaders()
-			)
-		);
+		if($scopes !== null){
+			$params['scope'] = implode($this->scopesDelimiter, $scopes);
+		}
+
+		$request = $this->requestFactory
+			->createRequest('POST', $this->clientCredentialsTokenURL ?? $this->accessTokenURL)
+			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withBody($this->streamFactory->createStream(http_build_query($params, '', '&', PHP_QUERY_RFC1738)))
+		;
+
+		foreach($this->authHeaders as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
+		$token = $this->parseTokenResponse($this->http->sendRequest($request));
 
 		$this->storage->storeAccessToken($this->serviceName, $token);
 
 		return $token;
-	}
-
-	/**
-	 * @param array $scopes
-	 *
-	 * @return array
-	 */
-	protected function getClientCredentialsTokenBody(array $scopes):array{
-		return [
-			'grant_type' => 'client_credentials',
-			'scope'      => implode($this->scopesDelimiter, $scopes),
-		];
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function getClientCredentialsTokenHeaders():array{
-		return array_merge($this->authHeaders, [
-			'Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret),
-		]);
 	}
 
 }

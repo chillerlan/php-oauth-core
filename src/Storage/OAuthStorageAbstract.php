@@ -41,7 +41,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface, LoggerAwar
 	 * @return string
 	 */
 	public function toStorage(AccessToken $token):string {
-		$data = $token->__toJSON();
+		$data = $token->toJSON();
 
 		unset($token);
 
@@ -54,7 +54,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface, LoggerAwar
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function fromStorage(string $data):AccessToken{
-		return (new AccessToken)->__fromJSON($data);
+		return (new AccessToken)->fromJSON($data);
 	}
 
 }

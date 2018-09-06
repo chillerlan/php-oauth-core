@@ -13,12 +13,16 @@
 namespace chillerlan\OAuth\Core;
 
 /**
+ * @implements \chillerlan\OAuth\Core\TokenRefresh
+ *
  * @property array                                           $authHeaders
  * @property string                                          $accessTokenURL
  * @property string                                          $refreshTokenURL
  * @property \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
  * @property \chillerlan\OAuth\OAuthOptions                  $options
  * @property \chillerlan\HTTP\HTTPClientInterface            $http
+ * @property \Psr\Http\Message\RequestFactoryInterface       $requestFactory
+ * @property \Psr\Http\Message\StreamFactoryInterface        $streamFactory
  */
 trait OAuth2TokenRefreshTrait{
 
@@ -45,45 +49,33 @@ trait OAuth2TokenRefreshTrait{
 			$refreshToken = $token->accessToken;
 		}
 
-		$newToken = $this->parseTokenResponse(
-			$this->http->request(
-				$this->refreshTokenURL ?? $this->accessTokenURL,
-				'POST',
-				[],
-				$this->refreshAccessTokenBody($refreshToken),
-				$this->refreshAccessTokenHeaders()
-			)
-		);
-
-		if(!$newToken->refreshToken){
-			$newToken->refreshToken = $refreshToken;
-		}
-
-		$this->storage->storeAccessToken($this->serviceName, $newToken);
-
-		return $newToken;
-	}
-
-	/**
-	 * @param string $refreshToken
-	 *
-	 * @return array
-	 */
-	protected function refreshAccessTokenBody(string $refreshToken):array{
-		return [
+		$body = [
 			'client_id'     => $this->options->key,
 			'client_secret' => $this->options->secret,
 			'grant_type'    => 'refresh_token',
 			'refresh_token' => $refreshToken,
 			'type'          => 'web_server',
 		];
-	}
 
-	/**
-	 * @return array
-	 */
-	protected function refreshAccessTokenHeaders():array{
-		return $this->authHeaders;
+		$request = $this->requestFactory
+			->createRequest('POST', $this->refreshTokenURL ?? $this->accessTokenURL)
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)))
+		;
+
+		foreach($this->authHeaders as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
+		$newToken = $this->parseTokenResponse($this->http->sendRequest($request));
+
+		if(empty($newToken->refreshToken)){
+			$newToken->refreshToken = $refreshToken;
+		}
+
+		$this->storage->storeAccessToken($this->serviceName, $newToken);
+
+		return $newToken;
 	}
 
 }

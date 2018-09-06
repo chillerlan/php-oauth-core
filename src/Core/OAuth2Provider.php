@@ -12,11 +12,8 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\HTTPClientInterface;
 use chillerlan\HTTP\Psr7;
-use chillerlan\OAuth\Storage\OAuthStorageInterface;
-use chillerlan\Settings\SettingsContainerInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 /**
  * from CSRFTokenTrait:
@@ -51,56 +48,31 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected $clientCredentialsTokenURL;
 
 	/**
-	 * OAuth2Provider constructor.
-	 *
-	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
-	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
-	 * @param \chillerlan\Settings\SettingsContainerInterface $options
-	 * @param array                                           $scopes
-	 */
-	public function __construct(HTTPClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options, array $scopes = null){
-		parent::__construct($http, $storage, $options);
-
-		if($scopes !== null){
-			$this->scopes = $scopes;
-		}
-
-	}
-
-	/**
 	 * @param array|null $params
+	 * @param array|null $scopes
 	 *
-	 * @return string
+	 * @return \Psr\Http\Message\UriInterface
 	 */
-	public function getAuthURL(array $params = null):string{
+	public function getAuthURL(array $params = null, array $scopes = null):UriInterface{
 		$params = $params ?? [];
 
 		if(isset($params['client_secret'])){
 			unset($params['client_secret']);
 		}
 
-		$params = $this->getAuthURLParams($params);
+		$params = array_merge($params, [
+			'client_id'     => $this->options->key,
+			'redirect_uri'  => $this->options->callbackURL,
+			'response_type' => 'code',
+			'scope'         => implode($this->scopesDelimiter, $scopes),
+			'type'          => 'web_server',
+		]);
 
 		if($this instanceof CSRFToken){
 			$params = $this->setState($params);
 		}
 
-		return $this->authURL.'?'.Psr7\build_http_query($params);
-	}
-
-	/**
-	 * @param array $params
-	 *
-	 * @return array
-	 */
-	protected function getAuthURLParams(array $params):array{
-		return array_merge($params, [
-			'client_id'     => $this->options->key,
-			'redirect_uri'  => $this->options->callbackURL,
-			'response_type' => 'code',
-			'scope'         => implode($this->scopesDelimiter, $this->scopes),
-			'type'          => 'web_server',
-		]);
+		return $this->uriFactory->createUri(Psr7\merge_query($this->authURL, $params));
 	}
 
 	/**
@@ -154,15 +126,24 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$this->checkState($state);
 		}
 
-		$token = $this->parseTokenResponse(
-			$this->http->request(
-				$this->accessTokenURL,
-				'POST',
-				null,
-				$this->getAccessTokenBody($code),
-				$this->getAccessTokenHeaders()
-			)
-		);
+		$body = [
+			'client_id'     => $this->options->key,
+			'client_secret' => $this->options->secret,
+			'code'          => $code,
+			'grant_type'    => 'authorization_code',
+			'redirect_uri'  => $this->options->callbackURL,
+		];
+
+		$request = $this->requestFactory
+			->createRequest('POST', $this->accessTokenURL)
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)));
+
+		foreach($this->authHeaders as $header => $value){
+			$request = $request->withHeader($header, $value);
+		}
+
+		$token = $this->parseTokenResponse($this->http->sendRequest($request));
 
 		$this->storage->storeAccessToken($this->serviceName, $token);
 
@@ -170,69 +151,27 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param string $code
+	 * @param \Psr\Http\Message\RequestInterface $request
+	 * @param \chillerlan\OAuth\Core\AccessToken $token
 	 *
-	 * @return array
-	 */
-	protected function getAccessTokenBody(string $code):array{
-		return [
-			'client_id'     => $this->options->key,
-			'client_secret' => $this->options->secret,
-			'code'          => $code,
-			'grant_type'    => 'authorization_code',
-			'redirect_uri'  => $this->options->callbackURL,
-		];
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function getAccessTokenHeaders():array{
-		return $this->authHeaders;
-	}
-
-	/**
-	 * @param string $path
-	 * @param array  $params
-	 * @param string $method
-	 * @param null   $body
-	 * @param array  $headers
-	 *
-	 * @return \Psr\Http\Message\ResponseInterface
+	 * @return \Psr\Http\Message\RequestInterface
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
-		$token = $this->storage->getAccessToken($this->serviceName);
-
-		// attempt to refresh an expired token
-		if($this->options->tokenAutoRefresh && $this instanceof TokenRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
-			$token = $this->refreshAccessToken($token);
-		}
-
-		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
-
-		$params  = array_merge($query, $params ?? []);
-		$headers = $headers ?? [];
+	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 
 		if(array_key_exists($this->authMethod, $this::AUTH_METHODS_HEADER)){
-			$headers = array_merge($headers, [
-				'Authorization' => $this::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken,
-			]);
+			$request = $request->withHeader('Authorization', $this::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken);
 		}
 		elseif(array_key_exists($this->authMethod, $this::AUTH_METHODS_QUERY)){
-			$params[$this::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
+			$uri = Psr7\merge_query((string)$request->getUri(), [$this::AUTH_METHODS_QUERY[$this->authMethod] => $token->accessToken]);
+
+			$request = $request->withUri($this->uriFactory->createUri($uri));
 		}
 		else{
 			throw new ProviderException('invalid auth type');
 		}
 
-		return $this->http->request(
-			$this->apiURL.explode('?', $path)[0],
-			$method ?? 'GET',
-			$params,
-			$body,
-			array_merge($this->apiHeaders, $headers)
-		);
+		return $request;
 	}
 
 }

@@ -75,7 +75,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
 	 */
 	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
-		$token = $token->__toJSON();
+		$token = $token->toJSON();
 
 		if(isset($_SESSION[$this->sessionVar]) && is_array($_SESSION[$this->sessionVar])){
 			$_SESSION[$this->sessionVar][$service] = $token;
@@ -96,7 +96,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	public function getAccessToken(string $service):AccessToken{
 
 		if($this->hasAccessToken($service)){
-			return (new AccessToken)->__fromJSON($_SESSION[$this->sessionVar][$service]);
+			return (new AccessToken)->fromJSON($_SESSION[$this->sessionVar][$service]);
 		}
 
 		throw new OAuthStorageException('token not found');

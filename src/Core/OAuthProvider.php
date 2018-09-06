@@ -12,10 +12,11 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\{HTTPClientInterface, Psr7};
+use chillerlan\HTTP\{HTTPClientInterface, Psr17\RequestFactory, Psr17\StreamFactory, Psr17\UriFactory, Psr7};
 use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMapInterface};
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
+use Psr\Http\Message\{RequestFactoryInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, NullLogger};
 use ReflectionClass;
@@ -49,6 +50,21 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @var \chillerlan\HTTP\MagicAPI\EndpointMapInterface
 	 */
 	protected $endpoints;
+
+	/**
+	 * @var \Psr\Http\Message\RequestFactoryInterface
+	 */
+	protected $requestFactory;
+
+	/**
+	 * @var \Psr\Http\Message\StreamFactoryInterface
+	 */
+	protected $streamFactory;
+
+	/**
+	 * @var \Psr\Http\Message\UriFactoryInterface
+	 */
+	protected $uriFactory;
 
 	/**
 	 * @var string
@@ -108,7 +124,11 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 		$this->http    = $http;
 		$this->storage = $storage;
 		$this->options = $options;
-		$this->logger  = new NullLogger;
+
+		$this->logger         = new NullLogger;
+		$this->requestFactory = new RequestFactory;
+		$this->streamFactory  = new StreamFactory;
+		$this->uriFactory     = new UriFactory;
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
@@ -138,10 +158,36 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @param \Psr\Http\Message\RequestFactoryInterface $requestFactory
+	 *
+	 * @return \chillerlan\OAuth\Core\OAuthInterface
 	 */
-	public function getStorageInterface():OAuthStorageInterface{
-		return $this->storage;
+	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface{
+		$this->requestFactory = $requestFactory;
+
+		return $this;
+	}
+
+	/**
+	 * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
+	 *
+	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 */
+	public function setStreamFactory(StreamFactoryInterface $streamFactory):OAuthInterface{
+		$this->streamFactory = $streamFactory;
+
+		return $this;
+	}
+
+	/**
+	 * @param \Psr\Http\Message\UriFactoryInterface $uriFactory
+	 *
+	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 */
+	public function setUriFactory(UriFactoryInterface $uriFactory):OAuthInterface{
+		$this->uriFactory = $uriFactory;
+
+		return $this;
 	}
 
 	/**
@@ -188,12 +234,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 				$params = [];
 			}
 
-			$body   = Psr7\clean_query_params($body);
-
-			if(is_array($body) && isset($headers['Content-Type']) && strpos($headers['Content-Type'], 'json') !== false){
-				$body = json_encode($body);
-			}
-
+			$body = Psr7\clean_query_params($body);
 		}
 
 		$params = Psr7\clean_query_params($params);
@@ -203,6 +244,51 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 		]);
 
 		return $this->request($endpoint, $params, $method, $body, $headers);
+	}
+
+	/**
+	 * @param string $path
+	 * @param array  $params
+	 * @param string $method
+	 * @param null   $body
+	 * @param array  $headers
+	 *
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
+		$token = $this->storage->getAccessToken($this->serviceName);
+
+		// attempt to refresh an expired token
+		if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
+			$token = $this->refreshAccessToken($token);
+		}
+
+		$request = $this->requestFactory
+			->createRequest($method ?? 'GET', Psr7\merge_query($this->apiURL.$path, $params));
+
+		foreach(array_merge($this->apiHeaders, $headers) as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
+		$request = $this->getRequestAuthorization($request, $token);
+
+		if(is_array($body) && $request->hasHeader('content-type')){
+			$contentType = strtolower($request->getHeader('content-type'));
+
+			if($contentType === 'application/x-www-form-urlencoded'){
+				$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));
+			}
+			elseif($contentType === 'application/json'){
+				$body = $this->streamFactory->createStream(json_encode($body));
+			}
+
+		}
+
+		if($body instanceof StreamInterface){
+			$request = $request->withBody($body);
+		}
+
+		return $this->http->sendRequest($request);
 	}
 
 }
