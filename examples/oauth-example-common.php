@@ -7,10 +7,10 @@
  * @license      MIT
  */
 
-use chillerlan\HTTP\{CurlClient, HTTPClientAbstract, HTTPResponseInterface};
+use chillerlan\HTTP\CurlClient;
 use chillerlan\Logger\{Log, LogOptionsTrait, Output\ConsoleLog};
 use chillerlan\OAuth\{OAuthOptions, Storage\SessionStorage};
-use chillerlan\Traits\{DotEnv, ImmutableSettingsInterface};
+use chillerlan\DotEnv\DotEnv;
 
 ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -32,12 +32,9 @@ $options_arr = [
 
 	// log
 	'minLogLevel'      => 'debug',
-
-	// test http client
-	'sleep'            => 0.25,
 ];
 
-/** @var \chillerlan\Traits\ImmutableSettingsInterface $options */
+/** @var \chillerlan\Settings\SettingsContainerInterface $options */
 $options = new class($options_arr) extends OAuthOptions{
 	use LogOptionsTrait;
 
@@ -45,41 +42,11 @@ $options = new class($options_arr) extends OAuthOptions{
 };
 
 $logger = new Log;
-$logger->addInstance(new ConsoleLog($options), 'console');
+$logger->addInstance(new ConsoleLog, 'console');
 
 /** @var \chillerlan\HTTP\HTTPClientInterface $http */
-$http = new class($options) extends HTTPClientAbstract{
-
-	protected $client;
-
-	public function __construct(ImmutableSettingsInterface $options){
-		parent::__construct($options);
-		$this->client = new CurlClient($this->options);
-	}
-
-	protected function getResponse():HTTPResponseInterface{
-
-		$this->logger->debug('$args', [
-			'$url' => $this->requestURL,
-			'$params' => $this->requestParams,
-			'$method' => $this->requestMethod,
-			'$body' => $this->requestBody,
-			'$headers' => $this->requestHeaders,
-		]);
-
-		$response = $this->client->request($this->requestURL, $this->requestParams, $this->requestMethod, $this->requestBody, $this->requestHeaders);
-
-		$this->logger->debug($response->body, (array)$response->headers);
-
-		usleep($this->options->sleep * 1000000);
-
-		return $response;
-	}
-
-};
-
-#$http->setLogger($logger);
+$http = new CurlClient($options);
 
 /** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
-$storage = new SessionStorage($options);
+$storage = new SessionStorage;
 #$storage->setLogger($logger);

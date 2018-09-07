@@ -273,7 +273,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 		$request = $this->getRequestAuthorization($request, $token);
 
 		if(is_array($body) && $request->hasHeader('content-type')){
-			$contentType = strtolower($request->getHeader('content-type'));
+			$contentType = strtolower($request->getHeaderLine('content-type'));
 
 			if($contentType === 'application/x-www-form-urlencoded'){
 				$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));

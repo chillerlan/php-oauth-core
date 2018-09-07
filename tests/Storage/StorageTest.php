@@ -13,12 +13,10 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface, SessionStorage};
+use chillerlan\OAuth\Storage\{MemoryStorage, SessionStorage};
 use chillerlan\OAuthTest\OAuthTestAbstract;
-use chillerlan\Traits\ClassLoader;
 
 class StorageTest extends OAuthTestAbstract{
-	use ClassLoader;
 
 	protected const STORAGE_INTERFACES = [
 		'MemoryStorage'  => [MemoryStorage::class],
@@ -42,7 +40,7 @@ class StorageTest extends OAuthTestAbstract{
 	}
 
 	protected function initStorage($storageInterface):void{
-		$this->storage = $this->loadClass($storageInterface, OAuthStorageInterface::class);
+		$this->storage = new $storageInterface;
 	}
 
 	/**

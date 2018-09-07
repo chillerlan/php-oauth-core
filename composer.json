@@ -22,12 +22,13 @@
 	"require": {
 		"php": "^7.2",
 		"ext-json":"*",
-		"chillerlan/php-traits": "^2.0",
+		"chillerlan/php-dotenv": "^1.0",
+		"chillerlan/php-settings-container": "^1.0",
 		"chillerlan/php-httpinterface": "dev-master",
 		"psr/log": "^1.0"
 	},
 	"require-dev": {
-		"chillerlan/php-log": "^2.0",
+		"chillerlan/php-log": "^3.0",
 		"phpunit/phpunit": "^7.3"
 	},
 	"autoload": {

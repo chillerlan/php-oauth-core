@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\Traits\ImmutableSettingsInterface;
+use chillerlan\Settings\SettingsContainerInterface;
 
 class SessionStorage extends OAuthStorageAbstract{
 
@@ -35,9 +35,9 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * Session constructor.
 	 *
-	 * @param \chillerlan\Traits\ImmutableSettingsInterface|null $options
+	 * @param \chillerlan\Settings\SettingsContainerInterface|null $options
 	 */
-	public function __construct(ImmutableSettingsInterface $options = null){
+	public function __construct(SettingsContainerInterface $options = null){
 		parent::__construct($options);
 
 		$this->sessionVar = $this->options->sessionTokenVar;

@@ -15,7 +15,7 @@ namespace chillerlan\OAuthTest;
 use chillerlan\Logger\Log;
 use chillerlan\Logger\LogOptions;
 use chillerlan\Logger\Output\LogOutputAbstract;
-use chillerlan\Traits\DotEnv;
+use chillerlan\DotEnv\DotEnv;
 use PHPUnit\Framework\TestCase;
 
 abstract class OAuthTestAbstract extends TestCase{
@@ -43,7 +43,7 @@ abstract class OAuthTestAbstract extends TestCase{
 	protected $options;
 
 	/**
-	 * @var \chillerlan\Traits\DotEnv
+	 * @var \chillerlan\DotEnv\DotEnv
 	 */
 	protected $env;
 
