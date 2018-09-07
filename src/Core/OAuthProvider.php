@@ -234,16 +234,34 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 				$params = [];
 			}
 
-#			$body = Psr7\clean_query_params($body); // @todo
+			$body = $this->cleanBodyParams($body);
 		}
 
-		$params = Psr7\clean_query_params($params);
+		$params = $this->cleanQueryParams($params);
 
 		$this->logger->debug('OAuthProvider::__call() -> '.(new ReflectionClass($this))->getShortName().'::'.$name.'()', [
 			'$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers,
 		]);
 
 		return $this->request($endpoint, $params, $method, $body, $headers);
+	}
+
+	/**
+	 * @param array $params
+	 *
+	 * @return array
+	 */
+	protected function cleanQueryParams(array $params):array{
+		return Psr7\clean_query_params($params, Psr7\BOOLEANS_AS_INT_STRING, true);
+	}
+
+	/**
+	 * @param array $params
+	 *
+	 * @return array
+	 */
+	protected function cleanBodyParams(array $params):array{
+		return Psr7\clean_query_params($params, Psr7\BOOLEANS_AS_BOOL, true);
 	}
 
 	/**
