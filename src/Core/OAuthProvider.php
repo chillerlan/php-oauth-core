@@ -234,7 +234,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 				$params = [];
 			}
 
-			$body = Psr7\clean_query_params($body);
+#			$body = Psr7\clean_query_params($body); // @todo
 		}
 
 		$params = Psr7\clean_query_params($params);

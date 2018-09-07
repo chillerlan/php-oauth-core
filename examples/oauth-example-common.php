@@ -42,7 +42,7 @@ $options = new class($options_arr) extends OAuthOptions{
 };
 
 $logger = new Log;
-$logger->addInstance(new ConsoleLog, 'console');
+$logger->addInstance(new ConsoleLog($options), 'console');
 
 /** @var \chillerlan\HTTP\HTTPClientInterface $http */
 $http = new CurlClient($options);
