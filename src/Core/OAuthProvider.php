@@ -209,7 +209,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 
 		$m = $this->endpoints->{$name};
 
-		$endpoint      = $m['path'];
+		$endpoint      = $this->endpoints->API_BASE.$m['path'];
 		$method        = $m['method'] ?? 'GET';
 		$body          = [];
 		$headers       = isset($m['headers']) && is_array($m['headers']) ? $m['headers'] : [];
