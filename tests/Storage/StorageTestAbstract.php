@@ -1,8 +1,8 @@
 <?php
 /**
- * Class StorageTest
+ * Class StorageTestAbstract
  *
- * @filesource   StorageTest.php
+ * @filesource   StorageTestAbstract.php
  * @created      24.01.2018
  * @package      chillerlan\OAuthTest\Storage
  * @author       Smiley <smiley@chillerlan.net>
@@ -13,15 +13,9 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Storage\{MemoryStorage, SessionStorage};
-use chillerlan\OAuthTest\OAuthTestAbstract;
+use PHPUnit\Framework\TestCase;
 
-class StorageTest extends OAuthTestAbstract{
-
-	protected const STORAGE_INTERFACES = [
-		'MemoryStorage'  => [MemoryStorage::class],
-		'SessionStorage' => [SessionStorage::class],
-	];
+abstract class StorageTestAbstract extends TestCase{
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\OAuthStorageInterface
@@ -34,30 +28,13 @@ class StorageTest extends OAuthTestAbstract{
 	protected $token;
 
 	protected function setUp(){
-		parent::setUp();
-
-		$this->token   = new AccessToken(['accessToken' => 'foobar']);
-	}
-
-	protected function initStorage($storageInterface):void{
-		$this->storage = new $storageInterface;
+		$this->token = new AccessToken(['accessToken' => 'foobar']);
 	}
 
 	/**
-	 * @return array
-	 */
-	public function storageInterfaceProvider(){
-		return $this::STORAGE_INTERFACES;
-	}
-
-	/**
-	 * @dataProvider storageInterfaceProvider
 	 * @runInSeparateProcess
-	 *
-	 * @param $storageInterface
 	 */
-	public function testTokenStorage($storageInterface){
-		$this->initStorage($storageInterface);
+	public function testTokenStorage(){
 
 		$this->storage->storeAccessToken('testService', $this->token);
 		$this->assertTrue($this->storage->hasAccessToken('testService'));
@@ -75,14 +52,9 @@ class StorageTest extends OAuthTestAbstract{
 	}
 
 	/**
-	 * @dataProvider storageInterfaceProvider
 	 * @runInSeparateProcess
-	 *
-	 * @param $storageInterface
 	 */
-	public function testClearAllAccessTokens($storageInterface){
-		$this->initStorage($storageInterface);
-
+	public function testClearAllAccessTokens(){
 		$this->storage->clearAllAccessTokens();
 
 		$this->assertFalse($this->storage->hasAccessToken('testService'));
@@ -105,40 +77,25 @@ class StorageTest extends OAuthTestAbstract{
 	/**
 	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
 	 * @expectedExceptionMessage state not found
-	 * @dataProvider storageInterfaceProvider
 	 * @runInSeparateProcess
-	 *
-	 * @param $storageInterface
 	 */
-	public function testRetrieveCSRFStateNotFoundException($storageInterface){
-		$this->initStorage($storageInterface);
-
+	public function testRetrieveCSRFStateNotFoundException(){
 		$this->storage->getCSRFState('LOLNOPE');
 	}
 
 	/**
 	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
 	 * @expectedExceptionMessage token not found
-	 * @dataProvider storageInterfaceProvider
 	 * @runInSeparateProcess
-	 *
-	 * @param $storageInterface
 	 */
-	public function testRetrieveAccessTokenNotFoundException($storageInterface){
-		$this->initStorage($storageInterface);
-
+	public function testRetrieveAccessTokenNotFoundException(){
 		$this->storage->getAccessToken('LOLNOPE');
 	}
 
 	/**
-	 * @dataProvider storageInterfaceProvider
 	 * @runInSeparateProcess
-	 *
-	 * @param $storageInterface
 	 */
-	public function testToStorage($storageInterface){
-		$this->initStorage($storageInterface);
-
+	public function testToStorage(){
 		$a = $this->storage->toStorage($this->token);
 		$b = $this->storage->fromStorage($a);
 

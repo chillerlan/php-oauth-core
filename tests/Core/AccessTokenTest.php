@@ -3,18 +3,18 @@
  *
  * @filesource   AccessTokenTest.php
  * @created      09.07.2017
- * @package      chillerlan\OAuthTest\Storage
+ * @package      chillerlan\OAuthTest\Core
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Storage;
+namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuthTest\OAuthTestAbstract;
+use PHPUnit\Framework\TestCase;
 
-class AccessTokenTest extends OAuthTestAbstract{
+class AccessTokenTest extends TestCase{
 
 	/**
 	 * @var \chillerlan\OAuth\Core\AccessToken
@@ -22,8 +22,6 @@ class AccessTokenTest extends OAuthTestAbstract{
 	protected $token;
 
 	protected function setUp(){
-		parent::setUp();
-
 		$this->token = new AccessToken;
 	}
 
@@ -38,6 +36,10 @@ class AccessTokenTest extends OAuthTestAbstract{
 
 	/**
 	 * @dataProvider tokenDataProvider
+	 *
+	 * @param $property
+	 * @param $value
+	 * @param $data
 	 */
 	public function testDefaultsGetSet($property, $value, $data){
 		// test defaults
@@ -62,6 +64,9 @@ class AccessTokenTest extends OAuthTestAbstract{
 
 	/**
 	 * @dataProvider expiryDataProvider
+	 *
+	 * @param $expires
+	 * @param $expected
 	 */
 	public function testSetExpiry($expires, $expected){
 		$this->token->expires = $expires;
@@ -79,6 +84,9 @@ class AccessTokenTest extends OAuthTestAbstract{
 
 	/**
 	 * @dataProvider isExpiredDataProvider
+	 *
+	 * @param $expires
+	 * @param $isExpired
 	 */
 	public function testIsExpired($expires, $isExpired){
 		$this->token->setExpiry($expires);
