@@ -25,4 +25,43 @@ class SessionStorageTest extends StorageTestAbstract{
 		$this->storage = new SessionStorage;
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testTokenStorage(){
+		parent::testTokenStorage();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testClearAllAccessTokens(){
+		parent::testClearAllAccessTokens();
+	}
+
+	/**
+	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @expectedExceptionMessage state not found
+	 * @runInSeparateProcess
+	 */
+	public function testRetrieveCSRFStateNotFoundException(){
+		parent::testRetrieveCSRFStateNotFoundException();
+	}
+
+	/**
+	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @expectedExceptionMessage token not found
+	 * @runInSeparateProcess
+	 */
+	public function testRetrieveAccessTokenNotFoundException(){
+		parent::testRetrieveAccessTokenNotFoundException();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testToStorage(){
+		parent::testToStorage();
+	}
+
 }
