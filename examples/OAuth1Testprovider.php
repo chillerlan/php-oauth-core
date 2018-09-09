@@ -14,9 +14,6 @@ namespace chillerlan\OAuthExamples;
 
 use chillerlan\OAuth\Core\OAuth1Provider;
 
-/**
- *
- */
 class OAuth1Testprovider extends OAuth1Provider{
 
 	protected $apiURL          = 'https://api.example.com';
@@ -24,5 +21,8 @@ class OAuth1Testprovider extends OAuth1Provider{
 	protected $authURL         = 'https://example.com/oauth/authorize';
 	protected $accessTokenURL  = 'https://example.com/oauth/access_token';
 	protected $userRevokeURL   = 'https://account.example.com/apps/';
+	protected $endpointMap     = TestEndpoints::class;
+	protected $authHeaders     = ['foo' => 'bar'];
+	protected $apiHeaders      = ['foo' => 'bar'];
 
 }
