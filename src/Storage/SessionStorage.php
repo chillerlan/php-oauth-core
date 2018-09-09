@@ -43,7 +43,9 @@ class SessionStorage extends OAuthStorageAbstract{
 		$this->sessionVar = $this->options->sessionTokenVar;
 		$this->stateVar = $this->options->sessionStateVar;
 
-		if($this->options->sessionStart && !$this->sessionIsActive()){
+		// Determine if the session has started.
+		// @link http://stackoverflow.com/a/18542272/1470961
+		if($this->options->sessionStart && !(session_status() !== PHP_SESSION_NONE)){
 			session_start();
 		}
 
@@ -202,16 +204,6 @@ class SessionStorage extends OAuthStorageAbstract{
 		unset($_SESSION[$this->stateVar]);
 
 		return $this;
-	}
-
-	/**
-	 * Determine if the session has started.
-	 * @url http://stackoverflow.com/a/18542272/1470961
-	 *
-	 * @return bool
-	 */
-	public function sessionIsActive():bool{
-		return session_status() !== PHP_SESSION_NONE;
 	}
 
 }
