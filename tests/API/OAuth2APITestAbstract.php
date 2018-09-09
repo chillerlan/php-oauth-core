@@ -17,7 +17,7 @@ use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, OAuth2Interface};
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
  */
-class OAuth2APITestAbstract extends APITestAbstract{
+abstract class OAuth2APITestAbstract extends APITestAbstract{
 
 	public function testOAuth2Instance(){
 		$this->assertInstanceOf(OAuth2Interface::class, $this->provider);

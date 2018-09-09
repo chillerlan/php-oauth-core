@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Psr\Log\LoggerInterface;
 
-class APITestAbstract extends TestCase{
+abstract class APITestAbstract extends TestCase{
 
 	/**
 	 * @var string
