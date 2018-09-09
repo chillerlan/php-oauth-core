@@ -83,7 +83,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('error retrieving access token: '.$data['error']);
 		}
 		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
-			throw new ProviderException('token missing');
+			throw new ProviderException('invalid token');
 		}
 
 		if($checkCallbackConfirmed && (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')){

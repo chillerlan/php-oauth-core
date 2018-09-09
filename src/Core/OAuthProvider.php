@@ -137,7 +137,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 			$this->endpoints = new $this->endpointMap;
 
 			if(!$this->endpoints instanceof EndpointMapInterface){
-				throw new ApiClientException('invalid endpoint map');
+				throw new ApiClientException('invalid endpoint map'); // @codeCoverageIgnore
 			}
 
 		}
@@ -162,6 +162,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @param \Psr\Http\Message\RequestFactoryInterface $requestFactory
 	 *
 	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @codeCoverageIgnore
 	 */
 	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface{
 		$this->requestFactory = $requestFactory;
@@ -173,6 +174,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
 	 *
 	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @codeCoverageIgnore
 	 */
 	public function setStreamFactory(StreamFactoryInterface $streamFactory):OAuthInterface{
 		$this->streamFactory = $streamFactory;
@@ -184,6 +186,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @param \Psr\Http\Message\UriFactoryInterface $uriFactory
 	 *
 	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @codeCoverageIgnore
 	 */
 	public function setUriFactory(UriFactoryInterface $uriFactory):OAuthInterface{
 		$this->uriFactory = $uriFactory;
