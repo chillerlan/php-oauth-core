@@ -31,9 +31,6 @@ abstract class StorageTestAbstract extends TestCase{
 		$this->token = new AccessToken(['accessToken' => 'foobar']);
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testTokenStorage(){
 
 		$this->storage->storeAccessToken('testService', $this->token);
@@ -51,9 +48,6 @@ abstract class StorageTestAbstract extends TestCase{
 		$this->assertFalse($this->storage->hasAccessToken('testService'));
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testClearAllAccessTokens(){
 		$this->storage->clearAllAccessTokens();
 
@@ -77,7 +71,6 @@ abstract class StorageTestAbstract extends TestCase{
 	/**
 	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
 	 * @expectedExceptionMessage state not found
-	 * @runInSeparateProcess
 	 */
 	public function testRetrieveCSRFStateNotFoundException(){
 		$this->storage->getCSRFState('LOLNOPE');
@@ -86,15 +79,11 @@ abstract class StorageTestAbstract extends TestCase{
 	/**
 	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
 	 * @expectedExceptionMessage token not found
-	 * @runInSeparateProcess
 	 */
 	public function testRetrieveAccessTokenNotFoundException(){
 		$this->storage->getAccessToken('LOLNOPE');
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testToStorage(){
 		$a = $this->storage->toStorage($this->token);
 		$b = $this->storage->fromStorage($a);
