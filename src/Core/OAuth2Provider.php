@@ -64,9 +64,12 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			'client_id'     => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
 			'response_type' => 'code',
-			'scope'         => implode($this->scopesDelimiter, $scopes),
 			'type'          => 'web_server',
 		]);
+
+		if($scopes !== null){
+			$params['scope'] = implode($this->scopesDelimiter, $scopes);
+		}
 
 		if($this instanceof CSRFToken){
 			$params = $this->setState($params);

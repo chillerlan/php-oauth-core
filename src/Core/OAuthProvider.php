@@ -149,9 +149,9 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 *
 	 * @return string|null
 	 */
-	public function __get(string $name){
+	public function __get(string $name):?string{
 
-		if(!in_array($name, ['serviceName', 'authURL', 'accessTokenURL', 'revokeURL', 'userRevokeURL'], true)){
+		if(!in_array($name, ['serviceName', 'authURL', 'accessTokenURL', 'revokeURL', 'userRevokeURL', 'apiURL'], true)){
 			return null;
 		}
 
@@ -283,9 +283,9 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 		}
 
 		$request = $this->requestFactory
-			->createRequest($method ?? 'GET', Psr7\merge_query($this->apiURL.$path, $params));
+			->createRequest($method ?? 'GET', Psr7\merge_query($this->apiURL.$path, $params ?? []));
 
-		foreach(array_merge($this->apiHeaders, $headers) as $header => $value){
+		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 
