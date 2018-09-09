@@ -13,10 +13,10 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\HTTP\{CurlClient, HTTPOptionsTrait, Psr7};
+use chillerlan\HTTP\{CurlClient, Psr7};
 use chillerlan\Logger\{Log, LogOptionsTrait, Output\LogOutputAbstract};
-use chillerlan\OAuth\{OAuthOptionsTrait, Core\AccessToken, Core\OAuthInterface, Storage\MemoryStorage};
-use chillerlan\Settings\{SettingsContainerAbstract, SettingsContainerInterface};
+use chillerlan\OAuth\{OAuthOptions, Core\AccessToken, Core\OAuthInterface, Storage\MemoryStorage};
+use chillerlan\Settings\SettingsContainerInterface;
 use Http\Client\HttpClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
@@ -84,8 +84,8 @@ class APITestAbstract extends TestCase{
 			'minLogLevel'      => 'debug',
 		];
 
-		$options = new class($options) extends SettingsContainerAbstract{
-			use OAuthOptionsTrait, HTTPOptionsTrait, LogOptionsTrait;
+		$options = new class($options) extends OAuthOptions{
+			use LogOptionsTrait;
 			protected $sleep;
 		};
 
@@ -114,7 +114,7 @@ class APITestAbstract extends TestCase{
 			new class($options) extends LogOutputAbstract{
 
 				protected function __log(string $level, string $message, array $context = null):void{
-					echo $message;//.PHP_EOL.print_r($context, true).PHP_EOL;
+					echo PHP_EOL.$message.PHP_EOL.print_r($context, true).PHP_EOL;
 				}
 
 			},
@@ -147,7 +147,7 @@ class APITestAbstract extends TestCase{
 
 				$response = $this->client->sendRequest($request);
 
-				$this->logger->debug("\n-----REQUEST-----\n".Psr7\message_to_string($request));
+				$this->logger->debug("\n-----REQUEST------\n".Psr7\message_to_string($request));
 				$this->logger->debug("\n-----RESPONSE-----\n".Psr7\message_to_string($response));
 
 				$response->getBody()->rewind();
