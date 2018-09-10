@@ -4,7 +4,8 @@
 	"homepage": "https://github.com/chillerlan/php-oauth-core",
 	"license": "MIT",
 	"type": "library",
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"keywords": [
 		"oauth", "oauth1", "oauth2", "client", "core"
 	],

@@ -15,7 +15,7 @@ namespace chillerlan\OAuthTest\Providers;
 use chillerlan\HTTP\{Psr17, Psr7\Response};
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, OAuth2Interface, OAuthInterface};
 use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage};
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
@@ -70,8 +70,8 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->storage->storeAccessToken($this->provider->serviceName, new AccessToken(['accessToken' => 'foo']));
 	}
 
-	protected function initHttp():HttpClient{
-		return new class($this->reflection, $this->responses) implements HttpClient{
+	protected function initHttp():ClientInterface{
+		return new class($this->reflection, $this->responses) implements ClientInterface{
 
 			/** @var \ReflectionClass */
 			protected $reflection;

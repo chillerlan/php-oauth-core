@@ -17,7 +17,7 @@ use chillerlan\HTTP\{CurlClient, Psr7};
 use chillerlan\Logger\{Log, LogOptionsTrait, Output\LogOutputAbstract};
 use chillerlan\OAuth\{OAuthOptions, Core\AccessToken, Core\OAuthInterface, Storage\MemoryStorage};
 use chillerlan\Settings\SettingsContainerInterface;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Psr\Log\LoggerInterface;
@@ -125,11 +125,11 @@ abstract class APITestAbstract extends TestCase{
 	/**
 	 * @param $options
 	 *
-	 * @return \Http\Client\HttpClient
+	 * @return \Psr\Http\Client\ClientInterface
 	 */
-	protected function initHttp($options, $logger):HttpClient{
-		return new class($options, $logger) implements HttpClient{
-			/** @var \Http\Client\HttpClient */
+	protected function initHttp($options, $logger):ClientInterface{
+		return new class($options, $logger) implements ClientInterface{
+			/** @var \Psr\Http\Client\ClientInterface */
 			protected $client;
 			/** @var \chillerlan\Settings\SettingsContainerInterface  */
 			protected $options;

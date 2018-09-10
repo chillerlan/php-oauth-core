@@ -16,7 +16,7 @@ use chillerlan\HTTP\{Psr17\RequestFactory, Psr17\StreamFactory, Psr17\UriFactory
 use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMapInterface};
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, NullLogger};
@@ -33,7 +33,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	use LoggerAwareTrait;
 
 	/**
-	 * @var \Http\Client\HttpClient
+	 * @var \Psr\Http\Client\ClientInterface
 	 */
 	protected $http;
 
@@ -115,13 +115,13 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	/**
 	 * OAuthProvider constructor.
 	 *
-	 * @param \Http\Client\HttpClient                         $http
+	 * @param \Psr\Http\Client\ClientInterface                $http
 	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
 	 * @param \chillerlan\Settings\SettingsContainerInterface $options
 	 *
 	 * @throws \chillerlan\HTTP\MagicAPI\ApiClientException
 	 */
-	public function __construct(HttpClient $http, OAuthStorageInterface $storage, SettingsContainerInterface $options){
+	public function __construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options){
 		$this->http    = $http;
 		$this->storage = $storage;
 		$this->options = $options;
