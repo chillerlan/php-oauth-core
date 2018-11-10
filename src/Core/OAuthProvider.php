@@ -133,7 +133,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
-		if(!empty($this->endpointMap) && class_exists($this->endpointMap)){
+		if($this instanceof ApiClientInterface && !empty($this->endpointMap) && class_exists($this->endpointMap)){
 			$this->endpoints = new $this->endpointMap;
 
 			if(!$this->endpoints instanceof EndpointMapInterface){
@@ -207,7 +207,11 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 */
 	public function __call(string $name, array $arguments):ResponseInterface{
 
-		if(!$this->endpoints instanceof EndpointMapInterface || !$this->endpoints->__isset($name)){
+		if(!$this instanceof ApiClientInterface){
+			throw new ApiClientException('MagicAPI not available');
+		}
+
+		if(!$this->endpoints->__isset($name)){
 			throw new ApiClientException('endpoint not found');
 		}
 
