@@ -7,7 +7,7 @@
  * @license      MIT
  */
 
-use chillerlan\HTTP\CurlClient;
+use chillerlan\HTTP\Psr18\CurlClient;
 use chillerlan\Logger\{Log, LogOptionsTrait, Output\ConsoleLog};
 use chillerlan\OAuth\{OAuthOptions, Storage\SessionStorage};
 use chillerlan\DotEnv\DotEnv;
@@ -44,7 +44,7 @@ $options = new class($options_arr) extends OAuthOptions{
 $logger = new Log;
 $logger->addInstance(new ConsoleLog($options), 'console');
 
-/** @var \chillerlan\HTTP\HTTPClientInterface $http */
+/** @var \chillerlan\HTTP\Psr18\HTTPClientInterface $http */
 $http = new CurlClient($options);
 
 /** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
