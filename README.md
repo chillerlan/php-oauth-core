@@ -26,8 +26,8 @@
 # Documentation
 ## Requirements
 - PHP 7.2+
-- the [Sodium](http://php.net/manual/book.sodium.php) extension for token encryption
-- cURL, PHP's stream wrapper or a HTTP client library of your choice
+  - the [Sodium](http://php.net/manual/book.sodium.php) extension for token encryption
+- a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library of your choice
 - see [`chillerlan/php-oauth`](https://github.com/chillerlan/php-oauth) for already implemented providers
 
 ## Getting Started
@@ -37,7 +37,7 @@ use chillerlan\OAuth\Providers\<PROVIDER_NAMESPACE>\<PROVIDER>;
 use chillerlan\OAuth\{
 	OAuthOptions, Storage\SessionTokenStorage
 };
-use chillerlan\HTTP\CurlClient;
+use chillerlan\HTTP\Psr18\CurlClient;
 
 // OAuthOptions
 $options = new OAuthOptions([
@@ -47,8 +47,8 @@ $options = new OAuthOptions([
 	'callbackURL' => '<API_CALLBACK_URL>',
 
 	// HTTPOptions
-	'ca_info'          => '/path/to/cacert.pem', // https://curl.haxx.se/ca/cacert.pem
-	'userAgent'        => 'my-awesome-oauth-app',
+	'ca_info'     => '/path/to/cacert.pem', // https://curl.haxx.se/ca/cacert.pem
+	'userAgent'   => 'my-awesome-oauth-app',
 ]);
 
 // HTTPClientInterface
@@ -135,9 +135,9 @@ $response = $provider->request(
 	['content-type' => 'whatever']
 );
 
-// use the data
-$headers = $response->headers;
-$data    = $response->json;
+// use the data: $response is a PSR-7 ResponseInterface
+$headers = $response->getHeaders();
+$data    = $response->getBody()->getContents();
 ```
 
 ## Extensions
@@ -190,14 +190,19 @@ There are 2 different `OAuthStorageInterface`, refer to these for implementation
 ### [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php)
 method | return
 ------ | ------
-`__construct(HTTPClientInterface $http, OAuthStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger = null)` | -
-`getAuthURL(array $params = null)` | string
-`getStorageInterface()` | `OAuthStorageInterface`
-`request(string $path, array $params = null, string $method = null, $body = null, array $headers = null)` | `HTTPResponseInterface`
+`__construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options)` | -
+`getAuthURL(array $params = null)` | PSR-7 `UriInterface`
+`request(string $path, array $params = null, string $method = null, $body = null, array $headers = null)` | PSR-7 `ResponseInterface` 
+`setRequestFactory(RequestFactoryInterface $requestFactory)` | `OAuthInterface`
+`setStreamFactory(StreamFactoryInterface $streamFactory)` | `OAuthInterface`
+`setUriFactory(UriFactoryInterface $uriFactory)` | `OAuthInterface`
 
 property | description
 -------- | -----------
 `$serviceName` | the classname for the current provider
+`$accessTokenURL` | the provider`s access token URL 
+`$authURL` |  the provider`s authentication token URL 
+`$revokeURL` | an optional URL to revoke an access token (via API)
 `$userRevokeURL` | an optional link to the provider's user control panel where they can revoke the current token
 
 ### [`OAuth1Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth1Provider.php)
@@ -205,13 +210,12 @@ method | return
 ------ | ------
 `getAccessToken(string $token, string $verifier, string $tokenSecret = null)` | `AccessToken`
 `getRequestToken()` | `AccessToken`
-`getSignature(string $url, array $params, string $method = null)` | string
 
 ### [`OAuth2Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth2Provider.php)
 method | return
 ------ | ------
-`__construct(HTTPClientInterface $http, OAuthStorageInterface $storage, ContainerInterface $options, LoggerInterface $logger = null, array $scopes = null)` | -
 `getAccessToken(string $code, string $state = null)` | `AccessToken`
+`getAuthURL(array $params = null, $scopes = null)` | PSR-7 `UriInterface`
 
 ### `ClientCredentials`
 implemented by `OAuth2ClientCredentialsTrait`
@@ -219,8 +223,6 @@ implemented by `OAuth2ClientCredentialsTrait`
 method | return
 ------ | ------
 `getClientCredentialsToken(array $scopes = null)` | `AccessToken`
-(protected) `getClientCredentialsTokenBody(array $scopes)` | array
-(protected) `getClientCredentialsTokenHeaders()` | array
 
 ### `CSRFToken`
 implemented by `CSRFTokenTrait`
@@ -262,7 +264,6 @@ method | return | description
 ------ | ------ | -----------
 `__construct(array $properties = null)` | - |
 `__set(string $property, $value)` | void | overrides `chillerlan\Traits\Container`
-`__toArray()` | array | from `chillerlan\Traits\Container`
 `setExpiry(int $expires = null)` | `AccessToken` |
 `isExpired()` | `bool` |
 
@@ -275,6 +276,7 @@ property | type | default | allowed | description
 `$refreshToken` | string | null | * |
 `$extraParams` | array | `[]` |  |
 `$expires` | int | `AccessToken::EOL_UNKNOWN` |  |
+`$provider` | string | null | * |
 
 # Disclaimer
 OAuth tokens are secrets and should be treated as such. Store them in a safe place,
