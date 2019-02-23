@@ -17,8 +17,7 @@ use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMa
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestFactoryInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\{RequestFactoryInterface, ResponseInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
 use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, NullLogger};
 use ReflectionClass;
 
