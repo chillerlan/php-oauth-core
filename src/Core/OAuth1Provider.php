@@ -143,8 +143,8 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			unset($signatureParams['oauth_signature']);
 		}
 
-		$key  = implode('&', Psr7\raw_urlencode([$this->options->secret, $accessTokenSecret ?? '']));
-		$data = Psr7\raw_urlencode([
+		$key  = implode('&', Psr7\r_rawurlencode([$this->options->secret, $accessTokenSecret ?? '']));
+		$data = Psr7\r_rawurlencode([
 			strtoupper($method ?? 'POST'),
 			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
 			Psr7\build_http_query($signatureParams),
