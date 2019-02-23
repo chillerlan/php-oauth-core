@@ -41,7 +41,7 @@ class SessionStorage extends OAuthStorageAbstract{
 		parent::__construct($options);
 
 		$this->sessionVar = $this->options->sessionTokenVar;
-		$this->stateVar = $this->options->sessionStateVar;
+		$this->stateVar   = $this->options->sessionStateVar;
 
 		// Determine if the session has started.
 		// @link http://stackoverflow.com/a/18542272/1470961
@@ -92,7 +92,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @param string $service
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
 	public function getAccessToken(string $service):AccessToken{

@@ -163,10 +163,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 
 		if(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_HEADER)){
-			$request = $request->withHeader('Authorization', $this::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken);
+			$request = $request->withHeader('Authorization', OAuth2Interface::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken);
 		}
 		elseif(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_QUERY)){
-			$uri = Psr7\merge_query((string)$request->getUri(), [$this::AUTH_METHODS_QUERY[$this->authMethod] => $token->accessToken]);
+			$uri = Psr7\merge_query((string)$request->getUri(), [OAuth2Interface::AUTH_METHODS_QUERY[$this->authMethod] => $token->accessToken]);
 
 			$request = $request->withUri($this->uriFactory->createUri($uri));
 		}

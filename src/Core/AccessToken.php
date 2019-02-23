@@ -119,15 +119,15 @@ class AccessToken extends SettingsContainerAbstract{
 			$expires =  intval($expires);
 		}
 
-		$this->expires = $this::EOL_UNKNOWN;
+		$this->expires = self::EOL_UNKNOWN;
 
-		if($expires === 0 || $expires === $this::EOL_NEVER_EXPIRES){
-			$this->expires = $this::EOL_NEVER_EXPIRES;
+		if($expires === 0 || $expires === self::EOL_NEVER_EXPIRES){
+			$this->expires = self::EOL_NEVER_EXPIRES;
 		}
 		elseif($expires > $now){
 			$this->expires = $expires;
 		}
-		elseif($expires > 0 && $expires < $this::EXPIRY_MAX){
+		elseif($expires > 0 && $expires < self::EXPIRY_MAX){
 			$this->expires = $now + $expires;
 		}
 
@@ -138,7 +138,7 @@ class AccessToken extends SettingsContainerAbstract{
 	 * @return bool
 	 */
 	public function isExpired():bool{
-		return $this->expires !== $this::EOL_NEVER_EXPIRES && $this->expires !== $this::EOL_UNKNOWN && time() > $this->expires;
+		return $this->expires !== self::EOL_NEVER_EXPIRES && $this->expires !== self::EOL_UNKNOWN && time() > $this->expires;
 	}
 
 }

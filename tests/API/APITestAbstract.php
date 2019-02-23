@@ -93,8 +93,7 @@ abstract class APITestAbstract extends TestCase{
 		$this->logger   = $this->initLog($options);
 		$http           = $this->initHttp($options, $this->logger);
 		$this->storage  = new MemoryStorage;
-		$this->provider = new $this->FQN($http, $this->storage, $options);
-		$this->provider->setLogger($this->logger);
+		$this->provider = new $this->FQN($http, $this->storage, $options, $this->logger);
 
 		$tokenfile = $this->CFG.'/'.$this->provider->serviceName.'.token.json';
 		$token = is_file($tokenfile)

@@ -47,7 +47,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	/**
 	 * @param string $data
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 */
 	public function fromStorage(string $data):AccessToken{
 		return (new AccessToken)->fromJSON($data);

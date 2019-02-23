@@ -19,7 +19,7 @@ use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, ResponseInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
-use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, NullLogger};
+use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
 
 /**
@@ -118,15 +118,16 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @param \Psr\Http\Client\ClientInterface                $http
 	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
 	 * @param \chillerlan\Settings\SettingsContainerInterface $options
+	 * @param \Psr\Log\LoggerInterface|null                   $logger
 	 *
 	 * @throws \chillerlan\HTTP\MagicAPI\ApiClientException
 	 */
-	public function __construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options){
+	public function __construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options, LoggerInterface $logger = null){
 		$this->http    = $http;
 		$this->storage = $storage;
 		$this->options = $options;
+		$this->logger  = $logger ?? new NullLogger;
 
-		$this->logger         = new NullLogger;
 		$this->requestFactory = new RequestFactory;
 		$this->streamFactory  = new StreamFactory;
 		$this->uriFactory     = new UriFactory;
