@@ -34,9 +34,7 @@
 In order to instance an [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthInterface.php) you you'll need to invoke a [`HTTPClientInterface`](https://github.com/chillerlan/php-httpinterface/blob/master/src/HTTPClientInterface.php), [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageInterface.php) and `OAuthOptions` (a [`ContainerInterface`](https://github.com/chillerlan/php-traits/blob/master/src/ContainerInterface.php)) objects first:
 ```php
 use chillerlan\OAuth\Providers\<PROVIDER_NAMESPACE>\<PROVIDER>;
-use chillerlan\OAuth\{
-	OAuthOptions, Storage\SessionTokenStorage
-};
+use chillerlan\OAuth\{OAuthOptions, Storage\SessionTokenStorage};
 use chillerlan\HTTP\Psr18\CurlClient;
 
 // OAuthOptions

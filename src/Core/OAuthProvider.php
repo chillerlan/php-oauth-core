@@ -279,7 +279,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @param string $path
 	 * @param array  $params
 	 * @param string $method
-	 * @param null   $body
+	 * @param mixed  $body
 	 * @param array  $headers
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
