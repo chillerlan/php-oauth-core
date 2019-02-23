@@ -12,8 +12,9 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\{Psr17\RequestFactory, Psr17\StreamFactory, Psr17\UriFactory, Psr7};
 use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMapInterface};
+use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
+use chillerlan\HTTP\Psr7;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
