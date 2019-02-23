@@ -15,7 +15,7 @@ namespace chillerlan\OAuth\Core;
 interface OAuth1Interface extends OAuthInterface{
 
 	/**
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 */
 	public function getRequestToken():AccessToken;
 
@@ -23,7 +23,7 @@ interface OAuth1Interface extends OAuthInterface{
 	 * @param string      $token
 	 * @param string      $verifier
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 */
 	public function getAccessToken(string $token, string $verifier):AccessToken;
 

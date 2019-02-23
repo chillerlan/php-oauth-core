@@ -29,7 +29,7 @@ trait OAuth2TokenRefreshTrait{
 	/**
 	 * @param \chillerlan\OAuth\Core\AccessToken $token
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken $token = null):AccessToken{

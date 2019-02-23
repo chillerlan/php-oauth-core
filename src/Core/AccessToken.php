@@ -110,7 +110,7 @@ class AccessToken extends SettingsContainerAbstract{
 	/**
 	 * @param int $expires
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 */
 	public function setExpiry(int $expires = null):AccessToken{
 		$now = time();

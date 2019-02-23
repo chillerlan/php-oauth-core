@@ -29,7 +29,7 @@ trait OAuth2ClientCredentialsTrait{
 	/**
 	 * @param array $scopes
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 */
 	public function getClientCredentialsToken(array $scopes = null):AccessToken{
 		$params = ['grant_type' => 'client_credentials'];

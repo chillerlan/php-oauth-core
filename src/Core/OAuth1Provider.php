@@ -39,7 +39,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 */
 	public function getRequestToken():AccessToken{
 
@@ -70,7 +70,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 * @param bool|null                           $checkCallbackConfirmed
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
@@ -156,7 +156,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param string $token
 	 * @param string $verifier
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
 	 */
 	public function getAccessToken(string $token, string $verifier):AccessToken{
 		$request = $this->requestFactory
