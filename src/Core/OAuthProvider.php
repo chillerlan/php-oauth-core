@@ -204,6 +204,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\HTTP\MagicAPI\ApiClientException
+	 * @codeCoverageIgnore
 	 */
 	public function __call(string $name, array $arguments):ResponseInterface{
 
@@ -258,6 +259,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @param array $params
 	 *
 	 * @return array
+	 * @codeCoverageIgnore
 	 */
 	protected function cleanQueryParams(array $params):array{
 		return Psr7\clean_query_params($params, Psr7\BOOLEANS_AS_INT_STRING, true);
@@ -267,6 +269,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @param array $params
 	 *
 	 * @return array
+	 * @codeCoverageIgnore
 	 */
 	protected function cleanBodyParams(array $params):array{
 		return Psr7\clean_query_params($params, Psr7\BOOLEANS_AS_BOOL, true);
