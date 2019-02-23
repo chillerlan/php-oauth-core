@@ -12,6 +12,8 @@
 
 namespace chillerlan\OAuth\Core;
 
+use Psr\Http\Message\UriInterface;
+
 interface OAuth2Interface extends OAuthInterface{
 
 	const HEADER_OAUTH              = 0;
@@ -42,5 +44,14 @@ interface OAuth2Interface extends OAuthInterface{
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function getAccessToken(string $code, string $state = null):AccessToken;
+
+	/**
+	 * @param array|null $params
+	 * @param array|null $scopes
+	 *
+	 * @return \Psr\Http\Message\UriInterface
+	 */
+	public function getAuthURL(array $params = null, array $scopes = null):UriInterface;
+
 
 }

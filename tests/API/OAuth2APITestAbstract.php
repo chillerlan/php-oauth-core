@@ -34,7 +34,7 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 		$token = $this->provider->getClientCredentialsToken();
 
 		$this->assertInstanceOf(AccessToken::class, $token);
-		$this->assertInternalType('string', $token->accessToken);
+		$this->assertIsString($token->accessToken);
 
 		if($token->expires !== AccessToken::EOL_NEVER_EXPIRES){
 			$this->assertGreaterThan(time(), $token->expires);
@@ -42,6 +42,5 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 
 		$this->logger->debug('OAuth2ClientCredentials', $token->toArray());
 	}
-
 
 }

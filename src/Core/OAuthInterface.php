@@ -38,6 +38,7 @@ interface OAuthInterface{
 	 * @param \chillerlan\OAuth\Core\AccessToken $token
 	 *
 	 * @return \Psr\Http\Message\RequestInterface
+	 * @internal
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface;
 

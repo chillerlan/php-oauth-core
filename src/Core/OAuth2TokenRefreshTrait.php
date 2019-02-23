@@ -20,7 +20,7 @@ namespace chillerlan\OAuth\Core;
  * @property string                                          $refreshTokenURL
  * @property \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
  * @property \chillerlan\OAuth\OAuthOptions                  $options
- * @property \chillerlan\HTTP\HTTPClientInterface            $http
+ * @property \chillerlan\HTTP\Psr18\HTTPClientInterface      $http
  * @property \Psr\Http\Message\RequestFactoryInterface       $requestFactory
  * @property \Psr\Http\Message\StreamFactoryInterface        $streamFactory
  */

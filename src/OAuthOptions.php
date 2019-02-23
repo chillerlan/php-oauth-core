@@ -31,10 +31,10 @@ use chillerlan\Settings\SettingsContainerAbstract;
  * HTTPOptionsTrait
  *
  * @property string     $user_agent
- * @property int        $timeout
  * @property array      $curl_options
  * @property string     $ca_info
- * @property int        $max_redirects
+ * @property bool       $ssl_verifypeer
+ * @property string     $curlHandle
  */
 class OAuthOptions extends SettingsContainerAbstract{
 	use OAuthOptionsTrait, HTTPOptionsTrait;

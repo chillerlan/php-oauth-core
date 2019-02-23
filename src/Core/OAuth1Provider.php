@@ -115,7 +115,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$nonce = random_bytes(32);
 
 		// use the sodium extension if available
-		/** @noinspection PhpComposerExtensionStubsInspection */
 		return function_exists('sodium_bin2hex') ? sodium_bin2hex($nonce) : bin2hex($nonce);
 	}
 
@@ -175,9 +174,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return \Psr\Http\Message\RequestInterface
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
-		$u = $request->getUri();
+		$uri = $request->getUri();
 
-		parse_str($u->getQuery(), $p);
+		parse_str($uri->getQuery(), $query);
 
 		$parameters = [
 			'oauth_consumer_key'     => $this->options->key,
@@ -188,7 +187,12 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			'oauth_version'          => '1.0',
 		];
 
-		$parameters['oauth_signature'] = $this->getSignature((string)$u->withQuery('')->withFragment(''), array_merge($p, $parameters), $request->getMethod(), $token->accessTokenSecret);
+		$parameters['oauth_signature'] = $this->getSignature(
+			(string)$uri->withQuery('')->withFragment(''),
+			array_merge($query, $parameters),
+			$request->getMethod(),
+			$token->accessTokenSecret
+		);
 
 		return $request->withHeader('Authorization', 'OAuth '.Psr7\build_http_query($parameters, true, ', ', '"'));
 	}
