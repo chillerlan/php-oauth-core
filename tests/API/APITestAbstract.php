@@ -13,7 +13,8 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\HTTP\{CurlClient, Psr7};
+use chillerlan\HTTP\Psr18\CurlClient;
+use chillerlan\HTTP\Psr7;
 use chillerlan\Logger\{Log, LogOptionsTrait, Output\LogOutputAbstract};
 use chillerlan\OAuth\{OAuthOptions, Core\AccessToken, Core\OAuthInterface, Storage\MemoryStorage};
 use chillerlan\Settings\SettingsContainerInterface;

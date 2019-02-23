@@ -20,8 +20,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
-/**
- */
 abstract class ProviderTestAbstract extends TestCase{
 
 	/**
