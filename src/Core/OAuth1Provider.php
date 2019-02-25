@@ -197,6 +197,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$token->accessTokenSecret
 		);
 
+		if(isset($query['oauth_session_handle'])){
+			$parameters['oauth_session_handle'] = $query['oauth_session_handle'];
+		}
+
 		return $request->withHeader('Authorization', 'OAuth '.Psr7\build_http_query($parameters, true, ', ', '"'));
 	}
 
