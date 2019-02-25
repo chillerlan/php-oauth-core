@@ -160,11 +160,12 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 			return;
 		}
 
-		$provider = $this
+		// will throw an exception if it goes wrong
+		$this
 			->getMethod('checkState')
 			->invokeArgs($this->provider, ['test_state']);
 
-		$this->assertInstanceOf(OAuth2Interface::class, $provider);
+		$this->expectNotToPerformAssertions();
 	}
 
 	/**
