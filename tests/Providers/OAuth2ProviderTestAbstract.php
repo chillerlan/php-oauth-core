@@ -43,8 +43,6 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		'/oauth2/api/request/test/get' => ['foo'],
 	];
 
-	protected $authMethodHeader = OAuth2Interface::AUTH_METHODS_HEADER[OAuth2Interface::HEADER_BEARER];
-
 	protected function setUp(){
 		parent::setUp();
 
@@ -93,7 +91,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 	public function testParseTokenResponseNoData(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('whatever'))])
+			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input(''))])
 		;
 	}
 
@@ -123,12 +121,17 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$request = new Request('GET', 'https://foo.bar');
 		$token   = new AccessToken(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token']);
 
-		// header (default)
-		$this->assertContains($this->authMethodHeader.'test_token', $this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization'));
+		$authMethod = $this->getProperty('authMethod')->getValue($this->provider);
 
+		// header (default)
+		if(isset(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod])){
+			$this->assertContains(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod].'test_token', $this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization'));
+		}
 		// query
-		$this->setProperty($this->provider, 'authMethod', OAuth2Interface::QUERY_ACCESS_TOKEN);
-		$this->assertContains('access_token=test_token', $this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery());
+		elseif(isset(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod])){
+			$this->assertContains(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod].'=test_token', $this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery());
+		}
+
 	}
 
 	public function testRequest(){
