@@ -42,6 +42,7 @@ trait OAuth2ClientCredentialsTrait{
 			->createRequest('POST', $this->clientCredentialsTokenURL ?? $this->accessTokenURL)
 			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withHeader('Accept-Encoding', 'identity')
 			->withBody($this->streamFactory->createStream(http_build_query($params, '', '&', PHP_QUERY_RFC1738)))
 		;
 
