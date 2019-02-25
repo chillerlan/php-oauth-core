@@ -24,7 +24,7 @@
 		"ext-json":"*",
 		"chillerlan/php-dotenv": "^1.0",
 		"chillerlan/php-settings-container": "^1.0",
-		"chillerlan/php-httpinterface": "^3.0",
+		"chillerlan/php-httpinterface": "^3.0.1",
 		"chillerlan/php-magic-apiclient": "^2.0",
 		"psr/log": "^1.0"
 	},
