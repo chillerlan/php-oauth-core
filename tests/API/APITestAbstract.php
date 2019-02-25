@@ -60,6 +60,11 @@ abstract class APITestAbstract extends TestCase{
 	 */
 	protected $dotEnv;
 
+	/**
+	 * @var float
+	 */
+	protected $requestDelay = 0.25;
+
 	protected function setUp(){
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -80,7 +85,7 @@ abstract class APITestAbstract extends TestCase{
 			'ca_info'          => $this->CFG.'/cacert.pem',
 			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
 			// testHTTPClient
-			'sleep'            => 0.25,
+			'sleep'            => $this->requestDelay,
 			// logger
 			'minLogLevel'      => 'debug',
 		];

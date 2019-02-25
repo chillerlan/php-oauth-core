@@ -23,10 +23,10 @@ trait OAuth2CSRFTokenTrait{
 	/**
 	 * @param string|null $state
 	 *
-	 * @return \chillerlan\OAuth\Core\OAuth2Interface
+	 * @return void
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	protected function checkState(string $state = null):OAuth2Interface{
+	protected function checkState(string $state = null):void{
 
 		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
 			throw new ProviderException('invalid state for '.$this->serviceName);
@@ -38,8 +38,6 @@ trait OAuth2CSRFTokenTrait{
 			throw new ProviderException('invalid CSRF state: '.$this->serviceName.' '.$state);
 		}
 
-		/** @noinspection PhpIncompatibleReturnTypeInspection */
-		return $this;
 	}
 
 	/**
