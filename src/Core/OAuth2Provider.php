@@ -85,7 +85,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
-		$data = Psr7\get_json($response, true);
+		$data = json_decode(Psr7\decompress_content($response), true); // silly amazon...
 
 		if(!is_array($data)){
 			throw new ProviderException('unable to parse token response');
