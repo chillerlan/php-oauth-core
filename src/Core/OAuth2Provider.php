@@ -16,7 +16,7 @@ use chillerlan\HTTP\Psr7;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 /**
- * from CSRFTokenTrait:
+ * from OAuth2CSRFTokenTrait:
  * @method array setState(array $params)
  * @method \chillerlan\OAuth\Core\OAuth2Interface checkState(string $state = null)
  */

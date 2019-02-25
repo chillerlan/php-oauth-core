@@ -163,7 +163,7 @@ class MyOauth1Provider extends Oauth1Provider{
 use chillerlan\OAuth\Providers\OAuth2Provider;
 
 class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
-	use OAuth2ClientCredentialsTrait, CSRFTokenTrait, OAuth2TokenRefreshTrait;
+	use OAuth2ClientCredentialsTrait, OAuth2CSRFTokenTrait, OAuth2TokenRefreshTrait;
 
 	public const SCOPE_WHATEVER = 'whatever';
 
@@ -223,7 +223,7 @@ method | return
 `getClientCredentialsToken(array $scopes = null)` | `AccessToken`
 
 ### `CSRFToken`
-implemented by `CSRFTokenTrait`
+implemented by `OAuth2CSRFTokenTrait`
 
 method | return
 ------ | ------
