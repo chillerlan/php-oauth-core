@@ -75,7 +75,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
-		parse_str($response->getBody()->getContents(), $data);
+		parse_str(Psr7\decompress_content($response), $data);
 
 		if(!$data || !is_array($data)){
 			throw new ProviderException('unable to parse token response');
