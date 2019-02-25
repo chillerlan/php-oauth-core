@@ -140,6 +140,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$request = $this->requestFactory
 			->createRequest('POST', $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withHeader('Accept-Encoding', 'identity')
 			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)));
 
 		foreach($this->authHeaders as $header => $value){

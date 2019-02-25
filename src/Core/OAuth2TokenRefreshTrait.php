@@ -60,6 +60,7 @@ trait OAuth2TokenRefreshTrait{
 		$request = $this->requestFactory
 			->createRequest('POST', $this->refreshTokenURL ?? $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withHeader('Accept-Encoding', 'identity')
 			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)))
 		;
 

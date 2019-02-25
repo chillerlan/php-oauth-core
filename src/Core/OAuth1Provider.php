@@ -56,7 +56,8 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$request = $this->requestFactory
 			->createRequest('POST', $this->requestTokenURL)
-			->withHeader('Authorization', 'OAuth '.Psr7\build_http_query($params, true, ', ', '"'));
+			->withHeader('Authorization', 'OAuth '.Psr7\build_http_query($params, true, ', ', '"'))
+			->withHeader('Accept-Encoding', 'identity')
 		;
 
 		foreach($this->authHeaders as $header => $value){
@@ -160,7 +161,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 */
 	public function getAccessToken(string $token, string $verifier):AccessToken{
 		$request = $this->requestFactory
-			->createRequest('POST', Psr7\merge_query($this->accessTokenURL, ['oauth_verifier' => $verifier]));
+			->createRequest('POST', Psr7\merge_query($this->accessTokenURL, ['oauth_verifier' => $verifier]))
+			->withHeader('Accept-Encoding', 'identity')
+		;
 
 		$request = $this->getRequestAuthorization($request, $this->storage->getAccessToken($this->serviceName));
 
