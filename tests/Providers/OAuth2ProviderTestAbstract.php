@@ -124,7 +124,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$token   = new AccessToken(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token']);
 
 		// header (default)
-		$this->assertContains($this->authMethodHeader.' test_token', $this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization'));
+		$this->assertContains($this->authMethodHeader.'test_token', $this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization'));
 
 		// query
 		$this->setProperty($this->provider, 'authMethod', OAuth2Interface::QUERY_ACCESS_TOKEN);
