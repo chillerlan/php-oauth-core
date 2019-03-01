@@ -182,6 +182,8 @@ There are 2 different `OAuthStorageInterface`, refer to these for implementation
 
 ## API
 ### [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php)
+Implements PSR-18 [`ClientInterface`](https://www.php-fig.org/psr/psr-18/) and PSR-3[`LoggerAwareInterface`](https://www.php-fig.org/psr/psr-3/).
+
 method | return
 ------ | ------
 `__construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options)` | -
