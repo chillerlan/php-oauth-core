@@ -315,18 +315,22 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function sendRequest(RequestInterface $request):ResponseInterface{
-		$token = $this->storage->getAccessToken($this->serviceName);
 
-		// attempt to refresh an expired token
-		if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
-			$token = $this->refreshAccessToken($token);
+		// get authorization only if we request the provider API
+		if($request->getUri()->getHost() === parse_url($this->apiURL, PHP_URL_HOST)){
+			$token = $this->storage->getAccessToken($this->serviceName);
+
+			// attempt to refresh an expired token
+			if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
+				$token = $this->refreshAccessToken($token);
+			}
+
+			foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
+				$request = $request->withAddedHeader($header, $value);
+			}
+
+			$request = $this->getRequestAuthorization($request, $token);
 		}
-
-		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
-			$request = $request->withAddedHeader($header, $value);
-		}
-
-		$request = $this->getRequestAuthorization($request, $token);
 
 		return $this->http->sendRequest($request);
 	}
