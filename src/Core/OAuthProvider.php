@@ -293,6 +293,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 		if(is_array($body) && $request->hasHeader('content-type')){
 			$contentType = strtolower($request->getHeaderLine('content-type'));
 
+			// @todo: content type support
 			if($contentType === 'application/x-www-form-urlencoded'){
 				$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));
 			}
@@ -321,7 +322,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 
 		// get authorization only if we request the provider API
-		if($request->getUri()->getHost() === parse_url($this->apiURL, PHP_URL_HOST)){
+		if(strpos((string)$request->getUri(), $this->apiURL) === 0){
 			$token = $this->storage->getAccessToken($this->serviceName);
 
 			// attempt to refresh an expired token
