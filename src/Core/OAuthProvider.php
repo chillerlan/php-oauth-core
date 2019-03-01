@@ -302,6 +302,10 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 
 		}
 
+		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
 		if($body instanceof StreamInterface){
 			$request = $request->withBody($body);
 		}
@@ -323,10 +327,6 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 			// attempt to refresh an expired token
 			if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
 				$token = $this->refreshAccessToken($token);
-			}
-
-			foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
-				$request = $request->withAddedHeader($header, $value);
 			}
 
 			$request = $this->getRequestAuthorization($request, $token);
