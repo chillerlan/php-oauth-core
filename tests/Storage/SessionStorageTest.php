@@ -12,14 +12,14 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\OAuth\Storage\SessionStorage;
+use chillerlan\OAuth\Storage\{OAuthStorageException, SessionStorage};
 
 /**
  * @runInSeparateProcess
  */
 class SessionStorageTest extends StorageTestAbstract{
 
-	protected function setUp(){
+	protected function setUp():void{
 		parent::setUp();
 
 		$this->storage = new SessionStorage;
@@ -40,20 +40,22 @@ class SessionStorageTest extends StorageTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
-	 * @expectedExceptionMessage state not found
 	 * @runInSeparateProcess
 	 */
 	public function testRetrieveCSRFStateNotFoundException(){
+		$this->expectException(OAuthStorageException::class);
+		$this->expectExceptionMessage('state not found');
+
 		parent::testRetrieveCSRFStateNotFoundException();
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
-	 * @expectedExceptionMessage token not found
 	 * @runInSeparateProcess
 	 */
 	public function testRetrieveAccessTokenNotFoundException(){
+		$this->expectException(OAuthStorageException::class);
+		$this->expectExceptionMessage('token not found');
+
 		parent::testRetrieveAccessTokenNotFoundException();
 	}
 

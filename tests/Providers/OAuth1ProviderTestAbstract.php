@@ -12,9 +12,9 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\HTTP\Psr17;
-use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface};
+use chillerlan\HTTP\Psr7\{Request, Response};
+use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth1Interface $provider
@@ -27,7 +27,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		'/oauth1/api/request'   => '{"data":"such data! much wow!"}',
 	];
 
-	protected function setUp(){
+	protected function setUp():void{
 		parent::setUp();
 
 		$this->setProperty($this->provider, 'requestTokenURL', 'https://localhost/oauth1/request_token');
@@ -54,11 +54,10 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		$this->assertSame('ygg22quLhpyegiyr7yl4hLAP9S8=', $signature);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage getSignature: invalid url
-	 */
 	public function testGetSignatureInvalidURLException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('getSignature: invalid url');
+
 		$this
 			->getMethod('getSignature')
 			->invokeArgs($this->provider, ['whatever', [], 'GET']);
@@ -74,41 +73,37 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		$this->assertSame('test_access_token_secret', $token->accessTokenSecret);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage unable to parse token response
-	 */
-	public function testParseTokenResponseNoData(){
+	public function testParseTokenResponseNoDataException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('unable to parse token response');
+
 		$this->getMethod('parseTokenResponse')->invokeArgs($this->provider, [new Response]);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage error retrieving access token
-	 */
-	public function testParseTokenResponseError(){
+	public function testParseTokenResponseErrorException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('error retrieving access token');
+
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('error=whatever'))])
 		;
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage invalid token
-	 */
-	public function testParseTokenResponseNoToken(){
+	public function testParseTokenResponseNoTokenException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('invalid token');
+
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('oauth_token=whatever'))])
 		;
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage oauth callback unconfirmed
-	 */
-	public function testParseTokenResponseCallbackUnconfirmed(){
+	public function testParseTokenResponseCallbackUnconfirmedException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('oauth callback unconfirmed');
+
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('oauth_token=whatever&oauth_token_secret=whatever_secret')), true])
@@ -124,8 +119,8 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 			)
 			->getHeaderLine('Authorization');
 
-		$this->assertContains('OAuth oauth_consumer_key="'.$this->options->key.'"', $authHeader);
-		$this->assertContains('oauth_token="test_token"', $authHeader);
+		$this->assertStringContainsString('OAuth oauth_consumer_key="'.$this->options->key.'"', $authHeader);
+		$this->assertStringContainsString('oauth_token="test_token"', $authHeader);
 	}
 
 	public function testRequest(){

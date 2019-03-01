@@ -13,10 +13,10 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\HTTP\{Psr17, Psr7\Response};
-use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, OAuth2Interface, OAuthInterface};
 use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage};
-use Psr\Http\Client\ClientInterface;
+use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, OAuth2Interface, OAuthInterface};
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
@@ -52,7 +52,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	 */
 	protected $responses;
 
-	protected function setUp(){
+	protected function setUp():void{
 
 		$this->options = new OAuthOptions([
 			'key'              => 'testkey',

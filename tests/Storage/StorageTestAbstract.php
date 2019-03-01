@@ -13,6 +13,7 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\Storage\OAuthStorageException;
 use PHPUnit\Framework\TestCase;
 
 abstract class StorageTestAbstract extends TestCase{
@@ -27,7 +28,7 @@ abstract class StorageTestAbstract extends TestCase{
 	 */
 	protected $token;
 
-	protected function setUp(){
+	protected function setUp():void{
 		$this->token = new AccessToken(['accessToken' => 'foobar']);
 	}
 
@@ -68,19 +69,17 @@ abstract class StorageTestAbstract extends TestCase{
 		$this->assertFalse($this->storage->hasAccessToken('testService'));
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
-	 * @expectedExceptionMessage state not found
-	 */
 	public function testRetrieveCSRFStateNotFoundException(){
+		$this->expectException(OAuthStorageException::class);
+		$this->expectExceptionMessage('state not found');
+
 		$this->storage->getCSRFState('LOLNOPE');
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Storage\OAuthStorageException
-	 * @expectedExceptionMessage token not found
-	 */
 	public function testRetrieveAccessTokenNotFoundException(){
+		$this->expectException(OAuthStorageException::class);
+		$this->expectExceptionMessage('token not found');
+
 		$this->storage->getAccessToken('LOLNOPE');
 	}
 
@@ -88,7 +87,7 @@ abstract class StorageTestAbstract extends TestCase{
 		$a = $this->storage->toStorage($this->token);
 		$b = $this->storage->fromStorage($a);
 
-		$this->assertInternalType('string', $a);
+		$this->assertIsString($a);
 		$this->assertInstanceOf(AccessToken::class, $b);
 		$this->assertEquals($this->token, $b);
 	}

@@ -16,10 +16,10 @@ use chillerlan\DotEnv\DotEnv;
 use chillerlan\HTTP\Psr18\CurlClient;
 use chillerlan\HTTP\Psr7;
 use chillerlan\Logger\{Log, LogOptionsTrait, Output\LogOutputAbstract};
-use chillerlan\OAuth\{OAuthOptions, Core\AccessToken, Core\OAuthInterface, Storage\MemoryStorage};
+use chillerlan\OAuth\{Core\AccessToken, Core\OAuthInterface, OAuthOptions, Storage\MemoryStorage};
 use chillerlan\Settings\SettingsContainerInterface;
-use Psr\Http\Client\ClientInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Psr\Log\LoggerInterface;
 
@@ -65,7 +65,7 @@ abstract class APITestAbstract extends TestCase{
 	 */
 	protected $requestDelay = 0.25;
 
-	protected function setUp(){
+	protected function setUp():void{
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
 		$file = file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';

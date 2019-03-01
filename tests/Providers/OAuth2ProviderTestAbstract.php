@@ -12,9 +12,10 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\HTTP\Psr17;
-use chillerlan\OAuth\Core\{AccessToken, AccessTokenForRefresh, ClientCredentials, CSRFToken, OAuth2Interface, TokenRefresh};
+use chillerlan\HTTP\Psr7\{Request, Response};
+use chillerlan\OAuth\Core\{AccessToken, AccessTokenForRefresh, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
+use chillerlan\OAuth\OAuthException;
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
@@ -43,7 +44,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		'/oauth2/api/request/test/get' => ['foo'],
 	];
 
-	protected function setUp(){
+	protected function setUp():void{
 		parent::setUp();
 
 		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth2/api/request');
@@ -84,33 +85,30 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$this->assertGreaterThan(time(), $token->expires);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage unable to parse token response
-	 */
-	public function testParseTokenResponseNoData(){
+	public function testParseTokenResponseNoDataException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('unable to parse token response');
+
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input(''))])
 		;
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage error retrieving access token
-	 */
-	public function testParseTokenResponseError(){
+	public function testParseTokenResponseErrorException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('error retrieving access token');
+
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('{"error":"whatever"}'))])
 		;
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage token missing
-	 */
-	public function testParseTokenResponseNoToken(){
+	public function testParseTokenResponseNoTokenException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('token missing');
+
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('{"foo":"bar"}'))])
@@ -125,11 +123,11 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		// header (default)
 		if(isset(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod])){
-			$this->assertContains(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod].'test_token', $this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization'));
+			$this->assertStringContainsString(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod].'test_token', $this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization'));
 		}
 		// query
 		elseif(isset(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod])){
-			$this->assertContains(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod].'=test_token', $this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery());
+			$this->assertStringContainsString(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod].'=test_token', $this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery());
 		}
 
 	}
@@ -141,11 +139,10 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$this->assertSame('such data! much wow!', json_decode($this->provider->request('')->getBody()->getContents())->data);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
-	 * @expectedExceptionMessage invalid auth type
-	 */
-	public function testRequestInvalidAuthType(){
+	public function testRequestInvalidAuthTypeException(){
+		$this->expectException(OAuthException::class);
+		$this->expectExceptionMessage('invalid auth type');
+
 		$this->setProperty($this->provider, 'authMethod', 'foo');
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
@@ -168,11 +165,9 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$this->expectNotToPerformAssertions();
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage invalid state
-	 */
-	public function testCheckStateInvalid(){
+	public function testCheckStateInvalidException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('invalid state');
 
 		if(!$this->provider instanceof CSRFToken){
 			$this->markTestSkipped('CSRFToken N/A');
@@ -184,11 +179,9 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 			->invoke($this->provider);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Core\ProviderException
-	 * @expectedExceptionMessage invalid CSRF state
-	 */
-	public function testCheckStateInvalidCSRFState(){
+	public function testCheckStateInvalidCSRFStateException(){
+		$this->expectException(ProviderException::class);
+		$this->expectExceptionMessage('invalid CSRF state');
 
 		if(!$this->provider instanceof CSRFToken){
 			$this->markTestSkipped('CSRFToken N/A');
@@ -200,11 +193,9 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 			->invokeArgs($this->provider, ['invalid_test_state']);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
-	 * @expectedExceptionMessage no refresh token available, token expired [
-	 */
 	public function testRefreshAccessTokenNoRefreshTokenAvailable(){
+		$this->expectException(OAuthException::class);
+		$this->expectExceptionMessage('no refresh token available, token expired [');
 
 		if(!$this->provider instanceof TokenRefresh){
 			$this->markTestSkipped('TokenRefresh N/A');
