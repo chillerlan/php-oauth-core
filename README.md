@@ -26,16 +26,16 @@
 # Documentation
 ## Requirements
 - PHP 7.2+
-  - the [Sodium](http://php.net/manual/book.sodium.php) extension for token encryption
 - a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library of your choice
+  - optional [PSR-17](https://www.php-fig.org/psr/psr-17/) compatible Request-, Response- and UriFactories
 - see [`chillerlan/php-oauth`](https://github.com/chillerlan/php-oauth) for already implemented providers
 
 ## Getting Started
-In order to instance an [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthInterface.php) you you'll need to invoke a [`HTTPClientInterface`](https://github.com/chillerlan/php-httpinterface/blob/master/src/HTTPClientInterface.php), [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageInterface.php) and `OAuthOptions` (a [`ContainerInterface`](https://github.com/chillerlan/php-traits/blob/master/src/ContainerInterface.php)) objects first:
+In order to instance an [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthInterface.php) you you'll need to invoke a PSR-18 [`ClientInterface`](https://github.com/php-fig/http-client/blob/master/src/ClientInterface.php), a [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageInterface.php) and `OAuthOptions` (a [`SettingsContainerInterface`](https://github.com/chillerlan/php-settings-container/blob/master/src/SettingsContainerInterface.php)) objects first:
 ```php
 use chillerlan\OAuth\Providers\<PROVIDER_NAMESPACE>\<PROVIDER>;
 use chillerlan\OAuth\{OAuthOptions, Storage\SessionTokenStorage};
-use chillerlan\HTTP\Psr18\CurlClient;
+use <PSR-18 HTTP Client>;
 
 // OAuthOptions
 $options = new OAuthOptions([
@@ -43,29 +43,20 @@ $options = new OAuthOptions([
 	'key'         => '<API_KEY>',
 	'secret'      => '<API_SECRET>',
 	'callbackURL' => '<API_CALLBACK_URL>',
-
-	// HTTPOptions
-	'ca_info'     => '/path/to/cacert.pem', // https://curl.haxx.se/ca/cacert.pem
-	'userAgent'   => 'my-awesome-oauth-app',
 ]);
 
-// HTTPClientInterface
-$http = new CurlClient($options);
+// a \Psr\Http\Client\ClientInterface
+$http = new HttpClient;
 
 // OAuthStorageInterface
 // a persistent storage is required for authentication!
 $storage = new SessionTokenStorage($options);
 
-// optional scopes for OAuth2 providers
-$scopes = [
-	Provider::SCOPE_WHATEVER,
-];
-
 // an optional \Psr\LoggerInterface logger
 $logger = new Logger;
 
 // invoke and use the OAuthInterface
-$provider = new Provider($http, $storage, $options, $logger, $scopes);
+$provider = new Provider($http, $storage, $options, $logger);
 ```
 
 ## Authentication
@@ -79,10 +70,15 @@ echo '<a href="?login='.$provider->serviceName.'">connect with '.$provider->serv
 ```
 
 ### Step 2: redirect to the provider
-Redirect to the provider's login screen with optional arguments in the authentication URL, like permissions etc.
+Redirect to the provider's login screen with optional arguments in the authentication URL, like permissions, scopes etc.
 ```php
+// optional scopes for OAuth2 providers
+$scopes = [
+	Provider::SCOPE_WHATEVER,
+];
+
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL(['extra-param' => 'val']));
+	header('Location: '.$provider->getAuthURL(['extra-param' => 'val'], $scopes));
 }
 ```
 
@@ -145,7 +141,7 @@ In order to use a provider or storage, that is not yet supported, you'll need to
 The OAuth1 implementation is close to Twitter's specs and *should* work for most other OAuth1 services.
 
 ```php
-use chillerlan\OAuth\Providers\OAuth1Provider;
+use chillerlan\OAuth\Core\OAuth1Provider;
 
 class MyOauth1Provider extends Oauth1Provider{
 
@@ -160,7 +156,7 @@ class MyOauth1Provider extends Oauth1Provider{
 ### [`OAuth2Interface`](https://github.com/chillerlan/php-oauth/tree/master/src/Providers/OAuth2Provider.php)
 [OAuth2 is a very straightforward... mess](https://hueniverse.com/oauth-2-0-and-the-road-to-hell-8eec45921529). Please refer to your provider's docs for implementation details.
 ```php
-use chillerlan\OAuth\Providers\OAuth2Provider;
+use chillerlan\OAuth\Core\OAuth2Provider;
 
 class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
 	use OAuth2ClientCredentialsTrait, OAuth2CSRFTokenTrait, OAuth2TokenRefreshTrait;
