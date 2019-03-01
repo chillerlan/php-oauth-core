@@ -18,7 +18,7 @@ use chillerlan\HTTP\Psr7;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestFactoryInterface, ResponseInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
+use Psr\Http\Message\{RequestInterface, RequestFactoryInterface, ResponseInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
 use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
 
@@ -29,7 +29,7 @@ use ReflectionClass;
  * @property string $serviceName
  * @property string $userRevokeURL
  */
-abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, LoggerAwareInterface{
+abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, ClientInterface, LoggerAwareInterface{
 	use LoggerAwareTrait;
 
 	/**
@@ -286,21 +286,9 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
-		$token = $this->storage->getAccessToken($this->serviceName);
-
-		// attempt to refresh an expired token
-		if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
-			$token = $this->refreshAccessToken($token);
-		}
 
 		$request = $this->requestFactory
 			->createRequest($method ?? 'GET', Psr7\merge_query($this->apiURL.$path, $params ?? []));
-
-		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
-			$request = $request->withAddedHeader($header, $value);
-		}
-
-		$request = $this->getRequestAuthorization($request, $token);
 
 		if(is_array($body) && $request->hasHeader('content-type')){
 			$contentType = strtolower($request->getHeaderLine('content-type'));
@@ -317,6 +305,28 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Logg
 		if($body instanceof StreamInterface){
 			$request = $request->withBody($body);
 		}
+
+		return $this->sendRequest($request);
+	}
+
+	/**
+	 * @param \Psr\Http\Message\RequestInterface $request
+	 *
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function sendRequest(RequestInterface $request):ResponseInterface{
+		$token = $this->storage->getAccessToken($this->serviceName);
+
+		// attempt to refresh an expired token
+		if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
+			$token = $this->refreshAccessToken($token);
+		}
+
+		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
+		$request = $this->getRequestAuthorization($request, $token);
 
 		return $this->http->sendRequest($request);
 	}
