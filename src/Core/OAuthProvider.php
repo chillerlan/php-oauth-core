@@ -290,6 +290,10 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 		$request = $this->requestFactory
 			->createRequest($method ?? 'GET', Psr7\merge_query($this->apiURL.$path, $params ?? []));
 
+		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
 		if(is_array($body) && $request->hasHeader('content-type')){
 			$contentType = strtolower($request->getHeaderLine('content-type'));
 
@@ -303,12 +307,11 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 
 		}
 
-		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
-			$request = $request->withAddedHeader($header, $value);
-		}
-
 		if($body instanceof StreamInterface){
-			$request = $request->withBody($body);
+			$request = $request
+				->withBody($body)
+				->withHeader('Content-length', $body->getSize())
+			;
 		}
 
 		return $this->sendRequest($request);
