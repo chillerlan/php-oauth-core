@@ -92,7 +92,7 @@ abstract class APITestAbstract extends TestCase{
 			protected $sleep;
 		};
 
-		$this->logger   = new OAuthTestLogger();
+		$this->logger   = new OAuthTestLogger('debug');
 		$http           = $this->initHttp($options, $this->logger);
 		$this->storage  = new MemoryStorage;
 		$this->provider = new $this->FQN($http, $this->storage, $options, $this->logger);
