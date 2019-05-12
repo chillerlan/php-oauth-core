@@ -12,8 +12,7 @@
 
 namespace chillerlan\OAuthTest;
 
-use Psr\Log\AbstractLogger;
-use Psr\Log\LogLevel;
+use Psr\Log\{AbstractLogger, LogLevel};
 
 class OAuthTestLogger extends AbstractLogger{
 
