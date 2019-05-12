@@ -244,7 +244,7 @@ method | return
 ------ | ------
 `storeAccessToken(string $service, AccessToken $token)` | `OAuthStorageInterface`
 `getAccessToken(string $service)` | `AccessToken`
-`hasAccessToken(string $service)` | `AccessToken`
+`hasAccessToken(string $service)` | bool
 `clearAccessToken(string$service)` | `OAuthStorageInterface`
 `clearAllAccessTokens()` | `OAuthStorageInterface`
 `storeCSRFState(string $service, string $state)` | `OAuthStorageInterface`
