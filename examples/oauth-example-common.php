@@ -8,9 +8,9 @@
  */
 
 use chillerlan\HTTP\Psr18\CurlClient;
-use chillerlan\Logger\{Log, LogOptionsTrait, Output\ConsoleLog};
 use chillerlan\OAuth\{OAuthOptions, Storage\SessionStorage};
 use chillerlan\DotEnv\DotEnv;
+use chillerlan\OAuthTest\OAuthTestLogger;
 
 ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -29,20 +29,14 @@ $options_arr = [
 	// HTTPOptions
 	'ca_info'          => $CFGDIR.'/cacert.pem',
 	'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/codemasher/php-oauth',
-
-	// log
-	'minLogLevel'      => 'debug',
 ];
 
 /** @var \chillerlan\Settings\SettingsContainerInterface $options */
 $options = new class($options_arr) extends OAuthOptions{
-	use LogOptionsTrait;
-
 	protected $sleep;
 };
 
-$logger = new Log;
-$logger->addInstance(new ConsoleLog($options), 'console');
+$logger = new OAuthTestLogger('debug');
 
 /** @var \chillerlan\HTTP\Psr18\HTTPClientInterface $http */
 $http = new CurlClient($options);

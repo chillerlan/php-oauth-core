@@ -15,8 +15,8 @@ namespace chillerlan\OAuthTest\API;
 use chillerlan\DotEnv\DotEnv;
 use chillerlan\HTTP\Psr18\CurlClient;
 use chillerlan\HTTP\Psr7;
-use chillerlan\Logger\{Log, LogOptionsTrait, Output\LogOutputAbstract};
 use chillerlan\OAuth\{Core\AccessToken, Core\OAuthInterface, OAuthOptions, Storage\MemoryStorage};
+use chillerlan\OAuthTest\OAuthTestLogger;
 use chillerlan\Settings\SettingsContainerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -86,16 +86,13 @@ abstract class APITestAbstract extends TestCase{
 			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
 			// testHTTPClient
 			'sleep'            => $this->requestDelay,
-			// logger
-			'minLogLevel'      => 'debug',
 		];
 
 		$options = new class($options) extends OAuthOptions{
-			use LogOptionsTrait;
 			protected $sleep;
 		};
 
-		$this->logger   = $this->initLog($options);
+		$this->logger   = new OAuthTestLogger();
 		$http           = $this->initHttp($options, $this->logger);
 		$this->storage  = new MemoryStorage;
 		$this->provider = new $this->FQN($http, $this->storage, $options, $this->logger);
@@ -106,25 +103,6 @@ abstract class APITestAbstract extends TestCase{
 			: new AccessToken(['accessToken' => 'nope']);
 
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
-	}
-
-	/**
-	 * @param $options
-	 *
-	 * @return \Psr\Log\LoggerInterface
-	 */
-	protected function initLog($options):LoggerInterface{
-
-		return (new Log)->addInstance(
-			new class($options) extends LogOutputAbstract{
-
-				protected function __log(string $level, string $message, array $context = null):void{
-					echo PHP_EOL.$message.PHP_EOL.print_r($context, true).PHP_EOL;
-				}
-
-			},
-			'console'
-		);
 	}
 
 	/**
