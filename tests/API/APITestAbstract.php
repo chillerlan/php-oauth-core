@@ -147,7 +147,18 @@ abstract class APITestAbstract extends TestCase{
 	protected function responseJson(ResponseInterface $response){
 		$response->getBody()->rewind();
 
-		return json_decode($response->getBody()->getContents());
+		return Psr7\get_json($response);
+	}
+
+	/**
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 *
+	 * @return mixed
+	 */
+	protected function responseXML(ResponseInterface $response){
+		$response->getBody()->rewind();
+
+		return Psr7\get_xml($response);
 	}
 
 	public function testOAuthInstance(){
