@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMapInterface};
+use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMap, EndpointMapInterface};
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
 use chillerlan\HTTP\Psr7;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
@@ -209,7 +209,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 */
 	public function __call(string $name, array $arguments):ResponseInterface{
 
-		if(!$this instanceof ApiClientInterface){
+		if(!$this instanceof ApiClientInterface || !$this->endpoints instanceof EndpointMap){
 			throw new ApiClientException('MagicAPI not available');
 		}
 
