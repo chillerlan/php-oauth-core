@@ -59,7 +59,7 @@ class OAuthTestLogger extends AbstractLogger{
 	 */
 	public function log($level, $message, array $context = []){
 
-		if(!isset($this::LEVELS[$level]) || !in_array($this->minLoglevel, $this::LEVELS)){
+		if(!isset($this::LEVELS[$level]) || !isset($this::LEVELS[$this->minLoglevel])){
 			return;
 		}
 
