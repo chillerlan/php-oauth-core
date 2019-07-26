@@ -23,14 +23,20 @@ use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger
 use ReflectionClass;
 
 /**
- * @property string $accessTokenURL
- * @property string $authURL
- * @property string $revokeURL
- * @property string $serviceName
- * @property string $userRevokeURL
+ * @property string                                         $accessTokenURL
+ * @property string                                         $authURL
+ * @property string                                         $apiURL
+ * @property \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpoints
+ * @property string                                         $revokeURL
+ * @property string                                         $serviceName
+ * @property string                                         $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, ClientInterface, LoggerAwareInterface{
 	use LoggerAwareTrait;
+
+	protected const ALLOWED_PROPERTIES = [
+		'accessTokenURL', 'apiURL', 'authURL', 'endpoints', 'revokeURL', 'serviceName', 'userRevokeURL'
+	];
 
 	/**
 	 * @var \Psr\Http\Client\ClientInterface
@@ -152,7 +158,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 */
 	public function __get(string $name):?string{
 
-		if(\in_array($name, ['serviceName', 'authURL', 'accessTokenURL', 'revokeURL', 'userRevokeURL', 'apiURL'], true)){
+		if(\in_array($name, $this::ALLOWED_PROPERTIES, true)){
 			return $this->{$name};
 		}
 
