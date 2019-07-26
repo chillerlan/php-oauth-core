@@ -7,10 +7,9 @@
  * @license      MIT
  */
 
-use chillerlan\HTTP\Psr18\CurlClient;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\OAuthTest\{ExampleStorage, OAuthTestLogger};
+use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestSessionStorage, OAuthTestLogger};
 
 ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -29,18 +28,22 @@ $options_arr = [
 	// HTTPOptions
 	'ca_info'          => $CFGDIR.'/cacert.pem',
 	'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/codemasher/php-oauth',
+
+	// testHTTPClient
+	'sleep'            => 0.25,
 ];
 
 /** @var \chillerlan\Settings\SettingsContainerInterface $options */
 $options = new class($options_arr) extends OAuthOptions{
-	protected $sleep;
+	protected $sleep; // testHTTPClient
 };
 
-$logger = new OAuthTestLogger('debug');
+$logger = new OAuthTestLogger('info');
 
 /** @var \chillerlan\HTTP\Psr18\HTTPClientInterface $http */
-$http = new CurlClient($options);
+$http = new OAuthTestHttpClient($options);
+#$http->setLogger($logger);
 
 /** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
-$storage = new ExampleStorage($options, $CFGDIR);
+$storage = new OAuthTestSessionStorage($options, $CFGDIR);
 #$storage->setLogger($logger);
