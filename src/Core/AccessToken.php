@@ -106,10 +106,10 @@ class AccessToken extends SettingsContainerAbstract{
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function setExpiry(int $expires = null):AccessToken{
-		$now = time();
+		$now = \time();
 
 		if($expires!== null){
-			$expires = intval($expires);
+			$expires = \intval($expires);
 		}
 
 		$this->expires = self::EOL_UNKNOWN;
@@ -131,7 +131,7 @@ class AccessToken extends SettingsContainerAbstract{
 	 * @return bool
 	 */
 	public function isExpired():bool{
-		return $this->expires !== self::EOL_NEVER_EXPIRES && $this->expires !== self::EOL_UNKNOWN && time() > $this->expires;
+		return $this->expires !== self::EOL_NEVER_EXPIRES && $this->expires !== self::EOL_UNKNOWN && \time() > $this->expires;
 	}
 
 }

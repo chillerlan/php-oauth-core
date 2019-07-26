@@ -69,7 +69,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	 */
 	public function clearAccessToken(string $service):OAuthStorageInterface{
 
-		if(array_key_exists($service, $this->tokens)){
+		if(\array_key_exists($service, $this->tokens)){
 			unset($this->tokens[$service]);
 		}
 
@@ -81,7 +81,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	 */
 	public function clearAllAccessTokens():OAuthStorageInterface{
 
-		foreach(array_keys($this->tokens) as $service){
+		foreach(\array_keys($this->tokens) as $service){
 			unset($this->tokens[$service]);
 		}
 
@@ -133,7 +133,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	 */
 	public function clearCSRFState(string $service):OAuthStorageInterface{
 
-		if(array_key_exists($service, $this->states)){
+		if(\array_key_exists($service, $this->states)){
 			unset($this->states[$service]);
 		}
 

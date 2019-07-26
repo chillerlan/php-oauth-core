@@ -32,7 +32,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 */
 	public function getAuthURL(array $params = null):UriInterface{
 
-		$params = array_merge(
+		$params = \array_merge(
 			$params ?? [],
 			['oauth_token' => $this->getRequestToken()->accessToken]
 		);
@@ -77,9 +77,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
-		parse_str(Psr7\decompress_content($response), $data);
+		\parse_str(Psr7\decompress_content($response), $data);
 
-		if(!$data || !is_array($data)){
+		if(!$data || !\is_array($data)){
 			throw new ProviderException('unable to parse token response');
 		}
 		elseif(isset($data['error'])){
@@ -115,12 +115,12 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return string
 	 */
 	protected function nonce():string{
-		$nonce = random_bytes(32);
+		$nonce = \random_bytes(32);
 
 		// use the sodium extension if available
-		return function_exists('sodium_bin2hex')
-			? sodium_bin2hex($nonce)
-			: bin2hex($nonce);
+		return \function_exists('sodium_bin2hex')
+			? \sodium_bin2hex($nonce)
+			: \bin2hex($nonce);
 	}
 
 	/**
@@ -133,28 +133,28 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{
-		$parseURL = parse_url($url);
+		$parseURL = \parse_url($url);
 
-		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !in_array($parseURL['scheme'], ['http', 'https'], true)){
+		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !\in_array($parseURL['scheme'], ['http', 'https'], true)){
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		parse_str($parseURL['query'] ?? '', $query);
+		\parse_str($parseURL['query'] ?? '', $query);
 
-		$signatureParams = array_merge($query, $params);
+		$signatureParams = \array_merge($query, $params);
 
 		if(isset($signatureParams['oauth_signature'])){
 			unset($signatureParams['oauth_signature']);
 		}
 
-		$key  = implode('&', Psr7\r_rawurlencode([$this->options->secret, $accessTokenSecret ?? '']));
+		$key  = \implode('&', Psr7\r_rawurlencode([$this->options->secret, $accessTokenSecret ?? '']));
 		$data = Psr7\r_rawurlencode([
-			strtoupper($method ?? 'POST'),
+			\strtoupper($method ?? 'POST'),
 			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
 			Psr7\build_http_query($signatureParams),
 		]);
 
-		return base64_encode(hash_hmac('sha1', implode('&', $data), $key, true));
+		return \base64_encode(\hash_hmac('sha1', \implode('&', $data), $key, true));
 	}
 
 	/**
@@ -183,7 +183,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 		$uri = $request->getUri();
 
-		parse_str($uri->getQuery(), $query);
+		\parse_str($uri->getQuery(), $query);
 
 		$parameters = [
 			'oauth_consumer_key'     => $this->options->key,
@@ -196,7 +196,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$parameters['oauth_signature'] = $this->getSignature(
 			(string)$uri->withQuery('')->withFragment(''),
-			array_merge($query, $parameters),
+			\array_merge($query, $parameters),
 			$request->getMethod(),
 			$token->accessTokenSecret
 		);

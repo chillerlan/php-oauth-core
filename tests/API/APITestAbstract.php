@@ -65,9 +65,9 @@ abstract class APITestAbstract extends TestCase{
 	protected $requestDelay = 0.25;
 
 	protected function setUp():void{
-		ini_set('date.timezone', 'Europe/Amsterdam');
+		\ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$file = file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
+		$file = \file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
 		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
 
 		if($this->dotEnv->get('IS_CI') === 'TRUE'){

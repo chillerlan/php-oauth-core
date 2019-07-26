@@ -134,7 +134,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
-		if($this instanceof ApiClientInterface && !empty($this->endpointMap) && class_exists($this->endpointMap)){
+		if($this instanceof ApiClientInterface && !empty($this->endpointMap) && \class_exists($this->endpointMap)){
 			$this->endpoints = new $this->endpointMap;
 
 			if(!$this->endpoints instanceof EndpointMapInterface){
@@ -152,7 +152,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 */
 	public function __get(string $name):?string{
 
-		if(in_array($name, ['serviceName', 'authURL', 'accessTokenURL', 'revokeURL', 'userRevokeURL', 'apiURL'], true)){
+		if(\in_array($name, ['serviceName', 'authURL', 'accessTokenURL', 'revokeURL', 'userRevokeURL', 'apiURL'], true)){
 			return $this->{$name};
 		}
 
@@ -222,22 +222,22 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 		$endpoint      = $this->endpoints->API_BASE.$m['path'];
 		$method        = $m['method'] ?? 'GET';
 		$body          = [];
-		$headers       = isset($m['headers']) && is_array($m['headers']) ? $m['headers'] : [];
+		$headers       = isset($m['headers']) && \is_array($m['headers']) ? $m['headers'] : [];
 		$path_elements = $m['path_elements'] ?? [];
-		$params_in_url = count($path_elements);
+		$params_in_url = \count($path_elements);
 		$params        = $arguments[$params_in_url] ?? [];
-		$urlparams     = array_slice($arguments,0 , $params_in_url);
+		$urlparams     = \array_slice($arguments,0 , $params_in_url);
 
 		if($params_in_url > 0){
 
-			if(count($urlparams) < $params_in_url){
-				throw new APIClientException('too few URL params, required: '.implode(', ', $path_elements));
+			if(\count($urlparams) < $params_in_url){
+				throw new APIClientException('too few URL params, required: '.\implode(', ', $path_elements));
 			}
 
-			$endpoint = sprintf($endpoint, ...$urlparams);
+			$endpoint = \sprintf($endpoint, ...$urlparams);
 		}
 
-		if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
+		if(\in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
 			$body = $arguments[$params_in_url + 1] ?? $params;
 
 			if($params === $body){
@@ -249,7 +249,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 
 		$params = $this->cleanQueryParams($params);
 
-		$this->logger->debug('OAuthProvider::__call() -> '.(new ReflectionClass($this))->getShortName().'::'.$name.'()', [
+		$this->logger->debug('OAuthProvider::__call() -> '.$this->serviceName.'::'.$name.'()', [
 			'$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers,
 		]);
 
@@ -295,14 +295,14 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 		}
 
 		if(is_array($body) && $request->hasHeader('content-type')){
-			$contentType = strtolower($request->getHeaderLine('content-type'));
+			$contentType = \strtolower($request->getHeaderLine('content-type'));
 
 			// @todo: content type support
 			if($contentType === 'application/x-www-form-urlencoded'){
-				$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));
+				$body = $this->streamFactory->createStream(\http_build_query($body, '', '&', \PHP_QUERY_RFC1738));
 			}
 			elseif($contentType === 'application/json'){
-				$body = $this->streamFactory->createStream(json_encode($body));
+				$body = $this->streamFactory->createStream(\json_encode($body));
 			}
 
 		}
@@ -325,7 +325,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 
 		// get authorization only if we request the provider API
-		if(strpos((string)$request->getUri(), $this->apiURL) === 0){
+		if(\strpos((string)$request->getUri(), $this->apiURL) === 0){
 			$token = $this->storage->getAccessToken($this->serviceName);
 
 			// attempt to refresh an expired token

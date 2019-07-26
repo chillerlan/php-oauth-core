@@ -11,7 +11,7 @@ use chillerlan\OAuth\OAuthOptions;
 use chillerlan\DotEnv\DotEnv;
 use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestSessionStorage, OAuthTestLogger};
 
-ini_set('date.timezone', 'Europe/Amsterdam');
+\ini_set('date.timezone', 'Europe/Amsterdam');
 
 /** @var string $ENVVAR */
 /** @var string $CFGDIR */

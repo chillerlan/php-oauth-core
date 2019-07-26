@@ -43,7 +43,7 @@ trait OAuth2TokenRefreshTrait{
 		if(empty($refreshToken)){
 
 			if(!$this instanceof AccessTokenForRefresh){
-				throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
+				throw new ProviderException(\sprintf('no refresh token available, token expired [%s]', \date('Y-m-d h:i:s A', $token->expires)));
 			}
 
 			$refreshToken = $token->accessToken;
@@ -61,7 +61,7 @@ trait OAuth2TokenRefreshTrait{
 			->createRequest('POST', $this->refreshTokenURL ?? $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)))
+			->withBody($this->streamFactory->createStream(\http_build_query($body, '', '&', \PHP_QUERY_RFC1738)))
 		;
 
 		foreach($this->authHeaders as $header => $value){

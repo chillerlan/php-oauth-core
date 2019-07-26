@@ -35,15 +35,15 @@ trait OAuth2ClientCredentialsTrait{
 		$params = ['grant_type' => 'client_credentials'];
 
 		if($scopes !== null){
-			$params['scope'] = implode($this->scopesDelimiter, $scopes);
+			$params['scope'] = \implode($this->scopesDelimiter, $scopes);
 		}
 
 		$request = $this->requestFactory
 			->createRequest('POST', $this->clientCredentialsTokenURL ?? $this->accessTokenURL)
-			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
+			->withHeader('Authorization', 'Basic '.\base64_encode($this->options->key.':'.$this->options->secret))
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(http_build_query($params, '', '&', PHP_QUERY_RFC1738)))
+			->withBody($this->streamFactory->createStream(\http_build_query($params, '', '&', \PHP_QUERY_RFC1738)))
 		;
 
 		foreach($this->authHeaders as $header => $value){

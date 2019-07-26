@@ -62,7 +62,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			unset($params['client_secret']);
 		}
 
-		$params = array_merge($params, [
+		$params = \array_merge($params, [
 			'client_id'     => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
 			'response_type' => 'code',
@@ -70,7 +70,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		]);
 
 		if($scopes !== null){
-			$params['scope'] = implode($this->scopesDelimiter, $scopes);
+			$params['scope'] = \implode($this->scopesDelimiter, $scopes);
 		}
 
 		if($this instanceof CSRFToken){
@@ -87,9 +87,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
-		$data = json_decode(Psr7\decompress_content($response), true); // silly amazon...
+		$data = \json_decode(Psr7\decompress_content($response), true); // silly amazon...
 
-		if(!is_array($data)){
+		if(!\is_array($data)){
 			throw new ProviderException('unable to parse token response');
 		}
 
@@ -143,7 +143,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->createRequest('POST', $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)));
+			->withBody($this->streamFactory->createStream(\http_build_query($body, '', '&', \PHP_QUERY_RFC1738)));
 
 		foreach($this->authHeaders as $header => $value){
 			$request = $request->withHeader($header, $value);
@@ -165,10 +165,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 
-		if(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_HEADER)){
+		if(\array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_HEADER)){
 			$request = $request->withHeader('Authorization', OAuth2Interface::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken);
 		}
-		elseif(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_QUERY)){
+		elseif(\array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_QUERY)){
 			$uri = Psr7\merge_query((string)$request->getUri(), [OAuth2Interface::AUTH_METHODS_QUERY[$this->authMethod] => $token->accessToken]);
 
 			$request = $request->withUri($this->uriFactory->createUri($uri));

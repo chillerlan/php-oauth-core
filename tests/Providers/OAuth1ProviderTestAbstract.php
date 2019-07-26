@@ -13,6 +13,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\HTTP\Psr17;
+use chillerlan\HTTP\Psr7;
 use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
 
@@ -41,7 +42,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 	}
 
 	public function testGetAuthURL(){
-		parse_str(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY), $query);
+		\parse_str(\parse_url($this->provider->getAuthURL(), \PHP_URL_QUERY), $query);
 
 		$this->assertSame('test_request_token', $query['oauth_token']);
 	}
@@ -127,7 +128,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		$token = new AccessToken(['accessTokenSecret' => 'test_request_token_secret']);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this->assertSame('such data! much wow!', json_decode($this->provider->request('')->getBody()->getContents())->data);
+		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request(''))->data);
 	}
 
 }

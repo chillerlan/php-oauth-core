@@ -51,7 +51,7 @@ class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function sendRequest(RequestInterface $request):ResponseInterface{
-		usleep($this->options->sleep * 1000000);
+		\usleep($this->options->sleep * 1000000);
 
 		$response = $this->client->sendRequest($request);
 

@@ -34,7 +34,7 @@ trait OAuth2CSRFTokenTrait{
 
 		$knownState = $this->storage->getCSRFState($this->serviceName);
 
-		if(!hash_equals($knownState, $state)){
+		if(!\hash_equals($knownState, $state)){
 			throw new ProviderException('invalid CSRF state: '.$this->serviceName.' '.$state);
 		}
 
@@ -48,7 +48,7 @@ trait OAuth2CSRFTokenTrait{
 	protected function setState(array $params):array{
 
 		if(!isset($params['state'])){
-			$params['state'] = sha1(random_bytes(256));
+			$params['state'] = \sha1(\random_bytes(256));
 		}
 
 		$this->storage->storeCSRFState($this->serviceName, $params['state']);

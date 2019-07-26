@@ -60,9 +60,9 @@ class OAuthTestLogger extends AbstractLogger{
 	 * @throws \Exception
 	 */
 	public function setLoglevel(string $loglevel):void{
-		$loglevel = strtolower($loglevel);
+		$loglevel = \strtolower($loglevel);
 
-		if(!array_key_exists($loglevel, $this::LEVELS)){
+		if(!\array_key_exists($loglevel, $this::LEVELS)){
 			throw new Exception('invalid loglevel');
 		}
 
@@ -81,11 +81,11 @@ class OAuthTestLogger extends AbstractLogger{
 		}
 
 		if($this::LEVELS[$level] >= $this::LEVELS[$this->loglevel]){
-			echo sprintf(
+			echo \sprintf(
 				'[%s][%s] %s',
-				date('Y-m-d H:i:s'),
-				substr($level, 0, 4),
-				str_replace("\n", "\n".str_repeat(' ', 28), trim($message))
+				\date('Y-m-d H:i:s'),
+				\substr($level, 0, 4),
+				\str_replace("\n", "\n".\str_repeat(' ', 28), \trim($message))
 			)."\n";
 		}
 
