@@ -18,11 +18,6 @@ use chillerlan\Settings\SettingsContainerInterface;
 class SessionStorage extends OAuthStorageAbstract{
 
 	/**
-	 * @var bool
-	 */
-	protected $sessionStart;
-
-	/**
 	 * @var string
 	 */
 	protected $sessionVar;
@@ -133,7 +128,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	public function clearAllAccessTokens():OAuthStorageInterface{
 
 		foreach(array_keys($_SESSION[$this->sessionVar]) as $service){
-			unset($_SESSION[$this->sessionVar][$service]); // trigger the memzero destructor
+			unset($_SESSION[$this->sessionVar][$service]);
 		}
 
 		unset($_SESSION[$this->sessionVar]);
