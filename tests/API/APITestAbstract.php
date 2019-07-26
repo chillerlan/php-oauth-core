@@ -13,14 +13,13 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\HTTP\Psr18\CurlClient;
 use chillerlan\HTTP\Psr7;
-use chillerlan\OAuth\{Core\AccessToken, Core\OAuthInterface, OAuthOptions, Storage\MemoryStorage};
-use chillerlan\OAuthTest\OAuthTestLogger;
 use chillerlan\Settings\SettingsContainerInterface;
+use chillerlan\OAuth\{Core\AccessToken, Core\OAuthInterface, OAuthOptions};
+use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestLogger, OAuthTestMemoryStorage};
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 abstract class APITestAbstract extends TestCase{
@@ -94,49 +93,18 @@ abstract class APITestAbstract extends TestCase{
 
 		$this->logger   = new OAuthTestLogger('debug');
 		$http           = $this->initHttp($options, $this->logger);
-		$this->storage  = new MemoryStorage;
+		$this->storage  = new OAuthTestMemoryStorage($options, $this->CFG);
 		$this->provider = new $this->FQN($http, $this->storage, $options, $this->logger);
-
-		$tokenfile = $this->CFG.'/'.$this->provider->serviceName.'.token.json';
-		$token = is_file($tokenfile)
-			? (new AccessToken)->fromJSON(file_get_contents($tokenfile))
-			: new AccessToken(['accessToken' => 'nope']);
-
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 	}
 
 	/**
-	 * @param $options
+	 * @param \chillerlan\Settings\SettingsContainerInterface $options
+	 * @param \Psr\Log\LoggerInterface                        $logger
 	 *
 	 * @return \Psr\Http\Client\ClientInterface
 	 */
-	protected function initHttp($options, $logger):ClientInterface{
-		return new class($options, $logger) implements ClientInterface{
-			/** @var \Psr\Http\Client\ClientInterface */
-			protected $client;
-			/** @var \chillerlan\Settings\SettingsContainerInterface  */
-			protected $options;
-			/** @var \Psr\Log\LoggerInterface  */
-			protected $logger;
-
-			public function __construct(SettingsContainerInterface $options, LoggerInterface $logger){
-				$this->options = $options;
-				$this->logger  = $logger;
-				$this->client  = new CurlClient($this->options);
-			}
-
-			public function sendRequest(RequestInterface $request):ResponseInterface{
-				usleep($this->options->sleep * 1000000);
-
-				$response = $this->client->sendRequest($request);
-
-				$this->logger->debug("\n-----REQUEST------\n".Psr7\message_to_string($request));
-				$this->logger->debug("\n-----RESPONSE-----\n".Psr7\message_to_string($response));
-
-				$response->getBody()->rewind();
-				return $response;
-			}
-		};
+	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger):ClientInterface{
+		return new OAuthTestHttpClient($options, null, $logger);
 	}
 
 	/**

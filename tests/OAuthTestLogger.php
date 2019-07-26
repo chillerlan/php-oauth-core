@@ -13,9 +13,11 @@
 namespace chillerlan\OAuthTest;
 
 use Psr\Log\{AbstractLogger, LogLevel};
+use Exception;
 
 class OAuthTestLogger extends AbstractLogger{
 
+	protected const E_NONE      = 0x00;
 	protected const E_DEBUG     = 0x01;
 	protected const E_INFO      = 0x02;
 	protected const E_NOTICE    = 0x04;
@@ -26,6 +28,7 @@ class OAuthTestLogger extends AbstractLogger{
 	protected const E_EMERGENCY = 0x80;
 
 	protected const LEVELS = [
+		'none'              => self::E_NONE,
 		LogLevel::DEBUG     => self::E_DEBUG,
 		LogLevel::INFO      => self::E_INFO,
 		LogLevel::NOTICE    => self::E_NOTICE,
@@ -40,15 +43,30 @@ class OAuthTestLogger extends AbstractLogger{
 	 * @see \Psr\Log\LogLevel
 	 * @var string
 	 */
-	protected $minLoglevel;
+	protected $loglevel;
 
 	/**
 	 * OAuthTestLogger constructor.
 	 *
-	 * @param string $minLoglevel
+	 * @param string $loglevel
 	 */
-	public function __construct(string $minLoglevel = null){
-		$this->minLoglevel = $minLoglevel;
+	public function __construct(string $loglevel = null){
+		$this->setLoglevel($loglevel ?? 'none');
+	}
+
+	/**
+	 * @param string $loglevel
+	 *
+	 * @throws \Exception
+	 */
+	public function setLoglevel(string $loglevel):void{
+		$loglevel = strtolower($loglevel);
+
+		if(!array_key_exists($loglevel, $this::LEVELS)){
+			throw new Exception('invalid loglevel');
+		}
+
+		$this->loglevel = $loglevel;
 	}
 
 	/**
@@ -56,19 +74,19 @@ class OAuthTestLogger extends AbstractLogger{
 	 * @param string $message
 	 * @param array  $context
 	 */
-	public function log($level, $message, array $context = []){
+	public function log($level, $message, array $context = []):void{
 
-		if(!isset($this::LEVELS[$level]) || !isset($this::LEVELS[$this->minLoglevel])){
+		if($this->loglevel === 'none' || !isset($this::LEVELS[$level]) || !isset($this::LEVELS[$this->loglevel])){
 			return;
 		}
 
-		if($this::LEVELS[$level] >= $this::LEVELS[$this->minLoglevel]){
+		if($this::LEVELS[$level] >= $this::LEVELS[$this->loglevel]){
 			echo sprintf(
-				     '[%s][%s] %s',
-				     date('Y-m-d H:i:s'),
-				     substr($level, 0, 4),
-				     str_replace("\n", "\n".str_repeat(' ', 28), trim($message))
-			     )."\n";
+				'[%s][%s] %s',
+				date('Y-m-d H:i:s'),
+				substr($level, 0, 4),
+				str_replace("\n", "\n".str_repeat(' ', 28), trim($message))
+			)."\n";
 		}
 
 	}

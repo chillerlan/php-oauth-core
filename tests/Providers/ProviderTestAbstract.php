@@ -75,6 +75,9 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->storage->storeAccessToken($this->provider->serviceName, new AccessToken(['accessToken' => 'foo']));
 	}
 
+	/**
+	 * @return \Psr\Http\Client\ClientInterface
+	 */
 	protected function initHttp():ClientInterface{
 		return new class($this->reflection, $this->responses) implements ClientInterface{
 

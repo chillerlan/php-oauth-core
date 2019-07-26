@@ -1,8 +1,8 @@
 <?php
 /**
- * Class ExampleStorage
+ * Class OAuthTestSessionStorage
  *
- * @filesource   ExampleStorage.php
+ * @filesource   OAuthTestSessionStorage.php
  * @created      26.07.2019
  * @package      chillerlan\OAuthTest
  * @author       smiley <smiley@chillerlan.net>
@@ -16,7 +16,7 @@ use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Storage\{OAuthStorageException, OAuthStorageInterface, SessionStorage};
 use chillerlan\Settings\SettingsContainerInterface;
 
-class ExampleStorage extends SessionStorage{
+class OAuthTestSessionStorage extends SessionStorage{
 
 	/**
 	 * @var string
@@ -24,7 +24,7 @@ class ExampleStorage extends SessionStorage{
 	protected $storagepath;
 
 	/**
-	 * ExampleStorage constructor.
+	 * OAuthTestSessionStorage constructor.
 	 *
 	 * @param \chillerlan\Settings\SettingsContainerInterface|null $options
 	 * @param string|null                                          $storagepath
