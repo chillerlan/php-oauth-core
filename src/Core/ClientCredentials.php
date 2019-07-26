@@ -17,7 +17,7 @@ interface ClientCredentials{
 	/**
 	 * @param array $scopes
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function getClientCredentialsToken(array $scopes = null):AccessToken;
 

@@ -41,7 +41,7 @@ interface OAuth2Interface extends OAuthInterface{
 	 * @param string      $code
 	 * @param string|null $state
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function getAccessToken(string $code, string $state = null):AccessToken;
 

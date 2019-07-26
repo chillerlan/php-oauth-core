@@ -17,7 +17,7 @@ interface TokenRefresh{
 	/**
 	 * @param \chillerlan\OAuth\Core\AccessToken|null $token
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function refreshAccessToken(AccessToken $token = null):AccessToken;
 

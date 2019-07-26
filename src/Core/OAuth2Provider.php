@@ -83,7 +83,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
@@ -123,7 +123,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param string      $code
 	 * @param string|null $state
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function getAccessToken(string $code, string $state = null):AccessToken{
 
