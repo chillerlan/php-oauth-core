@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Core;
 
 /**
- * @implements chillerlan\OAuth\Core\CSRFToken
+ * @implements \chillerlan\OAuth\Core\CSRFToken
  *
  * @property string                                          $serviceName
  * @property \chillerlan\OAuth\Storage\OAuthStorageInterface $storage

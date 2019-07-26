@@ -41,7 +41,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @param string $service
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
 	public function getAccessToken(string $service):AccessToken{
@@ -58,7 +58,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	 *
 	 * @return bool
 	 */
-	public function hasAccessToken(string $service):bool {
+	public function hasAccessToken(string $service):bool{
 		return isset($this->tokens[$service]) && $this->tokens[$service] instanceof AccessToken;
 	}
 
@@ -82,7 +82,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	public function clearAllAccessTokens():OAuthStorageInterface{
 
 		foreach(array_keys($this->tokens) as $service){
-			unset($this->tokens[$service]); // trigger the memzero destructor
+			unset($this->tokens[$service]);
 		}
 
 		$this->tokens = [];
@@ -122,7 +122,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	 *
 	 * @return bool
 	 */
-	public function hasCSRFState(string $service):bool {
+	public function hasCSRFState(string $service):bool{
 		return isset($this->states[$service]) && null !== $this->states[$service];
 	}
 

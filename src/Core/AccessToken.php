@@ -92,31 +92,24 @@ class AccessToken extends SettingsContainerAbstract{
 	/**
 	 * AccessToken setter
 	 *
-	 * @param string $property
-	 * @param mixed  $value
+	 * @param int|null $expires
 	 *
 	 * @return void
 	 */
-	public function __set(string $property, $value):void{
-
-		if(property_exists($this, $property)){
-			$property === 'expires'
-				? $this->setExpiry($value)
-				: $this->{$property} = $value;
-		}
-
+	protected function set_expires(int $expires = null):void{
+		$this->setExpiry($expires);
 	}
 
 	/**
 	 * @param int $expires
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function setExpiry(int $expires = null):AccessToken{
 		$now = time();
 
 		if($expires!== null){
-			$expires =  intval($expires);
+			$expires = intval($expires);
 		}
 
 		$this->expires = self::EOL_UNKNOWN;

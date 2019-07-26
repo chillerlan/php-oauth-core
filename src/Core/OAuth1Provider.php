@@ -2,6 +2,8 @@
 /**
  * Class OAuth1Provider
  *
+ * @link https://tools.ietf.org/html/rfc5849
+ *
  * @filesource   OAuth1Provider.php
  * @created      09.07.2017
  * @package      chillerlan\OAuth\Core
@@ -48,7 +50,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			'oauth_consumer_key'     => $this->options->key,
 			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
-			'oauth_timestamp'        => (new DateTime())->format('U'),
+			'oauth_timestamp'        => (new DateTime)->format('U'),
 			'oauth_version'          => '1.0',
 		];
 
@@ -116,7 +118,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$nonce = random_bytes(32);
 
 		// use the sodium extension if available
-		return function_exists('sodium_bin2hex') ? sodium_bin2hex($nonce) : bin2hex($nonce);
+		return function_exists('sodium_bin2hex')
+			? sodium_bin2hex($nonce)
+			: bin2hex($nonce);
 	}
 
 	/**
@@ -198,7 +202,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		);
 
 		if(isset($query['oauth_session_handle'])){
-			$parameters['oauth_session_handle'] = $query['oauth_session_handle'];
+			$parameters['oauth_session_handle'] = $query['oauth_session_handle']; // @codeCoverageIgnore
 		}
 
 		return $request->withHeader('Authorization', 'OAuth '.Psr7\build_http_query($parameters, true, ', ', '"'));

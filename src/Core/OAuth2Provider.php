@@ -2,6 +2,8 @@
 /**
  * Class OAuth2Provider
  *
+ * @link https://tools.ietf.org/html/rfc6749
+ *
  * @filesource   OAuth2Provider.php
  * @created      09.07.2017
  * @package      chillerlan\OAuth\Core

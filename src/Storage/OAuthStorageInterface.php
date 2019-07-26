@@ -27,7 +27,7 @@ interface OAuthStorageInterface{
 	/**
 	 * @param string $service
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getAccessToken(string $service):AccessToken;
@@ -95,7 +95,7 @@ interface OAuthStorageInterface{
 	/**
 	 * @param string $data
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function fromStorage(string $data):AccessToken;
 

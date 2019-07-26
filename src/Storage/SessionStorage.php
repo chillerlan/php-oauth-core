@@ -87,7 +87,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @param string $service
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken|\chillerlan\Settings\SettingsContainerInterface
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
 	public function getAccessToken(string $service):AccessToken{

@@ -152,11 +152,11 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 */
 	public function __get(string $name):?string{
 
-		if(!in_array($name, ['serviceName', 'authURL', 'accessTokenURL', 'revokeURL', 'userRevokeURL', 'apiURL'], true)){
-			return null;
+		if(in_array($name, ['serviceName', 'authURL', 'accessTokenURL', 'revokeURL', 'userRevokeURL', 'apiURL'], true)){
+			return $this->{$name};
 		}
 
-		return $this->{$name};
+		return null;
 	}
 
 	/**
