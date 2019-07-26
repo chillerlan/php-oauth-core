@@ -8,9 +8,9 @@
  */
 
 use chillerlan\HTTP\Psr18\CurlClient;
-use chillerlan\OAuth\{OAuthOptions, Storage\SessionStorage};
+use chillerlan\OAuth\OAuthOptions;
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\OAuthTest\OAuthTestLogger;
+use chillerlan\OAuthTest\{ExampleStorage, OAuthTestLogger};
 
 ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -42,5 +42,5 @@ $logger = new OAuthTestLogger('debug');
 $http = new CurlClient($options);
 
 /** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
-$storage = new SessionStorage;
+$storage = new ExampleStorage($options, $CFGDIR);
 #$storage->setLogger($logger);
