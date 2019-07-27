@@ -25,7 +25,9 @@ use ReflectionClass;
 /**
  * @property string                                         $accessTokenURL
  * @property string                                         $authURL
+ * @property string                                         $apiDocs
  * @property string                                         $apiURL
+ * @property string                                         $applicationURL
  * @property \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpoints
  * @property string                                         $revokeURL
  * @property string                                         $serviceName
@@ -35,7 +37,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	use LoggerAwareTrait;
 
 	protected const ALLOWED_PROPERTIES = [
-		'accessTokenURL', 'apiURL', 'authURL', 'endpoints', 'revokeURL', 'serviceName', 'userRevokeURL'
+		'accessTokenURL', 'apiDocs', 'apiURL', 'applicationURL', 'authURL', 'endpoints', 'revokeURL', 'serviceName', 'userRevokeURL'
 	];
 
 	/**
@@ -86,7 +88,17 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	/**
 	 * @var string
 	 */
+	protected $apiDocs;
+
+	/**
+	 * @var string
+	 */
 	protected $apiURL;
+
+	/**
+	 * @var string
+	 */
+	protected $applicationURL;
 
 	/**
 	 * @var string
