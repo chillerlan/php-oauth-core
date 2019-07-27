@@ -13,12 +13,10 @@
 namespace chillerlan\OAuthExamples;
 
 use chillerlan\OAuth\Core\{
-	ClientCredentials, CSRFToken, OAuth2CSRFTokenTrait, OAuth2ClientCredentialsTrait,
-	OAuth2Provider, OAuth2TokenRefreshTrait, TokenExpires, TokenRefresh, AccessTokenForRefresh
+	ClientCredentials, CSRFToken, OAuth2Provider, TokenExpires, TokenRefresh, AccessTokenForRefresh
 };
 
 class OAuth2Testprovider extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh, AccessTokenForRefresh{
-	use OAuth2CSRFTokenTrait, OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	protected $apiURL         = 'https://api.example.com/';
 	protected $authURL        = 'https://example.com/oauth2/authorize';

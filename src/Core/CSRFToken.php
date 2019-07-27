@@ -12,6 +12,12 @@
 
 namespace chillerlan\OAuth\Core;
 
+/**
+ * protected methods:
+ *
+ * @method checkState(string $state = null):void
+ * @method setState(array $params):array
+ */
 interface CSRFToken{
 
 }

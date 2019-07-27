@@ -17,11 +17,6 @@ namespace chillerlan\OAuth\Core;
 use chillerlan\HTTP\Psr7;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
-/**
- * from OAuth2CSRFTokenTrait:
- * @method array setState(array $params)
- * @method \chillerlan\OAuth\Core\OAuth2Interface checkState(string $state = null)
- */
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
@@ -178,6 +173,126 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		return $request;
+	}
+
+	/**
+	 * @param array $scopes
+	 *
+	 * @return \chillerlan\OAuth\Core\AccessToken
+	 */
+	public function getClientCredentialsToken(array $scopes = null):AccessToken{
+		$params = ['grant_type' => 'client_credentials'];
+
+		if($scopes !== null){
+			$params['scope'] = \implode($this->scopesDelimiter, $scopes);
+		}
+
+		$request = $this->requestFactory
+			->createRequest('POST', $this->clientCredentialsTokenURL ?? $this->accessTokenURL)
+			->withHeader('Authorization', 'Basic '.\base64_encode($this->options->key.':'.$this->options->secret))
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withHeader('Accept-Encoding', 'identity')
+			->withBody($this->streamFactory->createStream(\http_build_query($params, '', '&', \PHP_QUERY_RFC1738)))
+		;
+
+		foreach($this->authHeaders as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
+		$token = $this->parseTokenResponse($this->http->sendRequest($request));
+
+		$this->storage->storeAccessToken($this->serviceName, $token);
+
+		return $token;
+	}
+
+	/**
+	 * @param \chillerlan\OAuth\Core\AccessToken $token
+	 *
+	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 */
+	public function refreshAccessToken(AccessToken $token = null):AccessToken{
+
+		if($token === null){
+			$token = $this->storage->getAccessToken($this->serviceName);
+		}
+
+		$refreshToken = $token->refreshToken;
+
+		if(empty($refreshToken)){
+
+			if(!$this instanceof AccessTokenForRefresh){
+				throw new ProviderException(\sprintf('no refresh token available, token expired [%s]', \date('Y-m-d h:i:s A', $token->expires)));
+			}
+
+			$refreshToken = $token->accessToken;
+		}
+
+		$body = [
+			'client_id'     => $this->options->key,
+			'client_secret' => $this->options->secret,
+			'grant_type'    => 'refresh_token',
+			'refresh_token' => $refreshToken,
+			'type'          => 'web_server',
+		];
+
+		$request = $this->requestFactory
+			->createRequest('POST', $this->refreshTokenURL ?? $this->accessTokenURL)
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withHeader('Accept-Encoding', 'identity')
+			->withBody($this->streamFactory->createStream(\http_build_query($body, '', '&', \PHP_QUERY_RFC1738)))
+		;
+
+		foreach($this->authHeaders as $header => $value){
+			$request = $request->withAddedHeader($header, $value);
+		}
+
+		$newToken = $this->parseTokenResponse($this->http->sendRequest($request));
+
+		if(empty($newToken->refreshToken)){
+			$newToken->refreshToken = $refreshToken;
+		}
+
+		$this->storage->storeAccessToken($this->serviceName, $newToken);
+
+		return $newToken;
+	}
+
+	/**
+	 * @param string|null $state
+	 *
+	 * @return void
+	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 */
+	protected function checkState(string $state = null):void{
+
+		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
+			throw new ProviderException('invalid state for '.$this->serviceName);
+		}
+
+		$knownState = $this->storage->getCSRFState($this->serviceName);
+
+		if(!\hash_equals($knownState, $state)){
+			throw new ProviderException('invalid CSRF state: '.$this->serviceName.' '.$state);
+		}
+
+	}
+
+	/**
+	 * @param array $params
+	 *
+	 * @return array
+	 */
+	protected function setState(array $params):array{
+
+		if(!isset($params['state'])){
+			$params['state'] = \sha1(\random_bytes(256));
+		}
+
+		$this->storage->storeCSRFState($this->serviceName, $params['state']);
+
+		return $params;
 	}
 
 }
