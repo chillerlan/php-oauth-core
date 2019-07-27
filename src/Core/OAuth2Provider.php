@@ -179,8 +179,14 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param array $scopes
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function getClientCredentialsToken(array $scopes = null):AccessToken{
+
+		if(!$this instanceof ClientCredentials){
+			throw new ProviderException('client credentials token not supported');
+		}
+
 		$params = ['grant_type' => 'client_credentials'];
 
 		if($scopes !== null){
@@ -213,6 +219,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken $token = null):AccessToken{
+
+		if(!$this instanceof TokenRefresh){
+			throw new ProviderException('token refresh not supported');
+		}
 
 		if($token === null){
 			$token = $this->storage->getAccessToken($this->serviceName);
