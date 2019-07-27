@@ -154,9 +154,9 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	/**
 	 * @param string $name
 	 *
-	 * @return string|null
+	 * @return mixed|null
 	 */
-	public function __get(string $name):?string{
+	public function __get(string $name){
 
 		if(\in_array($name, $this::ALLOWED_PROPERTIES, true)){
 			return $this->{$name};
