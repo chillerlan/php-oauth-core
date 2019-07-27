@@ -18,11 +18,13 @@ use Psr\Http\Message\{
 };
 
 /**
- * @property string $accessTokenURL
- * @property string $authURL
- * @property string $revokeURL
- * @property string $serviceName
- * @property string $userRevokeURL
+ * @property string                                         $accessTokenURL
+ * @property string                                         $authURL
+ * @property string                                         $apiURL
+ * @property \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpoints
+ * @property string                                         $revokeURL
+ * @property string                                         $serviceName
+ * @property string                                         $userRevokeURL
  */
 interface OAuthInterface{
 
