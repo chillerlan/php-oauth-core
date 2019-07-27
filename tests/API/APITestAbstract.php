@@ -110,7 +110,7 @@ abstract class APITestAbstract extends TestCase{
 	/**
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 *
-	 * @return mixed
+	 * @return \stdClass|mixed
 	 */
 	protected function responseJson(ResponseInterface $response){
 		$response->getBody()->rewind();
@@ -121,7 +121,7 @@ abstract class APITestAbstract extends TestCase{
 	/**
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 *
-	 * @return mixed
+	 * @return \SimpleXMLElement|mixed
 	 */
 	protected function responseXML(ResponseInterface $response){
 		$response->getBody()->rewind();
