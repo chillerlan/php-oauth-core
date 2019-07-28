@@ -93,7 +93,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	/**
 	 * @var string
 	 */
-	protected $apiURL;
+	protected $apiURL = '';
 
 	/**
 	 * @var string
