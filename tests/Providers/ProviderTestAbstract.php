@@ -12,6 +12,7 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
+use chillerlan\DotEnv\DotEnv;
 use Psr\Log\LoggerInterface;
 use chillerlan\HTTP\{Psr17, Psr7, Psr7\Response};
 use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage};
@@ -23,6 +24,11 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
 abstract class ProviderTestAbstract extends TestCase{
+
+	/**
+	 * @var string
+	 */
+	protected $CFG = __DIR__.'/../../config';
 
 	/**
 	 * @var string
@@ -55,11 +61,26 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected $logger;
 
 	/**
+	 * @var \chillerlan\DotEnv\DotEnv
+	 */
+	protected $dotEnv;
+
+	/**
 	 * @var array
 	 */
 	protected $responses;
 
+	/**
+	 * @var bool
+	 */
+	protected $is_ci;
+
 	protected function setUp():void{
+
+		$file = \file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
+
+		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
+		$this->is_ci  = $this->dotEnv->get('IS_CI') === 'TRUE';
 
 		$this->options = new OAuthOptions([
 			'key'              => 'testkey',
@@ -69,7 +90,7 @@ abstract class ProviderTestAbstract extends TestCase{
 		]);
 
 		$this->storage    = new MemoryStorage;
-		$this->logger     = new OAuthTestLogger('debug');
+		$this->logger     = new OAuthTestLogger($this->is_ci ? 'none' : 'debug');
 		$this->reflection = new ReflectionClass($this->FQN);
 		$this->provider   = $this->reflection->newInstanceArgs([$this->initHttp(), $this->storage, $this->options, $this->logger]);
 
