@@ -232,7 +232,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 		}
 
 		if(!$this->endpoints->__isset($name)){
-			throw new ApiClientException('endpoint not found');
+			throw new ApiClientException('endpoint not found: "'.$name.'"');
 		}
 
 		$m = $this->endpoints->{$name};

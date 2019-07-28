@@ -12,7 +12,8 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\{Psr17, Psr7\Response};
+use Psr\Log\LoggerInterface;
+use chillerlan\HTTP\{Psr17, Psr7, Psr7\Response};
 use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage};
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, OAuth2Interface, OAuthInterface};
 use chillerlan\OAuthTest\OAuthTestLogger;
@@ -79,16 +80,19 @@ abstract class ProviderTestAbstract extends TestCase{
 	 * @return \Psr\Http\Client\ClientInterface
 	 */
 	protected function initHttp():ClientInterface{
-		return new class($this->reflection, $this->responses) implements ClientInterface{
+		return new class($this->reflection, $this->responses, $this->logger) implements ClientInterface{
 
 			/** @var \ReflectionClass */
 			protected $reflection;
 			/** @var array */
 			protected $responses;
+			/** @var \Psr\Log\LoggerInterface */
+			protected $logger;
 
-			public function __construct(ReflectionClass $reflection, array $responses){
+			public function __construct(ReflectionClass $reflection, array $responses, LoggerInterface $logger){
 				$this->reflection = $reflection;
 				$this->responses  = $responses;
+				$this->logger     = $logger;
 			}
 
 			public function sendRequest(RequestInterface $request):ResponseInterface{
@@ -103,7 +107,12 @@ abstract class ProviderTestAbstract extends TestCase{
 					$body = json_encode($this->responses[$path]);
 				}
 
-				return (new Response)->withBody(Psr17\create_stream_from_input($body));
+				$response = (new Response)->withBody(Psr17\create_stream_from_input($body));
+
+				$this->logger->debug("\n-----REQUEST------\n".Psr7\message_to_string($request));
+				$this->logger->debug("\n-----RESPONSE-----\n".Psr7\message_to_string($response));
+
+				return $response;
 			}
 		};
 	}
