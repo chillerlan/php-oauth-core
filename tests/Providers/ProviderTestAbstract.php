@@ -112,6 +112,8 @@ abstract class ProviderTestAbstract extends TestCase{
 				$this->logger->debug("\n-----REQUEST------\n".Psr7\message_to_string($request));
 				$this->logger->debug("\n-----RESPONSE-----\n".Psr7\message_to_string($response));
 
+				$response->getBody()->rewind();
+
 				return $response;
 			}
 		};
