@@ -25,11 +25,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected $authMethod = self::HEADER_BEARER;
 
 	/**
-	 * @var array
-	 */
-	protected $scopes = [];
-
-	/**
 	 * @var string
 	 */
 	protected $scopesDelimiter = ' ';
