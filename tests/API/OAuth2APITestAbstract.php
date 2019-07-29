@@ -13,6 +13,7 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, OAuth2Interface};
+use chillerlan\OAuth\Storage\MemoryStorage;
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
@@ -30,6 +31,8 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 
 			return;
 		}
+
+		$this->provider->setStorage(new MemoryStorage);
 
 		$token = $this->provider->getClientCredentialsToken();
 
