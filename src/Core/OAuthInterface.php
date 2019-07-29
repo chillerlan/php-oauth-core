@@ -12,6 +12,7 @@
 
 namespace chillerlan\OAuth\Core;
 
+use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use Psr\Http\Message\{
 	RequestFactoryInterface, RequestInterface, ResponseInterface,
 	StreamFactoryInterface, UriFactoryInterface, UriInterface
@@ -56,6 +57,13 @@ interface OAuthInterface{
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface;
+
+	/**
+	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
+	 *
+	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 */
+	public function setStorage(OAuthStorageInterface $storage):OAuthInterface;
 
 	/**
 	 * @param \Psr\Http\Message\RequestFactoryInterface $requestFactory
