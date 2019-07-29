@@ -64,6 +64,13 @@ abstract class APITestAbstract extends TestCase{
 	 */
 	protected $requestDelay = 0.25;
 
+	/**
+	 * a test username for live API tests, defined in .env as {ENV-PREFIX}_TESTUSER
+	 *
+	 * @var string
+	 */
+	protected $testuser;
+
 	protected function setUp():void{
 		\ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -75,6 +82,8 @@ abstract class APITestAbstract extends TestCase{
 
 			return;
 		}
+
+		$this->testuser = $this->dotEnv->get($this->ENV.'_TESTUSER');
 
 		$options = [
 			'key'              => $this->dotEnv->get($this->ENV.'_KEY'),
