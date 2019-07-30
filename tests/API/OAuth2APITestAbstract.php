@@ -20,6 +20,8 @@ use chillerlan\OAuth\Storage\MemoryStorage;
  */
 abstract class OAuth2APITestAbstract extends APITestAbstract{
 
+	protected $clientCredentialsScopes = [];
+
 	public function testOAuth2Instance(){
 		$this->assertInstanceOf(OAuth2Interface::class, $this->provider);
 	}
@@ -34,7 +36,7 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 
 		$this->provider->setStorage(new MemoryStorage);
 
-		$token = $this->provider->getClientCredentialsToken();
+		$token = $this->provider->getClientCredentialsToken($this->clientCredentialsScopes);
 
 		$this->assertInstanceOf(AccessToken::class, $token);
 		$this->assertIsString($token->accessToken);
