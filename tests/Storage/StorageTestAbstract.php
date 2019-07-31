@@ -28,45 +28,52 @@ abstract class StorageTestAbstract extends TestCase{
 	 */
 	protected $token;
 
+	/**
+	 * test service name
+	 *
+	 * @var string
+	 */
+	protected $tsn = 'testService';
+
 	protected function setUp():void{
 		$this->token = new AccessToken(['accessToken' => 'foobar']);
 	}
 
 	public function testTokenStorage(){
 
-		$this->storage->storeAccessToken('testService', $this->token);
-		$this->assertTrue($this->storage->hasAccessToken('testService'));
-		$this->assertSame('foobar', $this->storage->getAccessToken('testService')->accessToken);
+		$this->storage->storeAccessToken($this->tsn, $this->token);
+		$this->assertTrue($this->storage->hasAccessToken($this->tsn));
+		$this->assertSame('foobar', $this->storage->getAccessToken($this->tsn)->accessToken);
 
-		$this->storage->storeCSRFState('testService', 'foobar');
-		$this->assertTrue($this->storage->hasCSRFState('testService'));
-		$this->assertSame('foobar', $this->storage->getCSRFState('testService'));
+		$this->storage->storeCSRFState($this->tsn, 'foobar');
+		$this->assertTrue($this->storage->hasCSRFState($this->tsn));
+		$this->assertSame('foobar', $this->storage->getCSRFState($this->tsn));
 
-		$this->storage->clearCSRFState('testService');
-		$this->assertFalse($this->storage->hasCSRFState('testService'));
+		$this->storage->clearCSRFState($this->tsn);
+		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
 
-		$this->storage->clearAccessToken('testService');
-		$this->assertFalse($this->storage->hasAccessToken('testService'));
+		$this->storage->clearAccessToken($this->tsn);
+		$this->assertFalse($this->storage->hasAccessToken($this->tsn));
 	}
 
 	public function testClearAllAccessTokens(){
 		$this->storage->clearAllAccessTokens();
 
-		$this->assertFalse($this->storage->hasAccessToken('testService'));
-		$this->storage->storeAccessToken('testService', $this->token);
-		$this->assertTrue($this->storage->hasAccessToken('testService'));
+		$this->assertFalse($this->storage->hasAccessToken($this->tsn));
+		$this->storage->storeAccessToken($this->tsn, $this->token);
+		$this->assertTrue($this->storage->hasAccessToken($this->tsn));
 
-		$this->assertFalse($this->storage->hasCSRFState('testService'));
-		$this->storage->storeCSRFState('testService', 'foobar');
-		$this->assertTrue($this->storage->hasCSRFState('testService'));
+		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
+		$this->storage->storeCSRFState($this->tsn, 'foobar');
+		$this->assertTrue($this->storage->hasCSRFState($this->tsn));
 
 		$this->storage->clearAllCSRFStates();
 
-		$this->assertFalse($this->storage->hasCSRFState('testService'));
+		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
 
 		$this->storage->clearAllAccessTokens();
 
-		$this->assertFalse($this->storage->hasAccessToken('testService'));
+		$this->assertFalse($this->storage->hasAccessToken($this->tsn));
 	}
 
 	public function testRetrieveCSRFStateNotFoundException(){
