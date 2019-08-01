@@ -87,6 +87,16 @@ class OAuthTestLogger extends AbstractLogger{
 				\substr($level, 0, 4),
 				\str_replace("\n", "\n".\str_repeat(' ', 28), \trim($message))
 			)."\n";
+
+			if(!empty($context)){
+				$c = '--- CONTEXT START ---'."\n";
+				foreach($context as $k => $v){
+					$c .= '"'.$k.'" => '.var_export($v)."\n";
+				}
+				$c = '--- CONTEXT END ---'."\n";
+
+				echo $c;
+			}
 		}
 
 	}
