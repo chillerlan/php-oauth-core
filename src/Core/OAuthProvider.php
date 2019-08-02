@@ -181,6 +181,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
 	 *
 	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @codeCoverageIgnore
 	 */
 	public function setStorage(OAuthStorageInterface $storage):OAuthInterface{
 		$this->storage = $storage;
