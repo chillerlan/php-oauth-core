@@ -91,7 +91,7 @@ class OAuthTestLogger extends AbstractLogger{
 			if(!empty($context)){
 				$c = "\n".'--- CONTEXT START ---'."\n";
 				foreach($context as $k => $v){
-					$c .= '"'.$k.'" => '.var_export($v, true)."\n";
+					$c .= '\''.$k.'\' => '.var_export($v, true)."\n";
 				}
 				$c .= '--- CONTEXT END ---'."\n\n";
 
