@@ -12,10 +12,11 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\Psr17;
-use chillerlan\HTTP\Psr7;
+use chillerlan\HTTP\{Psr17, Psr7};
 use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth1Interface $provider
@@ -35,6 +36,21 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth1/access_token');
 		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth1/api/request');
 
+	}
+
+	/**
+	 * @return \Psr\Http\Client\ClientInterface
+	 */
+	protected function initHttp():ClientInterface{
+		return new class($this->responses, $this->logger) extends ProviderTestHttpClient{
+
+			public function sendRequest(RequestInterface $request):ResponseInterface{
+				$stream = Psr17\create_stream_from_input($this->responses[$request->getUri()->getPath()]);
+
+				return $this->logRequest($request, (new Response)->withBody($stream));
+			}
+
+		};
 	}
 
 	public function testOAuth1Instance(){

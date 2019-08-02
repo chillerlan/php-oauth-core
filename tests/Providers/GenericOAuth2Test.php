@@ -12,13 +12,36 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuthExamples\OAuth2Testprovider;
+use chillerlan\OAuth\Core\{AccessTokenForRefresh, ClientCredentials, CSRFToken, OAuth2Provider, OAuthInterface, TokenExpires, TokenRefresh};
+use ReflectionClass;
 
 /**
- * @property \chillerlan\OAuthExamples\OAuth2Testprovider $provider
+ * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
  */
 class GenericOAuth2Test extends OAuth2ProviderTestAbstract{
 
-	protected $FQN = OAuth2Testprovider::class;
+	/**
+	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 */
+	protected function getProvider():OAuthInterface{
+
+		$provider = new class($this->initHttp(), $this->storage, $this->options, $this->logger)
+			extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh, AccessTokenForRefresh{
+
+			protected $apiURL         = 'https://api.example.com/';
+			protected $authURL        = 'https://example.com/oauth2/authorize';
+			protected $accessTokenURL = 'https://example.com/oauth2/token';
+			protected $userRevokeURL  = 'https://account.example.com/apps/';
+			protected $endpointMap     = TestEndpoints::class;
+			protected $authHeaders    = ['foo' => 'bar'];
+			protected $apiHeaders     = ['foo' => 'bar'];
+			protected $authMethod     = OAuth2Provider::QUERY_ACCESS_TOKEN;
+
+		};
+
+		$this->reflection = new ReflectionClass($provider);
+
+		return $provider;
+	}
 
 }

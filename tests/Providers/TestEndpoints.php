@@ -10,7 +10,7 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthExamples;
+namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\HTTP\MagicAPI\EndpointMap;
 

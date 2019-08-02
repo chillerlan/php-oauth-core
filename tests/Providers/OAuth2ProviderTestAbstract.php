@@ -12,11 +12,12 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\Psr17;
-use chillerlan\HTTP\Psr7;
+use chillerlan\HTTP\{Psr17, Psr7};
 use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\OAuth\Core\{AccessToken, AccessTokenForRefresh, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
@@ -63,6 +64,21 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 			$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
 		}
 
+	}
+
+	/**
+	 * @return \Psr\Http\Client\ClientInterface
+	 */
+	protected function initHttp():ClientInterface{
+		return new class($this->responses, $this->logger) extends ProviderTestHttpClient{
+
+			public function sendRequest(RequestInterface $request):ResponseInterface{
+				$stream = Psr17\create_stream_from_input(json_encode($this->responses[$request->getUri()->getPath()]));
+
+				return $this->logRequest($request, (new Response)->withBody($stream));
+			}
+
+		};
 	}
 
 	public function testOAuth2Instance(){
