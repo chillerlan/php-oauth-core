@@ -71,6 +71,16 @@ abstract class APITestAbstract extends TestCase{
 	 */
 	protected $testuser;
 
+	/**
+	 * @var \chillerlan\OAuth\OAuthOptions
+	 */
+	protected $options;
+
+	/**
+	 * @var \Psr\Http\Client\ClientInterface
+	 */
+	protected $http;
+
 	protected function setUp():void{
 		\ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -96,14 +106,14 @@ abstract class APITestAbstract extends TestCase{
 			'sleep'            => $this->requestDelay,
 		];
 
-		$options = new class($options) extends OAuthOptions{
+		$this->options = new class($options) extends OAuthOptions{
 			protected $sleep;
 		};
 
 		$this->logger   = new OAuthTestLogger('debug');
-		$http           = $this->initHttp($options, $this->logger);
-		$this->storage  = new OAuthTestMemoryStorage($options, $this->CFG);
-		$this->provider = new $this->FQN($http, $this->storage, $options, $this->logger);
+		$this->storage  = new OAuthTestMemoryStorage($this->options, $this->CFG);
+		$this->http     = $this->initHttp($this->options, $this->logger);
+		$this->provider = $this->getProvider();
 	}
 
 	/**
@@ -114,6 +124,13 @@ abstract class APITestAbstract extends TestCase{
 	 */
 	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger):ClientInterface{
 		return new OAuthTestHttpClient($options, null, $logger);
+	}
+
+	/**
+	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 */
+	protected function getProvider():OAuthInterface{
+		return new $this->FQN($this->http, $this->storage, $this->options, $this->logger);
 	}
 
 	/**
