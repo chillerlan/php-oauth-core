@@ -99,4 +99,16 @@ abstract class StorageTestAbstract extends TestCase{
 		$this->assertEquals($this->token, $b);
 	}
 
+	public function testStoreWithExistingToken(){
+		$this->storage->storeAccessToken($this->tsn, $this->token);
+
+		$this->token->extraParams = array_merge($this->token->extraParams, ['q' => 'u here?']);
+
+		$this->storage->storeAccessToken($this->tsn, $this->token);
+
+		$token = $this->storage->getAccessToken($this->tsn);
+
+		$this->assertSame('u here?', $token->extraParams['q']);
+	}
+
 }
