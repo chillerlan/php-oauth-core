@@ -34,7 +34,7 @@
 In order to instance an [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthInterface.php) you you'll need to invoke a PSR-18 [`ClientInterface`](https://github.com/php-fig/http-client/blob/master/src/ClientInterface.php), a [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageInterface.php) and `OAuthOptions` (a [`SettingsContainerInterface`](https://github.com/chillerlan/php-settings-container/blob/master/src/SettingsContainerInterface.php)) objects first:
 ```php
 use chillerlan\OAuth\Providers\<PROVIDER_NAMESPACE>\<PROVIDER>;
-use chillerlan\OAuth\{OAuthOptions, Storage\SessionTokenStorage};
+use chillerlan\OAuth\{OAuthOptions, Storage\SessionStorage};
 use <PSR-18 HTTP Client>;
 
 // OAuthOptions
@@ -50,7 +50,7 @@ $http = new HttpClient;
 
 // OAuthStorageInterface
 // a persistent storage is required for authentication!
-$storage = new SessionTokenStorage($options);
+$storage = new SessionStorage($options);
 
 // an optional \Psr\LoggerInterface logger
 $logger = new Logger;
@@ -118,7 +118,7 @@ if(isset($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
 After successfully receiving the Token, we're ready to make API requests:
 ```php
 // import a token to the OAuth token storage if needed
-$storage->storeAccessToken($provider->serviceName, new AccessToken->__fromJSON($token_json));
+$storage->storeAccessToken($provider->serviceName, (new AccessToken)->fromJSON($token_json));
 
 // make a request
 $response = $provider->request(
@@ -133,6 +133,8 @@ $response = $provider->request(
 $headers = $response->getHeaders();
 $data    = $response->getBody()->getContents();
 ```
+
+[chillerlan/php-httpinterface](https://github.com/chillerlan/php-httpinterface#psr-7-message-helpers) brings some convenience functions to handle a `ResponseInterface` (among other stuff).
 
 ## Extensions
 In order to use a provider or storage, that is not yet supported, you'll need to implement the respective interfaces:
