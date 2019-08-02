@@ -66,4 +66,10 @@ class SessionStorageTest extends StorageTestAbstract{
 		parent::testToStorage();
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testStoreWithExistingToken(){
+		parent::testStoreWithExistingToken();
+	}
 }
