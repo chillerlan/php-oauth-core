@@ -13,8 +13,11 @@ use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestSessionStorage, OAuthTes
 
 \ini_set('date.timezone', 'Europe/Amsterdam');
 
-/** @var string $ENVVAR */
-/** @var string $CFGDIR */
+// these vars are supposed to be set before this file is included
+/** @var string $ENVVAR - name prefix for the environment variable */
+/** @var string $CFGDIR - the directory where configuration is stored (.env, cacert, tokens) */
+
+$LOGLEVEL = $LOGLEVEL ?? 'info';
 
 $env = (new DotEnv($CFGDIR, '.env', false))->load();
 
@@ -38,7 +41,7 @@ $options = new class($options_arr) extends OAuthOptions{
 	protected $sleep; // testHTTPClient
 };
 
-$logger = new OAuthTestLogger('info');
+$logger = new OAuthTestLogger($LOGLEVEL);
 
 /** @var \chillerlan\HTTP\Psr18\HTTPClientInterface $http */
 $http = new OAuthTestHttpClient($options);
