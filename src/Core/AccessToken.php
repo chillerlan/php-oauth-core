@@ -20,8 +20,6 @@ use function intval, time;
  * Base token implementation for any OAuth version.
  *
  * // Oauth1
- * @property string $requestToken
- * @property string $requestTokenSecret
  * @property string $accessTokenSecret
  *
  * // Oauth1/2
@@ -64,6 +62,7 @@ class AccessToken extends SettingsContainerAbstract{
 	protected $refreshToken;
 
 	/**
+	 * @todo: change to DateInterval?
 	 * @var int
 	 */
 	protected $expires = self::EOL_UNKNOWN;
