@@ -21,7 +21,6 @@ use chillerlan\Settings\SettingsContainerAbstract;
  * @property string     $key
  * @property string     $secret
  * @property string     $callbackURL
- * @property bool       $sandboxMode
  * @property bool       $sessionStart
  * @property string     $sessionTokenVar
  * @property string     $sessionStateVar

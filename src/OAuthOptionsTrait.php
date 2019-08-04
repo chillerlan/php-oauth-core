@@ -32,11 +32,6 @@ trait OAuthOptionsTrait{
 	/**
 	 * @var bool
 	 */
-	protected $sandboxMode = false;
-
-	/**
-	 * @var bool
-	 */
 	protected $sessionStart = true;
 
 	/**
