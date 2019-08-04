@@ -12,7 +12,10 @@
 
 namespace chillerlan\OAuth\Core;
 
+use chillerlan\HTTP\MagicAPI\ApiClientInterface;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Http\Message\{
 	RequestFactoryInterface, RequestInterface, ResponseInterface,
 	StreamFactoryInterface, UriFactoryInterface, UriInterface
@@ -29,7 +32,7 @@ use Psr\Http\Message\{
  * @property string                                         $serviceName
  * @property string                                         $userRevokeURL
  */
-interface OAuthInterface{
+interface OAuthInterface extends ApiClientInterface, ClientInterface, LoggerAwareInterface{
 
 	/**
 	 * @param array $params

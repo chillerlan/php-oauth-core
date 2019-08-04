@@ -15,6 +15,10 @@ namespace chillerlan\OAuth\Storage;
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\Settings\SettingsContainerInterface;
 
+use function array_keys, array_key_exists, is_array, session_start, session_status, session_write_close;
+
+use const PHP_SESSION_NONE;
+
 class SessionStorage extends OAuthStorageAbstract{
 
 	/**
@@ -40,8 +44,8 @@ class SessionStorage extends OAuthStorageAbstract{
 
 		// Determine if the session has started.
 		// @link http://stackoverflow.com/a/18542272/1470961
-		if($this->options->sessionStart && !(\session_status() !== \PHP_SESSION_NONE)){
-			\session_start();
+		if($this->options->sessionStart && !(session_status() !== PHP_SESSION_NONE)){
+			session_start();
 		}
 
 		if(!isset($_SESSION[$this->sessionVar])){
@@ -61,7 +65,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 */
 	public function __destruct(){
 		if($this->options->sessionStart){
-			\session_write_close();
+			session_write_close();
 		}
 	}
 
@@ -74,7 +78,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
 		$data = $this->toStorage($token);
 
-		if(isset($_SESSION[$this->sessionVar]) && \is_array($_SESSION[$this->sessionVar])){
+		if(isset($_SESSION[$this->sessionVar]) && is_array($_SESSION[$this->sessionVar])){
 			$_SESSION[$this->sessionVar][$service] = $data;
 		}
 		else{
@@ -115,7 +119,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 */
 	public function clearAccessToken(string $service):OAuthStorageInterface{
 
-		if(\array_key_exists($service, $_SESSION[$this->sessionVar])){
+		if(array_key_exists($service, $_SESSION[$this->sessionVar])){
 			unset($_SESSION[$this->sessionVar][$service]);
 		}
 
@@ -127,7 +131,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 */
 	public function clearAllAccessTokens():OAuthStorageInterface{
 
-		foreach(\array_keys($_SESSION[$this->sessionVar]) as $service){
+		foreach(array_keys($_SESSION[$this->sessionVar]) as $service){
 			unset($_SESSION[$this->sessionVar][$service]);
 		}
 
@@ -144,7 +148,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 */
 	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
 
-		if(isset($_SESSION[$this->stateVar]) && \is_array($_SESSION[$this->stateVar])){
+		if(isset($_SESSION[$this->stateVar]) && is_array($_SESSION[$this->stateVar])){
 			$_SESSION[$this->stateVar][$service] = $state;
 		}
 		else{
@@ -185,7 +189,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 */
 	public function clearCSRFState(string $service):OAuthStorageInterface{
 
-		if(\array_key_exists($service, $_SESSION[$this->stateVar])){
+		if(array_key_exists($service, $_SESSION[$this->stateVar])){
 			unset($_SESSION[$this->stateVar][$service]);
 		}
 

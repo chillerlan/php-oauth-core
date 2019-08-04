@@ -14,13 +14,22 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMap, EndpointMapInterface};
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
-use chillerlan\HTTP\Psr7;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestInterface, RequestFactoryInterface, ResponseInterface, StreamFactoryInterface, StreamInterface, UriFactoryInterface};
-use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger};
+use Psr\Http\Message\{
+	RequestFactoryInterface, RequestInterface, ResponseInterface,
+	StreamFactoryInterface, StreamInterface, UriFactoryInterface
+};
+use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
+
+use function array_slice, class_exists, count, http_build_query, implode,
+	in_array, is_array, json_encode, sprintf, strpos, strtolower;
+use function chillerlan\HTTP\Psr7\{clean_query_params, merge_query};
+
+use const PHP_QUERY_RFC1738;
+use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_INT_STRING, BOOLEANS_AS_BOOL};
 
 /**
  * @property string                                         $accessTokenURL
@@ -33,7 +42,7 @@ use ReflectionClass;
  * @property string                                         $serviceName
  * @property string                                         $userRevokeURL
  */
-abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, ClientInterface, LoggerAwareInterface{
+abstract class OAuthProvider implements OAuthInterface{
 	use LoggerAwareTrait;
 
 	protected const ALLOWED_PROPERTIES = [
@@ -152,7 +161,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
-		if($this instanceof ApiClientInterface && !empty($this->endpointMap) && \class_exists($this->endpointMap)){
+		if($this instanceof ApiClientInterface && !empty($this->endpointMap) && class_exists($this->endpointMap)){
 			$this->endpoints = new $this->endpointMap;
 
 			if(!$this->endpoints instanceof EndpointMapInterface){
@@ -170,7 +179,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 */
 	public function __get(string $name){
 
-		if(\in_array($name, $this::ALLOWED_PROPERTIES, true)){
+		if(in_array($name, $this::ALLOWED_PROPERTIES, true)){
 			return $this->{$name};
 		}
 
@@ -252,22 +261,22 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 		$endpoint      = $this->endpoints->API_BASE.$m['path'];
 		$method        = $m['method'] ?? 'GET';
 		$body          = [];
-		$headers       = isset($m['headers']) && \is_array($m['headers']) ? $m['headers'] : [];
+		$headers       = isset($m['headers']) && is_array($m['headers']) ? $m['headers'] : [];
 		$path_elements = $m['path_elements'] ?? [];
-		$params_in_url = \count($path_elements);
+		$params_in_url = count($path_elements);
 		$params        = $arguments[$params_in_url] ?? [];
-		$urlparams     = \array_slice($arguments,0 , $params_in_url);
+		$urlparams     = array_slice($arguments,0 , $params_in_url);
 
 		if($params_in_url > 0){
 
-			if(\count($urlparams) < $params_in_url){
-				throw new APIClientException('too few URL params, required: '.\implode(', ', $path_elements));
+			if(count($urlparams) < $params_in_url){
+				throw new APIClientException('too few URL params, required: '.implode(', ', $path_elements));
 			}
 
-			$endpoint = \sprintf($endpoint, ...$urlparams);
+			$endpoint = sprintf($endpoint, ...$urlparams);
 		}
 
-		if(\in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
+		if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
 			$body = $arguments[$params_in_url + 1] ?? $params;
 
 			if($params === $body){
@@ -293,7 +302,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 * @codeCoverageIgnore
 	 */
 	protected function cleanQueryParams(array $params):array{
-		return Psr7\clean_query_params($params, Psr7\BOOLEANS_AS_INT_STRING, true);
+		return clean_query_params($params, BOOLEANS_AS_INT_STRING, true);
 	}
 
 	/**
@@ -303,7 +312,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	 * @codeCoverageIgnore
 	 */
 	protected function cleanBodyParams(array $params):array{
-		return Psr7\clean_query_params($params, Psr7\BOOLEANS_AS_BOOL, true);
+		return clean_query_params($params, BOOLEANS_AS_BOOL, true);
 	}
 
 	/**
@@ -318,21 +327,21 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
 
 		$request = $this->requestFactory
-			->createRequest($method ?? 'GET', Psr7\merge_query($this->apiURL.$path, $params ?? []));
+			->createRequest($method ?? 'GET', merge_query($this->apiURL.$path, $params ?? []));
 
 		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 
 		if(is_array($body) && $request->hasHeader('content-type')){
-			$contentType = \strtolower($request->getHeaderLine('content-type'));
+			$contentType = strtolower($request->getHeaderLine('content-type'));
 
 			// @todo: content type support
 			if($contentType === 'application/x-www-form-urlencoded'){
-				$body = $this->streamFactory->createStream(\http_build_query($body, '', '&', \PHP_QUERY_RFC1738));
+				$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));
 			}
 			elseif($contentType === 'application/json'){
-				$body = $this->streamFactory->createStream(\json_encode($body));
+				$body = $this->streamFactory->createStream(json_encode($body));
 			}
 
 		}
@@ -355,7 +364,7 @@ abstract class OAuthProvider implements OAuthInterface, ApiClientInterface, Clie
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 
 		// get authorization only if we request the provider API
-		if(\strpos((string)$request->getUri(), $this->apiURL) === 0){
+		if(strpos((string)$request->getUri(), $this->apiURL) === 0){
 			$token = $this->storage->getAccessToken($this->serviceName);
 
 			// attempt to refresh an expired token

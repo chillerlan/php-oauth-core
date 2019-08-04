@@ -14,9 +14,9 @@ namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\{Core\AccessToken, OAuthOptions};
 use chillerlan\Settings\SettingsContainerInterface;
-use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger};
+use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 
-abstract class OAuthStorageAbstract implements OAuthStorageInterface, LoggerAwareInterface{
+abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	use LoggerAwareTrait;
 
 	/**
@@ -53,6 +53,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface, LoggerAwar
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function fromStorage(string $data):AccessToken{
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return (new AccessToken)->fromJSON($data);
 	}
 

@@ -14,6 +14,8 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\Settings\SettingsContainerAbstract;
 
+use function intval, time;
+
 /**
  * Base token implementation for any OAuth version.
  *
@@ -106,21 +108,21 @@ class AccessToken extends SettingsContainerAbstract{
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function setExpiry(int $expires = null):AccessToken{
-		$now = \time();
+		$now = time();
 
 		if($expires!== null){
-			$expires = \intval($expires);
+			$expires = intval($expires);
 		}
 
-		$this->expires = self::EOL_UNKNOWN;
+		$this->expires = $this::EOL_UNKNOWN;
 
-		if($expires === 0 || $expires === self::EOL_NEVER_EXPIRES){
-			$this->expires = self::EOL_NEVER_EXPIRES;
+		if($expires === 0 || $expires === $this::EOL_NEVER_EXPIRES){
+			$this->expires = $this::EOL_NEVER_EXPIRES;
 		}
 		elseif($expires > $now){
 			$this->expires = $expires;
 		}
-		elseif($expires > 0 && $expires < self::EXPIRY_MAX){
+		elseif($expires > 0 && $expires < $this::EXPIRY_MAX){
 			$this->expires = $now + $expires;
 		}
 
@@ -131,7 +133,7 @@ class AccessToken extends SettingsContainerAbstract{
 	 * @return bool
 	 */
 	public function isExpired():bool{
-		return $this->expires !== self::EOL_NEVER_EXPIRES && $this->expires !== self::EOL_UNKNOWN && \time() > $this->expires;
+		return $this->expires !== $this::EOL_NEVER_EXPIRES && $this->expires !== $this::EOL_UNKNOWN && time() > $this->expires;
 	}
 
 }

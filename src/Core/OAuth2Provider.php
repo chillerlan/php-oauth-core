@@ -14,8 +14,13 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Psr7;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
+
+use function array_key_exists, array_merge, base64_encode, date, hash_equals, http_build_query,
+	implode, is_array, json_decode, random_bytes, sha1, sprintf;
+use function chillerlan\HTTP\Psr7\{decompress_content, merge_query};
+
+use const PHP_QUERY_RFC1738;
 
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
@@ -52,7 +57,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			unset($params['client_secret']);
 		}
 
-		$params = \array_merge($params, [
+		$params = array_merge($params, [
 			'client_id'     => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
 			'response_type' => 'code',
@@ -60,14 +65,14 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		]);
 
 		if(!empty($scopes)){
-			$params['scope'] = \implode($this->scopesDelimiter, $scopes);
+			$params['scope'] = implode($this->scopesDelimiter, $scopes);
 		}
 
 		if($this instanceof CSRFToken){
 			$params = $this->setState($params);
 		}
 
-		return $this->uriFactory->createUri(Psr7\merge_query($this->authURL, $params));
+		return $this->uriFactory->createUri(merge_query($this->authURL, $params));
 	}
 
 	/**
@@ -77,9 +82,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
-		$data = \json_decode(Psr7\decompress_content($response), true); // silly amazon...
+		$data = json_decode(decompress_content($response), true); // silly amazon...
 
-		if(!\is_array($data)){
+		if(!is_array($data)){
 			throw new ProviderException('unable to parse token response');
 		}
 
@@ -133,7 +138,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->createRequest('POST', $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(\http_build_query($body, '', '&', \PHP_QUERY_RFC1738)));
+			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)));
 
 		foreach($this->authHeaders as $header => $value){
 			$request = $request->withHeader($header, $value);
@@ -155,11 +160,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 
-		if(\array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_HEADER)){
+		if(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_HEADER)){
 			$request = $request->withHeader('Authorization', OAuth2Interface::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken);
 		}
-		elseif(\array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_QUERY)){
-			$uri = Psr7\merge_query((string)$request->getUri(), [OAuth2Interface::AUTH_METHODS_QUERY[$this->authMethod] => $token->accessToken]);
+		elseif(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_QUERY)){
+			$uri = merge_query((string)$request->getUri(), [OAuth2Interface::AUTH_METHODS_QUERY[$this->authMethod] => $token->accessToken]);
 
 			$request = $request->withUri($this->uriFactory->createUri($uri));
 		}
@@ -185,15 +190,15 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$params = ['grant_type' => 'client_credentials'];
 
 		if($scopes !== null){
-			$params['scope'] = \implode($this->scopesDelimiter, $scopes);
+			$params['scope'] = implode($this->scopesDelimiter, $scopes);
 		}
 
 		$request = $this->requestFactory
 			->createRequest('POST', $this->clientCredentialsTokenURL ?? $this->accessTokenURL)
-			->withHeader('Authorization', 'Basic '.\base64_encode($this->options->key.':'.$this->options->secret))
+			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(\http_build_query($params, '', '&', \PHP_QUERY_RFC1738)))
+			->withBody($this->streamFactory->createStream(http_build_query($params, '', '&', PHP_QUERY_RFC1738)))
 		;
 
 		foreach($this->authHeaders as $header => $value){
@@ -228,7 +233,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		if(empty($refreshToken)){
 
 			if(!$this instanceof AccessTokenForRefresh){
-				throw new ProviderException(\sprintf('no refresh token available, token expired [%s]', \date('Y-m-d h:i:s A', $token->expires)));
+				throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
 			}
 
 			$refreshToken = $token->accessToken;
@@ -246,7 +251,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->createRequest('POST', $this->refreshTokenURL ?? $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(\http_build_query($body, '', '&', \PHP_QUERY_RFC1738)))
+			->withBody($this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738)))
 		;
 
 		foreach($this->authHeaders as $header => $value){
@@ -278,7 +283,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$knownState = $this->storage->getCSRFState($this->serviceName);
 
-		if(!\hash_equals($knownState, $state)){
+		if(!hash_equals($knownState, $state)){
 			throw new ProviderException('invalid CSRF state: '.$this->serviceName.' '.$state);
 		}
 
@@ -292,7 +297,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected function setState(array $params):array{
 
 		if(!isset($params['state'])){
-			$params['state'] = \sha1(\random_bytes(256));
+			$params['state'] = sha1(random_bytes(256));
 		}
 
 		$this->storage->storeCSRFState($this->serviceName, $params['state']);
