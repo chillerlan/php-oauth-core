@@ -73,14 +73,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 * @inheritDoc
 	 */
 	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
-		$data = $this->toStorage($token);
-
-		if(isset($_SESSION[$this->sessionVar]) && is_array($_SESSION[$this->sessionVar])){
-			$_SESSION[$this->sessionVar][$service] = $data;
-		}
-		else{
-			$_SESSION[$this->sessionVar] = [$service => $data];
-		}
+		$_SESSION[$this->sessionVar][$service] = $this->toStorage($token);
 
 		return $this;
 	}
@@ -134,13 +127,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 * @inheritDoc
 	 */
 	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
-
-		if(isset($_SESSION[$this->stateVar]) && is_array($_SESSION[$this->stateVar])){
-			$_SESSION[$this->stateVar][$service] = $state;
-		}
-		else{
-			$_SESSION[$this->stateVar] = [$service => $state];
-		}
+		$_SESSION[$this->stateVar][$service] = $state;
 
 		return $this;
 	}
