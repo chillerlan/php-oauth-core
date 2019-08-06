@@ -12,6 +12,7 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
+use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{OAuthStorageException, SessionStorage};
 
 /**
@@ -71,5 +72,17 @@ class SessionStorageTest extends StorageTestAbstract{
 	 */
 	public function testStoreWithExistingToken(){
 		parent::testStoreWithExistingToken();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testStoreStateWithNonExistentArray(){
+		$options = new OAuthOptions;
+		unset($_SESSION[$options->sessionStateVar]);
+
+		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
+		$this->storage->storeCSRFState($this->tsn, 'foobar');
+		$this->assertTrue($this->storage->hasCSRFState($this->tsn));
 	}
 }
