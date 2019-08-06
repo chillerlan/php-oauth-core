@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\Core\{AccessTokenForRefresh, ClientCredentials, CSRFToken, OAuth2Provider, OAuthInterface, TokenRefresh};
+use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider, OAuthInterface, TokenRefresh};
 use ReflectionClass;
 
 /**
@@ -26,7 +26,7 @@ class GenericOAuth2Test extends OAuth2ProviderTestAbstract{
 	protected function getProvider():OAuthInterface{
 
 		$provider = new class($this->initHttp(), $this->storage, $this->options, $this->logger)
-			extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh, AccessTokenForRefresh{
+			extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
 
 			protected $apiURL         = 'https://api.example.com/';
 			protected $authURL        = 'https://example.com/oauth2/authorize';

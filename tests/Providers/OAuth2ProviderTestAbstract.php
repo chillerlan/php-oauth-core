@@ -14,7 +14,7 @@ namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\HTTP\{Psr17, Psr7};
 use chillerlan\HTTP\Psr7\{Request, Response};
-use chillerlan\OAuth\Core\{AccessToken, AccessTokenForRefresh, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
+use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
@@ -219,11 +219,6 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 			return;
 		}
 
-		if($this->provider instanceof AccessTokenForRefresh){
-			$this->markTestSkipped('N/A, AccessTokenForRefresh');
-			return;
-		}
-
 		$token = new AccessToken(['expires' => 1, 'refreshToken' => null]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
@@ -255,21 +250,6 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		}
 
 		$token = new AccessToken(['accessToken' => 'test_access_token', 'refreshToken' => 'test_refresh_token', 'expires' => 1]);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
-
-		\sleep(2);
-
-		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request(''))->data);
-	}
-
-	public function testRequestWithTokenRefreshAccessTokenForRefresh(){
-
-		if(!$this->provider instanceof AccessTokenForRefresh){
-			$this->markTestSkipped('AccessTokenForRefresh N/A');
-			return;
-		}
-
-		$token = new AccessToken(['accessToken' => 'test_access_token', 'expires' => 1]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
 		\sleep(2);
