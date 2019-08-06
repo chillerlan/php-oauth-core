@@ -47,6 +47,6 @@ trait OAuthOptionsTrait{
 	/**
 	 * @var bool
 	 */
-	protected $tokenAutoRefresh = false;
+	protected $tokenAutoRefresh = true;
 
 }
