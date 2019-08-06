@@ -45,10 +45,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected $clientCredentialsTokenURL;
 
 	/**
-	 * @param array|null $params
-	 * @param array|null $scopes
-	 *
-	 * @return \Psr\Http\Message\UriInterface
+	 * @inheritDoc
 	 */
 	public function getAuthURL(array $params = null, array $scopes = null):UriInterface{
 		$params = $params ?? [];
@@ -115,10 +112,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param string      $code
-	 * @param string|null $state
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @inheritDoc
 	 */
 	public function getAccessToken(string $code, string $state = null):AccessToken{
 
@@ -152,11 +146,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param \Psr\Http\Message\RequestInterface $request
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
-	 *
-	 * @return \Psr\Http\Message\RequestInterface
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @inheritDoc
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 
@@ -176,9 +166,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param array $scopes
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @inheritDoc
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function getClientCredentialsToken(array $scopes = null):AccessToken{
@@ -213,9 +201,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @inheritDoc
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken $token = null):AccessToken{

@@ -29,10 +29,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	protected $states = [];
 
 	/**
-	 * @param string                             $service
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
 		$this->tokens[$service] = $token;
@@ -41,10 +38,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
-	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @inheritDoc
 	 */
 	public function getAccessToken(string $service):AccessToken{
 
@@ -56,18 +50,14 @@ class MemoryStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function hasAccessToken(string $service):bool{
 		return isset($this->tokens[$service]) && $this->tokens[$service] instanceof AccessToken;
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearAccessToken(string $service):OAuthStorageInterface{
 
@@ -79,7 +69,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearAllAccessTokens():OAuthStorageInterface{
 
@@ -93,10 +83,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 * @param string $state
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
 		$this->states[$service] = $state;
@@ -105,10 +92,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return string
-	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @inheritDoc
 	 */
 	public function getCSRFState(string $service):string{
 
@@ -120,18 +104,14 @@ class MemoryStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function hasCSRFState(string $service):bool{
 		return isset($this->states[$service]) && null !== $this->states[$service];
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearCSRFState(string $service):OAuthStorageInterface{
 
@@ -143,7 +123,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearAllCSRFStates():OAuthStorageInterface{
 		$this->states = [];

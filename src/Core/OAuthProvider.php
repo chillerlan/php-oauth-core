@@ -187,9 +187,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
-	 *
-	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
 	public function setStorage(OAuthStorageInterface $storage):OAuthInterface{
@@ -199,9 +197,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @param \Psr\Http\Message\RequestFactoryInterface $requestFactory
-	 *
-	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
 	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface{
@@ -211,9 +207,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
-	 *
-	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
 	public function setStreamFactory(StreamFactoryInterface $streamFactory):OAuthInterface{
@@ -223,9 +217,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @param \Psr\Http\Message\UriFactoryInterface $uriFactory
-	 *
-	 * @return \chillerlan\OAuth\Core\OAuthInterface
+	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
 	public function setUriFactory(UriFactoryInterface $uriFactory):OAuthInterface{
@@ -316,13 +308,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @param string $path
-	 * @param array  $params
-	 * @param string $method
-	 * @param mixed  $body
-	 * @param array  $headers
-	 *
-	 * @return \Psr\Http\Message\ResponseInterface
+	 * @inheritDoc
 	 */
 	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
 
@@ -357,9 +343,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @param \Psr\Http\Message\RequestInterface $request
-	 *
-	 * @return \Psr\Http\Message\ResponseInterface
+	 * @inheritDoc
 	 */
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 

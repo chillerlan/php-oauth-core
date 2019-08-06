@@ -32,7 +32,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	protected $stateVar;
 
 	/**
-	 * Session constructor.
+	 * SessionStorage constructor.
 	 *
 	 * @param \chillerlan\Settings\SettingsContainerInterface|null $options
 	 */
@@ -59,7 +59,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * Destructor.
+	 * SessionStorage destructor.
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -70,10 +70,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string                             $service
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
 		$data = $this->toStorage($token);
@@ -89,10 +86,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
-	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @inheritDoc
 	 */
 	public function getAccessToken(string $service):AccessToken{
 
@@ -104,18 +98,14 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function hasAccessToken(string $service):bool{
 		return isset($_SESSION[$this->sessionVar], $_SESSION[$this->sessionVar][$service]);
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearAccessToken(string $service):OAuthStorageInterface{
 
@@ -127,7 +117,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearAllAccessTokens():OAuthStorageInterface{
 
@@ -141,10 +131,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 * @param string $state
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
 
@@ -159,10 +146,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return string
-	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @inheritDoc
 	 */
 	public function getCSRFState(string $service):string{
 
@@ -174,18 +158,14 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function hasCSRFState(string $service):bool{
 		return isset($_SESSION[$this->stateVar], $_SESSION[$this->stateVar][$service]);
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearCSRFState(string $service):OAuthStorageInterface{
 
@@ -197,7 +177,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
 	public function clearAllCSRFStates():OAuthStorageInterface{
 		unset($_SESSION[$this->stateVar]);

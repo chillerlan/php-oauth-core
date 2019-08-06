@@ -91,8 +91,6 @@ class AccessToken extends SettingsContainerAbstract{
 	}
 
 	/**
-	 * AccessToken setter
-	 *
 	 * @param int|null $expires
 	 *
 	 * @return void

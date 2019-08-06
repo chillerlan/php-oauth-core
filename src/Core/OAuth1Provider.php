@@ -29,9 +29,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	protected $requestTokenURL;
 
 	/**
-	 * @param array $params
-	 *
-	 * @return \Psr\Http\Message\UriInterface
+	 * @inheritDoc
 	 */
 	public function getAuthURL(array $params = null):UriInterface{
 
@@ -44,7 +42,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @inheritDoc
 	 */
 	public function getRequestToken():AccessToken{
 
@@ -161,10 +159,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * @param string $token
-	 * @param string $verifier
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @inheritDoc
 	 */
 	public function getAccessToken(string $token, string $verifier):AccessToken{
 		$request = $this->requestFactory
@@ -178,10 +173,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * @param \Psr\Http\Message\RequestInterface $request
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
-	 *
-	 * @return \Psr\Http\Message\RequestInterface
+	 * @inheritDoc
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 		$uri = $request->getUri();

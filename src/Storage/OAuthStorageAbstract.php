@@ -37,7 +37,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	}
 
 	/**
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
+	 * @inheritDoc
 	 *
 	 * @return string
 	 */
@@ -48,9 +48,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	}
 
 	/**
-	 * @param string $data
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @inheritDoc
 	 */
 	public function fromStorage(string $data):AccessToken{
 		/** @noinspection PhpIncompatibleReturnTypeInspection */
