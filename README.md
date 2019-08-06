@@ -28,120 +28,59 @@
 - PHP 7.2+
 - a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library of your choice
   - optional [PSR-17](https://www.php-fig.org/psr/psr-17/) compatible Request-, Response- and UriFactories
-- see [`chillerlan/php-oauth`](https://github.com/chillerlan/php-oauth) for already implemented providers
+- see [`chillerlan/php-oauth-providers`](https://github.com/chillerlan/php-oauth-providers) for already implemented providers
 
-## Getting Started
-In order to instance an [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthInterface.php) you you'll need to invoke a PSR-18 [`ClientInterface`](https://github.com/php-fig/http-client/blob/master/src/ClientInterface.php), a [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageInterface.php) and `OAuthOptions` (a [`SettingsContainerInterface`](https://github.com/chillerlan/php-settings-container/blob/master/src/SettingsContainerInterface.php)) objects first:
-```php
-use chillerlan\OAuth\Providers\<PROVIDER_NAMESPACE>\<PROVIDER>;
-use chillerlan\OAuth\{OAuthOptions, Storage\SessionStorage};
-use <PSR-18 HTTP Client>;
+## Installation
+**requires [composer](https://getcomposer.org)**
 
-// OAuthOptions
-$options = new OAuthOptions([
-	// OAuthOptions
-	'key'         => '<API_KEY>',
-	'secret'      => '<API_SECRET>',
-	'callbackURL' => '<API_CALLBACK_URL>',
-]);
-
-// a \Psr\Http\Client\ClientInterface
-$http = new HttpClient;
-
-// OAuthStorageInterface
-// a persistent storage is required for authentication!
-$storage = new SessionStorage($options);
-
-// an optional \Psr\LoggerInterface logger
-$logger = new Logger;
-
-// invoke and use the OAuthInterface
-$provider = new Provider($http, $storage, $options, $logger);
-```
-
-## Authentication
-The application flow may differ slightly depending on the provider; there's a working authentication example in the provider repository.
-
-### Step 1: optional login link
-Display a login link and provide the user with information what kind of data you're about to access; ask them for permission to save the access token if needed.
-
-```php
-echo '<a href="?login='.$provider->serviceName.'">connect with '.$provider->serviceName.'!</a>';
-```
-
-### Step 2: redirect to the provider
-Redirect to the provider's login screen with optional arguments in the authentication URL, like permissions, scopes etc.
-```php
-// optional scopes for OAuth2 providers
-$scopes = [
-	Provider::SCOPE_WHATEVER,
-];
-
-if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL(['extra-param' => 'val'], $scopes));
+`composer.json` (note: replace `dev-master` with a version boundary)
+```json
+{
+	"require": {
+		"php": "^7.2",
+		"chillerlan/php-oauth-core": "dev-master"
+	}
 }
 ```
+Profit!
 
-### Step 3: receive the token
-Receive the access token, save it, do whatever you need to do, then redirect to step 4
+## API
+### [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php)
+The `OAuthInterface` implements the PSR-18 [`ClientInterface`](https://www.php-fig.org/psr/psr-18/), 
+the PSR-3[`LoggerAwareInterface`](https://www.php-fig.org/psr/psr-3/) as well as the 
+[`ApiClientInterface`](https://github.com/chillerlan/php-magic-apiclient/blob/master/src/ApiClientInterface.php) 
+and offers basic methods that are common to the OAuth 1/2 interfaces, all supplied in the abstract class [`OAuthProvider`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php).
 
-#### OAuth1
-```php
-if(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])){
-	$token = $provider->getAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
+method | return | description
+------ | ------ | -----------
+`__construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options, LoggerInterface $logger = null)` | - | 
+`getAuthURL(array $params = null)` | PSR-7 `UriInterface` | 
+`request(string $path, array $params = null, string $method = null, $body = null, array $headers = null)` | PSR-7 `ResponseInterface`  | 
+`setRequestFactory(RequestFactoryInterface $requestFactory)` | `OAuthInterface` | PSR-17
+`setStreamFactory(StreamFactoryInterface $streamFactory)` | `OAuthInterface` | PSR-17
+`setUriFactory(UriFactoryInterface $uriFactory)` | `OAuthInterface` | PSR-17
+`getRequestAuthorization(RequestInterface $request, AccessToken $token)` | PSR-7 `RequestInterface`
 
-	// save & redirect...
-}
-```
+property | description
+-------- | -----------
+`$serviceName` | the classname for the current provider
+`$accessTokenURL` | the provider`s access token URL 
+`$authURL` |  the provider`s authentication token URL 
+`$revokeURL` | an optional URL to revoke an access token (via API)
+`$userRevokeURL` | an optional link to the provider's user control panel where they can revoke the current token
+`$apiDocs` | a link to the provider's API docs
+`$applicationURL` | a link to the API/application credential generation page
+`$endpoints` | an `EndpointMapInterface` for the current provider
 
-#### OAuth2
-usage of the `<state>` parameter depends on the provider
-```php
-if(isset($_GET['code'])){
-	$token = $provider->getAccessToken($_GET['code'], $_GET['state'] ?? null);
+### [`OAuth1Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth1Provider.php)
+extends `OAuthInterface`
 
-	// save & redirect...
-}
-```
+method | return
+------ | ------
+`getRequestToken()` | `AccessToken`
+`getAccessToken(string $token, string $verifier)` | `AccessToken`
 
-### Step 4: auth Granted
-After receiving the access token, go on and verify it then use the API.
-```php
-if(isset($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
-	$response = $provider->doStuff();
-	
-	// ...
-}
-```
-
-## Call the Provider's API
-After successfully receiving the Token, we're ready to make API requests:
-```php
-// import a token to the OAuth token storage if needed
-$storage->storeAccessToken($provider->serviceName, (new AccessToken)->fromJSON($token_json));
-
-// make a request
-$response = $provider->request(
-	'/some/endpoint', 
-	['q' => 'param'], 
-	'POST', 
-	['data' => 'content'], 
-	['content-type' => 'whatever']
-);
-
-// use the data: $response is a PSR-7 ResponseInterface
-$headers = $response->getHeaders();
-$data    = $response->getBody()->getContents();
-```
-
-[chillerlan/php-httpinterface](https://github.com/chillerlan/php-httpinterface#psr-7-message-helpers) brings some convenience functions to handle a `ResponseInterface` (among other stuff).
-
-## Extensions
-In order to use a provider or storage, that is not yet supported, you'll need to implement the respective interfaces:
-
-### [`OAuth1Interface`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Core/OAuth1Provider.php)
-The OAuth1 implementation is close to Twitter's specs and *should* work for most other OAuth1 services.
-
+#### A minimal OAuth1 provider
 ```php
 use chillerlan\OAuth\Core\OAuth1Provider;
 
@@ -155,122 +94,137 @@ class MyOauth1Provider extends Oauth1Provider{
 }
 ```
 
-### [`OAuth2Interface`](https://github.com/chillerlan/php-oauth/tree/master/src/Providers/OAuth2Provider.php)
-[OAuth2 is a very straightforward... mess](https://hueniverse.com/oauth-2-0-and-the-road-to-hell-8eec45921529). Please refer to your provider's docs for implementation details.
-```php
-use chillerlan\OAuth\Core\OAuth2Provider;
 
-class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
+### [`OAuth2Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth2Provider.php) 
+extends `OAuthInterface`
 
-	public const SCOPE_WHATEVER = 'whatever';
-
-	protected $apiURL                    = 'https://api.example.com';
-	protected $authURL                   = 'https://example.com/oauth2/authorize';
-	protected $accessTokenURL            = 'https://example.com/oauth2/token';
-	protected $clientCredentialsTokenURL = 'https://example.com/oauth2/client_credentials';
-	protected $authMethod                = self::HEADER_BEARER;
-	protected $authHeaders               = ['Accept' => 'application/json'];
-	protected $apiHeaders                = ['Accept' => 'application/json'];
-	protected $scopesDelimiter           = ',';
-
-}
-```
-
-### [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/OAuthStorageInterface.php)
-There are 2 different `OAuthStorageInterface`, refer to these for implementation details (extend `OAuthStorageAbstract`):
-- [`MemoryStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/MemoryStorage.php): non-persistent, to store an existing token during script runtime and then discard it.
-- [`SessionStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/SessionStorage.php): (half-)persistent, stores a token for as long a user's session is alive, e.g. while authenticating.
-
-## API
-### [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php)
-Implements PSR-18 [`ClientInterface`](https://www.php-fig.org/psr/psr-18/) and PSR-3[`LoggerAwareInterface`](https://www.php-fig.org/psr/psr-3/).
-
-method | return
------- | ------
-`__construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options)` | -
-`getAuthURL(array $params = null)` | PSR-7 `UriInterface`
-`request(string $path, array $params = null, string $method = null, $body = null, array $headers = null)` | PSR-7 `ResponseInterface` 
-`setRequestFactory(RequestFactoryInterface $requestFactory)` | `OAuthInterface`
-`setStreamFactory(StreamFactoryInterface $streamFactory)` | `OAuthInterface`
-`setUriFactory(UriFactoryInterface $uriFactory)` | `OAuthInterface`
-
-property | description
--------- | -----------
-`$serviceName` | the classname for the current provider
-`$accessTokenURL` | the provider`s access token URL 
-`$authURL` |  the provider`s authentication token URL 
-`$revokeURL` | an optional URL to revoke an access token (via API)
-`$userRevokeURL` | an optional link to the provider's user control panel where they can revoke the current token
-
-### [`OAuth1Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth1Provider.php)
-method | return
------- | ------
-`getAccessToken(string $token, string $verifier, string $tokenSecret = null)` | `AccessToken`
-`getRequestToken()` | `AccessToken`
-
-### [`OAuth2Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth2Provider.php)
 method | return
 ------ | ------
 `getAccessToken(string $code, string $state = null)` | `AccessToken`
 `getAuthURL(array $params = null, $scopes = null)` | PSR-7 `UriInterface`
 
-### `ClientCredentials`
+#### `ClientCredentials`
+The `ClientCredentials` interface indicates that the provider supports the [client credentials grant type](https://tools.ietf.org/html/rfc6749#section-4.4).
 
 method | return
 ------ | ------
 `getClientCredentialsToken(array $scopes = null)` | `AccessToken`
 
-### `CSRFToken`
+#### `CSRFToken`
+The `CSRFToken` interface enables usage of the `<state>` parameter to mitigate [cross-site request forgery](https://tools.ietf.org/html/rfc6749#section-10.12) and automatically enforces it during authorization requests.
 
 method | return
 ------ | ------
 (protected) `checkState(string $state = null)` | `OAuth2Interface`
 (protected) `setState(array $params)` | array
 
-### `TokenRefresh`
+#### `TokenRefresh`
+The `TokenRefresh` interface indicates if a provider supports usage of [refresh tokens](https://tools.ietf.org/html/rfc6749#section-10.4). 
+The option setting `$tokenAutoRefresh` enables automatic refresh of expired tokens when using the `OAuthInterface::request()` or the PSR-18 `OAuthInterface::sendRequest()` methods to call the provider's API.
 
 method | return
 ------ | ------
 `refreshAccessToken(AccessToken $token = null)` | `AccessToken`
 
-### `TokenExpires`
-method | return
------- | ------
+#### A minimal OAuth2 provider
+```php
+use chillerlan\OAuth\Core\OAuth2Provider;
+
+class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
+
+	protected $apiURL                    = 'https://api.example.com';
+	protected $authURL                   = 'https://example.com/oauth2/authorize';
+	protected $accessTokenURL            = 'https://example.com/oauth2/token';
+	protected $clientCredentialsTokenURL = 'https://example.com/oauth2/client_credentials';
+	protected $authMethod                = self::HEADER_BEARER;
+	protected $scopesDelimiter           = ',';
+
+}
+```
 
 ### [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageAbstract.php)
+
+The `OAuthStorageInterface` serves for storing access tokens and auth states (CSRF) on a per-user basis.
+The included implementations are intended for throwaway use during authentication or script runtime, please refer to these for implementation details (extend `OAuthStorageAbstract`):
+
+- [`MemoryStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/MemoryStorage.php): non-persistent, to store an existing token during script runtime and then discard it.
+- [`SessionStorage`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/SessionStorage.php): (half-)persistent, stores a token for as long a user's session is alive, e.g. while authenticating.
+
+An example implementation for a persistent database storage with token encryption can be found over here: [`DBStorage`](https://github.com/chillerlan/php-oauth/blob/master/src/Storage/DBStorage.php).
+
 method | return
 ------ | ------
-`storeAccessToken(string $service, AccessToken $token)` | `OAuthStorageInterface`
+`storeAccessToken(string $service, AccessToken $token)` | bool
 `getAccessToken(string $service)` | `AccessToken`
 `hasAccessToken(string $service)` | bool
-`clearAccessToken(string$service)` | `OAuthStorageInterface`
-`clearAllAccessTokens()` | `OAuthStorageInterface`
-`storeCSRFState(string $service, string $state)` | `OAuthStorageInterface`
+`clearAccessToken(string$service)` | bool
+`clearAllAccessTokens()` | bool
+`storeCSRFState(string $service, string $state)` | bool
 `getCSRFState(string $service)` | string
 `hasCSRFState(string $service)` | bool
-`clearCSRFState(string $service)` | `OAuthStorageInterface`
-`clearAllCSRFStates()` | `OAuthStorageInterface`
-`toStorage(AccessToken $token)` | string
-`fromStorage(string $data)` | `AccessToken`
+`clearCSRFState(string $service)` | bool
+`clearAllCSRFStates()` | bool
+`toStorage(AccessToken $token)` | mixed
+`fromStorage($data)` | `AccessToken`
 
 ### [`AccessToken`](https://github.com/chillerlan/php-oauth-core/tree/master/src/Core/AccessToken.php)
+The `AccessToken` is a container to keep any token related data in one place. It extends the 
+[`SettingsContainerInterface`](https://github.com/chillerlan/php-settings-container/blob/master/src/SettingsContainerInterface.php)
+and therefore offers all of its methods.
+
 method | return | description
 ------ | ------ | -----------
-`__construct(array $properties = null)` | - |
-`__set(string $property, $value)` | void | overrides `chillerlan\Traits\Container`
+`__construct(iterable  $properties = null)` | - |
 `setExpiry(int $expires = null)` | `AccessToken` |
-`isExpired()` | `bool` |
+`isExpired()` | bool |
 
-property | type | default | allowed | description
--------- | ---- | ------- | ------- | -----------
-`$requestToken` | string | null | * | OAuth1 only
-`$requestTokenSecret` | string | null | * | OAuth1 only
-`$accessTokenSecret` | string | null | * | OAuth1 only
-`$accessToken` | string | null | * |
-`$refreshToken` | string | null | * |
-`$extraParams` | array | `[]` |  |
-`$expires` | int | `AccessToken::EOL_UNKNOWN` |  |
-`$provider` | string | null | * |
+inherited from `SettingsContainerInterface`:
+
+method | return | description
+------ | ------ | -----------
+`__get(string $property)` | mixed |
+`__set(string $property, $value)` | void | calls `$this->{'set_'.$property}($value)` if such a method exists
+`__isset(string $property)` | bool | 
+`__unset(string $property)` | void | 
+`__toString()` | string | a JSON string
+`toArray()` | array | 
+`fromIterable(iterable $properties)` | `SettingsContainerInterface` | 
+`toJSON(int $jsonOptions = null)` | string | accepts [JSON options constants](http://php.net/manual/json.constants.php)
+`fromJSON(string $json)` | `SettingsContainerInterface` | 
+
+property | type | default | description
+-------- | ---- | ------- | -----------
+`$accessTokenSecret` | string | `null` |  OAuth1 only
+`$accessToken` | string | `null` |
+`$refreshToken` | string | `null` |
+`$extraParams` | array | `[]` |
+`$expires` | int | `AccessToken::EOL_UNKNOWN` |
+`$provider` | string | `null` |
+
+### [`OAuthOptions`](https://github.com/chillerlan/php-oauth-core/blob/master/src/OAuthOptions.php)
+`OAuthOptions` is a [`SettingsContainerInterface`](https://github.com/chillerlan/php-settings-container/blob/master/src/SettingsContainerInterface.php)
+that uses the plug-in traits [`OAuthOptionsTrait`](https://github.com/chillerlan/php-oauth-core/blob/master/src/OAuthOptionsTrait.php) 
+and [`HTTPOptionsTrait`](https://github.com/chillerlan/php-httpinterface/blob/master/src/HTTPOptionsTrait.php) to provide settings for a provider.
+
+property | type | default | description
+-------- | ---- | ------- | -----------
+`$key` | string | `null` | The application key (or id) given by your provider (see [supported providers](https://github.com/chillerlan/php-oauth-providers#supported-providers))
+`$secret` | string | `null` | The application secret given by your provider
+`$callbackURL` | string | `null` | The callback URL associated with your application
+`$sessionStart` | bool | `true` | Whether or not to start the session when [session storage](https://github.com/chillerlan/php-oauth-core/tree/master/src/Storage/SessionStorage.php) is used
+`$sessionTokenVar` | string | 'chillerlan-oauth-token' | The session array key for token storage 
+`$sessionStateVar` | string | 'chillerlan-oauth-state' | The session array key for <state> storage (OAuth2) 
+`$tokenAutoRefresh` | bool | `true` | Whether or not to automatically refresh access tokens (OAuth2)
+
+from `HTTPOptionsTrait`:
+
+property | type | default | description
+-------- | ---- | ------- | -----------
+`$user_agent` | string |  |  
+`$curl_options` | array | `[]` | https://php.net/manual/function.curl-setopt.php
+`$ca_info` | string | `null` | https://curl.haxx.se/docs/caextract.html 
+`$ssl_verifypeer` | bool | `true` | see CURLOPT_SSL_VERIFYPEER  
+
 
 # Disclaimer
 OAuth tokens are secrets and should be treated as such. Store them in a safe place,
