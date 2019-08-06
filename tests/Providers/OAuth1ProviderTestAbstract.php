@@ -34,7 +34,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this->setProperty($this->provider, 'requestTokenURL', 'https://localhost/oauth1/request_token');
 		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth1/access_token');
-		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth1/api/request');
+		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth1/api');
 
 	}
 
@@ -141,10 +141,14 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 	}
 
 	public function testRequest(){
-		$token = new AccessToken(['accessTokenSecret' => 'test_request_token_secret']);
+		$token = new AccessToken(['accessTokenSecret' => 'test_token']);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request(''))->data);
+		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request('/request'))->data);
+
+		// coverage, @todo
+		$this->provider->request('/request', null, 'POST', ['foo' => 'bar'], ['Content-Type' => 'application/json']);
+		$this->provider->request('/request', null, 'POST', ['foo' => 'bar'], ['Content-Type' => 'application/x-www-form-urlencoded']);
 	}
 
 }

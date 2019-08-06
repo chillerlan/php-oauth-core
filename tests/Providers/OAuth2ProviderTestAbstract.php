@@ -42,14 +42,13 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		],
 		'/oauth2/api/request' => [
 			'data' => 'such data! much wow!'
-		],
-		'/oauth2/api/request/test/get' => ['foo'],
+		]
 	];
 
 	protected function setUp():void{
 		parent::setUp();
 
-		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth2/api/request');
+		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth2/api');
 		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth2/access_token');
 
 		if($this->provider instanceof TokenRefresh){
@@ -153,7 +152,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request(''))->data);
+		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request('/request'))->data);
 	}
 
 	public function testRequestInvalidAuthTypeException(){
@@ -164,7 +163,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this->provider->request('');
+		$this->provider->request('/request');
 	}
 
 	public function testCheckCSRFState(){
@@ -254,7 +253,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		\sleep(2);
 
-		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request(''))->data);
+		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request('/request'))->data);
 	}
 
 	public function testGetClientCredentials(){
