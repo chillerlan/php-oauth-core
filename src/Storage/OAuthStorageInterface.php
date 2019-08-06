@@ -23,10 +23,10 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 * @param string                             $service
 	 * @param \chillerlan\OAuth\Core\AccessToken $token
 	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @return bool
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface;
+	public function storeAccessToken(string $service, AccessToken $token):bool;
 
 	/**
 	 * Retrieves an AccessToken for the given $service
@@ -52,16 +52,16 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @param string $service
 	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @return bool
 	 */
-	public function clearAccessToken(string $service):OAuthStorageInterface;
+	public function clearAccessToken(string $service):bool;
 
 	/**
 	 * Deletes all access tokens (for the current user)
 	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @return bool
 	 */
-	public function clearAllAccessTokens():OAuthStorageInterface;
+	public function clearAllAccessTokens():bool;
 
 	/**
 	 * Stores a CSRF <state> value for the given $service
@@ -69,9 +69,9 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 * @param string $service
 	 * @param string $state
 	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @return bool
 	 */
-	public function storeCSRFState(string $service, string $state):OAuthStorageInterface;
+	public function storeCSRFState(string $service, string $state):bool;
 
 	/**
 	 * Retrieves a CSRF <state> value for the given $service
@@ -97,16 +97,16 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @param string $service
 	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @return bool
 	 */
-	public function clearCSRFState(string $service):OAuthStorageInterface;
+	public function clearCSRFState(string $service):bool;
 
 	/**
 	 * Deletes all stored CSRF states (for the current user)
 	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @return bool
 	 */
-	public function clearAllCSRFStates():OAuthStorageInterface;
+	public function clearAllCSRFStates():bool;
 
 	/**
 	 * Prepares an AccessToken for storage (serialize, encrypt etc.)

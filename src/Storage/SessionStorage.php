@@ -72,10 +72,10 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
+	public function storeAccessToken(string $service, AccessToken $token):bool{
 		$_SESSION[$this->sessionVar][$service] = $this->toStorage($token);
 
-		return $this;
+		return true;
 	}
 
 	/**
@@ -100,19 +100,19 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service):OAuthStorageInterface{
+	public function clearAccessToken(string $service):bool{
 
 		if(array_key_exists($service, $_SESSION[$this->sessionVar])){
 			unset($_SESSION[$this->sessionVar][$service]);
 		}
 
-		return $this;
+		return true;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllAccessTokens():OAuthStorageInterface{
+	public function clearAllAccessTokens():bool{
 
 		foreach(array_keys($_SESSION[$this->sessionVar]) as $service){
 			unset($_SESSION[$this->sessionVar][$service]);
@@ -120,16 +120,16 @@ class SessionStorage extends OAuthStorageAbstract{
 
 		unset($_SESSION[$this->sessionVar]);
 
-		return $this;
+		return true;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
+	public function storeCSRFState(string $service, string $state):bool{
 		$_SESSION[$this->stateVar][$service] = $state;
 
-		return $this;
+		return true;
 	}
 
 	/**
@@ -154,22 +154,22 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service):OAuthStorageInterface{
+	public function clearCSRFState(string $service):bool{
 
 		if(array_key_exists($service, $_SESSION[$this->stateVar])){
 			unset($_SESSION[$this->stateVar][$service]);
 		}
 
-		return $this;
+		return true;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllCSRFStates():OAuthStorageInterface{
+	public function clearAllCSRFStates():bool{
 		unset($_SESSION[$this->stateVar]);
 
-		return $this;
+		return true;
 	}
 
 }

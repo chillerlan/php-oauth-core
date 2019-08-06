@@ -31,10 +31,10 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
+	public function storeAccessToken(string $service, AccessToken $token):bool{
 		$this->tokens[$service] = $token;
 
-		return $this;
+		return true;
 	}
 
 	/**
@@ -59,19 +59,19 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service):OAuthStorageInterface{
+	public function clearAccessToken(string $service):bool{
 
 		if(array_key_exists($service, $this->tokens)){
 			unset($this->tokens[$service]);
 		}
 
-		return $this;
+		return true;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllAccessTokens():OAuthStorageInterface{
+	public function clearAllAccessTokens():bool{
 
 		foreach(array_keys($this->tokens) as $service){
 			unset($this->tokens[$service]);
@@ -79,16 +79,16 @@ class MemoryStorage extends OAuthStorageAbstract{
 
 		$this->tokens = [];
 
-		return $this;
+		return true;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
+	public function storeCSRFState(string $service, string $state):bool{
 		$this->states[$service] = $state;
 
-		return $this;
+		return true;
 	}
 
 	/**
@@ -113,22 +113,22 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service):OAuthStorageInterface{
+	public function clearCSRFState(string $service):bool{
 
 		if(array_key_exists($service, $this->states)){
 			unset($this->states[$service]);
 		}
 
-		return $this;
+		return true;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllCSRFStates():OAuthStorageInterface{
+	public function clearAllCSRFStates():bool{
 		$this->states = [];
 
-		return $this;
+		return true;
 	}
 
 }
