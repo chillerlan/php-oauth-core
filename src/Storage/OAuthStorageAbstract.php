@@ -16,6 +16,8 @@ use chillerlan\OAuth\{Core\AccessToken, OAuthOptions};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 
+use function is_string;
+
 abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	use LoggerAwareTrait;
 
@@ -50,7 +52,12 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	/**
 	 * @inheritDoc
 	 */
-	public function fromStorage(string $data):AccessToken{
+	public function fromStorage($data):AccessToken{
+
+		if(!is_string($data)){
+			throw new OAuthStorageException('invalid data');
+		}
+
 		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return (new AccessToken)->fromJSON($data);
 	}
