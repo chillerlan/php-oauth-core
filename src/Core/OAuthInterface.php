@@ -26,7 +26,6 @@ use Psr\Http\Message\{
  * @property string                                         $apiURL
  * @property string                                         $applicationURL
  * @property \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpoints
- * @property string                                         $revokeURL
  * @property string                                         $serviceName
  * @property string                                         $userRevokeURL
  */

@@ -36,7 +36,6 @@ use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_INT_STRING, BOOLEANS_AS_BOOL};
  * @property string                                         $apiURL
  * @property string                                         $applicationURL
  * @property \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpoints
- * @property string                                         $revokeURL
  * @property string                                         $serviceName
  * @property string                                         $userRevokeURL
  */
@@ -44,7 +43,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	use LoggerAwareTrait;
 
 	protected const ALLOWED_PROPERTIES = [
-		'apiDocs', 'apiURL', 'applicationURL', 'endpoints', 'revokeURL', 'serviceName', 'userRevokeURL'
+		'apiDocs', 'apiURL', 'applicationURL', 'endpoints', 'serviceName', 'userRevokeURL'
 	];
 
 	/**

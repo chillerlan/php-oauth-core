@@ -69,7 +69,6 @@ The following public properties are available:
 property | description
 -------- | -----------
 `$serviceName` | the classname for the current provider
-`$revokeURL` | an optional URL to revoke an access token (via API)
 `$userRevokeURL` | an optional link to the provider's user control panel where they can revoke the current token
 `$apiDocs` | a link to the provider's API docs
 `$applicationURL` | a link to the API/application credential generation page
@@ -80,8 +79,9 @@ The following internal (protected) properties affect a provider's functionality
 property | description
 -------- | -----------
 `$authURL` | URL to the the provider's consent screen
-`$accessTokenURL` | the provider's token excahnge URL
+`$accessTokenURL` | the provider's token exchange URL
 `$apiURL` | the base URL of the provider's API to access
+`$revokeURL` | (optional) an URL to revoke the given access token via the provider's API
 `$endpointMap` | (optional) a class FQCN of an `EndpointMapInterface` for the provider's API
 `$authHeaders` | (optional) additional headers to use during authentication
 `$apiHeaders` | (optional) additional headers to use during API access
