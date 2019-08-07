@@ -32,8 +32,6 @@ use const PHP_QUERY_RFC1738;
 use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_INT_STRING, BOOLEANS_AS_BOOL};
 
 /**
- * @property string                                         $accessTokenURL
- * @property string                                         $authURL
  * @property string                                         $apiDocs
  * @property string                                         $apiURL
  * @property string                                         $applicationURL
@@ -46,7 +44,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	use LoggerAwareTrait;
 
 	protected const ALLOWED_PROPERTIES = [
-		'accessTokenURL', 'apiDocs', 'apiURL', 'applicationURL', 'authURL', 'endpoints', 'revokeURL', 'serviceName', 'userRevokeURL'
+		'apiDocs', 'apiURL', 'applicationURL', 'endpoints', 'revokeURL', 'serviceName', 'userRevokeURL'
 	];
 
 	/**

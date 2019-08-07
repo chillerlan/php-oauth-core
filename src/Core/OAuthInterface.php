@@ -22,8 +22,6 @@ use Psr\Http\Message\{
 };
 
 /**
- * @property string                                         $accessTokenURL
- * @property string                                         $authURL
  * @property string                                         $apiDocs
  * @property string                                         $apiURL
  * @property string                                         $applicationURL
