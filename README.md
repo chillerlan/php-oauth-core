@@ -54,31 +54,51 @@ and offers basic methods that are common to the OAuth 1/2 interfaces, all suppli
 method | return | description
 ------ | ------ | -----------
 `__construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options, LoggerInterface $logger = null)` | - | 
+`__call(string $name, array $arguments)` | PSR-7 `ResponseInterface` | magic API
 `getAuthURL(array $params = null)` | PSR-7 `UriInterface` | 
 `request(string $path, array $params = null, string $method = null, $body = null, array $headers = null)` | PSR-7 `ResponseInterface`  | 
+`setStorage(OAuthStorageInterface $storage)` | `OAuthInterface` | 
+`setLogger(LoggerInterface $logger)` | void | PSR-3
 `setRequestFactory(RequestFactoryInterface $requestFactory)` | `OAuthInterface` | PSR-17
 `setStreamFactory(StreamFactoryInterface $streamFactory)` | `OAuthInterface` | PSR-17
 `setUriFactory(UriFactoryInterface $uriFactory)` | `OAuthInterface` | PSR-17
 `getRequestAuthorization(RequestInterface $request, AccessToken $token)` | PSR-7 `RequestInterface`
 
+The following public properties are available:
+
 property | description
 -------- | -----------
 `$serviceName` | the classname for the current provider
-`$accessTokenURL` | the provider`s access token URL 
-`$authURL` |  the provider`s authentication token URL 
 `$revokeURL` | an optional URL to revoke an access token (via API)
 `$userRevokeURL` | an optional link to the provider's user control panel where they can revoke the current token
 `$apiDocs` | a link to the provider's API docs
 `$applicationURL` | a link to the API/application credential generation page
 `$endpoints` | an `EndpointMapInterface` for the current provider
 
+The following internal (protected) properties affect a provider's functionality
+
+property | description
+-------- | -----------
+`$authURL` | URL to the the provider's consent screen
+`$accessTokenURL` | the provider's token excahnge URL
+`$apiURL` | the base URL of the provider's API to access
+`$endpointMap` | (optional) a class FQCN of an `EndpointMapInterface` for the provider's API
+`$authHeaders` | (optional) additional headers to use during authentication
+`$apiHeaders` | (optional) additional headers to use during API access
+
+
 ### [`OAuth1Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth1Provider.php)
-extends `OAuthInterface`
 
 method | return
 ------ | ------
 `getRequestToken()` | `AccessToken`
 `getAccessToken(string $token, string $verifier)` | `AccessToken`
+
+Protected properties:
+
+property | description
+-------- | -----------
+`$requestTokenURL` | the OAuth1 request token excange URL
 
 #### A minimal OAuth1 provider
 ```php
@@ -86,22 +106,30 @@ use chillerlan\OAuth\Core\OAuth1Provider;
 
 class MyOauth1Provider extends Oauth1Provider{
 
-	protected $apiURL          = 'https://api.example.com';
 	protected $requestTokenURL = 'https://example.com/oauth/request_token';
 	protected $authURL         = 'https://example.com/oauth/authorize';
 	protected $accessTokenURL  = 'https://example.com/oauth/access_token';
+	protected $apiURL          = 'https://api.example.com';
 
 }
 ```
 
 
 ### [`OAuth2Interface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuth2Provider.php) 
-extends `OAuthInterface`
 
 method | return
 ------ | ------
 `getAccessToken(string $code, string $state = null)` | `AccessToken`
 `getAuthURL(array $params = null, $scopes = null)` | PSR-7 `UriInterface`
+
+Protected properties:
+
+property | description
+-------- | -----------
+`$authMethod` | the authentication method, one of `OAuth2Interface::AUTH_METHODS_HEADER` or `OAuth2Interface::AUTH_METHODS_QUERY`
+`$scopesDelimiter` | (optional) a delimiter string for the OAuth2 scopes, defaults to `' '` (space)
+`$refreshTokenURL` | (optional) a refresh token exchange URL, in case it differs from `$accessTokenURL`
+`$clientCredentialsTokenURL` | (optional) a client credentials token exchange URL, in case it differs from `$accessTokenURL`
 
 #### `ClientCredentials`
 The `ClientCredentials` interface indicates that the provider supports the [client credentials grant type](https://tools.ietf.org/html/rfc6749#section-4.4).
@@ -132,15 +160,17 @@ use chillerlan\OAuth\Core\OAuth2Provider;
 
 class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
 
-	protected $apiURL                    = 'https://api.example.com';
 	protected $authURL                   = 'https://example.com/oauth2/authorize';
 	protected $accessTokenURL            = 'https://example.com/oauth2/token';
+	protected $apiURL                    = 'https://api.example.com';
+
+	// optional
 	protected $clientCredentialsTokenURL = 'https://example.com/oauth2/client_credentials';
 	protected $authMethod                = self::HEADER_BEARER;
 	protected $scopesDelimiter           = ',';
-
 }
 ```
+
 
 ### [`OAuthStorageInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Storage/OAuthStorageAbstract.php)
 
