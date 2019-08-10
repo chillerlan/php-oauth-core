@@ -13,12 +13,17 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\DotEnv\DotEnv;
+use chillerlan\HTTP\Psr18\LoggingClient;
+use chillerlan\HTTP\Psr7\Response;
 use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage};
 use chillerlan\OAuth\Core\{AccessToken, OAuthInterface};
 use chillerlan\OAuthTest\OAuthTestLogger;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
+
+use function chillerlan\HTTP\Psr17\create_stream_from_input;
 
 abstract class ProviderTestAbstract extends TestCase{
 
@@ -96,7 +101,28 @@ abstract class ProviderTestAbstract extends TestCase{
 	/**
 	 * @return \Psr\Http\Client\ClientInterface
 	 */
-	abstract protected function initHttp():ClientInterface;
+	protected function initHttp():ClientInterface{
+
+		$client = new class($this->responses) implements ClientInterface{
+
+			/** @var array */
+			protected $responses;
+
+			public function __construct(array $responses){
+				$this->responses = $responses;
+			}
+
+			public function sendRequest(RequestInterface $request):ResponseInterface{
+				$stream = create_stream_from_input($this->responses[$request->getUri()->getPath()]);
+
+				return (new Response)->withBody($stream);
+			}
+
+		};
+
+		return new LoggingClient($client, $this->logger);
+	}
+
 
 	/**
 	 * @return \chillerlan\OAuth\Core\OAuthInterface

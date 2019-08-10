@@ -16,8 +16,6 @@ use chillerlan\HTTP\{Psr17, Psr7};
 use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
@@ -25,24 +23,10 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 	protected $responses = [
-		'/oauth2/access_token' => [
-			'access_token' => 'test_access_token',
-			'expires_in'   => 3600,
-			'state'        => 'test_state',
-		],
-		'/oauth2/refresh_token' =>  [
-			'access_token' => 'test_refreshed_access_token',
-			'expires_in'   => 60,
-			'state'        => 'test_state',
-		],
-		'/oauth2/client_credentials' => [
-			'access_token' => 'test_client_credentials_token',
-			'expires_in'   => 30,
-			'state'        => 'test_state',
-		],
-		'/oauth2/api/request' => [
-			'data' => 'such data! much wow!'
-		]
+		'/oauth2/access_token'       => '{"access_token":"test_access_token","expires_in":3600,"state":"test_state"}',
+		'/oauth2/refresh_token'      => '{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
+		'/oauth2/client_credentials' => '{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
+		'/oauth2/api/request'        => '{"data":"such data! much wow!"}',
 	];
 
 	protected function setUp():void{
@@ -50,34 +34,10 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth2/api');
 		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth2/access_token');
+		$this->setProperty($this->provider, 'refreshTokenURL', 'https://localhost/oauth2/refresh_token');
+		$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
 
-		if($this->provider instanceof TokenRefresh){
-			$this->setProperty($this->provider, 'refreshTokenURL', 'https://localhost/oauth2/refresh_token');
-		}
-
-		if($this->provider instanceof ClientCredentials){
-			$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
-		}
-
-		if($this->provider instanceof CSRFToken){
-			$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
-		}
-
-	}
-
-	/**
-	 * @return \Psr\Http\Client\ClientInterface
-	 */
-	protected function initHttp():ClientInterface{
-		return new class($this->responses, $this->logger) extends ProviderTestHttpClient{
-
-			public function sendRequest(RequestInterface $request):ResponseInterface{
-				$stream = Psr17\create_stream_from_input(json_encode($this->responses[$request->getUri()->getPath()]));
-
-				return $this->logRequest($request, (new Response)->withBody($stream));
-			}
-
-		};
+		$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
 	}
 
 	public function testOAuth2Instance(){
