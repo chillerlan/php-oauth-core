@@ -77,6 +77,13 @@ class SessionStorageTest extends StorageTestAbstract{
 	/**
 	 * @runInSeparateProcess
 	 */
+	public function testFromStorageInvalidInputException(){
+		parent::testFromStorageInvalidInputException();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 */
 	public function testStoreStateWithNonExistentArray(){
 		$options = new OAuthOptions;
 		unset($_SESSION[$options->sessionStateVar]);
