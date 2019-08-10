@@ -12,9 +12,15 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\{Psr17, Psr7};
 use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
+
+use function chillerlan\HTTP\Psr17\create_stream_from_input;
+use function chillerlan\HTTP\Psr7\get_json;
+
+use function parse_str, parse_url;
+
+use const PHP_URL_QUERY;
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth1Interface $provider
@@ -41,7 +47,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 	}
 
 	public function testGetAuthURL(){
-		\parse_str(\parse_url($this->provider->getAuthURL(), \PHP_URL_QUERY), $query);
+		parse_str(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY), $query);
 
 		$this->assertSame('test_request_token', $query['oauth_token']);
 	}
@@ -86,7 +92,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('error=whatever'))])
+			->invokeArgs($this->provider, [(new Response)->withBody(create_stream_from_input('error=whatever'))])
 		;
 	}
 
@@ -96,7 +102,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('oauth_token=whatever'))])
+			->invokeArgs($this->provider, [(new Response)->withBody(create_stream_from_input('oauth_token=whatever'))])
 		;
 	}
 
@@ -106,7 +112,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('oauth_token=whatever&oauth_token_secret=whatever_secret')), true])
+			->invokeArgs($this->provider, [(new Response)->withBody(create_stream_from_input('oauth_token=whatever&oauth_token_secret=whatever_secret')), true])
 		;
 	}
 
@@ -127,7 +133,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		$token = new AccessToken(['accessTokenSecret' => 'test_token']);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request('/request'))->data);
+		$this->assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
 
 		// coverage, @todo
 		$this->provider->request('/request', null, 'POST', ['foo' => 'bar'], ['Content-Type' => 'application/json']);

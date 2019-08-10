@@ -24,6 +24,7 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
 use function chillerlan\HTTP\Psr17\create_stream_from_input;
+use function file_exists;
 
 abstract class ProviderTestAbstract extends TestCase{
 
@@ -79,7 +80,7 @@ abstract class ProviderTestAbstract extends TestCase{
 
 	protected function setUp():void{
 
-		$file = \file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
+		$file = file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
 
 		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
 		$this->is_ci  = $this->dotEnv->get('IS_CI') === 'TRUE';

@@ -13,14 +13,15 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\HTTP\Psr7;
 use chillerlan\Settings\SettingsContainerInterface;
-use chillerlan\OAuth\{Core\AccessToken, Core\OAuthInterface, OAuthOptions};
+use chillerlan\OAuth\{Core\OAuthInterface, OAuthOptions};
 use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestLogger, OAuthTestMemoryStorage};
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+
+use function chillerlan\HTTP\Psr7\{get_json, get_xml};
 
 abstract class APITestAbstract extends TestCase{
 
@@ -141,7 +142,7 @@ abstract class APITestAbstract extends TestCase{
 	protected function responseJson(ResponseInterface $response){
 		$response->getBody()->rewind();
 
-		return Psr7\get_json($response);
+		return get_json($response);
 	}
 
 	/**
@@ -152,7 +153,7 @@ abstract class APITestAbstract extends TestCase{
 	protected function responseXML(ResponseInterface $response){
 		$response->getBody()->rewind();
 
-		return Psr7\get_xml($response);
+		return get_xml($response);
 	}
 
 	public function testOAuthInstance(){

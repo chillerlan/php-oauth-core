@@ -12,10 +12,16 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\{Psr17, Psr7};
 use chillerlan\HTTP\Psr7\{Request, Response};
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
+
+use function chillerlan\HTTP\Psr17\create_stream_from_input;
+use function chillerlan\HTTP\Psr7\get_json;
+
+use function explode, parse_str, parse_url, sleep, time;
+
+use const PHP_URL_QUERY;
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
@@ -46,19 +52,19 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 	public function testGetAuthURL(){
 		$url = $this->provider->getAuthURL(['client_secret' => 'foo'], ['some_scope']);
-		\parse_str(\parse_url($url, \PHP_URL_QUERY), $query);
+		parse_str(parse_url($url, PHP_URL_QUERY), $query);
 
 		$this->assertArrayNotHasKey('client_secret', $query);
 		$this->assertSame($this->options->key, $query['client_id']);
 		$this->assertSame('code', $query['response_type']);
-		$this->assertSame(\explode('?', $url)[0], $this->getProperty('authURL')->getValue($this->provider));
+		$this->assertSame(explode('?', $url)[0], $this->getProperty('authURL')->getValue($this->provider));
 	}
 
 	public function testGetAccessToken(){
 		$token = $this->provider->getAccessToken('foo', 'test_state');
 
 		$this->assertSame('test_access_token', $token->accessToken);
-		$this->assertGreaterThan(\time(), $token->expires);
+		$this->assertGreaterThan(time(), $token->expires);
 	}
 
 	public function testParseTokenResponseNoDataException(){
@@ -67,7 +73,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input(''))])
+			->invokeArgs($this->provider, [(new Response)->withBody(create_stream_from_input(''))])
 		;
 	}
 
@@ -77,7 +83,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('{"error":"whatever"}'))])
+			->invokeArgs($this->provider, [(new Response)->withBody(create_stream_from_input('{"error":"whatever"}'))])
 		;
 	}
 
@@ -87,7 +93,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(Psr17\create_stream_from_input('{"foo":"bar"}'))])
+			->invokeArgs($this->provider, [(new Response)->withBody(create_stream_from_input('{"foo":"bar"}'))])
 		;
 	}
 
@@ -99,11 +105,17 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		// header (default)
 		if(isset(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod])){
-			$this->assertStringContainsString(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod].'test_token', $this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization'));
+			$this->assertStringContainsString(
+				OAuth2Interface::AUTH_METHODS_HEADER[$authMethod].'test_token',
+				$this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization')
+			);
 		}
 		// query
 		elseif(isset(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod])){
-			$this->assertStringContainsString(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod].'=test_token', $this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery());
+			$this->assertStringContainsString(
+				OAuth2Interface::AUTH_METHODS_QUERY[$authMethod].'=test_token',
+				$this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery()
+			);
 		}
 
 	}
@@ -112,7 +124,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request('/request'))->data);
+		$this->assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
 	}
 
 	public function testRequestInvalidAuthTypeException(){
@@ -198,7 +210,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this->assertSame('test_refresh_token', $token->refreshToken);
 		$this->assertSame('test_refreshed_access_token', $token->accessToken);
-		$this->assertGreaterThan(\time(), $token->expires);
+		$this->assertGreaterThan(time(), $token->expires);
 	}
 
 	public function testRequestWithTokenRefresh(){
@@ -211,9 +223,9 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$token = new AccessToken(['accessToken' => 'test_access_token', 'refreshToken' => 'test_refresh_token', 'expires' => 1]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		\sleep(2);
+		sleep(2);
 
-		$this->assertSame('such data! much wow!', Psr7\get_json($this->provider->request('/request'))->data);
+		$this->assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
 	}
 
 	public function testGetClientCredentials(){
@@ -226,7 +238,7 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$token = $this->provider->getClientCredentialsToken(['some_scope']);
 
 		$this->assertSame('test_client_credentials_token', $token->accessToken);
-		$this->assertGreaterThan(\time(), $token->expires);
+		$this->assertGreaterThan(time(), $token->expires);
 	}
 
 }
