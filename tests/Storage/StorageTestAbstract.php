@@ -99,6 +99,13 @@ abstract class StorageTestAbstract extends TestCase{
 		$this->assertEquals($this->token, $b);
 	}
 
+	public function testFromStorageInvalidInputException(){
+		$this->expectException(OAuthStorageException::class);
+		$this->expectExceptionMessage('invalid data');
+
+		$this->storage->fromStorage([]);
+	}
+
 	public function testStoreWithExistingToken(){
 		$this->storage->storeAccessToken($this->tsn, $this->token);
 
