@@ -27,12 +27,6 @@ use const PHP_URL_QUERY;
  */
 abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 
-	protected $responses = [
-		'/oauth1/request_token' => 'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',
-		'/oauth1/access_token'  => 'oauth_token=test_access_token&oauth_token_secret=test_access_token_secret&oauth_callback_confirmed=true',
-		'/oauth1/api/request'   => '{"data":"such data! much wow!"}',
-	];
-
 	protected function setUp():void{
 		parent::setUp();
 
@@ -40,6 +34,14 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth1/access_token');
 		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth1/api');
 
+	}
+
+	protected function getTestResponses():array{
+		return [
+			'/oauth1/request_token' => 'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',
+			'/oauth1/access_token'  => 'oauth_token=test_access_token&oauth_token_secret=test_access_token_secret&oauth_callback_confirmed=true',
+			'/oauth1/api/request'   => '{"data":"such data! much wow!"}',
+		];
 	}
 
 	public function testOAuth1Instance(){

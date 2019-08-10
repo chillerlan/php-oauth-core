@@ -28,13 +28,6 @@ use const PHP_URL_QUERY;
  */
 abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
-	protected $responses = [
-		'/oauth2/access_token'       => '{"access_token":"test_access_token","expires_in":3600,"state":"test_state"}',
-		'/oauth2/refresh_token'      => '{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
-		'/oauth2/client_credentials' => '{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
-		'/oauth2/api/request'        => '{"data":"such data! much wow!"}',
-	];
-
 	protected function setUp():void{
 		parent::setUp();
 
@@ -44,6 +37,15 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
 
 		$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
+	}
+
+	protected function getTestResponses():array{
+		return [
+			'/oauth2/access_token'       => '{"access_token":"test_access_token","expires_in":3600,"state":"test_state"}',
+			'/oauth2/refresh_token'      => '{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
+			'/oauth2/client_credentials' => '{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
+			'/oauth2/api/request'        => '{"data":"such data! much wow!"}',
+		];
 	}
 
 	public function testOAuth2Instance(){

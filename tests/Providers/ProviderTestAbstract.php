@@ -69,11 +69,6 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected $dotEnv;
 
 	/**
-	 * @var array
-	 */
-	protected $responses;
-
-	/**
 	 * @var bool
 	 */
 	protected $is_ci;
@@ -99,12 +94,14 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->storage->storeAccessToken($this->provider->serviceName, new AccessToken(['accessToken' => 'foo']));
 	}
 
+	abstract protected function getTestResponses():array;
+
 	/**
 	 * @return \Psr\Http\Client\ClientInterface
 	 */
 	protected function initHttp():ClientInterface{
 
-		$client = new class($this->responses) implements ClientInterface{
+		$client = new class($this->getTestResponses()) implements ClientInterface{
 
 			/** @var array */
 			protected $responses;
