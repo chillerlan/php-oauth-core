@@ -56,12 +56,20 @@ class OAuthTestSessionStorage extends SessionStorage{
 	public function getAccessToken(string $service):AccessToken{
 
 		if($this->hasAccessToken($service)){
-			return (new AccessToken)->fromJSON($_SESSION[$this->sessionVar][$service]);
+
+			/** @var \chillerlan\OAuth\Core\AccessToken $token */
+			$token = (new AccessToken)->fromJSON($_SESSION[$this->sessionVar][$service]);
+
+			return $token;
 		}
 
 		$tokenfile = $this->storagepath.'/'.$service.'.token.json';
 		if(file_exists($tokenfile)){
-			return (new AccessToken)->fromJSON(file_get_contents($tokenfile));
+
+			/** @var \chillerlan\OAuth\Core\AccessToken $token */
+			$token = (new AccessToken)->fromJSON(file_get_contents($tokenfile));
+
+			return $token;
 		}
 
 		throw new OAuthStorageException('token not found');
