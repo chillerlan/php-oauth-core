@@ -128,7 +128,10 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected function getProvider():OAuthInterface{
 		$this->reflection = new ReflectionClass($this->FQN);
 
-		return $this->reflection->newInstanceArgs([$this->initHttp(), $this->storage, $this->options, $this->logger]);
+		/** @var \chillerlan\OAuth\Core\OAuthInterface $OAuthInterface */
+		$OAuthInterface = $this->reflection->newInstanceArgs([$this->initHttp(), $this->storage, $this->options, $this->logger]);
+
+		return $OAuthInterface;
 	}
 
 	/**
