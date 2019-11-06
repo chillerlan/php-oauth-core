@@ -139,7 +139,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	 *
 	 * @return \ReflectionMethod
 	 */
-	protected function getMethod(string $method):ReflectionMethod {
+	protected function getMethod(string $method):ReflectionMethod{
 		$method = $this->reflection->getMethod($method);
 		$method->setAccessible(true);
 

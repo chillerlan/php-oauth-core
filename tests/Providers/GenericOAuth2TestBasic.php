@@ -45,7 +45,6 @@ class GenericOAuth2TestBasic extends OAuth2ProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('token refresh not supported');
 
-		/** @noinspection PhpUndefinedMethodInspection */
 		$this->provider->refreshAccessToken();
 	}
 
@@ -53,7 +52,6 @@ class GenericOAuth2TestBasic extends OAuth2ProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('client credentials token not supported');
 
-		/** @noinspection PhpUndefinedMethodInspection */
 		$this->provider->getClientCredentialsToken();
 	}
 
