@@ -126,7 +126,9 @@ Protected properties:
 
 property | description
 -------- | -----------
-`$authMethod` | the authentication method, one of `OAuth2Interface::AUTH_METHODS_HEADER` or `OAuth2Interface::AUTH_METHODS_QUERY`
+`$authMethod` | the authentication method, `OAuth2Interface::AUTH_METHOD_HEADER` (default) or `OAuth2Interface::AUTH_METHOD_QUERY`
+`$authMethodHeader` | the name of the `Authorization` header in case `OAuth2Interface::AUTH_METHOD_HEADER` is used, defaults to `Bearer`
+`$authMethodQuery` | the name of the querystring in case `OAuth2Interface::AUTH_METHOD_QUERY` is used, defaults to `access_token`
 `$scopesDelimiter` | (optional) a delimiter string for the OAuth2 scopes, defaults to `' '` (space)
 `$refreshTokenURL` | (optional) a refresh token exchange URL, in case it differs from `$accessTokenURL`
 `$clientCredentialsTokenURL` | (optional) a client credentials token exchange URL, in case it differs from `$accessTokenURL`
@@ -166,7 +168,8 @@ class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRF
 
 	// optional
 	protected $clientCredentialsTokenURL = 'https://example.com/oauth2/client_credentials';
-	protected $authMethod                = self::HEADER_BEARER;
+	protected $authMethod                = self::AUTH_METHOD_HEADER;
+	protected $authMethodHeader          = 'OAuth';
 	protected $scopesDelimiter           = ',';
 }
 ```

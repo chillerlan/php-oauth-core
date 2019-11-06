@@ -16,26 +16,8 @@ use Psr\Http\Message\UriInterface;
 
 interface OAuth2Interface extends OAuthInterface{
 
-	const HEADER_OAUTH              = 0;
-	const HEADER_BEARER             = 1;
-	const QUERY_ACCESS_TOKEN        = 2;
-	const QUERY_OAUTH2_ACCESS_TOKEN = 3;
-	const QUERY_APIKEY              = 4;
-	const QUERY_AUTH                = 5;
-	const QUERY_OAUTH_TOKEN         = 6;
-
-	const AUTH_METHODS_HEADER = [
-		self::HEADER_OAUTH  => 'OAuth ',
-		self::HEADER_BEARER => 'Bearer ',
-	];
-
-	const AUTH_METHODS_QUERY = [
-		self::QUERY_ACCESS_TOKEN        => 'access_token',
-		self::QUERY_OAUTH2_ACCESS_TOKEN => 'oauth2_access_token',
-		self::QUERY_APIKEY              => 'apikey',
-		self::QUERY_AUTH                => 'auth',
-		self::QUERY_OAUTH_TOKEN         => 'oauth_token',
-	];
+	const AUTH_METHOD_HEADER = 1;
+	const AUTH_METHOD_QUERY  = 2;
 
 	/**
 	 * Obtains an OAuth2 access token with the given $code, verifies the $state
@@ -59,6 +41,5 @@ interface OAuth2Interface extends OAuthInterface{
 	 * @return \Psr\Http\Message\UriInterface
 	 */
 	public function getAuthURL(array $params = null, array $scopes = null):UriInterface;
-
 
 }

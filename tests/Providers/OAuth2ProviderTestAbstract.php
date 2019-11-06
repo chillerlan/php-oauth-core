@@ -106,16 +106,16 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 		$authMethod = $this->getProperty('authMethod')->getValue($this->provider);
 
 		// header (default)
-		if(isset(OAuth2Interface::AUTH_METHODS_HEADER[$authMethod])){
+		if($authMethod === OAuth2Interface::AUTH_METHOD_HEADER){
 			$this->assertStringContainsString(
-				OAuth2Interface::AUTH_METHODS_HEADER[$authMethod].'test_token',
+				$this->getProperty('authMethodHeader')->getValue($this->provider).' test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization')
 			);
 		}
 		// query
-		elseif(isset(OAuth2Interface::AUTH_METHODS_QUERY[$authMethod])){
+		elseif($authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
 			$this->assertStringContainsString(
-				OAuth2Interface::AUTH_METHODS_QUERY[$authMethod].'=test_token',
+				$this->getProperty('authMethodQuery')->getValue($this->provider).'=test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery()
 			);
 		}

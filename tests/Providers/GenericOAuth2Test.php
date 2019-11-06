@@ -32,10 +32,10 @@ class GenericOAuth2Test extends OAuth2ProviderTestAbstract{
 			protected $authURL        = 'https://example.com/oauth2/authorize';
 			protected $accessTokenURL = 'https://example.com/oauth2/token';
 			protected $userRevokeURL  = 'https://account.example.com/apps/';
-			protected $endpointMap     = TestEndpoints::class;
+			protected $endpointMap    = TestEndpoints::class;
 			protected $authHeaders    = ['foo' => 'bar'];
 			protected $apiHeaders     = ['foo' => 'bar'];
-			protected $authMethod     = OAuth2Provider::QUERY_ACCESS_TOKEN;
+			protected $authMethod     = OAuth2Provider::AUTH_METHOD_QUERY;
 
 		};
 

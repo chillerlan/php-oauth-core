@@ -16,7 +16,7 @@ namespace chillerlan\OAuth\Core;
 
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
-use function array_key_exists, array_merge, base64_encode, date, hash_equals, http_build_query,
+use function array_merge, base64_encode, date, hash_equals, http_build_query,
 	implode, is_array, json_decode, random_bytes, sha1, sprintf;
 use function chillerlan\HTTP\Psr7\{decompress_content, merge_query};
 
@@ -27,7 +27,17 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var int
 	 */
-	protected $authMethod = self::HEADER_BEARER;
+	protected $authMethod = self::AUTH_METHOD_HEADER;
+
+	/**
+	 * @var string
+	 */
+	protected $authMethodHeader = 'Bearer';
+
+	/**
+	 * @var string
+	 */
+	protected $authMethodQuery = 'access_token';
 
 	/**
 	 * @var string
@@ -150,19 +160,17 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 
-		if(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_HEADER)){
-			$request = $request->withHeader('Authorization', OAuth2Interface::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken);
-		}
-		elseif(array_key_exists($this->authMethod, OAuth2Interface::AUTH_METHODS_QUERY)){
-			$uri = merge_query((string)$request->getUri(), [OAuth2Interface::AUTH_METHODS_QUERY[$this->authMethod] => $token->accessToken]);
-
-			$request = $request->withUri($this->uriFactory->createUri($uri));
-		}
-		else{
-			throw new ProviderException('invalid auth type');
+		if($this->authMethod === OAuth2Interface::AUTH_METHOD_HEADER){
+			return $request->withHeader('Authorization', $this->authMethodHeader.' '.$token->accessToken);
 		}
 
-		return $request;
+		if($this->authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
+			$uri = merge_query($request->getUri()->__toString(), [$this->authMethodQuery => $token->accessToken]);
+
+			return $request->withUri($this->uriFactory->createUri($uri));
+		}
+
+		throw new ProviderException('invalid auth type');
 	}
 
 	/**
