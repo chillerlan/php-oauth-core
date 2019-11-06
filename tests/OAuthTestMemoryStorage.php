@@ -61,7 +61,11 @@ class OAuthTestMemoryStorage extends MemoryStorage{
 
 		$tokenfile = $this->storagepath.'/'.$service.'.token.json';
 		if(file_exists($tokenfile)){
-			return (new AccessToken)->fromJSON(file_get_contents($tokenfile));
+
+			/** @var \chillerlan\OAuth\Core\AccessToken $token */
+			$token = (new AccessToken)->fromJSON(file_get_contents($tokenfile));
+
+			return $token;
 		}
 
 		throw new OAuthStorageException('token not found');
