@@ -94,6 +94,9 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->storage->storeAccessToken($this->provider->serviceName, new AccessToken(['accessToken' => 'foo']));
 	}
 
+	/**
+	 * @return array
+	 */
 	abstract protected function getTestResponses():array;
 
 	/**
