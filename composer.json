@@ -4,7 +4,7 @@
 	"homepage": "https://github.com/chillerlan/php-oauth-core",
 	"license": "MIT",
 	"type": "library",
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"keywords": [
 		"oauth", "oauth1", "oauth2", "client", "core", "psr-7", "psr-17", "psr-18", "rfc5849", "rfc6749"
 	],
@@ -23,9 +23,11 @@
 		"php": "^7.2",
 		"ext-json":"*",
 		"ext-simplexml":"*",
-		"chillerlan/php-settings-container": "^1.1",
-		"chillerlan/php-httpinterface": "dev-master",
-		"chillerlan/php-magic-apiclient": "^2.1",
+		"chillerlan/php-settings-container": "^1.2",
+		"chillerlan/php-httpinterface": "^4.0",
+		"chillerlan/php-magic-apiclient": "^3.0",
+		"psr/http-client":"^1.0",
+		"psr/http-message": "^1.0",
 		"psr/log": "^1.1"
 	},
 	"require-dev": {
