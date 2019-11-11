@@ -1,4 +1,5 @@
 # chillerlan/php-oauth-core
+A PHP7.2+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://github.com/codemasher/PHPoAuthLib) on [Lusitanian/PHPoAuthLib](https://github.com/Lusitanian/PHPoAuthLib).
 
 [![Packagist version][packagist-badge]][packagist]
 [![License][license-badge]][license]
@@ -264,6 +265,77 @@ property | type | default | description
 `$retries` | int | 3 |
 `$curl_multi_options` | array | `[]` |
 
+## Testing
+
+If you just wrote your own provider implementation, you also might want to test it. 
+This library brings several abstract tests that you can use.
+In order to use them, you need to add the PSR-4 namespaces to your project's `composer.json` like so:
+```json
+{
+	...
+
+	"autoload": {
+		"psr-4": {
+			"my\\project\\source\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"my\\project\\test\\": "tests/",
+
+			...
+
+			"chillerlan\\HTTPTest\\MagicAPI\\": "vendor/chillerlan/php-magic-apiclient/tests",
+			"chillerlan\\OAuthTest\\": "vendor/chillerlan/php-oauth-core/tests"
+		}
+	}
+}
+```
+
+The [basic unit test](https://github.com/chillerlan/php-oauth-core/tree/master/tests/Providers) looks as follows:
+```php
+namespace my\project\test;
+
+use my\project\source\MyProvider;
+use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
+
+/**
+ * @property \my\project\source\MyProvider $provider
+ */
+class MyProviderTest extends OAuth2ProviderTestAbstract{
+
+	protected $CFG = __DIR__.'/../config'; // specifies the path for .env, cacert.pem and oauth tokens
+	protected $FQN = MyProvider::class;
+
+}
+```
+That is all! You'll only need to add/overload methods in case you need to cover edge cases or additional features of your provider implementation.
+
+In case you want to run tests against a live API, you can use the [abstract API tests](https://github.com/chillerlan/php-oauth-core/tree/master/tests/API).
+The live API tests are disabled on (Travis) CI and you need to enable them explicit by changing the line `IS_CI=TRUE` in you project's .env.
+```php
+namespace my\project\test;
+
+use my\project\source\MyProvider;
+use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+
+/**
+ * @property \my\project\source\MyProvider $provider
+ */
+class MyProviderAPITest extends OAuth2APITestAbstract{
+
+	protected $CFG = __DIR__.'/../config';
+	protected $FQN = MyProvider::class;
+	protected $ENV = 'MYPROVIDER'; // the prefix for the provider's name in .env
+
+	// your live API tests here
+	public function testIdentity(){
+		$r = $this->provider->identity();
+		$this->assertSame($this->testuser, $this->responseJson($r)->id);
+	}
+
+}
+```
 
 # Disclaimer
 OAuth tokens are secrets and should be treated as such. Store them in a safe place,
