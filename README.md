@@ -215,7 +215,7 @@ inherited from `SettingsContainerInterface`:
 
 method | return | description
 ------ | ------ | -----------
-`__get(string $property)` | mixed |
+`__get(string $property)` | mixed | calls `$this->{'get_'.$property}($value)` if such a method exists
 `__set(string $property, $value)` | void | calls `$this->{'set_'.$property}($value)` if such a method exists
 `__isset(string $property)` | bool | 
 `__unset(string $property)` | void | 
@@ -257,6 +257,12 @@ property | type | default | description
 `$curl_options` | array | `[]` | https://php.net/manual/function.curl-setopt.php
 `$ca_info` | string | `null` | https://curl.haxx.se/docs/caextract.html 
 `$ssl_verifypeer` | bool | `true` | see CURLOPT_SSL_VERIFYPEER  
+`$curlHandle` | string | `CurlHandle::class` |
+`$windowSize` | int | 5 |
+`$sleep` | int/float | `null` |
+`$timeout` | int | 10 |
+`$retries` | int | 3 |
+`$curl_multi_options` | array | `[]` |
 
 
 # Disclaimer
