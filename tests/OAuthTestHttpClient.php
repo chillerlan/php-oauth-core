@@ -39,7 +39,11 @@ class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
 	 * @param \Psr\Http\Client\ClientInterface|null           $http
 	 * @param \Psr\Log\LoggerInterface|null                   $logger
 	 */
-	public function __construct(SettingsContainerInterface $options, ClientInterface $http = null, LoggerInterface $logger = null){
+	public function __construct(
+		SettingsContainerInterface $options,
+		ClientInterface $http = null,
+		LoggerInterface $logger = null
+	){
 		$this->options = $options;
 		$this->client  = new LoggingClient(
 			$http ?? new CurlClient($this->options),

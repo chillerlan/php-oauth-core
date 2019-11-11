@@ -41,10 +41,14 @@ abstract class OAuth2ProviderTestAbstract extends ProviderTestAbstract{
 
 	protected function getTestResponses():array{
 		return [
-			'/oauth2/access_token'       => '{"access_token":"test_access_token","expires_in":3600,"state":"test_state"}',
-			'/oauth2/refresh_token'      => '{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
-			'/oauth2/client_credentials' => '{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
-			'/oauth2/api/request'        => '{"data":"such data! much wow!"}',
+			'/oauth2/access_token' =>
+				'{"access_token":"test_access_token","expires_in":3600,"state":"test_state"}',
+			'/oauth2/refresh_token' =>
+				'{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
+			'/oauth2/client_credentials' =>
+				'{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
+			'/oauth2/api/request' =>
+				'{"data":"such data! much wow!"}',
 		];
 	}
 

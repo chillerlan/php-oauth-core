@@ -146,7 +146,12 @@ abstract class OAuthProvider implements OAuthInterface{
 	 *
 	 * @throws \chillerlan\HTTP\MagicAPI\ApiClientException
 	 */
-	public function __construct(ClientInterface $http, OAuthStorageInterface $storage, SettingsContainerInterface $options, LoggerInterface $logger = null){
+	public function __construct(
+		ClientInterface $http,
+		OAuthStorageInterface $storage,
+		SettingsContainerInterface $options,
+		LoggerInterface $logger = null
+	){
 		$this->http    = $http;
 		$this->storage = $storage;
 		$this->options = $options;
@@ -307,7 +312,13 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * @inheritDoc
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface{
+	public function request(
+		string $path,
+		array $params = null,
+		string $method = null,
+		$body = null,
+		array $headers = null
+	):ResponseInterface{
 
 		$request = $this->requestFactory
 			->createRequest($method ?? 'GET', merge_query($this->apiURL.$path, $params ?? []));
@@ -349,7 +360,11 @@ abstract class OAuthProvider implements OAuthInterface{
 			$token = $this->storage->getAccessToken($this->serviceName);
 
 			// attempt to refresh an expired token
-			if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
+			if(
+				$this instanceof TokenRefresh
+				&& $this->options->tokenAutoRefresh
+				&& ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)
+			){
 				$token = $this->refreshAccessToken($token);
 			}
 

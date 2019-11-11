@@ -13,15 +13,16 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\Settings\SettingsContainerInterface;
 use chillerlan\OAuth\{Core\OAuthInterface, OAuthOptions};
 use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestLogger, OAuthTestMemoryStorage};
+use chillerlan\Settings\SettingsContainerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 use function chillerlan\HTTP\Psr7\{get_json, get_xml};
+use function file_exists, ini_set;
 
 abstract class APITestAbstract extends TestCase{
 
@@ -83,9 +84,9 @@ abstract class APITestAbstract extends TestCase{
 	protected $http;
 
 	protected function setUp():void{
-		\ini_set('date.timezone', 'Europe/Amsterdam');
+		ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$file = \file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
+		$file         = file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
 		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
 
 		if($this->dotEnv->get('IS_CI') === 'TRUE'){
@@ -96,20 +97,15 @@ abstract class APITestAbstract extends TestCase{
 
 		$this->testuser = $this->dotEnv->get($this->ENV.'_TESTUSER');
 
-		$options = [
+		$this->options = new OAuthOptions([
 			'key'              => $this->dotEnv->get($this->ENV.'_KEY'),
 			'secret'           => $this->dotEnv->get($this->ENV.'_SECRET'),
 			'tokenAutoRefresh' => true,
 			// HTTPOptionsTrait
 			'ca_info'          => $this->CFG.'/cacert.pem',
 			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
-			// testHTTPClient
 			'sleep'            => $this->requestDelay,
-		];
-
-		$this->options = new class($options) extends OAuthOptions{
-			protected $sleep;
-		};
+		]);
 
 		$this->logger   = new OAuthTestLogger('debug');
 		$this->storage  = new OAuthTestMemoryStorage($this->options, $this->CFG);

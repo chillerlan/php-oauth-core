@@ -90,7 +90,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('invalid token');
 		}
 
-		if($checkCallbackConfirmed && (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')){
+		if(
+			$checkCallbackConfirmed
+			&& (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')
+		){
 			throw new ProviderException('oauth callback unconfirmed');
 		}
 
@@ -119,6 +122,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$nonce = random_bytes(32);
 
 		// use the sodium extension if available
+		/** @noinspection PhpComposerExtensionStubsInspection */
 		return function_exists('sodium_bin2hex')
 			? \sodium_bin2hex($nonce)
 			: bin2hex($nonce);

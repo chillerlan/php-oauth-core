@@ -34,6 +34,11 @@ use chillerlan\Settings\SettingsContainerAbstract;
  * @property string     $ca_info
  * @property bool       $ssl_verifypeer
  * @property string     $curlHandle
+ * @property int        $windowSize
+ * @property int|float  $sleep
+ * @property int        $timeout
+ * @property int        $retries
+ * @property array      $curl_multi_options
  */
 class OAuthOptions extends SettingsContainerAbstract{
 	use OAuthOptionsTrait, HTTPOptionsTrait;

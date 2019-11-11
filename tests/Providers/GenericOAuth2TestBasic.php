@@ -25,8 +25,7 @@ class GenericOAuth2TestBasic extends OAuth2ProviderTestAbstract{
 	 */
 	protected function getProvider():OAuthInterface{
 
-		$provider = new class($this->initHttp(), $this->storage, $this->options, $this->logger)
-			extends OAuth2Provider{
+		$provider = new class($this->initHttp(), $this->storage, $this->options, $this->logger) extends OAuth2Provider{
 
 			protected $apiURL         = 'https://api.example.com/';
 			protected $authURL        = 'https://example.com/oauth2/authorize';

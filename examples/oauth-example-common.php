@@ -9,14 +9,15 @@
 
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestSessionStorage, OAuthTestLogger};
+use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestMemoryStorage, OAuthTestLogger};
 
 \ini_set('date.timezone', 'Europe/Amsterdam');
 
 // these vars are supposed to be set before this file is included
 /** @var string $ENVVAR - name prefix for the environment variable */
 /** @var string $CFGDIR - the directory where configuration is stored (.env, cacert, tokens) */
-
+$ENVVAR   = $ENVVAR ?? '';
+$CFGDIR   = $CFGDIR ?? __DIR__.'/../config';
 $LOGLEVEL = $LOGLEVEL ?? 'info';
 
 $env = (new DotEnv($CFGDIR, '.env', false))->load();
@@ -31,22 +32,19 @@ $options_arr = [
 	// HTTPOptions
 	'ca_info'          => $CFGDIR.'/cacert.pem',
 	'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/codemasher/php-oauth',
-
-	// testHTTPClient
 	'sleep'            => 0.25,
 ];
 
 /** @var \chillerlan\Settings\SettingsContainerInterface $options */
-$options = new class($options_arr) extends OAuthOptions{
-	protected $sleep; // testHTTPClient
-};
+$options = new OAuthOptions($options_arr);
 
+/** @var \Psr\Log\LoggerInterface $logger */
 $logger = new OAuthTestLogger($LOGLEVEL);
 
-/** @var \chillerlan\HTTP\Psr18\HTTPClientInterface $http */
+/** @var \Psr\Http\Client\ClientInterface $http */
 $http = new OAuthTestHttpClient($options);
 #$http->setLogger($logger);
 
 /** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
-$storage = new OAuthTestSessionStorage($options, $CFGDIR);
+$storage = new OAuthTestMemoryStorage($options, $CFGDIR);
 #$storage->setLogger($logger);

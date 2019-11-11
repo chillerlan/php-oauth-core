@@ -15,6 +15,8 @@ namespace chillerlan\OAuthTest\API;
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, OAuth2Interface};
 use chillerlan\OAuth\Storage\MemoryStorage;
 
+use function time;
+
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
  */
@@ -42,7 +44,7 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 		$this->assertIsString($token->accessToken);
 
 		if($token->expires !== AccessToken::EOL_NEVER_EXPIRES){
-			$this->assertGreaterThan(\time(), $token->expires);
+			$this->assertGreaterThan(time(), $token->expires);
 		}
 
 		$this->logger->debug('OAuth2ClientCredentials', $token->toArray());

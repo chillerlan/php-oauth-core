@@ -38,9 +38,12 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 
 	protected function getTestResponses():array{
 		return [
-			'/oauth1/request_token' => 'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',
-			'/oauth1/access_token'  => 'oauth_token=test_access_token&oauth_token_secret=test_access_token_secret&oauth_callback_confirmed=true',
-			'/oauth1/api/request'   => '{"data":"such data! much wow!"}',
+			'/oauth1/request_token' =>
+				'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',
+			'/oauth1/access_token'  =>
+				'oauth_token=test_access_token&oauth_token_secret=test_access_token_secret&oauth_callback_confirmed=true',
+			'/oauth1/api/request'   =>
+				'{"data":"such data! much wow!"}',
 		];
 	}
 
@@ -57,7 +60,10 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 	public function testGetSignature(){
 		$signature = $this
 			->getMethod('getSignature')
-			->invokeArgs($this->provider, ['http://localhost/api/whatever', ['foo' => 'bar', 'oauth_signature' => 'should not see me!'], 'GET']);
+			->invokeArgs(
+				$this->provider,
+				['http://localhost/api/whatever', ['foo' => 'bar', 'oauth_signature' => 'should not see me!'], 'GET']
+			);
 
 		$this->assertSame('ygg22quLhpyegiyr7yl4hLAP9S8=', $signature);
 	}
@@ -114,7 +120,11 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [(new Response)->withBody(create_stream_from_input('oauth_token=whatever&oauth_token_secret=whatever_secret')), true])
+			->invokeArgs(
+				$this->provider,
+				[(new Response)
+					 ->withBody(create_stream_from_input('oauth_token=whatever&oauth_token_secret=whatever_secret')), true]
+			)
 		;
 	}
 
@@ -138,8 +148,10 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		$this->assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
 
 		// coverage, @todo
-		$this->provider->request('/request', null, 'POST', ['foo' => 'bar'], ['Content-Type' => 'application/json']);
-		$this->provider->request('/request', null, 'POST', ['foo' => 'bar'], ['Content-Type' => 'application/x-www-form-urlencoded']);
+		$this->provider
+			->request('/request', null, 'POST', ['foo' => 'bar'], ['Content-Type' => 'application/json']);
+		$this->provider
+			->request('/request', null, 'POST', ['foo' => 'bar'], ['Content-Type' => 'application/x-www-form-urlencoded']);
 	}
 
 }

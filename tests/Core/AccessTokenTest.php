@@ -14,6 +14,8 @@ namespace chillerlan\OAuthTest\Core;
 use chillerlan\OAuth\Core\AccessToken;
 use PHPUnit\Framework\TestCase;
 
+use function sleep, time;
+
 class AccessTokenTest extends TestCase{
 
 	/**
@@ -95,30 +97,30 @@ class AccessTokenTest extends TestCase{
 
 	public function testIsExpiredVariable(){
 
-		$now     = \time();
+		$now     = time();
 		$expiry1 = $now + 3600;
 		$this->token->setExpiry($expiry1);
 		$this->assertSame($expiry1, $this->token->expires);
 		$this->assertFalse($this->token->isExpired());
 
-		$now     = \time();
+		$now     = time();
 		$expiry2 = 3600;
 		$this->token->setExpiry($expiry2);
 		$this->assertSame($now+$expiry2, $this->token->expires);
 		$this->assertFalse($this->token->isExpired());
 
-		$now     = \time();
+		$now     = time();
 		$expiry3 = 2;
 		$this->token->setExpiry($expiry3);
 		$this->assertSame($now+$expiry3, $this->token->expires);
-		\sleep(3);
+		sleep(3);
 		$this->assertTrue($this->token->isExpired());
 
-		$now     = \time();
+		$now     = time();
 		$expiry4 = $now + 2;
 		$this->token->setExpiry($expiry4);
 		$this->assertSame($expiry4, $this->token->expires);
-		\sleep(3);
+		sleep(3);
 		$this->assertTrue($this->token->isExpired());
 	}
 

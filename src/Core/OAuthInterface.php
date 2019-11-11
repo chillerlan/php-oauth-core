@@ -67,7 +67,13 @@ interface OAuthInterface extends ApiClientInterface, ClientInterface, LoggerAwar
 	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):ResponseInterface;
+	public function request(
+		string $path,
+		array $params = null,
+		string $method = null,
+		$body = null,
+		array $headers = null
+	):ResponseInterface;
 
 	/**
 	 * Sets an optional OAuthStorageInterface

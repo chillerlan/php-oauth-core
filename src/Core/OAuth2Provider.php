@@ -225,7 +225,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$refreshToken = $token->refreshToken;
 
 		if(empty($refreshToken)){
-			throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
+			throw new ProviderException(
+				sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires))
+			);
 		}
 
 		$body = [
