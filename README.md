@@ -46,7 +46,7 @@ Profit!
 
 ## API
 ### [`OAuthInterface`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php)
-The `OAuthInterface` implements the PSR-18 [`ClientInterface`](https://www.php-fig.org/psr/psr-18/), 
+The `OAuthInterface` implements the PSR-18 [`ClientInterface`](https://www.php-fig.org/psr/psr-18/) (a PSR-18 compatible http client is still required), 
 the PSR-3[`LoggerAwareInterface`](https://www.php-fig.org/psr/psr-3/) as well as the 
 [`ApiClientInterface`](https://github.com/chillerlan/php-magic-apiclient/blob/master/src/ApiClientInterface.php) 
 and offers basic methods that are common to the OAuth 1/2 interfaces, all supplied in the abstract class [`OAuthProvider`](https://github.com/chillerlan/php-oauth-core/blob/master/src/Core/OAuthProvider.php).
