@@ -1,5 +1,6 @@
-.idea
-vendor
+.build/*
+.idea/*
+vendor/*
 config/.env
 config/*.token*
 config/cacert.pem
