@@ -25,40 +25,40 @@ use const PHP_QUERY_RFC1738;
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
-	 * @var int
+	 *
 	 */
-	protected $authMethod = self::AUTH_METHOD_HEADER;
+	protected int $authMethod = self::AUTH_METHOD_HEADER;
 
 	/**
-	 * @var string
+	 *
 	 */
-	protected $authMethodHeader = 'Bearer';
+	protected string $authMethodHeader = 'Bearer';
 
 	/**
-	 * @var string
+	 *
 	 */
-	protected $authMethodQuery = 'access_token';
+	protected string $authMethodQuery = 'access_token';
 
 	/**
-	 * @var string
+	 *
 	 */
-	protected $scopesDelimiter = ' ';
+	protected string $scopesDelimiter = ' ';
 
 	/**
-	 * @var string
+	 *
 	 */
-	protected $refreshTokenURL;
+	protected string $refreshTokenURL;
 
 	/**
-	 * @var string
+	 *
 	 */
-	protected $clientCredentialsTokenURL;
+	protected string $clientCredentialsTokenURL;
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getAuthURL(array $params = null, array $scopes = null):UriInterface{
-		$params = $params ?? [];
+		$params ??= [];
 
 		if(isset($params['client_secret'])){
 			unset($params['client_secret']);

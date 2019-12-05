@@ -20,10 +20,7 @@ use function file_exists, file_get_contents, file_put_contents;
 
 class OAuthTestSessionStorage extends SessionStorage{
 
-	/**
-	 * @var string
-	 */
-	protected $storagepath;
+	protected string $storagepath;
 
 	/**
 	 * OAuthTestSessionStorage constructor.
@@ -58,7 +55,7 @@ class OAuthTestSessionStorage extends SessionStorage{
 		if($this->hasAccessToken($service)){
 
 			/** @var \chillerlan\OAuth\Core\AccessToken $token */
-			$token = (new AccessToken)->fromJSON($_SESSION[$this->sessionVar][$service]);
+			$token = (new AccessToken)->fromJSON($_SESSION[$this->tokenVar][$service]);
 
 			return $token;
 		}

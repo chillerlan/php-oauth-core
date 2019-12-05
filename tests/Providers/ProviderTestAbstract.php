@@ -15,11 +15,13 @@ namespace chillerlan\OAuthTest\Providers;
 use chillerlan\DotEnv\DotEnv;
 use chillerlan\HTTP\Psr18\LoggingClient;
 use chillerlan\HTTP\Psr7\Response;
-use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage};
+use chillerlan\Settings\SettingsContainerInterface;
+use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage, Storage\OAuthStorageInterface};
 use chillerlan\OAuth\Core\{AccessToken, OAuthInterface};
 use chillerlan\OAuthTest\OAuthTestLogger;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
+use Psr\Log\LoggerInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
@@ -28,50 +30,23 @@ use function file_exists;
 
 abstract class ProviderTestAbstract extends TestCase{
 
-	/**
-	 * @var string
-	 */
-	protected $CFG = __DIR__.'/../../config';
+	protected string $CFG = __DIR__.'/../../config';
 
-	/**
-	 * @var string
-	 */
-	protected $FQN;
+	protected string $FQN;
 
-	/**
-	 * @var \ReflectionClass
-	 */
-	protected $reflection;
+	protected ReflectionClass $reflection;
 
-	/**
-	 * @var \chillerlan\OAuth\Storage\OAuthStorageInterface
-	 */
-	protected $storage;
+	protected OAuthStorageInterface $storage;
+	/** @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface */
+	protected SettingsContainerInterface $options;
 
-	/**
-	 * @var \chillerlan\OAuth\OAuthOptions
-	 */
-	protected $options;
+	protected OAuthInterface $provider;
 
-	/**
-	 * @var \chillerlan\OAuth\Core\OAuthInterface
-	 */
-	protected $provider;
+	protected LoggerInterface $logger;
 
-	/**
-	 * @var \Psr\Log\LoggerInterface
-	 */
-	protected $logger;
+	protected DotEnv $dotEnv;
 
-	/**
-	 * @var \chillerlan\DotEnv\DotEnv
-	 */
-	protected $dotEnv;
-
-	/**
-	 * @var bool
-	 */
-	protected $is_ci;
+	protected bool $is_ci;
 
 	protected function setUp():void{
 
@@ -106,8 +81,7 @@ abstract class ProviderTestAbstract extends TestCase{
 
 		$client = new class($this->getTestResponses()) implements ClientInterface{
 
-			/** @var array */
-			protected $responses;
+			protected array $responses;
 
 			public function __construct(array $responses){
 				$this->responses = $responses;

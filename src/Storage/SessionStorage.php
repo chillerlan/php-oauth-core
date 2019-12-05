@@ -22,14 +22,14 @@ use const PHP_SESSION_NONE;
 class SessionStorage extends OAuthStorageAbstract{
 
 	/**
-	 * @var string
+	 * the key name for the token storage array in $_SESSION
 	 */
-	protected $sessionVar;
+	protected string $tokenVar;
 
 	/**
-	 * @var string
+	 * the key name for the CSRF token storage array in $_SESSION
 	 */
-	protected $stateVar;
+	protected string $stateVar;
 
 	/**
 	 * SessionStorage constructor.
@@ -39,8 +39,8 @@ class SessionStorage extends OAuthStorageAbstract{
 	public function __construct(SettingsContainerInterface $options = null){
 		parent::__construct($options);
 
-		$this->sessionVar = $this->options->sessionTokenVar;
-		$this->stateVar   = $this->options->sessionStateVar;
+		$this->tokenVar = $this->options->sessionTokenVar;
+		$this->stateVar = $this->options->sessionStateVar;
 
 		// Determine if the session has started.
 		// @link http://stackoverflow.com/a/18542272/1470961
@@ -48,8 +48,8 @@ class SessionStorage extends OAuthStorageAbstract{
 			session_start();
 		}
 
-		if(!isset($_SESSION[$this->sessionVar])){
-			$_SESSION[$this->sessionVar] = [];
+		if(!isset($_SESSION[$this->tokenVar])){
+			$_SESSION[$this->tokenVar] = [];
 		}
 
 		if(!isset($_SESSION[$this->stateVar])){
@@ -73,7 +73,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 * @inheritDoc
 	 */
 	public function storeAccessToken(string $service, AccessToken $token):bool{
-		$_SESSION[$this->sessionVar][$service] = $this->toStorage($token);
+		$_SESSION[$this->tokenVar][$service] = $this->toStorage($token);
 
 		return true;
 	}
@@ -84,7 +84,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	public function getAccessToken(string $service):AccessToken{
 
 		if($this->hasAccessToken($service)){
-			return $this->fromStorage($_SESSION[$this->sessionVar][$service]);
+			return $this->fromStorage($_SESSION[$this->tokenVar][$service]);
 		}
 
 		throw new OAuthStorageException('token not found');
@@ -94,7 +94,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 * @inheritDoc
 	 */
 	public function hasAccessToken(string $service):bool{
-		return isset($_SESSION[$this->sessionVar], $_SESSION[$this->sessionVar][$service]);
+		return isset($_SESSION[$this->tokenVar], $_SESSION[$this->tokenVar][$service]);
 	}
 
 	/**
@@ -102,8 +102,8 @@ class SessionStorage extends OAuthStorageAbstract{
 	 */
 	public function clearAccessToken(string $service):bool{
 
-		if(array_key_exists($service, $_SESSION[$this->sessionVar])){
-			unset($_SESSION[$this->sessionVar][$service]);
+		if(array_key_exists($service, $_SESSION[$this->tokenVar])){
+			unset($_SESSION[$this->tokenVar][$service]);
 		}
 
 		return true;
@@ -114,11 +114,11 @@ class SessionStorage extends OAuthStorageAbstract{
 	 */
 	public function clearAllAccessTokens():bool{
 
-		foreach(array_keys($_SESSION[$this->sessionVar]) as $service){
-			unset($_SESSION[$this->sessionVar][$service]);
+		foreach(array_keys($_SESSION[$this->tokenVar]) as $service){
+			unset($_SESSION[$this->tokenVar][$service]);
 		}
 
-		unset($_SESSION[$this->sessionVar]);
+		unset($_SESSION[$this->tokenVar]);
 
 		return true;
 	}

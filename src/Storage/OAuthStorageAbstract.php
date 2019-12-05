@@ -22,9 +22,9 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	use LoggerAwareTrait;
 
 	/**
-	 * @var \chillerlan\OAuth\OAuthOptions
+	 * @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface
 	 */
-	protected $options;
+	protected SettingsContainerInterface $options;
 
 	/**
 	 * OAuthStorageAbstract constructor.
@@ -44,9 +44,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	 * @return string
 	 */
 	public function toStorage(AccessToken $token):string{
-		$data = $token->toJSON();
-
-		return $data;
+		return $token->toJSON();
 	}
 
 	/**

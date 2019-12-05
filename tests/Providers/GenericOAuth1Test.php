@@ -27,14 +27,14 @@ class GenericOAuth1Test extends OAuth1ProviderTestAbstract{
 
 		$provider = new class($this->initHttp(), $this->storage, $this->options, $this->logger) extends OAuth1Provider{
 
-			protected $apiURL          = 'https://api.example.com';
-			protected $requestTokenURL = 'https://example.com/oauth/request_token';
-			protected $authURL         = 'https://example.com/oauth/authorize';
-			protected $accessTokenURL  = 'https://example.com/oauth/access_token';
-			protected $userRevokeURL   = 'https://account.example.com/apps/';
-			protected $endpointMap     = TestEndpoints::class;
-			protected $authHeaders     = ['foo' => 'bar'];
-			protected $apiHeaders      = ['foo' => 'bar'];
+			protected string $apiURL          = 'https://api.example.com';
+			protected string $requestTokenURL = 'https://example.com/oauth/request_token';
+			protected string $authURL         = 'https://example.com/oauth/authorize';
+			protected string $accessTokenURL  = 'https://example.com/oauth/access_token';
+			protected string $userRevokeURL   = 'https://account.example.com/apps/';
+			protected string $endpointMap     = TestEndpoints::class;
+			protected array $authHeaders      = ['foo' => 'bar'];
+			protected array $apiHeaders       = ['foo' => 'bar'];
 
 		};
 

@@ -43,9 +43,8 @@ class OAuthTestLogger extends AbstractLogger{
 
 	/**
 	 * @see \Psr\Log\LogLevel
-	 * @var string
 	 */
-	protected $loglevel;
+	protected string $loglevel;
 
 	/**
 	 * OAuthTestLogger constructor.

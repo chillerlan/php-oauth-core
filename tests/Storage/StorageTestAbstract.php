@@ -13,27 +13,19 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Storage\OAuthStorageException;
+use chillerlan\OAuth\Storage\{OAuthStorageException, OAuthStorageInterface};
 use PHPUnit\Framework\TestCase;
 
 abstract class StorageTestAbstract extends TestCase{
 
-	/**
-	 * @var \chillerlan\OAuth\Storage\OAuthStorageInterface
-	 */
-	protected $storage;
+	protected OAuthStorageInterface $storage;
 
-	/**
-	 * @var \chillerlan\OAuth\Core\AccessToken
-	 */
-	protected $token;
+	protected AccessToken $token;
 
 	/**
 	 * test service name
-	 *
-	 * @var string
 	 */
-	protected $tsn = 'testService';
+	protected string $tsn = 'testService';
 
 	protected function setUp():void{
 		$this->token = new AccessToken(['accessToken' => 'foobar']);

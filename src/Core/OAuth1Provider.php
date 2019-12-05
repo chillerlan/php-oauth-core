@@ -24,9 +24,9 @@ use function chillerlan\HTTP\Psr7\{build_http_query, decompress_content, merge_q
 abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 	/**
-	 * @var string
+	 * the request token URL
 	 */
-	protected $requestTokenURL;
+	protected string $requestTokenURL;
 
 	/**
 	 * @inheritDoc

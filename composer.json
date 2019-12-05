@@ -20,7 +20,7 @@
 		"source": "https://github.com/chillerlan/php-oauth-core"
 	},
 	"require": {
-		"php": "^7.2",
+		"php": "^7.4",
 		"ext-json":"*",
 		"ext-simplexml":"*",
 		"chillerlan/php-settings-container": "^1.2",

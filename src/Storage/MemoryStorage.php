@@ -19,14 +19,14 @@ use function array_keys, array_key_exists;
 class MemoryStorage extends OAuthStorageAbstract{
 
 	/**
-	 * @var array
+	 * the token storage array
 	 */
-	protected $tokens = [];
+	protected array $tokens = [];
 
 	/**
-	 * @var array
+	 * the CSRF state storage array
 	 */
-	protected $states = [];
+	protected array $states = [];
 
 	/**
 	 * @inheritDoc

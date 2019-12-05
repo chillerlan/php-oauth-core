@@ -22,7 +22,7 @@ use function time;
  */
 abstract class OAuth2APITestAbstract extends APITestAbstract{
 
-	protected $clientCredentialsScopes = [];
+	protected array $clientCredentialsScopes = [];
 
 	public function testOAuth2Instance(){
 		$this->assertInstanceOf(OAuth2Interface::class, $this->provider);

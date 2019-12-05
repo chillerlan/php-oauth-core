@@ -18,10 +18,7 @@ use function sleep, time;
 
 class AccessTokenTest extends TestCase{
 
-	/**
-	 * @var \chillerlan\OAuth\Core\AccessToken
-	 */
-	protected $token;
+	protected AccessToken $token;
 
 	protected function setUp():void{
 		$this->token = new AccessToken;

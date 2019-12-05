@@ -13,7 +13,7 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\OAuth\{Core\OAuthInterface, OAuthOptions};
+use chillerlan\OAuth\{Core\OAuthInterface, OAuthOptions, Storage\OAuthStorageInterface};
 use chillerlan\OAuthTest\{OAuthTestHttpClient, OAuthTestLogger, OAuthTestMemoryStorage};
 use chillerlan\Settings\SettingsContainerInterface;
 use PHPUnit\Framework\TestCase;
@@ -26,62 +26,27 @@ use function file_exists, ini_set;
 
 abstract class APITestAbstract extends TestCase{
 
-	/**
-	 * @var string
-	 */
-	protected $CFG = __DIR__.'/../../config';
+	protected string $CFG = __DIR__.'/../../config';
 
-	/**
-	 * @var string
-	 */
-	protected $FQN;
+	protected string $FQN;
 
-	/**
-	 * @var string
-	 */
-	protected $ENV;
+	protected string $ENV;
 
-	/**
-	 * @var \chillerlan\OAuth\Core\OAuthInterface
-	 */
-	protected $provider;
+	protected OAuthInterface $provider;
 
-	/**
-	 * @var \chillerlan\OAuth\Storage\OAuthStorageInterface
-	 */
-	protected $storage;
+	protected OAuthStorageInterface $storage;
 
-	/**
-	 * @var \Psr\Log\LoggerInterface
-	 */
-	protected $logger;
+	protected LoggerInterface $logger;
 
-	/**
-	 * @var \chillerlan\DotEnv\DotEnv
-	 */
-	protected $dotEnv;
+	protected DotEnv $dotEnv;
 
-	/**
-	 * @var float
-	 */
-	protected $requestDelay = 0.25;
+	protected float $requestDelay = 0.25;
+	/** a test username for live API tests, defined in .env as {ENV-PREFIX}_TESTUSER*/
+	protected string $testuser;
+	/** @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface */
+	protected SettingsContainerInterface $options;
 
-	/**
-	 * a test username for live API tests, defined in .env as {ENV-PREFIX}_TESTUSER
-	 *
-	 * @var string
-	 */
-	protected $testuser;
-
-	/**
-	 * @var \chillerlan\OAuth\OAuthOptions
-	 */
-	protected $options;
-
-	/**
-	 * @var \Psr\Http\Client\ClientInterface
-	 */
-	protected $http;
+	protected ClientInterface $http;
 
 	protected function setUp():void{
 		ini_set('date.timezone', 'Europe/Amsterdam');

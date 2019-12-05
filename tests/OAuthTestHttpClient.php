@@ -22,15 +22,9 @@ use function usleep;
 
 class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
 
-	/**
-	 * @var \chillerlan\Settings\SettingsContainerInterface
-	 */
-	protected $options;
+	protected SettingsContainerInterface $options;
 
-	/**
-	 * @var \Psr\Http\Client\ClientInterface
-	 */
-	protected $client;
+	protected ClientInterface $client;
 
 	/**
 	 * OAuthTestHttpClient constructor.

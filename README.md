@@ -30,7 +30,7 @@ A PHP7.2+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 
 # Documentation
 ## Requirements
-- PHP 7.2+
+- PHP 7.4+
 - a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library of your choice ([there is one included](https://github.com/chillerlan/php-httpinterface), though)
   - optional [PSR-17](https://www.php-fig.org/psr/psr-17/) compatible Request-, Response- and UriFactories
 - see [`chillerlan/php-oauth-providers`](https://github.com/chillerlan/php-oauth-providers) for already implemented providers
@@ -42,7 +42,7 @@ A PHP7.2+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 ```json
 {
 	"require": {
-		"php": "^7.2",
+		"php": "^7.4",
 		"chillerlan/php-oauth-core": "dev-master"
 	}
 }

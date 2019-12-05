@@ -47,37 +47,35 @@ class AccessToken extends SettingsContainerAbstract{
 	public const EXPIRY_MAX = 86400 * 365;
 
 	/**
-	 * @var string
+	 * the access token secret (OAuth1)
 	 */
-	protected $accessTokenSecret;
+	protected ?string $accessTokenSecret = null;
 
 	/**
-	 * @var string
+	 * the oauth access token
 	 */
-	protected $accessToken;
+	protected ?string $accessToken = null;
 
 	/**
-	 * @var string
+	 * an optional refresh token (OAuth2)
 	 */
-	protected $refreshToken;
+	protected ?string $refreshToken = null;
 
 	/**
+	 * the token expiration date/time
 	 * @todo: change to DateInterval?
-	 * @var int
 	 */
-	protected $expires = self::EOL_UNKNOWN;
+	protected int $expires = self::EOL_UNKNOWN;
 
 	/**
-	 * @var array
+	 * Additional token parameters supplied by the provider
 	 */
-	protected $extraParams = [];
+	protected array $extraParams = [];
 
 	/**
 	 * the provider who issued this token
-	 *
-	 * @var string
 	 */
-	protected $provider;
+	protected ?string $provider = null;
 
 	/**
 	 * AccessToken constructor.

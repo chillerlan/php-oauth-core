@@ -28,14 +28,14 @@ class GenericOAuth2Test extends OAuth2ProviderTestAbstract{
 		$provider = new class($this->initHttp(), $this->storage, $this->options, $this->logger)
 			extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
 
-			protected $apiURL         = 'https://api.example.com/';
-			protected $authURL        = 'https://example.com/oauth2/authorize';
-			protected $accessTokenURL = 'https://example.com/oauth2/token';
-			protected $userRevokeURL  = 'https://account.example.com/apps/';
-			protected $endpointMap    = TestEndpoints::class;
-			protected $authHeaders    = ['foo' => 'bar'];
-			protected $apiHeaders     = ['foo' => 'bar'];
-			protected $authMethod     = OAuth2Provider::AUTH_METHOD_QUERY;
+			protected string $apiURL         = 'https://api.example.com/';
+			protected string $authURL        = 'https://example.com/oauth2/authorize';
+			protected string $accessTokenURL = 'https://example.com/oauth2/token';
+			protected string $userRevokeURL  = 'https://account.example.com/apps/';
+			protected string $endpointMap    = TestEndpoints::class;
+			protected array $authHeaders     = ['foo' => 'bar'];
+			protected array $apiHeaders      = ['foo' => 'bar'];
+			protected int $authMethod        = OAuth2Provider::AUTH_METHOD_QUERY;
 
 		};
 

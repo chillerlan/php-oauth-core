@@ -16,57 +16,43 @@ trait OAuthOptionsTrait{
 
 	/**
 	 * The application key (or id) given by your provider
-	 *
-	 * @var string
 	 */
-	protected $key;
+	protected string $key;
 
 	/**
 	 * The application secret given by your provider
-	 *
-	 * @var string
 	 */
-	protected $secret;
+	protected string $secret;
 
 	/**
 	 * The callback URL associated with your application
-	 *
-	 * @var string
 	 */
-	protected $callbackURL;
+	protected string $callbackURL;
 
 	/**
 	 * Whether or not to start the session when session storage is used
 	 *
 	 * @see \chillerlan\OAuth\Storage\SessionStorage
-	 *
-	 * @var bool
 	 */
-	protected $sessionStart = true;
+	protected bool $sessionStart = true;
 
 	/**
 	 * The session array key for token storage
 	 *
 	 * @see \chillerlan\OAuth\Storage\SessionStorage
-	 *
-	 * @var string
 	 */
-	protected $sessionTokenVar = 'chillerlan-oauth-token';
+	protected string $sessionTokenVar = 'chillerlan-oauth-token';
 
 	/**
 	 * The session array key for <state> storage (OAuth2)
 	 *
 	 * @see \chillerlan\OAuth\Storage\SessionStorage
-	 *
-	 * @var string
 	 */
-	protected $sessionStateVar = 'chillerlan-oauth-state';
+	protected string $sessionStateVar = 'chillerlan-oauth-state';
 
 	/**
 	 * Whether or not to automatically refresh access tokens (OAuth2)
-	 *
-	 * @var bool
 	 */
-	protected $tokenAutoRefresh = true;
+	protected bool $tokenAutoRefresh = true;
 
 }

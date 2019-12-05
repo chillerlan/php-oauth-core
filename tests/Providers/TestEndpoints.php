@@ -16,7 +16,7 @@ use chillerlan\HTTP\MagicAPI\EndpointMap;
 
 class TestEndpoints extends EndpointMap{
 
-	protected $test = [
+	protected array $test = [
 		'path'          => '/test/%1$s',
 		'method'        => 'GET',
 		'query'         => ['foo'],

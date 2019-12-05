@@ -27,11 +27,11 @@ class GenericOAuth2TestBasic extends OAuth2ProviderTestAbstract{
 
 		$provider = new class($this->initHttp(), $this->storage, $this->options, $this->logger) extends OAuth2Provider{
 
-			protected $apiURL         = 'https://api.example.com/';
-			protected $authURL        = 'https://example.com/oauth2/authorize';
-			protected $accessTokenURL = 'https://example.com/oauth2/token';
-			protected $userRevokeURL  = 'https://account.example.com/apps/';
-			protected $endpointMap     = TestEndpoints::class;
+			protected string $apiURL         = 'https://api.example.com/';
+			protected string $authURL        = 'https://example.com/oauth2/authorize';
+			protected string $accessTokenURL = 'https://example.com/oauth2/token';
+			protected string $userRevokeURL  = 'https://account.example.com/apps/';
+			protected string $endpointMap     = TestEndpoints::class;
 
 		};
 

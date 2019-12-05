@@ -20,10 +20,7 @@ use function file_exists, file_get_contents, file_put_contents;
 
 class OAuthTestMemoryStorage extends MemoryStorage{
 
-	/**
-	 * @var string
-	 */
-	protected $storagepath;
+	protected string $storagepath;
 
 	/**
 	 * OAuthTestSessionStorage constructor.

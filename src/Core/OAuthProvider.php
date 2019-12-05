@@ -47,94 +47,96 @@ abstract class OAuthProvider implements OAuthInterface{
 	];
 
 	/**
-	 * @var \Psr\Http\Client\ClientInterface
+	 * the http client
 	 */
-	protected $http;
+	protected ClientInterface $http;
 
 	/**
-	 * @var \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * the token storage
 	 */
-	protected $storage;
+	protected OAuthStorageInterface $storage;
 
 	/**
-	 * @var \chillerlan\OAuth\OAuthOptions
+	 * the options instance
+	 *
+	 * @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface
 	 */
-	protected $options;
+	protected SettingsContainerInterface $options;
 
 	/**
-	 * @var \chillerlan\HTTP\MagicAPI\EndpointMapInterface
+	 * the API endpoints (optional)
 	 */
-	protected $endpoints;
+	protected EndpointMapInterface $endpoints;
 
 	/**
-	 * @var \Psr\Http\Message\RequestFactoryInterface
+	 * an optional PSR-17 request factory
 	 */
-	protected $requestFactory;
+	protected RequestFactoryInterface $requestFactory;
 
 	/**
-	 * @var \Psr\Http\Message\StreamFactoryInterface
+	 * an optional PSR-17 stream factory
 	 */
-	protected $streamFactory;
+	protected StreamFactoryInterface  $streamFactory;
 
 	/**
-	 * @var \Psr\Http\Message\UriFactoryInterface
+	 * an optional PSR-17 URI factory
 	 */
-	protected $uriFactory;
+	protected UriFactoryInterface $uriFactory;
 
 	/**
-	 * @var string
+	 * the name of the provider (class)
 	 */
-	protected $serviceName;
+	protected string $serviceName;
 
 	/**
-	 * @var string
+	 * the authentication URL
 	 */
-	protected $authURL;
+	protected string $authURL;
 
 	/**
-	 * @var string
+	 * an optional link to the provider's API docs
 	 */
-	protected $apiDocs;
+	protected string $apiDocs;
 
 	/**
-	 * @var string
+	 * the API base URL
 	 */
-	protected $apiURL = '';
+	protected string $apiURL;
 
 	/**
-	 * @var string
+	 * an optional URL to the provider's credential registration/application page
 	 */
-	protected $applicationURL;
+	protected string $applicationURL;
 
 	/**
-	 * @var string
+	 * an optional link to the page where a user can revoke access tokens
 	 */
-	protected $userRevokeURL;
+	protected string $userRevokeURL;
 
 	/**
-	 * @var string
+	 * an optional URL for application side token revocation
 	 */
-	protected $revokeURL;
+	protected string $revokeURL;
 
 	/**
-	 * @var string
+	 * the provider's access token exchange URL
 	 */
-	protected $accessTokenURL;
+	protected string $accessTokenURL;
 
 	/**
-	 * @var string FQCN
+	 * an optional EndpointMapInterface FQCN
 	 */
-	protected $endpointMap;
+	protected string $endpointMap;
 
 	/**
-	 * @var array
+	 * additional headers to use during authentication
 	 */
-	protected $authHeaders = [];
+	protected array $authHeaders = [];
 
 	/**
-	 * @var array
+	 * additional headers to use during API access
 	 */
-	protected $apiHeaders = [];
+	protected array $apiHeaders = [];
 
 	/**
 	 * OAuthProvider constructor.
