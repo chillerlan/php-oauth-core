@@ -19,8 +19,8 @@ use chillerlan\OAuth\Core\OAuth1Interface;
  */
 abstract class OAuth1APITestAbstract extends APITestAbstract{
 
-	public function testOAuth1Instance(){
-		$this->assertInstanceOf(OAuth1Interface::class, $this->provider);
+	public function testOAuth1Instance():void{
+		static::assertInstanceOf(OAuth1Interface::class, $this->provider);
 	}
 
 }

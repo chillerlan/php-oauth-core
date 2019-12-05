@@ -31,74 +31,74 @@ abstract class StorageTestAbstract extends TestCase{
 		$this->token = new AccessToken(['accessToken' => 'foobar']);
 	}
 
-	public function testTokenStorage(){
+	public function testTokenStorage():void{
 
 		$this->storage->storeAccessToken($this->tsn, $this->token);
-		$this->assertTrue($this->storage->hasAccessToken($this->tsn));
-		$this->assertSame('foobar', $this->storage->getAccessToken($this->tsn)->accessToken);
+		static::assertTrue($this->storage->hasAccessToken($this->tsn));
+		static::assertSame('foobar', $this->storage->getAccessToken($this->tsn)->accessToken);
 
 		$this->storage->storeCSRFState($this->tsn, 'foobar');
-		$this->assertTrue($this->storage->hasCSRFState($this->tsn));
-		$this->assertSame('foobar', $this->storage->getCSRFState($this->tsn));
+		static::assertTrue($this->storage->hasCSRFState($this->tsn));
+		static::assertSame('foobar', $this->storage->getCSRFState($this->tsn));
 
 		$this->storage->clearCSRFState($this->tsn);
-		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
+		static::assertFalse($this->storage->hasCSRFState($this->tsn));
 
 		$this->storage->clearAccessToken($this->tsn);
-		$this->assertFalse($this->storage->hasAccessToken($this->tsn));
+		static::assertFalse($this->storage->hasAccessToken($this->tsn));
 	}
 
-	public function testClearAllAccessTokens(){
+	public function testClearAllAccessTokens():void{
 		$this->storage->clearAllAccessTokens();
 
-		$this->assertFalse($this->storage->hasAccessToken($this->tsn));
+		static::assertFalse($this->storage->hasAccessToken($this->tsn));
 		$this->storage->storeAccessToken($this->tsn, $this->token);
-		$this->assertTrue($this->storage->hasAccessToken($this->tsn));
+		static::assertTrue($this->storage->hasAccessToken($this->tsn));
 
-		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
+		static::assertFalse($this->storage->hasCSRFState($this->tsn));
 		$this->storage->storeCSRFState($this->tsn, 'foobar');
-		$this->assertTrue($this->storage->hasCSRFState($this->tsn));
+		static::assertTrue($this->storage->hasCSRFState($this->tsn));
 
 		$this->storage->clearAllCSRFStates();
 
-		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
+		static::assertFalse($this->storage->hasCSRFState($this->tsn));
 
 		$this->storage->clearAllAccessTokens();
 
-		$this->assertFalse($this->storage->hasAccessToken($this->tsn));
+		static::assertFalse($this->storage->hasAccessToken($this->tsn));
 	}
 
-	public function testRetrieveCSRFStateNotFoundException(){
+	public function testRetrieveCSRFStateNotFoundException():void{
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('state not found');
 
 		$this->storage->getCSRFState('LOLNOPE');
 	}
 
-	public function testRetrieveAccessTokenNotFoundException(){
+	public function testRetrieveAccessTokenNotFoundException():void{
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('token not found');
 
 		$this->storage->getAccessToken('LOLNOPE');
 	}
 
-	public function testToStorage(){
+	public function testToStorage():void{
 		$a = $this->storage->toStorage($this->token);
 		$b = $this->storage->fromStorage($a);
 
-		$this->assertIsString($a);
-		$this->assertInstanceOf(AccessToken::class, $b);
-		$this->assertEquals($this->token, $b);
+		static::assertIsString($a);
+		static::assertInstanceOf(AccessToken::class, $b);
+		static::assertEquals($this->token, $b);
 	}
 
-	public function testFromStorageInvalidInputException(){
+	public function testFromStorageInvalidInputException():void{
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('invalid data');
 
 		$this->storage->fromStorage([]);
 	}
 
-	public function testStoreWithExistingToken(){
+	public function testStoreWithExistingToken():void{
 		$this->storage->storeAccessToken($this->tsn, $this->token);
 
 		$this->token->extraParams = array_merge($this->token->extraParams, ['q' => 'u here?']);
@@ -107,7 +107,7 @@ abstract class StorageTestAbstract extends TestCase{
 
 		$token = $this->storage->getAccessToken($this->tsn);
 
-		$this->assertSame('u here?', $token->extraParams['q']);
+		static::assertSame('u here?', $token->extraParams['q']);
 	}
 
 }

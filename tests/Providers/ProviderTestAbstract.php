@@ -90,6 +90,7 @@ abstract class ProviderTestAbstract extends TestCase{
 			public function sendRequest(RequestInterface $request):ResponseInterface{
 				$stream = create_stream_from_input($this->responses[$request->getUri()->getPath()]);
 
+				/** @noinspection PhpIncompatibleReturnTypeInspection */
 				return (new Response)->withBody($stream);
 			}
 
@@ -149,13 +150,13 @@ abstract class ProviderTestAbstract extends TestCase{
 		return $property;
 	}
 
-	public function testOAuthInstance(){
-		$this->assertInstanceOf(OAuthInterface::class, $this->provider);
+	public function testOAuthInstance():void{
+		static::assertInstanceOf(OAuthInterface::class, $this->provider);
 	}
 
-	public function testMagicGet(){
-		$this->assertSame($this->reflection->getShortName(), $this->provider->serviceName);
-		$this->assertNull($this->provider->foo);
+	public function testMagicGet():void{
+		static::assertSame($this->reflection->getShortName(), $this->provider->serviceName);
+		static::assertNull($this->provider->foo);
 	}
 
 }

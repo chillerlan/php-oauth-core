@@ -40,14 +40,14 @@ class GenericOAuth2TestBasic extends OAuth2ProviderTestAbstract{
 		return $provider;
 	}
 
-	public function testRefreshAccessTokenException(){
+	public function testRefreshAccessTokenException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('token refresh not supported');
 
 		$this->provider->refreshAccessToken();
 	}
 
-	public function testGetClientCredentialsTokenException(){
+	public function testGetClientCredentialsTokenException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('client credentials token not supported');
 

@@ -47,17 +47,17 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		];
 	}
 
-	public function testOAuth1Instance(){
-		$this->assertInstanceOf(OAuth1Interface::class, $this->provider);
+	public function testOAuth1Instance():void{
+		static::assertInstanceOf(OAuth1Interface::class, $this->provider);
 	}
 
-	public function testGetAuthURL(){
+	public function testGetAuthURL():void{
 		parse_str(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY), $query);
 
-		$this->assertSame('test_request_token', $query['oauth_token']);
+		static::assertSame('test_request_token', $query['oauth_token']);
 	}
 
-	public function testGetSignature(){
+	public function testGetSignature():void{
 		$signature = $this
 			->getMethod('getSignature')
 			->invokeArgs(
@@ -65,10 +65,10 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 				['http://localhost/api/whatever', ['foo' => 'bar', 'oauth_signature' => 'should not see me!'], 'GET']
 			);
 
-		$this->assertSame('ygg22quLhpyegiyr7yl4hLAP9S8=', $signature);
+		static::assertSame('ygg22quLhpyegiyr7yl4hLAP9S8=', $signature);
 	}
 
-	public function testGetSignatureInvalidURLException(){
+	public function testGetSignatureInvalidURLException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('getSignature: invalid url');
 
@@ -77,24 +77,24 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 			->invokeArgs($this->provider, ['whatever', [], 'GET']);
 	}
 
-	public function testGetAccessToken(){
+	public function testGetAccessToken():void{
 		$token = new AccessToken(['accessTokenSecret' => 'test_request_token_secret']);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
 		$token = $this->provider->getAccessToken('test_request_token', 'verifier');
 
-		$this->assertSame('test_access_token', $token->accessToken);
-		$this->assertSame('test_access_token_secret', $token->accessTokenSecret);
+		static::assertSame('test_access_token', $token->accessToken);
+		static::assertSame('test_access_token_secret', $token->accessTokenSecret);
 	}
 
-	public function testParseTokenResponseNoDataException(){
+	public function testParseTokenResponseNoDataException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('unable to parse token response');
 
 		$this->getMethod('parseTokenResponse')->invokeArgs($this->provider, [new Response]);
 	}
 
-	public function testParseTokenResponseErrorException(){
+	public function testParseTokenResponseErrorException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('error retrieving access token');
 
@@ -104,7 +104,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		;
 	}
 
-	public function testParseTokenResponseNoTokenException(){
+	public function testParseTokenResponseNoTokenException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid token');
 
@@ -114,7 +114,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		;
 	}
 
-	public function testParseTokenResponseCallbackUnconfirmedException(){
+	public function testParseTokenResponseCallbackUnconfirmedException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('oauth callback unconfirmed');
 
@@ -128,7 +128,7 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 		;
 	}
 
-	public function testGetRequestAuthorization(){
+	public function testGetRequestAuthorization():void{
 
 		$authHeader = $this->provider
 			->getRequestAuthorization(
@@ -137,15 +137,15 @@ abstract class OAuth1ProviderTestAbstract extends ProviderTestAbstract{
 			)
 			->getHeaderLine('Authorization');
 
-		$this->assertStringContainsString('OAuth oauth_consumer_key="'.$this->options->key.'"', $authHeader);
-		$this->assertStringContainsString('oauth_token="test_token"', $authHeader);
+		static::assertStringContainsString('OAuth oauth_consumer_key="'.$this->options->key.'"', $authHeader);
+		static::assertStringContainsString('oauth_token="test_token"', $authHeader);
 	}
 
-	public function testRequest(){
+	public function testRequest():void{
 		$token = new AccessToken(['accessTokenSecret' => 'test_token']);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this->assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
+		static::assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
 
 		// coverage, @todo
 		$this->provider

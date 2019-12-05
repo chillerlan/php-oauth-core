@@ -117,9 +117,9 @@ abstract class APITestAbstract extends TestCase{
 		return get_xml($response);
 	}
 
-	public function testOAuthInstance(){
-		$this->assertInstanceOf(OAuthInterface::class, $this->provider);
-		$this->assertInstanceOf($this->FQN, $this->provider);
+	public function testOAuthInstance():void{
+		static::assertInstanceOf(OAuthInterface::class, $this->provider);
+		static::assertInstanceOf($this->FQN, $this->provider);
 	}
 
 }

@@ -24,11 +24,11 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 
 	protected array $clientCredentialsScopes = [];
 
-	public function testOAuth2Instance(){
-		$this->assertInstanceOf(OAuth2Interface::class, $this->provider);
+	public function testOAuth2Instance():void{
+		static::assertInstanceOf(OAuth2Interface::class, $this->provider);
 	}
 
-	public function testRequestCredentialsToken(){
+	public function testRequestCredentialsToken():void{
 
 		if(!$this->provider instanceof ClientCredentials){
 			$this->markTestSkipped('ClientCredentials N/A');
@@ -40,11 +40,11 @@ abstract class OAuth2APITestAbstract extends APITestAbstract{
 
 		$token = $this->provider->getClientCredentialsToken($this->clientCredentialsScopes);
 
-		$this->assertInstanceOf(AccessToken::class, $token);
-		$this->assertIsString($token->accessToken);
+		static::assertInstanceOf(AccessToken::class, $token);
+		static::assertIsString($token->accessToken);
 
 		if($token->expires !== AccessToken::EOL_NEVER_EXPIRES){
-			$this->assertGreaterThan(time(), $token->expires);
+			static::assertGreaterThan(time(), $token->expires);
 		}
 
 		$this->logger->debug('OAuth2ClientCredentials', $token->toArray());

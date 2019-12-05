@@ -29,21 +29,21 @@ class SessionStorageTest extends StorageTestAbstract{
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testTokenStorage(){
+	public function testTokenStorage():void{
 		parent::testTokenStorage();
 	}
 
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testClearAllAccessTokens(){
+	public function testClearAllAccessTokens():void{
 		parent::testClearAllAccessTokens();
 	}
 
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testRetrieveCSRFStateNotFoundException(){
+	public function testRetrieveCSRFStateNotFoundException():void{
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('state not found');
 
@@ -53,7 +53,7 @@ class SessionStorageTest extends StorageTestAbstract{
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testRetrieveAccessTokenNotFoundException(){
+	public function testRetrieveAccessTokenNotFoundException():void{
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('token not found');
 
@@ -63,33 +63,33 @@ class SessionStorageTest extends StorageTestAbstract{
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testToStorage(){
+	public function testToStorage():void{
 		parent::testToStorage();
 	}
 
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testStoreWithExistingToken(){
+	public function testStoreWithExistingToken():void{
 		parent::testStoreWithExistingToken();
 	}
 
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testFromStorageInvalidInputException(){
+	public function testFromStorageInvalidInputException():void{
 		parent::testFromStorageInvalidInputException();
 	}
 
 	/**
 	 * @runInSeparateProcess
 	 */
-	public function testStoreStateWithNonExistentArray(){
+	public function testStoreStateWithNonExistentArray():void{
 		$options = new OAuthOptions;
 		unset($_SESSION[$options->sessionStateVar]);
 
-		$this->assertFalse($this->storage->hasCSRFState($this->tsn));
+		static::assertFalse($this->storage->hasCSRFState($this->tsn));
 		$this->storage->storeCSRFState($this->tsn, 'foobar');
-		$this->assertTrue($this->storage->hasCSRFState($this->tsn));
+		static::assertTrue($this->storage->hasCSRFState($this->tsn));
 	}
 }
