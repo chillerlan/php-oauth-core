@@ -50,10 +50,9 @@ abstract class ProviderTestAbstract extends TestCase{
 
 	protected function setUp():void{
 
-		$file = file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
-
+		$file         = file_exists($this->CFG.'/.env') ? '.env' : '.env_example';
 		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
-		$this->is_ci  = $this->dotEnv->get('IS_CI') === 'TRUE';
+		$this->is_ci  = defined('TEST_IS_CI') && TEST_IS_CI === true;
 
 		$this->options = new OAuthOptions([
 			'key'              => 'testkey',

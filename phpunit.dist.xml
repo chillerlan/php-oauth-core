@@ -20,4 +20,7 @@
 		<log type="coverage-xml" target=".build/coverage/coverage-xml"/>
 		<log type="junit" target=".build/logs/junit.xml"/>
 	</logging>
+	<php>
+		<const name="TEST_IS_CI" value="true"/>
+	</php>
 </phpunit>

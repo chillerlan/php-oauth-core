@@ -51,10 +51,11 @@ abstract class APITestAbstract extends TestCase{
 	protected function setUp():void{
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$file         = file_exists($this->CFG.'/.env') ? '.env' : '.env_travis';
+		$file         = file_exists($this->CFG.'/.env') ? '.env' : '.env_example';
 		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
+		$isCI         = defined('TEST_IS_CI') && TEST_IS_CI === true;
 
-		if($this->dotEnv->get('IS_CI') === 'TRUE'){
+		if($isCI){
 			$this->markTestSkipped('not on CI');
 
 			return;

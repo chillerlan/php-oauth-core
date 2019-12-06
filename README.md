@@ -316,7 +316,7 @@ class MyProviderTest extends OAuth2ProviderTestAbstract{
 That is all! You'll only need to add/overload methods in case you need to cover edge cases or additional features of your provider implementation.
 
 In case you want to run tests against a live API, you can use the [abstract API tests](https://github.com/chillerlan/php-oauth-core/tree/master/tests/API).
-The live API tests are disabled on (Travis) CI and you need to enable them explicit by changing the line `IS_CI=TRUE` in you project's .env.
+The live API tests are disabled on (Travis) CI and you need to enable them explicit by changing the value of `TEST_IS_CI` to `false` in your project's phpunit.xml.
 ```php
 namespace my\project\test;
 
