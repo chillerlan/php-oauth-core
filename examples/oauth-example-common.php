@@ -24,9 +24,9 @@ $env = (new DotEnv($CFGDIR, '.env', false))->load();
 
 $options_arr = [
 	// OAuthOptions
-	'key'              => $env->get($ENVVAR.'_KEY'),
-	'secret'           => $env->get($ENVVAR.'_SECRET'),
-	'callbackURL'      => $env->get($ENVVAR.'_CALLBACK_URL'),
+	'key'              => $env->get($ENVVAR.'_KEY') ?? '', // @todo: $env->get(..., default)
+	'secret'           => $env->get($ENVVAR.'_SECRET') ?? '',
+	'callbackURL'      => $env->get($ENVVAR.'_CALLBACK_URL') ?? '',
 	'tokenAutoRefresh' => true,
 
 	// HTTPOptions
