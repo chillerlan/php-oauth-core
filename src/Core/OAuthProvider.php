@@ -32,12 +32,12 @@ use const PHP_QUERY_RFC1738;
 use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_INT_STRING, BOOLEANS_AS_BOOL};
 
 /**
- * @property string                                         $apiDocs
+ * @property string|null                                    $apiDocs
  * @property string                                         $apiURL
- * @property string                                         $applicationURL
+ * @property string|null                                    $applicationURL
  * @property \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpoints
  * @property string                                         $serviceName
- * @property string                                         $userRevokeURL
+ * @property string|null                                    $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface{
 	use LoggerAwareTrait;
@@ -86,7 +86,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * the name of the provider (class)
 	 */
-	protected string $serviceName;
+	protected ?string $serviceName = null;
 
 	/**
 	 * the authentication URL
@@ -96,27 +96,27 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * an optional link to the provider's API docs
 	 */
-	protected string $apiDocs;
+	protected ?string $apiDocs = null;
 
 	/**
 	 * the API base URL
 	 */
-	protected string $apiURL;
+	protected ?string $apiURL = null;
 
 	/**
 	 * an optional URL to the provider's credential registration/application page
 	 */
-	protected string $applicationURL;
+	protected ?string $applicationURL = null;
 
 	/**
 	 * an optional link to the page where a user can revoke access tokens
 	 */
-	protected string $userRevokeURL;
+	protected ?string $userRevokeURL = null;
 
 	/**
 	 * an optional URL for application side token revocation
 	 */
-	protected string $revokeURL;
+	protected ?string $revokeURL = null;
 
 	/**
 	 * the provider's access token exchange URL
@@ -126,7 +126,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * an optional EndpointMapInterface FQCN
 	 */
-	protected string $endpointMap;
+	protected ?string $endpointMap = null;
 
 	/**
 	 * additional headers to use during authentication
