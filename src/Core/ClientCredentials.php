@@ -19,7 +19,7 @@ interface ClientCredentials{
 	 *
 	 * @link https://tools.ietf.org/html/rfc6749#section-4.4
 	 *
-	 * @param array $scopes
+	 * @param array|null $scopes
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException

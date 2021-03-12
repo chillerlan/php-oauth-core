@@ -14,7 +14,7 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\Settings\SettingsContainerAbstract;
 
-use function intval, time;
+use function time;
 
 /**
  * Base token implementation for any OAuth version.
@@ -65,7 +65,7 @@ class AccessToken extends SettingsContainerAbstract{
 	 * the token expiration date/time
 	 * @todo: change to DateInterval?
 	 */
-	protected int $expires = self::EOL_UNKNOWN;
+	protected ?int $expires = self::EOL_UNKNOWN;
 
 	/**
 	 * Additional token parameters supplied by the provider
@@ -98,18 +98,12 @@ class AccessToken extends SettingsContainerAbstract{
 	}
 
 	/**
-	 * @param int $expires
+	 * @param int|null $expires
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 */
 	public function setExpiry(int $expires = null):AccessToken{
 		$now = time();
-
-		if($expires!== null){
-			$expires = intval($expires);
-		}
-
-		$this->expires = $this::EOL_UNKNOWN;
 
 		if($expires === 0 || $expires === $this::EOL_NEVER_EXPIRES){
 			$this->expires = $this::EOL_NEVER_EXPIRES;
@@ -119,6 +113,9 @@ class AccessToken extends SettingsContainerAbstract{
 		}
 		elseif($expires > 0 && $expires < $this::EXPIRY_MAX){
 			$this->expires = $now + $expires;
+		}
+		else{
+			$this->expires = $this::EOL_UNKNOWN;
 		}
 
 		return $this;

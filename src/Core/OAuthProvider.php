@@ -8,6 +8,8 @@
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
+ *
+ * @phan-file-suppress PhanUndeclaredProperty (MagicAPI\ApiClientInterface)
  */
 
 namespace chillerlan\OAuth\Core;
@@ -345,7 +347,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		if($body instanceof StreamInterface){
 			$request = $request
 				->withBody($body)
-				->withHeader('Content-length', $body->getSize())
+				->withHeader('Content-length', (string)$body->getSize())
 			;
 		}
 

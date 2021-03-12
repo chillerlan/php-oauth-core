@@ -35,7 +35,7 @@ interface OAuthInterface extends ApiClientInterface, ClientInterface, LoggerAwar
 	 * Prepares the URL with optional $params which redirects to the provider's authorization prompt
 	 * and returns a PSR-7 UriInterface with all necessary parameters set
 	 *
-	 * @param array $params
+	 * @param array|null $params
 	 *
 	 * @return \Psr\Http\Message\UriInterface
 	 */
@@ -58,11 +58,11 @@ interface OAuthInterface extends ApiClientInterface, ClientInterface, LoggerAwar
 	 * Prepares an API request to $path with the given parameters, gets authorization, fires the request
 	 * and returns a PSR-7 ResponseInterface with the corresponding API response
 	 *
-	 * @param string $path
-	 * @param array  $params
-	 * @param string $method
-	 * @param null   $body
-	 * @param array  $headers
+	 * @param string      $path
+	 * @param array|null  $params
+	 * @param string|null $method
+	 * @param null        $body
+	 * @param array|null  $headers
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\OAuth\Core\ProviderException

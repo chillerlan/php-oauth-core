@@ -122,17 +122,16 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$nonce = random_bytes(32);
 
 		// use the sodium extension if available
-		/** @noinspection PhpComposerExtensionStubsInspection */
 		return function_exists('sodium_bin2hex')
 			? \sodium_bin2hex($nonce)
 			: bin2hex($nonce);
 	}
 
 	/**
-	 * @param string $url
-	 * @param array  $params
-	 * @param string $method
-	 * @param string $accessTokenSecret
+	 * @param string      $url
+	 * @param array       $params
+	 * @param string      $method
+	 * @param string|null $accessTokenSecret
 	 *
 	 * @return string
 	 * @throws \chillerlan\OAuth\Core\ProviderException

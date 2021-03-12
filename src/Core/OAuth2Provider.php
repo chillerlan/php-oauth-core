@@ -10,6 +10,9 @@
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
+ *
+ * @phan-file-suppress PhanUndeclaredProperty (MagicAPI\ApiClientInterface)
+ * @phan-file-suppress PhanUndeclaredMethod (CSRFToken, ClientCredentials, TokenRefresh)
  */
 
 namespace chillerlan\OAuth\Core;
