@@ -10,7 +10,7 @@
 
 namespace chillerlan\OAuthTest\MagicAPI;
 
-use chillerlan\HTTP\MagicAPI\EndpointMapInterface;
+use chillerlan\OAuth\MagicAPI\EndpointMapInterface;
 use ReflectionClass;
 
 use function count, dirname, file_get_contents, file_put_contents, implode, in_array, is_array, ksort, str_replace;
@@ -26,8 +26,8 @@ class EndpointDocblock{
 	/**
 	 * EndpointDocblock constructor.
 	 *
-	 * @param object|string                                  $provider
-	 * @param \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpointMap
+	 * @param object|string                                   $provider
+	 * @param \chillerlan\OAuth\MagicAPI\EndpointMapInterface $endpointMap
 	 */
 	public function __construct($provider, EndpointMapInterface $endpointMap){
 		$this->provider    = $provider;
