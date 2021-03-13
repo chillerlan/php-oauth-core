@@ -31,7 +31,7 @@ $options_arr = [
 
 	// HTTPOptions
 	'ca_info'          => $CFGDIR.'/cacert.pem',
-	'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/codemasher/php-oauth',
+	'userAgent'        => 'chillerlanPhpOAuth/4.0.0 +https://github.com/codemasher/php-oauth-core',
 	'sleep'            => 0.25,
 ];
 
