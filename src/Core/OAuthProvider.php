@@ -66,7 +66,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * the API endpoints (optional)
 	 */
-	protected EndpointMapInterface $endpoints;
+	protected ?EndpointMapInterface $endpoints = null;
 
 	/**
 	 * an optional PSR-17 request factory
@@ -165,7 +165,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
-		if($this instanceof ApiClientInterface && !empty($this->endpointMap) && class_exists($this->endpointMap)){
+		if(!empty($this->endpointMap) && class_exists($this->endpointMap)){
 			$this->endpoints = new $this->endpointMap;
 
 			if(!$this->endpoints instanceof EndpointMapInterface){
@@ -235,24 +235,24 @@ abstract class OAuthProvider implements OAuthInterface{
 	 *
 	 * @todo WIP
 	 *
-	 * @param string $name
+	 * @param string $endpointName
 	 * @param array  $arguments
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
 	 * @codeCoverageIgnore
 	 */
-	public function __call(string $name, array $arguments):ResponseInterface{
+	public function __call(string $endpointName, array $arguments):ResponseInterface{
 
-		if(!$this instanceof ApiClientInterface || !$this->endpoints instanceof EndpointMap){
+		if(!$this->endpoints instanceof EndpointMap){
 			throw new ApiClientException('MagicAPI not available');
 		}
 
-		if(!$this->endpoints->__isset($name)){
-			throw new ApiClientException('endpoint not found: "'.$name.'"');
+		if(!isset($this->endpoints->{$endpointName})){
+			throw new ApiClientException('endpoint not found: "'.$endpointName.'"');
 		}
 
-		$m = $this->endpoints->{$name};
+		$m = $this->endpoints->{$endpointName};
 
 		$endpoint      = $this->endpoints->API_BASE.$m['path'];
 		$method        = $m['method'] ?? 'GET';
@@ -284,7 +284,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		$params = $this->cleanQueryParams($params);
 
-		$this->logger->debug('OAuthProvider::__call() -> '.$this->serviceName.'::'.$name.'()', [
+		$this->logger->debug('OAuthProvider::__call() -> '.$this->serviceName.'::'.$endpointName.'()', [
 			'$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers,
 		]);
 
