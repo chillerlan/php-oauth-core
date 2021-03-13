@@ -2,9 +2,7 @@
 /**
  * Class OAuthTestLogger
  *
- * @filesource   OAuthTestLogger.php
  * @created      04.05.2019
- * @package      chillerlan\OAuthTest
  * @author       smiley <smiley@chillerlan.net>
  * @copyright    2019 smiley
  * @license      MIT

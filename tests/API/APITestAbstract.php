@@ -2,9 +2,7 @@
 /**
  * Class APITestAbstract
  *
- * @filesource   APITestAbstract.php
  * @created      08.09.2018
- * @package      chillerlan\OAuthTest\API
  * @author       smiley <smiley@chillerlan.net>
  * @copyright    2018 smiley
  * @license      MIT

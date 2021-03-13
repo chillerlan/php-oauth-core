@@ -2,9 +2,7 @@
 /**
  * Class OAuth2ProviderTestAbstract
  *
- * @filesource   OAuth2ProviderTestAbstract.php
  * @created      09.09.2018
- * @package      chillerlan\OAuthTest\Providers
  * @author       smiley <smiley@chillerlan.net>
  * @copyright    2018 smiley
  * @license      MIT

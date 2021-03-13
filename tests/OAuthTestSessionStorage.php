@@ -2,9 +2,7 @@
 /**
  * Class OAuthTestSessionStorage
  *
- * @filesource   OAuthTestSessionStorage.php
  * @created      26.07.2019
- * @package      chillerlan\OAuthTest
  * @author       smiley <smiley@chillerlan.net>
  * @copyright    2019 smiley
  * @license      MIT

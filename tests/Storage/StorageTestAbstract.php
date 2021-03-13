@@ -2,9 +2,7 @@
 /**
  * Class StorageTestAbstract
  *
- * @filesource   StorageTestAbstract.php
  * @created      24.01.2018
- * @package      chillerlan\OAuthTest\Storage
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2018 Smiley
  * @license      MIT

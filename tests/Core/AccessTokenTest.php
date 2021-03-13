@@ -1,9 +1,7 @@
 <?php
 /**
  *
- * @filesource   AccessTokenTest.php
  * @created      09.07.2017
- * @package      chillerlan\OAuthTest\Core
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT

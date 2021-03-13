@@ -2,9 +2,7 @@
 /**
  * Class GenericOAuth2Test
  *
- * @filesource   GenericOAuth2Test.php
  * @created      09.09.2018
- * @package      chillerlan\OAuthTest\Core
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2018 Smiley
  * @license      MIT
