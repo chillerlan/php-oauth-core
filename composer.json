@@ -25,7 +25,6 @@
 		"ext-simplexml":"*",
 		"chillerlan/php-settings-container": "^2.1",
 		"chillerlan/php-httpinterface": "dev-main#ff1c129a258c19c2b780eca10dd322c7deddf1e8",
-		"chillerlan/php-magic-apiclient": "^3.1",
 		"psr/http-client":"^1.0",
 		"psr/http-message": "^1.0",
 		"psr/log": "^1.1"

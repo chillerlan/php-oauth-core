@@ -12,8 +12,8 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\MagicAPI\{ApiClientException, ApiClientInterface, EndpointMap, EndpointMapInterface};
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
+use chillerlan\OAuth\MagicAPI\{ApiClientException, EndpointMap, EndpointMapInterface};
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
@@ -32,12 +32,12 @@ use const PHP_QUERY_RFC1738;
 use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_INT_STRING, BOOLEANS_AS_BOOL};
 
 /**
- * @property string|null                                    $apiDocs
- * @property string                                         $apiURL
- * @property string|null                                    $applicationURL
- * @property \chillerlan\HTTP\MagicAPI\EndpointMapInterface $endpoints
- * @property string                                         $serviceName
- * @property string|null                                    $userRevokeURL
+ * @property string|null                                     $apiDocs
+ * @property string                                          $apiURL
+ * @property string|null                                     $applicationURL
+ * @property \chillerlan\OAuth\MagicAPI\EndpointMapInterface $endpoints
+ * @property string                                          $serviceName
+ * @property string|null                                     $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface{
 	use LoggerAwareTrait;
@@ -146,7 +146,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @param \chillerlan\Settings\SettingsContainerInterface $options
 	 * @param \Psr\Log\LoggerInterface|null                   $logger
 	 *
-	 * @throws \chillerlan\HTTP\MagicAPI\ApiClientException
+	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
 	 */
 	public function __construct(
 		ClientInterface $http,
@@ -239,7 +239,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @param array  $arguments
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
-	 * @throws \chillerlan\HTTP\MagicAPI\ApiClientException
+	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
 	 * @codeCoverageIgnore
 	 */
 	public function __call(string $name, array $arguments):ResponseInterface{
