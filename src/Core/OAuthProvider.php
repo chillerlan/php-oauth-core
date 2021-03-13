@@ -25,7 +25,7 @@ use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
 
 use function array_slice, class_exists, count, http_build_query, implode,
-	in_array, is_array, json_encode, sprintf, strpos, strtolower;
+	in_array, is_array, is_string, json_encode, sprintf, strpos, strtolower;
 use function chillerlan\HTTP\Psr7\{clean_query_params, merge_query};
 
 use const PHP_QUERY_RFC1738;
@@ -329,17 +329,21 @@ abstract class OAuthProvider implements OAuthInterface{
 			$request = $request->withAddedHeader($header, $value);
 		}
 
-		if(is_array($body) && $request->hasHeader('content-type')){
+		if($request->hasHeader('content-type')){
 			$contentType = strtolower($request->getHeaderLine('content-type'));
 
-			// @todo: content type support
-			if($contentType === 'application/x-www-form-urlencoded'){
-				$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));
+			if(is_array($body)){
+				if($contentType === 'application/x-www-form-urlencoded'){
+					$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));
+				}
+				elseif($contentType === 'application/json' || $contentType === 'application/vnd.api+json'){
+					$body = $this->streamFactory->createStream(json_encode($body));
+				}
 			}
-			elseif($contentType === 'application/json'){
-				$body = $this->streamFactory->createStream(json_encode($body));
+			elseif(is_string($body)){
+				// we don't check if the given string matches the content type - this is the implementor's responsibility
+				$body = $this->streamFactory->createStream($body);
 			}
-
 		}
 
 		if($body instanceof StreamInterface){

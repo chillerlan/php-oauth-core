@@ -56,11 +56,11 @@ interface OAuthInterface extends ApiClientInterface, ClientInterface, LoggerAwar
 	 * Prepares an API request to $path with the given parameters, gets authorization, fires the request
 	 * and returns a PSR-7 ResponseInterface with the corresponding API response
 	 *
-	 * @param string                                        $path
-	 * @param array|null                                    $params
-	 * @param string|null                                   $method
-	 * @param array|\Psr\Http\Message\StreamInterface|null  $body
-	 * @param array|null                                    $headers
+	 * @param string                                               $path
+	 * @param array|null                                           $params
+	 * @param string|null                                          $method
+	 * @param array|string|\Psr\Http\Message\StreamInterface|null  $body
+	 * @param array|null                                           $headers
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\OAuth\Core\ProviderException
