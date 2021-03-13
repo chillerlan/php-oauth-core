@@ -451,6 +451,36 @@ Search.appendIndex(
             "summary": "Tries\u0020to\u0020refresh\u0020an\u0020existing\u0020access\u0020token\u0020with\u0020an\u0020associated\u0020refresh\u0020token\nand\u0020returns\u0020a\u0020fresh\u0020AccessToken",
             "url": "classes/chillerlan-OAuth-Core-TokenRefresh.html#method_refreshAccessToken"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\MagicAPI\\ApiClientException",
+            "name": "ApiClientException",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-MagicAPI-ApiClientException.html"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\MagicAPI\\ApiClientInterface",
+            "name": "ApiClientInterface",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-MagicAPI-ApiClientInterface.html"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\MagicAPI\\ApiClientInterface\u003A\u003A__call\u0028\u0029",
+            "name": "__call",
+            "summary": "Implements\u0020the\u0020Magic\u0020API\u0020client",
+            "url": "classes/chillerlan-OAuth-MagicAPI-ApiClientInterface.html#method___call"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\MagicAPI\\EndpointMap",
+            "name": "EndpointMap",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-MagicAPI-EndpointMap.html"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\MagicAPI\\EndpointMap\u003A\u003A\u0024API_BASE",
+            "name": "API_BASE",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-MagicAPI-EndpointMap.html#property_API_BASE"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\MagicAPI\\EndpointMapInterface",
+            "name": "EndpointMapInterface",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-MagicAPI-EndpointMapInterface.html"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\OAuthException",
             "name": "OAuthException",
             "summary": "",
@@ -905,6 +935,41 @@ Search.appendIndex(
             "name": "token",
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Core-AccessTokenTest.html#property_token"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock",
+            "name": "EndpointDocblock",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "EndpointDocblock\u0020constructor.",
+            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method___construct"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003Acreate\u0028\u0029",
+            "name": "create",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method_create"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003AcreateInterface\u0028\u0029",
+            "name": "createInterface",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method_createInterface"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003AcreateJSON\u0028\u0029",
+            "name": "createJSON",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method_createJSON"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003A\u0024provider",
+            "name": "provider",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#property_provider"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003A\u0024endpointMap",
+            "name": "endpointMap",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#property_endpointMap"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestHttpClient",
             "name": "OAuthTestHttpClient",
@@ -1501,6 +1566,11 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/chillerlan-oauth-core.html"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\MagicAPI",
+            "name": "MagicAPI",
+            "summary": "",
+            "url": "namespaces/chillerlan-oauth-magicapi.html"
+        },                {
             "fqsen": "\\chillerlan\\OAuth",
             "name": "OAuth",
             "summary": "",
@@ -1525,6 +1595,11 @@ Search.appendIndex(
             "name": "Core",
             "summary": "",
             "url": "namespaces/chillerlan-oauthtest-core.html"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI",
+            "name": "MagicAPI",
+            "summary": "",
+            "url": "namespaces/chillerlan-oauthtest-magicapi.html"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest",
             "name": "OAuthTest",
