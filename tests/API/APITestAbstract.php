@@ -20,7 +20,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 use function chillerlan\HTTP\Psr7\{get_json, get_xml};
-use function file_exists, ini_set;
+use function defined, file_exists, ini_set, realpath;
+use const DIRECTORY_SEPARATOR;
 
 abstract class APITestAbstract extends TestCase{
 
@@ -30,6 +31,8 @@ abstract class APITestAbstract extends TestCase{
 
 	protected string $ENV;
 
+	protected ClientInterface $http;
+
 	protected OAuthInterface $provider;
 
 	protected OAuthStorageInterface $storage;
@@ -37,38 +40,31 @@ abstract class APITestAbstract extends TestCase{
 	protected LoggerInterface $logger;
 
 	protected DotEnv $dotEnv;
-
-	protected float $requestDelay = 0.25;
 	/** a test username for live API tests, defined in .env as {ENV-PREFIX}_TESTUSER*/
 	protected string $testuser;
 	/** @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface */
 	protected SettingsContainerInterface $options;
 
-	protected ClientInterface $http;
-
 	protected function setUp():void{
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$file         = file_exists($this->CFG.'/.env') ? '.env' : '.env_example';
+		$this->CFG    = realpath($this->CFG);
+		$file         = file_exists($this->CFG.DIRECTORY_SEPARATOR.'.env') ? '.env' : '.env_example';
 		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
-		$isCI         = defined('TEST_IS_CI') && TEST_IS_CI === true;
 
-		if($isCI){
-			$this->markTestSkipped('not on CI');
-
-			return;
+		if(defined('TEST_IS_CI') && TEST_IS_CI === true){
+			$this->markTestSkipped('not on CI (set TEST_IS_CI in phpunit.xml to "false" if you want to run live API tests)');
 		}
 
-		$this->testuser = $this->dotEnv->get($this->ENV.'_TESTUSER');
+		$this->testuser = (string)$this->dotEnv->get($this->ENV.'_TESTUSER');
 
 		$this->options = new OAuthOptions([
 			'key'              => $this->dotEnv->get($this->ENV.'_KEY'),
 			'secret'           => $this->dotEnv->get($this->ENV.'_SECRET'),
 			'tokenAutoRefresh' => true,
 			// HTTPOptionsTrait
-			'ca_info'          => $this->CFG.'/cacert.pem',
-			'userAgent'        => 'chillerlanPhpOAuth/3.0.0 +https://github.com/chillerlan/php-oauth',
-			'sleep'            => $this->requestDelay,
+			'ca_info'          => $this->CFG.DIRECTORY_SEPARATOR.'cacert.pem',
+			'userAgent'        => 'chillerlanPhpOAuth/4.0.0 +https://github.com/chillerlan/php-oauth-core',
 		]);
 
 		$this->logger   = new OAuthTestLogger('debug');
@@ -97,7 +93,7 @@ abstract class APITestAbstract extends TestCase{
 	/**
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 *
-	 * @return \stdClass|mixed
+	 * @return \stdClass|array|bool
 	 */
 	protected function responseJson(ResponseInterface $response){
 		$response->getBody()->rewind();
@@ -108,7 +104,7 @@ abstract class APITestAbstract extends TestCase{
 	/**
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 *
-	 * @return \SimpleXMLElement|mixed
+	 * @return \SimpleXMLElement|array|bool
 	 */
 	protected function responseXML(ResponseInterface $response){
 		$response->getBody()->rewind();
