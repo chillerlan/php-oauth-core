@@ -10,6 +10,7 @@
 
 namespace chillerlan\OAuthTest\MagicAPI;
 
+use chillerlan\OAuth\Core\OAuthInterface;
 use chillerlan\OAuth\MagicAPI\EndpointMapInterface;
 use ReflectionClass;
 
@@ -19,17 +20,17 @@ use const JSON_PRETTY_PRINT, PHP_EOL;
 
 class EndpointDocblock{
 
-	protected object $provider;
+	protected OAuthInterface $provider;
 
 	protected EndpointMapInterface $endpointMap;
 
 	/**
 	 * EndpointDocblock constructor.
 	 *
-	 * @param object|string                                   $provider
+	 * @param \chillerlan\OAuth\Core\OAuthInterface           $provider
 	 * @param \chillerlan\OAuth\MagicAPI\EndpointMapInterface $endpointMap
 	 */
-	public function __construct($provider, EndpointMapInterface $endpointMap){
+	public function __construct(OAuthInterface $provider, EndpointMapInterface $endpointMap){
 		$this->provider    = $provider;
 		$this->endpointMap = $endpointMap;
 	}

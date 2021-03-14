@@ -33,8 +33,8 @@ interface OAuth2Interface extends OAuthInterface{
 	 * Prepares the URL with optional $params and $scopes which redirects to the provider's authorization prompt
 	 * and returns a PSR-7 UriInterface with all necessary parameters set
 	 *
-	 * @param array|null $params
-	 * @param array|null $scopes
+	 * @param array|null    $params
+	 * @param string[]|null $scopes
 	 *
 	 * @return \Psr\Http\Message\UriInterface
 	 */

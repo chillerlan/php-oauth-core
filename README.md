@@ -47,7 +47,7 @@ An API documentation created with [phpDocumentor](https://www.phpdoc.org/) can b
 ```json
 {
 	"require": {
-		"php": "^7.4",
+		"php": "^7.4 || ^8.0",
 		"chillerlan/php-oauth-core": "dev-main"
 	}
 }
