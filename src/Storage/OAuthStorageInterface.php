@@ -13,6 +13,9 @@ namespace chillerlan\OAuth\Storage;
 use chillerlan\OAuth\Core\AccessToken;
 use Psr\Log\LoggerAwareInterface;
 
+/**
+ * Specifies the methods required for an OAuth storage adapter
+ */
 interface OAuthStorageInterface extends LoggerAwareInterface{
 
 	/**

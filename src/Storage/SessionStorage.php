@@ -17,6 +17,9 @@ use function array_keys, array_key_exists, session_start, session_status, sessio
 
 use const PHP_SESSION_NONE;
 
+/**
+ * Implements a session storage adapter. Session storage is half persistent as tokens are stored for the duration of the session.
+ */
 class SessionStorage extends OAuthStorageAbstract{
 
 	/**

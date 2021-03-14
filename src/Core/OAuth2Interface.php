@@ -12,6 +12,9 @@ namespace chillerlan\OAuth\Core;
 
 use Psr\Http\Message\UriInterface;
 
+/**
+ * Specifies the basic methods for an OAuth2 provider.
+ */
 interface OAuth2Interface extends OAuthInterface{
 
 	const AUTH_METHOD_HEADER = 1;

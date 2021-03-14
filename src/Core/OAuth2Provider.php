@@ -23,35 +23,43 @@ use function chillerlan\HTTP\Psr7\{decompress_content, merge_query};
 
 use const PHP_QUERY_RFC1738;
 
+/**
+ * Implements an abstract OAuth2 provider with all methods required by the OAuth2Interface.
+ * It also implements the ClientCredentials, CSRFToken and TokenRefresh interfaces in favor over traits.
+ */
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
-	 *
+	 * Specifies the authentication method:
+	 *   - OAuth2Interface::AUTH_METHOD_HEADER (Bearer, OAuth, ...)
+	 *   - OAuth2Interface::AUTH_METHOD_QUERY (access_token, ...)
 	 */
 	protected int $authMethod = self::AUTH_METHOD_HEADER;
 
 	/**
-	 *
+	 * The name of the authentication header in case of OAuth2Interface::AUTH_METHOD_HEADER
 	 */
 	protected string $authMethodHeader = 'Bearer';
 
 	/**
-	 *
+	 * The name of the authentication query parameter in case of OAuth2Interface::AUTH_METHOD_QUERY
 	 */
 	protected string $authMethodQuery = 'access_token';
 
 	/**
-	 *
+	 * The delimiter string for scopes
 	 */
 	protected string $scopesDelimiter = ' ';
 
 	/**
-	 *
+	 * An optional refresh token endpoint in case the provider supports TokenRefresh.
+	 * If the provider supports token refresh and $refreshTokenURL is null, $accessTokenURL will be used instead.
 	 */
 	protected ?string $refreshTokenURL = null;
 
 	/**
-	 *
+	 * An optional refresh token endpoint in case the provider supports ClientCredentials.
+	 * If the provider supports client credentials and $clientCredentialsTokenURL is null, $accessTokenURL will be used instead.
 	 */
 	protected ?string $clientCredentialsTokenURL = null;
 
@@ -175,7 +183,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @inheritDoc
+	 * Obtains an OAuth2 client credentials token and returns an AccessToken
+	 *
+	 * @see \chillerlan\OAuth\Core\ClientCredentials
+	 *
+	 * @param array|null $scopes
+	 *
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function getClientCredentialsToken(array $scopes = null):AccessToken{
@@ -210,7 +224,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @inheritDoc
+	 * Tries to refresh an existing AccessToken with an associated refresh token and returns a fresh AccessToken.
+	 *
+	 * @see \chillerlan\OAuth\Core\TokenRefresh
+	 *
+	 * @param \chillerlan\OAuth\Core\AccessToken|null $token
+	 *
+	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken $token = null):AccessToken{
@@ -262,12 +282,22 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * Checks whether the CSRF state was set and verifies against the last known state.
+	 * Throws a ProviderException if the given state is empty, unknown or doesn't match the known state.
+	 *
+	 * @see \chillerlan\OAuth\Core\CSRFToken
+	 *
 	 * @param string|null $state
 	 *
 	 * @return void
 	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @internal
 	 */
-	protected function checkState(string $state = null):void{
+	public function checkState(string $state = null):void{
+
+		if(!$this instanceof CSRFToken){
+			throw new ProviderException('CSRF protection not supported');
+		}
 
 		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
 			throw new ProviderException('invalid state for '.$this->serviceName);
@@ -282,11 +312,22 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * Sets the CSRF state parameter in a given array of query parameters and stores that value
+	 * in the local storage for later verification. Returns the updated array of parameters.
+	 *
+	 * @see \chillerlan\OAuth\Core\CSRFToken
+	 *
 	 * @param array $params
 	 *
 	 * @return array
+	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @internal
 	 */
-	protected function setState(array $params):array{
+	public function setState(array $params):array{
+
+		if(!$this instanceof CSRFToken){
+			throw new ProviderException('CSRF protection not supported');
+		}
 
 		if(!isset($params['state'])){
 			$params['state'] = sha1(random_bytes(256));

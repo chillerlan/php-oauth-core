@@ -15,7 +15,7 @@ use chillerlan\Settings\SettingsContainerAbstract;
 use function time;
 
 /**
- * Base token implementation for any OAuth version.
+ * Access token implementation for any OAuth version.
  *
  * // Oauth1
  * @property string $accessTokenSecret

@@ -14,6 +14,8 @@ use chillerlan\HTTP\HTTPOptionsTrait;
 use chillerlan\Settings\SettingsContainerAbstract;
 
 /**
+ * This class holds all settings related to the OAuth provider as well as the default HTTP client.
+ *
  * OAuthOptionsTrait
  *
  * @property string     $key

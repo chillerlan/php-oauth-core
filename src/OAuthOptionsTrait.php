@@ -10,6 +10,9 @@
 
 namespace chillerlan\OAuth;
 
+/**
+ * The settings for the OAuth provider
+ */
 trait OAuthOptionsTrait{
 
 	/**

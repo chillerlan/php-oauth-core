@@ -14,6 +14,9 @@ use chillerlan\OAuth\Core\AccessToken;
 
 use function array_keys, array_key_exists;
 
+/**
+ * Implements a memory storage adapter. Memory storage is not persistent as tokens are only stored during script runtime.
+ */
 class MemoryStorage extends OAuthStorageAbstract{
 
 	/**

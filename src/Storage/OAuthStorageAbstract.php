@@ -16,6 +16,9 @@ use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 
 use function is_string;
 
+/**
+ * Implements ab anstract OAuth storage adapter
+ */
 abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	use LoggerAwareTrait;
 

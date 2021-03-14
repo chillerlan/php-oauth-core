@@ -10,11 +10,15 @@
 
 namespace chillerlan\OAuth\Core;
 
+/**
+ * Specifies the basic methods for an OAuth1 provider.
+ */
 interface OAuth1Interface extends OAuthInterface{
 
 	/**
-	 * Obtains an OAuth1 request token and returns an AccessToken
-	 * object for use in the authentication request
+	 * Obtains an OAuth1 request token and returns an AccessToken object for use in the authentication request.
+	 *
+	 * @link https://tools.ietf.org/html/rfc5849#section-2.1
 	 *
 	 * @see \chillerlan\OAuth\Core\OAuth1Provider::getAuthURL()
 	 *
@@ -24,11 +28,12 @@ interface OAuth1Interface extends OAuthInterface{
 	public function getRequestToken():AccessToken;
 
 	/**
-	 * Obtains an OAuth1 access token with the given $token and $verifier
-	 * and returns an AccessToken object
+	 * Obtains an OAuth1 access token with the given $token and $verifier and returns an AccessToken object.
 	 *
-	 * @param string      $token
-	 * @param string      $verifier
+	 * @link https://tools.ietf.org/html/rfc5849#section-2.3
+	 *
+	 * @param string $token
+	 * @param string $verifier
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException

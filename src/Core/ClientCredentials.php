@@ -10,12 +10,15 @@
 
 namespace chillerlan\OAuth\Core;
 
+/**
+ * Specifies whether the provider is capable of the OAuth2 client credentials authentication flow.
+ *
+ * @link https://tools.ietf.org/html/rfc6749#section-4.4
+ */
 interface ClientCredentials{
 
 	/**
 	 * Obtains an OAuth2 client credentials token and returns an AccessToken
-	 *
-	 * @link https://tools.ietf.org/html/rfc6749#section-4.4
 	 *
 	 * @param array|null $scopes
 	 *

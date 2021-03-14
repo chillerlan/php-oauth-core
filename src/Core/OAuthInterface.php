@@ -20,6 +20,8 @@ use Psr\Http\Message\{
 };
 
 /**
+ * Specifies the basic methods for an OAuth provider.
+ *
  * @property string                                          $apiDocs
  * @property string                                          $apiURL
  * @property string                                          $applicationURL

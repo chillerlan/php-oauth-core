@@ -32,6 +32,9 @@ use const PHP_QUERY_RFC1738;
 use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_INT_STRING, BOOLEANS_AS_BOOL};
 
 /**
+ * Implements an abstract OAuth provider with all methods required by the OAuthInterface.
+ * It also implements a magic getter that allows to access the properties listed below.
+ *
  * @property string|null                                     $apiDocs
  * @property string                                          $apiURL
  * @property string|null                                     $applicationURL
@@ -47,12 +50,12 @@ abstract class OAuthProvider implements OAuthInterface{
 	];
 
 	/**
-	 * the http client
+	 * the http client instance
 	 */
 	protected ClientInterface $http;
 
 	/**
-	 * the token storage
+	 * the token storage instance
 	 */
 	protected OAuthStorageInterface $storage;
 
@@ -64,7 +67,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	protected SettingsContainerInterface $options;
 
 	/**
-	 * the API endpoints (optional)
+	 * the API endpoints (optional) (magic)
 	 */
 	protected ?EndpointMapInterface $endpoints = null;
 
@@ -84,7 +87,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	protected UriFactoryInterface $uriFactory;
 
 	/**
-	 * the name of the provider (class)
+	 * the name of the provider (class) (magic)
 	 */
 	protected ?string $serviceName = null;
 
@@ -94,22 +97,22 @@ abstract class OAuthProvider implements OAuthInterface{
 	protected string $authURL;
 
 	/**
-	 * an optional link to the provider's API docs
+	 * an optional link to the provider's API docs (magic)
 	 */
 	protected ?string $apiDocs = null;
 
 	/**
-	 * the API base URL
+	 * the API base URL (magic)
 	 */
 	protected ?string $apiURL = null;
 
 	/**
-	 * an optional URL to the provider's credential registration/application page
+	 * an optional URL to the provider's credential registration/application page (magic)
 	 */
 	protected ?string $applicationURL = null;
 
 	/**
-	 * an optional link to the page where a user can revoke access tokens
+	 * an optional link to the page where a user can revoke access tokens (magic)
 	 */
 	protected ?string $userRevokeURL = null;
 
@@ -177,6 +180,8 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
+	 * Magic getter for the properties specified in self::ALLOWED_PROPERTIES
+	 *
 	 * @param string $name
 	 *
 	 * @return mixed|null
@@ -231,7 +236,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * ugly, isn't it?
+	 * Magic API endpoint access. ugly, isn't it?
 	 *
 	 * @todo WIP
 	 *
@@ -292,6 +297,8 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
+	 * Cleans an array of query parameters
+	 *
 	 * @param array $params
 	 *
 	 * @return array
@@ -302,6 +309,8 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
+	 * Cleans an array of body parameters
+	 *
 	 * @param array $params
 	 *
 	 * @return array

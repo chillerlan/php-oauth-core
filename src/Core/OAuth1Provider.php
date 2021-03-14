@@ -19,10 +19,13 @@ use function array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
 	implode, in_array, is_array, parse_str, parse_url, random_bytes, strtoupper;
 use function chillerlan\HTTP\Psr7\{build_http_query, decompress_content, merge_query, r_rawurlencode};
 
+/**
+ * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
+ */
 abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 	/**
-	 * the request token URL
+	 * The request OAuth1 token URL
 	 */
 	protected string $requestTokenURL;
 
@@ -69,6 +72,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
+	 * Parses the response from a request to the token endpoint
+	 *
+	 * @link https://tools.ietf.org/html/rfc5849#section-2.1
+	 *
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 * @param bool|null                           $checkCallbackConfirmed
 	 *
@@ -112,7 +119,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * returns a random 32 byte hex string
+	 * returns a 32 byte random string (in hexadecimal representation) for use as a nonce
 	 *
 	 * @return string
 	 */
@@ -126,6 +133,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
+	 * Generates a request signature
+	 *
+	 * @link https://tools.ietf.org/html/rfc5849#section-3.4
+	 *
 	 * @param string      $url
 	 * @param array       $params
 	 * @param string      $method
