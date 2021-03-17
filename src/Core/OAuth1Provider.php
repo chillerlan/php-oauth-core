@@ -33,11 +33,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @inheritDoc
 	 */
 	public function getAuthURL(array $params = null):UriInterface{
-
-		$params = array_merge(
-			$params ?? [],
-			['oauth_token' => $this->getRequestToken()->accessToken]
-		);
+		$params = array_merge($params ?? [], ['oauth_token' => $this->getRequestToken()->accessToken]);
 
 		return $this->uriFactory->createUri(merge_query($this->authURL, $params));
 	}
@@ -156,9 +152,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$signatureParams = array_merge($query, $params);
 
-		if(isset($signatureParams['oauth_signature'])){
-			unset($signatureParams['oauth_signature']);
-		}
+		unset($signatureParams['oauth_signature']);
 
 		$key  = implode('&', r_rawurlencode([$this->options->secret, $accessTokenSecret ?? '']));
 		$data = r_rawurlencode([
@@ -174,6 +168,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @inheritDoc
 	 */
 	public function getAccessToken(string $token, string $verifier):AccessToken{
+
 		$request = $this->requestFactory
 			->createRequest('POST', merge_query($this->accessTokenURL, ['oauth_verifier' => $verifier]))
 			->withHeader('Accept-Encoding', 'identity')

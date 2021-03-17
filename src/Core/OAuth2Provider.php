@@ -58,7 +58,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected ?string $refreshTokenURL = null;
 
 	/**
-	 * An optional refresh token endpoint in case the provider supports ClientCredentials.
+	 * An optional client credentials token endpoint in case the provider supports ClientCredentials.
 	 * If the provider supports client credentials and $clientCredentialsTokenURL is null, $accessTokenURL will be used instead.
 	 */
 	protected ?string $clientCredentialsTokenURL = null;
@@ -69,9 +69,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	public function getAuthURL(array $params = null, array $scopes = null):UriInterface{
 		$params ??= [];
 
-		if(isset($params['client_secret'])){
-			unset($params['client_secret']);
-		}
+		unset($params['client_secret']);
 
 		$params = array_merge($params, [
 			'client_id'     => $this->options->key,
@@ -92,6 +90,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * Parses the response from a request to the token endpoint
+	 *
+	 * @link https://tools.ietf.org/html/rfc6749#section-4.1.4
+	 *
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
@@ -174,7 +176,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if($this->authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
-			$uri = merge_query($request->getUri()->__toString(), [$this->authMethodQuery => $token->accessToken]);
+			$uri = merge_query((string)$request->getUri(), [$this->authMethodQuery => $token->accessToken]);
 
 			return $request->withUri($this->uriFactory->createUri($uri));
 		}
