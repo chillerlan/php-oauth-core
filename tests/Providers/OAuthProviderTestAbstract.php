@@ -11,14 +11,10 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\HTTP\Psr18\LoggingClient;
-use chillerlan\HTTP\Psr7\Response;
 use chillerlan\OAuth\Core\{AccessToken};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Psr\Log\LoggerInterface;
-use function chillerlan\HTTP\Psr17\create_stream_from_input;
-use function strpos;
 
 abstract class OAuthProviderTestAbstract extends ProviderTestAbstract{
 
