@@ -90,7 +90,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/chillerlan-OAuth-Core-ClientCredentials.html"><abbr title="\chillerlan\OAuth\Core\ClientCredentials">ClientCredentials</abbr></a></dt>
         <dd>Specifies whether the provider is capable of the OAuth2 client credentials authentication flow.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/chillerlan-OAuth-Core-CSRFToken.html"><abbr title="\chillerlan\OAuth\Core\CSRFToken">CSRFToken</abbr></a></dt>
-        <dd>Implements the methods required for the OAuth2 CSRF token validation (&quot;state parameter&quot;)</dd>
+        <dd>Specifies the methods required for the OAuth2 CSRF token validation (&quot;state parameter&quot;)</dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html"><abbr title="\chillerlan\OAuth\Core\OAuth1Interface">OAuth1Interface</abbr></a></dt>
         <dd>Specifies the basic methods for an OAuth1 provider.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/chillerlan-OAuth-Core-OAuth2Interface.html"><abbr title="\chillerlan\OAuth\Core\OAuth2Interface">OAuth2Interface</abbr></a></dt>
@@ -132,11 +132,11 @@
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuth-Storage-SessionStorage.html"><abbr title="\chillerlan\OAuth\Storage\SessionStorage">SessionStorage</abbr></a></dt>
         <dd>Implements a session storage adapter. Session storage is half persistent as tokens are stored for the duration of the session.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-API-APITestAbstract.html"><abbr title="\chillerlan\OAuthTest\API\APITestAbstract">APITestAbstract</abbr></a></dt>
-        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-API-OAuth1APITestAbstract.html"><abbr title="\chillerlan\OAuthTest\API\OAuth1APITestAbstract">OAuth1APITestAbstract</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-API-OAuth2APITestAbstract.html"><abbr title="\chillerlan\OAuthTest\API\OAuth2APITestAbstract">OAuth2APITestAbstract</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html"><abbr title="\chillerlan\OAuthTest\API\OAuthAPITestAbstract">OAuthAPITestAbstract</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Core-AccessTokenTest.html"><abbr title="\chillerlan\OAuthTest\Core\AccessTokenTest">AccessTokenTest</abbr></a></dt>
         <dd></dd>
@@ -148,20 +148,32 @@
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-OAuthTestMemoryStorage.html"><abbr title="\chillerlan\OAuthTest\OAuthTestMemoryStorage">OAuthTestMemoryStorage</abbr></a></dt>
         <dd>Implements a memory storage adapter. Memory storage is not persistent as tokens are only stored during script runtime.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-OAuthTestSessionStorage.html"><abbr title="\chillerlan\OAuthTest\OAuthTestSessionStorage">OAuthTestSessionStorage</abbr></a></dt>
-        <dd>Implements a session storage adapter. Session storage is half persistent as tokens are stored for the duration of the session.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-GenericOAuth1Test.html"><abbr title="\chillerlan\OAuthTest\Providers\GenericOAuth1Test">GenericOAuth1Test</abbr></a></dt>
-        <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-GenericOAuth2Test.html"><abbr title="\chillerlan\OAuthTest\Providers\GenericOAuth2Test">GenericOAuth2Test</abbr></a></dt>
-        <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-GenericOAuth2TestBasic.html"><abbr title="\chillerlan\OAuthTest\Providers\GenericOAuth2TestBasic">GenericOAuth2TestBasic</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth1-DummyOAuth1Provider.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth1\DummyOAuth1Provider">DummyOAuth1Provider</abbr></a></dt>
+        <dd>An OAuth1 provider implementation</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth1-DummyOAuth1Test.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth1\DummyOAuth1Test">DummyOAuth1Test</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth1ProviderTestAbstract.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth1ProviderTestAbstract">OAuth1ProviderTestAbstract</abbr></a></dt>
         <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth2-DummyOAuth2BasicProvider.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth2\DummyOAuth2BasicProvider">DummyOAuth2BasicProvider</abbr></a></dt>
+        <dd>A minimal OAuth2 provider implementation</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth2-DummyOAuth2Provider.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth2\DummyOAuth2Provider">DummyOAuth2Provider</abbr></a></dt>
+        <dd>An OAuth2 provider implementation that supports token refresh, csrf tokens and client credentials</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth2-DummyOAuth2Test.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth2\DummyOAuth2Test">DummyOAuth2Test</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth2-DummyOAuth2TestBasic.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth2\DummyOAuth2TestBasic">DummyOAuth2TestBasic</abbr></a></dt>
+        <dd>Tests a minimal OAuth2 provider implementation (no token refresh, no csrf, no nothing)</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuth2ProviderTestAbstract.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract">OAuth2ProviderTestAbstract</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-OAuthProviderTestAbstract.html"><abbr title="\chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract">OAuthProviderTestAbstract</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html"><abbr title="\chillerlan\OAuthTest\Providers\ProviderTestAbstract">ProviderTestAbstract</abbr></a></dt>
         <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-ProviderTestHttpClient.html"><abbr title="\chillerlan\OAuthTest\Providers\ProviderTestHttpClient">ProviderTestHttpClient</abbr></a></dt>
+        <dd>a dummy client that returns a prepared set of responses</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-RequestTest-OAuthProviderRequestTest.html"><abbr title="\chillerlan\OAuthTest\Providers\RequestTest\OAuthProviderRequestTest">OAuthProviderRequestTest</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-RequestTest-RequestTestProvider.html"><abbr title="\chillerlan\OAuthTest\Providers\RequestTest\RequestTestProvider">RequestTestProvider</abbr></a></dt>
+        <dd>Implements an abstract OAuth provider with all methods required by the OAuthInterface.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Providers-TestEndpoints.html"><abbr title="\chillerlan\OAuthTest\Providers\TestEndpoints">TestEndpoints</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/chillerlan-OAuthTest-Storage-MemoryStorageTest.html"><abbr title="\chillerlan\OAuthTest\Storage\MemoryStorageTest">MemoryStorageTest</abbr></a></dt>
