@@ -24,12 +24,13 @@ use Psr\Http\Message\{
 use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
 
-use function array_slice, class_exists, count, http_build_query, implode,
-	in_array, is_array, is_string, json_encode, sprintf, strpos, strtolower;
 use function chillerlan\HTTP\Psr7\{clean_query_params, merge_query};
+use function array_slice, class_exists, count, http_build_query, implode, in_array, is_array,
+	is_scalar, is_string, json_encode, parse_url, sprintf, strpos, strtolower;
 
+use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_BOOL, BOOLEANS_AS_INT_STRING};
 use const PHP_QUERY_RFC1738;
-use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_INT_STRING, BOOLEANS_AS_BOOL};
+use const PHP_URL_HOST;
 
 /**
  * Implements an abstract OAuth provider with all methods required by the OAuthInterface.
@@ -238,85 +239,122 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * Magic API endpoint access. ugly, isn't it?
 	 *
-	 * @todo WIP
-	 *
 	 * @param string $endpointName
 	 * @param array  $arguments
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
-	 * @codeCoverageIgnore
 	 */
 	public function __call(string $endpointName, array $arguments):ResponseInterface{
 
 		if(!$this->endpoints instanceof EndpointMap){
-			throw new ApiClientException('MagicAPI not available');
+			throw new ApiClientException('MagicAPI not available'); // @codeCoverageIgnore
 		}
 
 		if(!isset($this->endpoints->{$endpointName})){
 			throw new ApiClientException('endpoint not found: "'.$endpointName.'"');
 		}
 
-		$m = $this->endpoints->{$endpointName};
+		// metadata for the current endpoint
+		$endpointMeta  = $this->endpoints->{$endpointName};
+		$path          = $this->endpoints->API_BASE.($endpointMeta['path'] ?? '');
+		$method        = $endpointMeta['method'] ?? 'GET';
+		$path_elements = $endpointMeta['path_elements'] ?? [];
+		$query_params  = $endpointMeta['query'] ?? [];
+		$headers       = $endpointMeta['headers'] ?? [];
+		// the body value of the metadata is only informational
+		$has_body      = isset($endpointMeta['body']) && !empty($endpointMeta['body']);
 
-		$endpoint      = $this->endpoints->API_BASE.$m['path'];
-		$method        = $m['method'] ?? 'GET';
-		$body          = [];
-		$headers       = isset($m['headers']) && is_array($m['headers']) ? $m['headers'] : [];
-		$path_elements = $m['path_elements'] ?? [];
-		$params_in_url = count($path_elements);
-		$params        = $arguments[$params_in_url] ?? [];
-		$urlparams     = array_slice($arguments,0 , $params_in_url);
+		$params = null;
+		$body   = null;
 
-		if($params_in_url > 0){
+		$path_element_count = count($path_elements);
+		$query_param_count  = count($query_params);
 
-			if(count($urlparams) < $params_in_url){
-				throw new APIClientException('too few URL params, required: '.implode(', ', $path_elements));
-			}
-
-			$endpoint = sprintf($endpoint, ...$urlparams);
+		if($path_element_count > 0){
+			$path = $this->parsePathElements($path, $path_elements, $path_element_count, $arguments);
 		}
 
-		if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
-			$body = $arguments[$params_in_url + 1] ?? $params;
+		if($query_param_count > 0){
+			// $params is the first argument after path segments
+			$params = $arguments[$path_element_count] ?? null;
 
-			if($params === $body){
-				$params = [];
+			if(is_array($params)){
+				$params = $this->cleanQueryParams($this->removeUnlistedParams($params, $query_params));
 			}
-
-			$body = $this->cleanBodyParams($body);
 		}
 
-		$params = $this->cleanQueryParams($params);
+		if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE']) && $has_body){
+			// if no query params are present, $body is the first argument after any path segments
+			$argPos = $query_param_count > 0 ? 1 : 0;
+			$body   = $arguments[$path_element_count + $argPos] ?? null;
+
+			if(is_array($body)){
+				$body = $this->cleanBodyParams($body);
+			}
+		}
 
 		$this->logger->debug('OAuthProvider::__call() -> '.$this->serviceName.'::'.$endpointName.'()', [
-			'$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers,
+			'$endpoint' => $path, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers,
 		]);
 
-		return $this->request($endpoint, $params, $method, $body, $headers);
+		return $this->request($path, $params, $method, $body, $headers);
+	}
+
+	/**
+	 * Checks the given path elements and returns the given path with placeholders replaced
+	 *
+	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
+	 */
+	protected function parsePathElements(string $path, array $path_elements, int $path_element_count, array $arguments):string{
+		// we don't know if all of the given arguments are path elements...
+		$urlparams = array_slice($arguments, 0, $path_element_count);
+
+		if(count($urlparams) !== $path_element_count){
+			throw new APIClientException('too few URL params, required: '.implode(', ', $path_elements));
+		}
+
+		foreach($urlparams as $i => $param){
+			// ...but we do know that the arguments after the path elements are usually array or null
+			if(!is_scalar($param)){
+				$msg = 'invalid path element value for "%s": %s';
+
+				throw new APIClientException(sprintf($msg, $path_elements[$i], var_export($param, true)));
+			}
+		}
+
+		return sprintf($path, ...$urlparams);
+	}
+
+	/**
+	 * Checks an array against an allowlist and removes any parameter that is not allowed
+	 */
+	protected function removeUnlistedParams(array $params, array $allowed):array{
+		$query = [];
+		// remove any params that are not listed
+		foreach($params as $key => $value){
+
+			if(!in_array($key, $allowed, true)){
+				continue;
+			}
+
+			$query[$key] = $value;
+		}
+
+		return $query;
 	}
 
 	/**
 	 * Cleans an array of query parameters
-	 *
-	 * @param array $params
-	 *
-	 * @return array
-	 * @codeCoverageIgnore
 	 */
-	protected function cleanQueryParams(array $params):array{
+	protected function cleanQueryParams(iterable $params):array{
 		return clean_query_params($params, BOOLEANS_AS_INT_STRING, true);
 	}
 
 	/**
 	 * Cleans an array of body parameters
-	 *
-	 * @param array $params
-	 *
-	 * @return array
-	 * @codeCoverageIgnore
 	 */
-	protected function cleanBodyParams(array $params):array{
+	protected function cleanBodyParams(iterable $params):array{
 		return clean_query_params($params, BOOLEANS_AS_BOOL, true);
 	}
 
@@ -332,7 +370,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	):ResponseInterface{
 
 		$request = $this->requestFactory
-			->createRequest($method ?? 'GET', merge_query($this->apiURL.$path, $params ?? []));
+			->createRequest($method ?? 'GET', merge_query($this->getRequestTarget($path), $params ?? []));
 
 		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
@@ -363,6 +401,38 @@ abstract class OAuthProvider implements OAuthInterface{
 		}
 
 		return $this->sendRequest($request);
+	}
+
+	/**
+	 * Determine the request target from the given URI (path segment or URL) with respect to $apiURL,
+	 * anything except host and path will be ignored, scheme will always be set to "https".
+	 * Throws if the given path is invalid or if the host of a given URL does not match $apiURL.
+	 *
+	 * @see \chillerlan\OAuth\Core\OAuthInterface::request()
+	 *
+	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 */
+	protected function getRequestTarget(string $uri):string{
+		$parsedURL = parse_url($uri);
+
+		if(!isset($parsedURL['path'])){
+			throw new ProviderException('invalid path');
+		}
+
+		// for some reason we were given a host name
+		if(isset($parsedURL['host'])){
+
+			// back out if it doesn't match
+			if($parsedURL['host'] !== parse_url($this->apiURL, PHP_URL_HOST)){
+				throw new ProviderException('given host does not match provider host');
+			}
+
+			// we explicitly ignore any existing parameters here
+			return 'https://'.$parsedURL['host'].$parsedURL['path'];
+		}
+
+		// $apiURL may already include a part of the path
+		return $this->apiURL.$parsedURL['path'];
 	}
 
 	/**
