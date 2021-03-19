@@ -20,12 +20,6 @@ class OAuthTestMemoryStorage extends MemoryStorage{
 
 	protected string $storagepath;
 
-	/**
-	 * OAuthTestSessionStorage constructor.
-	 *
-	 * @param \chillerlan\Settings\SettingsContainerInterface|null $options
-	 * @param string|null                                          $storagepath
-	 */
 	public function __construct(SettingsContainerInterface $options = null, string $storagepath = null){
 		parent::__construct($options);
 
@@ -38,7 +32,7 @@ class OAuthTestMemoryStorage extends MemoryStorage{
 	public function storeAccessToken(string $service, AccessToken $token):bool{
 		parent::storeAccessToken($service, $token);
 
-		if(@file_put_contents($this->storagepath.'/'.$service.'.token.json', $token->toJSON()) === false){
+		if(file_put_contents($this->storagepath.'/'.$service.'.token.json', $token->toJSON()) === false){
 			throw new OAuthStorageException('unable to access file storage');
 		}
 
@@ -56,11 +50,8 @@ class OAuthTestMemoryStorage extends MemoryStorage{
 
 		$tokenfile = $this->storagepath.'/'.$service.'.token.json';
 		if(file_exists($tokenfile)){
-
-			/** @var \chillerlan\OAuth\Core\AccessToken $token */
-			$token = (new AccessToken)->fromJSON(file_get_contents($tokenfile));
-
-			return $token;
+			/** @noinspection PhpIncompatibleReturnTypeInspection */
+			return (new AccessToken)->fromJSON(file_get_contents($tokenfile));
 		}
 
 		throw new OAuthStorageException('token not found');

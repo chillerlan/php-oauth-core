@@ -34,18 +34,18 @@ class AccessTokenTest extends TestCase{
 	/**
 	 * @dataProvider tokenDataProvider
 	 *
-	 * @param $property
-	 * @param $value
-	 * @param $data
+	 * @param string $property
+	 * @param mixed  $value
+	 * @param mixed  $data
 	 */
-	public function testDefaultsGetSet($property, $value, $data):void{
+	public function testDefaultsGetSet(string $property, $value, $data):void{
 		// test defaults
-		static::assertSame($value, $this->token->{$property});
+		$this::assertSame($value, $this->token->{$property});
 
 		// set some data
 		$this->token->{$property} = $data;
 
-		static::assertSame($data, $this->token->{$property});
+		$this::assertSame($data, $this->token->{$property});
 	}
 
 	public function expiryDataProvider():array{
@@ -62,13 +62,13 @@ class AccessTokenTest extends TestCase{
 	/**
 	 * @dataProvider expiryDataProvider
 	 *
-	 * @param $expires
-	 * @param $expected
+	 * @param int|null $expires
+	 * @param int      $expected
 	 */
-	public function testSetExpiry($expires, $expected):void{
+	public function testSetExpiry(?int $expires, int $expected):void{
 		$this->token->expires = $expires;
 
-		static::assertSame($expected, $this->token->expires);
+		$this::assertSame($expected, $this->token->expires);
 	}
 
 	public function isExpiredDataProvider():array{
@@ -82,12 +82,12 @@ class AccessTokenTest extends TestCase{
 	/**
 	 * @dataProvider isExpiredDataProvider
 	 *
-	 * @param $expires
-	 * @param $isExpired
+	 * @param int  $expires
+	 * @param bool $isExpired
 	 */
-	public function testIsExpired($expires, $isExpired):void{
+	public function testIsExpired(int $expires, bool $isExpired):void{
 		$this->token->setExpiry($expires);
-		static::assertSame($isExpired, $this->token->isExpired());
+		$this::assertSame($isExpired, $this->token->isExpired());
 	}
 
 	public function testIsExpiredVariable():void{
@@ -95,28 +95,28 @@ class AccessTokenTest extends TestCase{
 		$now     = time();
 		$expiry1 = $now + 3600;
 		$this->token->setExpiry($expiry1);
-		static::assertSame($expiry1, $this->token->expires);
-		static::assertFalse($this->token->isExpired());
+		$this::assertSame($expiry1, $this->token->expires);
+		$this::assertFalse($this->token->isExpired());
 
 		$now     = time();
 		$expiry2 = 3600;
 		$this->token->setExpiry($expiry2);
-		static::assertSame($now+$expiry2, $this->token->expires);
-		static::assertFalse($this->token->isExpired());
+		$this::assertSame($now+$expiry2, $this->token->expires);
+		$this::assertFalse($this->token->isExpired());
 
 		$now     = time();
 		$expiry3 = 2;
 		$this->token->setExpiry($expiry3);
-		static::assertSame($now+$expiry3, $this->token->expires);
+		$this::assertSame($now+$expiry3, $this->token->expires);
 		sleep(3);
-		static::assertTrue($this->token->isExpired());
+		$this::assertTrue($this->token->isExpired());
 
 		$now     = time();
 		$expiry4 = $now + 2;
 		$this->token->setExpiry($expiry4);
-		static::assertSame($expiry4, $this->token->expires);
+		$this::assertSame($expiry4, $this->token->expires);
 		sleep(3);
-		static::assertTrue($this->token->isExpired());
+		$this::assertTrue($this->token->isExpired());
 	}
 
 }

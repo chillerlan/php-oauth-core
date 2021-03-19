@@ -14,13 +14,51 @@ use chillerlan\OAuth\MagicAPI\EndpointMap;
 
 class TestEndpoints extends EndpointMap{
 
+	protected string $API_BASE = '/api';
+
 	protected array $test = [
-		'path'          => '/test/%1$s',
+		'path'          => '/test/%1$s/%2$s/__echo__',
 		'method'        => 'GET',
 		'query'         => ['foo'],
-		'path_elements' => ['id'],
+		'path_elements' => ['a', 'b'],
 		'body'          => null,
-		'headers'       => [],
+		'headers'       => null,
+	];
+
+	protected array $postNoPathNoQuery = [
+		'path'          => '/post/nopathnoquery/__echo__',
+		'method'        => 'POST',
+		'query'         => null,
+		'path_elements' => null,
+		'body'          => ['foo'],
+		'headers'       => ['content-type' => 'application/json'],
+	];
+
+	protected array $postWithPathNoQuery = [
+		'path'          => '/post/%1$s/__echo__',
+		'method'        => 'POST',
+		'query'         => null,
+		'path_elements' => ['path'],
+		'body'          => ['foo'],
+		'headers'       => ['content-type' => 'application/json'],
+	];
+
+	protected array $postNoPathWithQuery = [
+		'path'          => '/post/nopathwithquery/__echo__',
+		'method'        => 'POST',
+		'query'         => ['query'],
+		'path_elements' => null,
+		'body'          => ['foo'],
+		'headers'       => ['content-type' => 'application/json'],
+	];
+
+	protected array $postWithPathAndQuery = [
+		'path'          => '/post/%1$s/__echo__',
+		'method'        => 'POST',
+		'query'         => ['query'],
+		'path_elements' => ['pathandquery'],
+		'body'          => ['foo'],
+		'headers'       => ['content-type' => 'application/json'],
 	];
 
 }

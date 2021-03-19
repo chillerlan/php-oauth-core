@@ -18,31 +18,29 @@ use function time;
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
  */
-abstract class OAuth2APITestAbstract extends APITestAbstract{
+abstract class OAuth2APITestAbstract extends OAuthAPITestAbstract{
 
 	protected array $clientCredentialsScopes = [];
 
 	public function testOAuth2Instance():void{
-		static::assertInstanceOf(OAuth2Interface::class, $this->provider);
+		$this::assertInstanceOf(OAuth2Interface::class, $this->provider);
 	}
 
 	public function testRequestCredentialsToken():void{
 
 		if(!$this->provider instanceof ClientCredentials){
 			$this->markTestSkipped('ClientCredentials N/A');
-
-			return;
 		}
 
 		$this->provider->setStorage(new MemoryStorage);
 
 		$token = $this->provider->getClientCredentialsToken($this->clientCredentialsScopes);
 
-		static::assertInstanceOf(AccessToken::class, $token);
-		static::assertIsString($token->accessToken);
+		$this::assertInstanceOf(AccessToken::class, $token);
+		$this::assertIsString($token->accessToken);
 
 		if($token->expires !== AccessToken::EOL_NEVER_EXPIRES){
-			static::assertGreaterThan(time(), $token->expires);
+			$this::assertGreaterThan(time(), $token->expires);
 		}
 
 		$this->logger->debug('OAuth2ClientCredentials', $token->toArray());

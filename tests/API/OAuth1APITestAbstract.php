@@ -15,10 +15,10 @@ use chillerlan\OAuth\Core\OAuth1Interface;
 /**
  * @property \chillerlan\OAuth\Core\OAuth1Interface $provider
  */
-abstract class OAuth1APITestAbstract extends APITestAbstract{
+abstract class OAuth1APITestAbstract extends OAuthAPITestAbstract{
 
 	public function testOAuth1Instance():void{
-		static::assertInstanceOf(OAuth1Interface::class, $this->provider);
+		$this::assertInstanceOf(OAuth1Interface::class, $this->provider);
 	}
 
 }

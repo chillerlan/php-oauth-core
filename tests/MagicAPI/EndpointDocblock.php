@@ -69,7 +69,7 @@ class EndpointDocblock{
 
 			if(isset($params['method']) && in_array($params['method'], ['PATCH', 'POST', 'PUT', 'DELETE'], true)){
 
-				if($params['body'] !== null){
+				if(isset($params['body']) && $params['body'] !== null){
 					$args[] = is_array($params['body']) ? 'array $body = [\''.implode('\', \'', $params['body']).'\']' : 'array $body = []';
 				}
 

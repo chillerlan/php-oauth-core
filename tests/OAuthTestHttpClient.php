@@ -10,7 +10,7 @@
 
 namespace chillerlan\OAuthTest;
 
-use chillerlan\HTTP\{Psr18\CurlClient, Psr18\LoggingClient};
+use chillerlan\HTTP\Psr18\{CurlClient, LoggingClient};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
@@ -24,13 +24,6 @@ class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
 
 	protected ClientInterface $client;
 
-	/**
-	 * OAuthTestHttpClient constructor.
-	 *
-	 * @param \chillerlan\Settings\SettingsContainerInterface $options
-	 * @param \Psr\Http\Client\ClientInterface|null           $http
-	 * @param \Psr\Log\LoggerInterface|null                   $logger
-	 */
 	public function __construct(
 		SettingsContainerInterface $options,
 		ClientInterface $http = null,
@@ -44,18 +37,14 @@ class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
 	}
 
 	/**
-	 * @param \Psr\Log\LoggerInterface $logger
-	 *
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function setLogger(LoggerInterface $logger):void{
 		$this->client->setLogger($logger);
 	}
 
 	/**
-	 * @param \Psr\Http\Message\RequestInterface $request
-	 *
-	 * @return \Psr\Http\Message\ResponseInterface
+	 * @inheritDoc
 	 */
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 		usleep($this->options->sleep * 1000000);

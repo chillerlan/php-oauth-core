@@ -47,7 +47,7 @@ class OAuthTestLogger extends AbstractLogger{
 	/**
 	 * OAuthTestLogger constructor.
 	 *
-	 * @param string $loglevel
+	 * @param string|null $loglevel
 	 */
 	public function __construct(string $loglevel = null){
 		$this->setLoglevel($loglevel ?? 'none');
@@ -69,9 +69,7 @@ class OAuthTestLogger extends AbstractLogger{
 	}
 
 	/**
-	 * @param string $level
-	 * @param string $message
-	 * @param array  $context
+	 * @inheritDoc
 	 */
 	public function log($level, $message, array $context = []):void{
 
@@ -101,4 +99,5 @@ class OAuthTestLogger extends AbstractLogger{
 		}
 
 	}
+
 }

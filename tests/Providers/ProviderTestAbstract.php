@@ -11,109 +11,105 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\HTTP\Psr18\LoggingClient;
-use chillerlan\HTTP\Psr7\Response;
-use chillerlan\Settings\SettingsContainerInterface;
-use chillerlan\OAuth\{OAuthOptions, Storage\MemoryStorage, Storage\OAuthStorageInterface};
-use chillerlan\OAuth\Core\{AccessToken, OAuthInterface};
+use chillerlan\HTTP\Psr17\{RequestFactory, ResponseFactory, StreamFactory};
+use chillerlan\OAuth\Core\OAuthInterface;
+use chillerlan\OAuth\OAuthOptions;
+use chillerlan\OAuth\Storage\MemoryStorage;
+use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\OAuthTest\OAuthTestLogger;
+use chillerlan\Settings\SettingsContainerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
-use function chillerlan\HTTP\Psr17\create_stream_from_input;
-use function file_exists;
+use function chillerlan\HTTP\Psr7\{get_json, get_xml};
+use function defined, file_exists, ini_set, realpath;
+
+use const DIRECTORY_SEPARATOR;
 
 abstract class ProviderTestAbstract extends TestCase{
 
-	protected string $CFG = __DIR__.'/../../config';
-
-	protected string $FQN;
-
-	protected ReflectionClass $reflection;
-
-	protected OAuthStorageInterface $storage;
 	/** @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface */
 	protected SettingsContainerInterface $options;
-
 	protected OAuthInterface $provider;
-
-	protected LoggerInterface $logger;
-
+	protected OAuthStorageInterface $storage;
 	protected DotEnv $dotEnv;
 
+	// PSR interfaces
+	protected RequestFactory $requestFactory;
+	protected ResponseFactory $responseFactory;
+	protected StreamFactory $streamFactory;
+	protected ClientInterface $http;
+	protected LoggerInterface $logger;
+
+	protected ReflectionClass $reflection;
+	// config dir & fqcn of the test subject
+	protected string $CFG = __DIR__.'/../../config';
+	protected string $FQN;
 	protected bool $is_ci;
+	protected array $testResponses = [];
 
 	protected function setUp():void{
+		ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$file         = file_exists($this->CFG.'/.env') ? '.env' : '.env_example';
-		$this->dotEnv = (new DotEnv($this->CFG, $file))->load();
-		$this->is_ci  = defined('TEST_IS_CI') && TEST_IS_CI === true;
+		// get the .env config
+		$this->CFG    = realpath($this->CFG);
+		$envFile      = file_exists($this->CFG.DIRECTORY_SEPARATOR.'.env') ? '.env' : '.env_example';
+		$this->dotEnv = (new DotEnv($this->CFG, $envFile))->load();
 
-		$this->options = new OAuthOptions([
+		// are we running on CI? (travis, github) -> see phpunit.xml
+		$this->is_ci = defined('TEST_IS_CI') && TEST_IS_CI === true;
+
+		// logger output only when not on CI
+		$this->logger = new OAuthTestLogger($this->is_ci ? 'none' : 'debug');
+
+		// init some PSR-17 factories
+		$this->requestFactory  = new RequestFactory;
+		$this->responseFactory = new ResponseFactory;
+		$this->streamFactory   = new StreamFactory;
+
+		$this->options    = $this->initOptions();
+		$this->storage    = $this->initStorage($this->options);
+		$this->http       = $this->initHttp($this->options, $this->logger, $this->testResponses);
+		$this->reflection = new ReflectionClass($this->FQN);
+		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+		$this->provider   = $this->reflection->newInstanceArgs([$this->http, $this->storage, $this->options, $this->logger]);
+	}
+
+	protected function initOptions():SettingsContainerInterface{
+		return new OAuthOptions([
 			'key'              => 'testkey',
 			'secret'           => 'testsecret',
 			'callbackURL'      => 'https://localhost/callback',
 			'tokenAutoRefresh' => true,
 		]);
-
-		$this->storage    = new MemoryStorage;
-		$this->logger     = new OAuthTestLogger($this->is_ci ? 'none' : 'debug');
-		$this->provider   = $this->getProvider();
-
-		$this->storage->storeAccessToken($this->provider->serviceName, new AccessToken(['accessToken' => 'foo']));
 	}
 
-	/**
-	 * @return array
-	 */
-	abstract protected function getTestResponses():array;
-
-	/**
-	 * @return \Psr\Http\Client\ClientInterface
-	 */
-	protected function initHttp():ClientInterface{
-
-		$client = new class($this->getTestResponses()) implements ClientInterface{
-
-			protected array $responses;
-
-			public function __construct(array $responses){
-				$this->responses = $responses;
-			}
-
-			public function sendRequest(RequestInterface $request):ResponseInterface{
-				$stream = create_stream_from_input($this->responses[$request->getUri()->getPath()]);
-
-				/** @noinspection PhpIncompatibleReturnTypeInspection */
-				return (new Response)->withBody($stream);
-			}
-
-		};
-
-		return new LoggingClient($client, $this->logger);
+	protected function initStorage(SettingsContainerInterface $options):OAuthStorageInterface{
+		return new MemoryStorage($options);
 	}
 
+	abstract protected function initHttp(
+		SettingsContainerInterface $options,
+		LoggerInterface $logger,
+		array $responses
+	):ClientInterface;
 
-	/**
-	 * @return \chillerlan\OAuth\Core\OAuthInterface
-	 */
-	protected function getProvider():OAuthInterface{
-		$this->reflection = new ReflectionClass($this->FQN);
-
-		/** @var \chillerlan\OAuth\Core\OAuthInterface $OAuthInterface */
-		$OAuthInterface = $this->reflection->newInstanceArgs([$this->initHttp(), $this->storage, $this->options, $this->logger]);
-
-		return $OAuthInterface;
+	public function testOAuthInstance():void{
+		$this::assertInstanceOf(OAuthInterface::class, $this->provider);
 	}
 
-	/**
-	 * @param string $method
-	 *
-	 * @return \ReflectionMethod
-	 */
+	public function testProviderInstance():void{
+		$this::assertInstanceOf($this->FQN, $this->provider);
+	}
+
+	public function testMagicGet():void{
+		$this::assertSame($this->reflection->getShortName(), $this->provider->serviceName);
+		$this::assertNull($this->provider->foo);
+	}
+
 	protected function getMethod(string $method):ReflectionMethod{
 		$method = $this->reflection->getMethod($method);
 		$method->setAccessible(true);
@@ -121,11 +117,6 @@ abstract class ProviderTestAbstract extends TestCase{
 		return $method;
 	}
 
-	/**
-	 * @param string $property
-	 *
-	 * @return \ReflectionProperty
-	 */
 	protected function getProperty(string $property):ReflectionProperty{
 		$property = $this->reflection->getProperty($property);
 		$property->setAccessible(true);
@@ -134,26 +125,37 @@ abstract class ProviderTestAbstract extends TestCase{
 	}
 
 	/**
-	 * @param        $object
+	 * @param object $object
 	 * @param string $property
-	 * @param        $value
+	 * @param mixed  $value
 	 *
-	 * @return \ReflectionProperty
+	 * @return void
 	 */
-	protected function setProperty($object, string $property, $value):ReflectionProperty{
+	protected function setProperty(object $object, string $property, $value):void{
 		$property = $this->getProperty($property);
 		$property->setValue($object, $value);
-
-		return $property;
 	}
 
-	public function testOAuthInstance():void{
-		static::assertInstanceOf(OAuthInterface::class, $this->provider);
+	/**
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 *
+	 * @return \stdClass|array|bool
+	 */
+	protected function responseJson(ResponseInterface $response){
+		$response->getBody()->rewind();
+
+		return get_json($response);
 	}
 
-	public function testMagicGet():void{
-		static::assertSame($this->reflection->getShortName(), $this->provider->serviceName);
-		static::assertNull($this->provider->foo);
+	/**
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 *
+	 * @return \SimpleXMLElement|array|bool
+	 */
+	protected function responseXML(ResponseInterface $response){
+		$response->getBody()->rewind();
+
+		return get_xml($response);
 	}
 
 }
