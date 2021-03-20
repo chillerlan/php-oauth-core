@@ -236,6 +236,11 @@ Search.appendIndex(
             "summary": "An\u0020optional\u0020client\u0020credentials\u0020token\u0020endpoint\u0020in\u0020case\u0020the\u0020provider\u0020supports\u0020ClientCredentials.",
             "url": "classes/chillerlan-OAuth-Core-OAuth2Provider.html#property_clientCredentialsTokenURL"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuth2Provider\u003A\u003A\u0024defaultScopes",
+            "name": "defaultScopes",
+            "summary": "Default\u0020scopes\u0020to\u0020apply\u0020if\u0020none\u0020were\u0020provided\u0020via\u0020the\u0020\u0024scopes\u0020parameter\u0020in\u0020OAuth2Provider\u003A\u003AgetAuthURL\u0028\u0029",
+            "url": "classes/chillerlan-OAuth-Core-OAuth2Provider.html#property_defaultScopes"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface",
             "name": "OAuthInterface",
             "summary": "Specifies\u0020the\u0020basic\u0020methods\u0020for\u0020an\u0020OAuth\u0020provider.",
