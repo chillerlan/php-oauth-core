@@ -21,7 +21,7 @@ use function array_merge, base64_encode, date, hash_equals, http_build_query,
 	implode, is_array, json_decode, random_bytes, sha1, sprintf;
 use function chillerlan\HTTP\Psr7\{decompress_content, merge_query};
 
-use const PHP_QUERY_RFC1738;
+use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 
 /**
  * Implements an abstract OAuth2 provider with all methods required by the OAuth2Interface.
@@ -104,9 +104,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \JsonException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
-		$data = json_decode(decompress_content($response), true); // silly amazon...
+		// silly amazon sends compressed data...
+		$data = json_decode(decompress_content($response), true, 512, JSON_THROW_ON_ERROR);
 
 		if(!is_array($data)){
 			throw new ProviderException('unable to parse token response');

@@ -75,7 +75,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody(create_stream_from_input('')),
+				$this->responseFactory->createResponse()->withBody(create_stream_from_input('""')),
 			])
 		;
 	}
