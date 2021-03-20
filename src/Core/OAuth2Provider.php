@@ -64,10 +64,16 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected ?string $clientCredentialsTokenURL = null;
 
 	/**
+	 * Default scopes to apply if none were provided via the $scopes parameter in OAuth2Provider::getAuthURL()
+	 */
+	protected array $defaultScopes = [];
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getAuthURL(array $params = null, array $scopes = null):UriInterface{
 		$params ??= [];
+		$scopes ??= $this->defaultScopes;
 
 		unset($params['client_secret']);
 
