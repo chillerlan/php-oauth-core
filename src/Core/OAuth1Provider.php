@@ -58,6 +58,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			->createRequest('POST', $this->requestTokenURL)
 			->withHeader('Authorization', 'OAuth '.build_http_query($params, true, ', ', '"'))
 			->withHeader('Accept-Encoding', 'identity')
+			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
 		;
 
 		foreach($this->authHeaders as $header => $value){
@@ -172,6 +173,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$request = $this->requestFactory
 			->createRequest('POST', merge_query($this->accessTokenURL, ['oauth_verifier' => $verifier]))
 			->withHeader('Accept-Encoding', 'identity')
+			->withHeader('Content-Length', '0')
 		;
 
 		$request = $this->getRequestAuthorization($request, $this->storage->getAccessToken($this->serviceName));
