@@ -13,7 +13,7 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 
 [php-badge]: https://img.shields.io/packagist/php-v/chillerlan/php-oauth-core?logo=php&color=8892BF
 [php]: https://www.php.net/supported-versions.php
-[packagist-badge]: https://img.shields.io/packagist/v/chillerlan/php-oauth-core.svg
+[packagist-badge]: https://img.shields.io/packagist/v/chillerlan/php-oauth-core.svg?logo=packagist
 [packagist]: https://packagist.org/packages/chillerlan/php-oauth-core
 [license-badge]: https://img.shields.io/github/license/chillerlan/php-oauth-core.svg
 [license]: https://github.com/chillerlan/php-oauth-core/blob/main/LICENSE
@@ -23,7 +23,7 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [coverage]: https://codecov.io/github/chillerlan/php-oauth-core
 [scrutinizer-badge]: https://img.shields.io/scrutinizer/g/chillerlan/php-oauth-core.svg?logo=scrutinizer
 [scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-oauth-core
-[downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth-core.svg
+[downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth-core.svg?logo=packagist
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth-core/stats
 [gh-action-badge]: https://github.com/chillerlan/php-oauth-core/workflows/Continuous%20Integration/badge.svg
 [gh-action]: https://github.com/chillerlan/php-oauth-core/actions
