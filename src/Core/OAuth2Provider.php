@@ -15,11 +15,12 @@
 
 namespace chillerlan\OAuth\Core;
 
+use chillerlan\HTTP\Psr7\Query;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 use function array_merge, base64_encode, date, hash_equals, http_build_query,
 	implode, is_array, json_decode, random_bytes, sha1, sprintf;
-use function chillerlan\HTTP\Psr7\{decompress_content, merge_query};
+use function chillerlan\HTTP\Psr7\decompress_content;
 
 use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 
@@ -92,7 +93,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$params = $this->setState($params);
 		}
 
-		return $this->uriFactory->createUri(merge_query($this->authURL, $params));
+		return $this->uriFactory->createUri(Query::merge($this->authURL, $params));
 	}
 
 	/**
@@ -184,7 +185,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if($this->authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
-			$uri = merge_query((string)$request->getUri(), [$this->authMethodQuery => $token->accessToken]);
+			$uri = Query::merge((string)$request->getUri(), [$this->authMethodQuery => $token->accessToken]);
 
 			return $request->withUri($this->uriFactory->createUri($uri));
 		}

@@ -30,7 +30,7 @@
 		"ext-simplexml":"*",
 		"ext-zlib": "*",
 		"chillerlan/php-settings-container": "^2.1",
-		"chillerlan/php-httpinterface": "dev-main#b6169a11b001b746a3a4d3f4c987299a893ed545",
+		"chillerlan/php-httpinterface": "dev-main#404000a5ce159de8121f7eb98ecc58723cdb747c",
 		"psr/http-client":"^1.0",
 		"psr/http-message": "^1.0",
 		"psr/log": "^1.1"

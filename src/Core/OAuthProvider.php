@@ -13,6 +13,7 @@
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
+use chillerlan\HTTP\Psr7\Query;
 use chillerlan\OAuth\MagicAPI\{ApiClientException, EndpointMap, EndpointMapInterface};
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
@@ -24,11 +25,9 @@ use Psr\Http\Message\{
 use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
 
-use function chillerlan\HTTP\Psr7\{clean_query_params, merge_query};
 use function array_slice, class_exists, count, http_build_query, implode, in_array, is_array,
 	is_scalar, is_string, json_encode, parse_url, sprintf, strpos, strtolower;
 
-use const chillerlan\HTTP\Psr7\{BOOLEANS_AS_BOOL, BOOLEANS_AS_INT_STRING};
 use const PHP_QUERY_RFC1738;
 use const PHP_URL_HOST;
 
@@ -348,14 +347,14 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * Cleans an array of query parameters
 	 */
 	protected function cleanQueryParams(iterable $params):array{
-		return clean_query_params($params, BOOLEANS_AS_INT_STRING, true);
+		return Query::cleanParams($params, Query::BOOLEANS_AS_INT_STRING, true);
 	}
 
 	/**
 	 * Cleans an array of body parameters
 	 */
 	protected function cleanBodyParams(iterable $params):array{
-		return clean_query_params($params, BOOLEANS_AS_BOOL, true);
+		return Query::cleanParams($params, Query::BOOLEANS_AS_BOOL, true);
 	}
 
 	/**
@@ -370,7 +369,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	):ResponseInterface{
 
 		$request = $this->requestFactory
-			->createRequest($method ?? 'GET', merge_query($this->getRequestTarget($path), $params ?? []));
+			->createRequest($method ?? 'GET', Query::merge($this->getRequestTarget($path), $params ?? []));
 
 		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);

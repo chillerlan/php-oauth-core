@@ -11,11 +11,11 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
+use chillerlan\HTTP\Psr7\Query;
 
 use function chillerlan\HTTP\Psr17\create_stream_from_input;
 use function chillerlan\HTTP\Psr7\get_json;
-
-use function parse_str, parse_url;
+use function parse_url;
 
 use const PHP_URL_QUERY;
 
@@ -47,7 +47,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetAuthURL():void{
-		parse_str(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY), $query);
+		$query = Query::parse(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY));
 
 		$this::assertSame('test_request_token', $query['oauth_token']);
 	}

@@ -12,12 +12,13 @@
 
 namespace chillerlan\OAuth\Core;
 
+use chillerlan\HTTP\Psr7\Query;
 use DateTime;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 use function array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
-	implode, in_array, is_array, parse_str, parse_url, random_bytes, strtoupper;
-use function chillerlan\HTTP\Psr7\{build_http_query, decompress_content, merge_query, r_rawurlencode};
+	implode, in_array, is_array, parse_url, random_bytes, strtoupper;
+use function chillerlan\HTTP\Psr7\{decompress_content, r_rawurlencode};
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -35,7 +36,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	public function getAuthURL(array $params = null):UriInterface{
 		$params = array_merge($params ?? [], ['oauth_token' => $this->getRequestToken()->accessToken]);
 
-		return $this->uriFactory->createUri(merge_query($this->authURL, $params));
+		return $this->uriFactory->createUri(Query::merge($this->authURL, $params));
 	}
 
 	/**
@@ -56,7 +57,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$request = $this->requestFactory
 			->createRequest('POST', $this->requestTokenURL)
-			->withHeader('Authorization', 'OAuth '.build_http_query($params, true, ', ', '"'))
+			->withHeader('Authorization', 'OAuth '.Query::build($params, true, ', ', '"'))
 			->withHeader('Accept-Encoding', 'identity')
 			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
 		;
@@ -80,7 +81,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
-		parse_str(decompress_content($response), $data);
+		$data = Query::parse(decompress_content($response));
 
 		if(!$data || !is_array($data)){
 			throw new ProviderException('unable to parse token response');
@@ -149,7 +150,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		parse_str($parseURL['query'] ?? '', $query);
+		$query = Query::parse($parseURL['query'] ?? '');
 
 		$signatureParams = array_merge($query, $params);
 
@@ -159,7 +160,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$data = r_rawurlencode([
 			strtoupper($method ?? 'POST'),
 			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
-			build_http_query($signatureParams),
+			Query::build($signatureParams),
 		]);
 
 		return base64_encode(hash_hmac('sha1', implode('&', $data), $key, true));
@@ -171,7 +172,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	public function getAccessToken(string $token, string $verifier):AccessToken{
 
 		$request = $this->requestFactory
-			->createRequest('POST', merge_query($this->accessTokenURL, ['oauth_verifier' => $verifier]))
+			->createRequest('POST', Query::merge($this->accessTokenURL, ['oauth_verifier' => $verifier]))
 			->withHeader('Accept-Encoding', 'identity')
 			->withHeader('Content-Length', '0')
 		;
@@ -187,7 +188,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 		$uri = $request->getUri();
 
-		parse_str($uri->getQuery(), $query);
+		$query = Query::parse($uri->getQuery());
 
 		$parameters = [
 			'oauth_consumer_key'     => $this->options->key,
@@ -209,7 +210,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$parameters['oauth_session_handle'] = $query['oauth_session_handle']; // @codeCoverageIgnore
 		}
 
-		return $request->withHeader('Authorization', 'OAuth '.build_http_query($parameters, true, ', ', '"'));
+		return $request->withHeader('Authorization', 'OAuth '.Query::build($parameters, true, ', ', '"'));
 	}
 
 }
