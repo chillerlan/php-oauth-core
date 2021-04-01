@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth\Core;
 
-use GuzzleHttp\Psr7\HttpFactory;
+use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
 use chillerlan\HTTP\Utils\Query;
 use chillerlan\OAuth\MagicAPI\{ApiClientException, EndpointMap, EndpointMapInterface};
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
@@ -164,10 +164,9 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		// i hate this, but i also hate adding 3 more params to the constructor
 		// no i won't use a DI container for this. don't @ me
-		$factory              = new HttpFactory;
-		$this->requestFactory = $factory;
-		$this->streamFactory  = $factory;
-		$this->uriFactory     = $factory;
+		$this->requestFactory = new RequestFactory;
+		$this->streamFactory  = new StreamFactory;
+		$this->uriFactory     = new UriFactory;
 
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 
