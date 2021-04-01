@@ -124,19 +124,19 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
     <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#constant_FACTORIES">FACTORIES</a>
     <span>
-        &nbsp;= [&#039;requestFactory&#039; =&gt; &#039;REQUEST_FACTORY&#039;, &#039;responseFactory&#039; =&gt; &#039;RESPONSE_FACTORY&#039;, &#039;streamFactory&#039; =&gt; &#039;STREAM_FACTORY&#039;]                    </span>
+        &nbsp;= [&#039;requestFactory&#039; =&gt; &#039;REQUEST_FACTORY&#039;, &#039;responseFactory&#039; =&gt; &#039;RESPONSE_FACTORY&#039;, &#039;streamFactory&#039; =&gt; &#039;STREAM_FACTORY&#039;, &#039;uriFactory&#039; =&gt; &#039;URI_FACTORY&#039;]                    </span>
 </dt>
 <dd></dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/chillerlan-OAuthTest-Providers-OAuth1-DummyOAuth1Test.html#property_provider">$provider</a>
+    <a href="classes/chillerlan-OAuthTest-Providers-OAuth1ProviderTestAbstract.html#property_provider">$provider</a>
     <span>
                 &nbsp;: <a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html"><abbr title="\chillerlan\OAuth\Core\OAuth1Interface">OAuth1Interface</abbr></a>            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/chillerlan-OAuthTest-Providers-OAuth1ProviderTestAbstract.html#property_provider">$provider</a>
+    <a href="classes/chillerlan-OAuthTest-Providers-OAuth1-DummyOAuth1Test.html#property_provider">$provider</a>
     <span>
                 &nbsp;: <a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html"><abbr title="\chillerlan\OAuth\Core\OAuth1Interface">OAuth1Interface</abbr></a>            </span>
 </dt>
@@ -237,6 +237,13 @@
     <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_testResponses">$testResponses</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_uriFactory">$uriFactory</a>
+    <span>
+                &nbsp;: <abbr title="\Psr\Http\Message\UriFactoryInterface">UriFactoryInterface</abbr>            </span>
 </dt>
 <dd></dd>
 
@@ -453,7 +460,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
     <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FACTORIES</span>
-    = <span class="phpdocumentor-signature__default-value">[&#039;requestFactory&#039; =&gt; &#039;REQUEST_FACTORY&#039;, &#039;responseFactory&#039; =&gt; &#039;RESPONSE_FACTORY&#039;, &#039;streamFactory&#039; =&gt; &#039;STREAM_FACTORY&#039;]</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;requestFactory&#039; =&gt; &#039;REQUEST_FACTORY&#039;, &#039;responseFactory&#039; =&gt; &#039;RESPONSE_FACTORY&#039;, &#039;streamFactory&#039; =&gt; &#039;STREAM_FACTORY&#039;, &#039;uriFactory&#039; =&gt; &#039;URI_FACTORY&#039;]</span>
 </code>
 
 
@@ -469,37 +476,6 @@
             Properties
             <a href="classes/chillerlan-OAuthTest-Providers-OAuth1-DummyOAuth1Test.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_provider">
-        $provider
-        <a href="classes/chillerlan-OAuthTest-Providers-OAuth1-DummyOAuth1Test.html#property_provider" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/OAuth1/DummyOAuth1Test.php"><a href="files/tests-providers-oauth1-dummyoauth1test.html"><abbr title="tests/Providers/OAuth1/DummyOAuth1Test.php">DummyOAuth1Test.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html"><abbr title="\chillerlan\OAuth\Core\OAuth1Interface">OAuth1Interface</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$provider</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -535,6 +511,37 @@
         class="
             phpdocumentor-element
             -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_provider">
+        $provider
+        <a href="classes/chillerlan-OAuthTest-Providers-OAuth1-DummyOAuth1Test.html#property_provider" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/OAuth1/DummyOAuth1Test.php"><a href="files/tests-providers-oauth1-dummyoauth1test.html"><abbr title="tests/Providers/OAuth1/DummyOAuth1Test.php">DummyOAuth1Test.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html"><abbr title="\chillerlan\OAuth\Core\OAuth1Interface">OAuth1Interface</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$provider</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
             -protected
                                                         "
 >
@@ -547,7 +554,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 </aside>
 
     
@@ -577,7 +584,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 </aside>
 
     
@@ -637,7 +644,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 </aside>
 
     
@@ -667,7 +674,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 </aside>
 
     
@@ -697,7 +704,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 </aside>
 
     
@@ -727,7 +734,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 </aside>
 
     
@@ -758,7 +765,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 </aside>
 
     
@@ -788,7 +795,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 </aside>
 
     
@@ -818,7 +825,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 </aside>
 
     
@@ -848,7 +855,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 </aside>
 
     
@@ -878,7 +885,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 </aside>
 
     
@@ -908,7 +915,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 </aside>
 
     
@@ -938,7 +945,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 </aside>
 
     
@@ -947,6 +954,36 @@
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$testResponses</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
+
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_uriFactory">
+        $uriFactory
+        <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_uriFactory" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">51</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Psr\Http\Message\UriFactoryInterface">UriFactoryInterface</abbr></span>
+    <span class="phpdocumentor-signature__name">$uriFactory</span>
+    </code>
 
     
     
@@ -1132,7 +1169,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 </aside>
 
     
@@ -1196,7 +1233,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 </aside>
 
     
@@ -1356,7 +1393,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 </aside>
 
     
@@ -1420,7 +1457,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 </aside>
 
     
@@ -1462,7 +1499,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 </aside>
 
     
@@ -1504,7 +1541,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 </aside>
 
     
@@ -1560,7 +1597,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 </aside>
 
     
@@ -1592,7 +1629,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 </aside>
 
     
@@ -1634,7 +1671,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 </aside>
 
     
@@ -1678,7 +1715,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">167</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 </aside>
 
     
@@ -1722,7 +1759,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 </aside>
 
     
@@ -1782,7 +1819,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestAbstract.php"><a href="files/tests-providers-providertestabstract.html"><abbr title="tests/Providers/ProviderTestAbstract.php">ProviderTestAbstract.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 </aside>
 
     

@@ -1526,6 +1526,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_streamFactory"
         },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\ProviderTestAbstract\u003A\u003A\u0024uriFactory",
+            "name": "uriFactory",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_uriFactory"
+        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\ProviderTestAbstract\u003A\u003A\u0024http",
             "name": "http",
             "summary": "",
