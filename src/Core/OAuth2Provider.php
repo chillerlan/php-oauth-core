@@ -15,12 +15,12 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Psr7\Query;
+use chillerlan\HTTP\Utils\Query;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 use function array_merge, base64_encode, date, hash_equals, http_build_query,
 	implode, is_array, json_decode, random_bytes, sha1, sprintf;
-use function chillerlan\HTTP\Psr7\decompress_content;
+use function chillerlan\HTTP\Utils\decompress_content;
 
 use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 

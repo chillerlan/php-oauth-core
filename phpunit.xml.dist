@@ -25,5 +25,9 @@
 	</logging>
 	<php>
 		<const name="TEST_IS_CI" value="true"/>
+		<const name="TEST_CLIENT_FACTORY" value="chillerlan\OAuthTest\GuzzleClientFactory"/>
+		<const name="REQUEST_FACTORY" value="GuzzleHttp\Psr7\HttpFactory"/>
+		<const name="RESPONSE_FACTORY" value="GuzzleHttp\Psr7\HttpFactory"/>
+		<const name="STREAM_FACTORY" value="GuzzleHttp\Psr7\HttpFactory"/>
 	</php>
 </phpunit>

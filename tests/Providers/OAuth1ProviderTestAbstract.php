@@ -11,10 +11,9 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
-use chillerlan\HTTP\Psr7\Query;
+use chillerlan\HTTP\Utils\Query;
 
-use function chillerlan\HTTP\Psr17\create_stream_from_input;
-use function chillerlan\HTTP\Psr7\get_json;
+use function chillerlan\HTTP\Utils\get_json;
 use function parse_url;
 
 use const PHP_URL_QUERY;
@@ -96,7 +95,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody(create_stream_from_input('error=whatever')),
+				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('error=whatever')),
 			])
 		;
 	}
@@ -108,7 +107,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody(create_stream_from_input('oauth_token=whatever')),
+				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('oauth_token=whatever')),
 			])
 		;
 	}
@@ -121,7 +120,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
 				$this->responseFactory->createResponse()
-					->withBody(create_stream_from_input('oauth_token=whatever&oauth_token_secret=whatever_secret')),
+					->withBody($this->streamFactory->createStream('oauth_token=whatever&oauth_token_secret=whatever_secret')),
 				true,
 			])
 		;

@@ -10,7 +10,6 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\Psr18\LoggingClient;
 use chillerlan\OAuth\Core\{AccessToken};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
@@ -27,7 +26,7 @@ abstract class OAuthProviderTestAbstract extends ProviderTestAbstract{
 	}
 
 	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger, array $responses):ClientInterface{
-		return new LoggingClient(new ProviderTestHttpClient($responses), $this->logger);
+		return new ProviderTestHttpClient($responses, $this->responseFactory, $this->streamFactory);
 	}
 
 }

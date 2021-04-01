@@ -12,13 +12,13 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Psr7\Query;
+use chillerlan\HTTP\Utils\Query;
 use DateTime;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 use function array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
 	implode, in_array, is_array, parse_url, random_bytes, strtoupper;
-use function chillerlan\HTTP\Psr7\{decompress_content, r_rawurlencode};
+use function chillerlan\HTTP\Utils\{decompress_content, r_rawurlencode};
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.

@@ -10,7 +10,6 @@
 
 namespace chillerlan\OAuth;
 
-use chillerlan\HTTP\HTTPOptionsTrait;
 use chillerlan\Settings\SettingsContainerAbstract;
 
 /**
@@ -41,5 +40,5 @@ use chillerlan\Settings\SettingsContainerAbstract;
  * @property array      $curl_multi_options
  */
 class OAuthOptions extends SettingsContainerAbstract{
-	use OAuthOptionsTrait, HTTPOptionsTrait;
+	use OAuthOptionsTrait;
 }

@@ -10,46 +10,60 @@
 
 namespace chillerlan\OAuthTest;
 
-use chillerlan\HTTP\Psr18\{CurlClient, LoggingClient};
-use chillerlan\Settings\SettingsContainerInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
-use Psr\Log\{LoggerAwareInterface, LoggerInterface, NullLogger};
+use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger};
+use Exception, Throwable;
 
-use function usleep;
+use function chillerlan\HTTP\Utils\message_to_string;
+use function constant, defined, get_class, usleep;
 
 class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
+	use LoggerAwareTrait;
 
-	protected SettingsContainerInterface $options;
-
-	protected ClientInterface $client;
+	protected ClientInterface $http;
 
 	public function __construct(
-		SettingsContainerInterface $options,
-		ClientInterface $http = null,
+		string $cfgdir,
 		LoggerInterface $logger = null
 	){
-		$this->options = $options;
-		$this->client  = new LoggingClient(
-			$http ?? new CurlClient($this->options),
-			$logger ?? new NullLogger
-		);
-	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function setLogger(LoggerInterface $logger):void{
-		$this->client->setLogger($logger);
+		if(!defined('TEST_CLIENT_FACTORY')){
+			throw new Exception('TEST_CLIENT_FACTORY in phpunit.xml not set');
+		}
+
+		$clientFactory = constant('TEST_CLIENT_FACTORY');
+
+		$this->http   = $clientFactory::getClient($cfgdir);
+		$this->logger = $logger ?? new NullLogger;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function sendRequest(RequestInterface $request):ResponseInterface{
-		usleep($this->options->sleep * 1000000);
+		$this->logger->debug("\n----HTTP-REQUEST----\n".message_to_string($request));
+		usleep(250000);
 
-		return $this->client->sendRequest($request);
+		try{
+			$response = $this->http->sendRequest($request);
+		}
+		catch(Throwable $e){
+			$this->logger->debug("\n----HTTP-ERROR------\n".message_to_string($request));
+			$this->logger->error($e->getMessage());
+			$this->logger->error($e->getTraceAsString());
+
+			if(!$e instanceof ClientExceptionInterface){
+				throw new Exception('unexpected exception, does not implement "ClientExceptionInterface": '.get_class($e));
+			}
+
+			throw $e;
+		}
+
+		$this->logger->debug("\n----HTTP-RESPONSE---\n".message_to_string($response));
+
+		return $response;
 	}
 
 }

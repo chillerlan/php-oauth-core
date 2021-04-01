@@ -12,10 +12,9 @@ namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
-use chillerlan\HTTP\Psr7\Query;
+use chillerlan\HTTP\Utils\Query;
 
-use function chillerlan\HTTP\Psr17\create_stream_from_input;
-use function chillerlan\HTTP\Psr7\get_json;
+use function chillerlan\HTTP\Utils\get_json;
 
 use function explode, parse_url, sleep, time;
 
@@ -76,7 +75,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody(create_stream_from_input('""')),
+				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('""')),
 			])
 		;
 	}
@@ -88,7 +87,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody(create_stream_from_input('{"error":"whatever"}')),
+				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"error":"whatever"}')),
 			])
 		;
 	}
@@ -100,7 +99,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody(create_stream_from_input('{"foo":"bar"}')),
+				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"foo":"bar"}')),
 			])
 		;
 	}

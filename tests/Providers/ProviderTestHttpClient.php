@@ -10,11 +10,9 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\Psr7\Response;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
+use Psr\Http\Message\{RequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
 
-use function chillerlan\HTTP\Psr17\create_stream_from_input;
 use function strpos;
 
 /**
@@ -23,9 +21,17 @@ use function strpos;
 class ProviderTestHttpClient implements ClientInterface{
 
 	protected array $responses;
+	protected ResponseFactoryInterface $responseFactory;
+	protected StreamFactoryInterface $streamFactory;
 
-	public function __construct(array $responses){
+	public function __construct(
+		array $responses,
+		ResponseFactoryInterface $responseFactory,
+		StreamFactoryInterface $streamFactory
+	){
 		$this->responses = $responses;
+		$this->responseFactory = $responseFactory;
+		$this->streamFactory = $streamFactory;
 	}
 
 	/**
@@ -36,7 +42,7 @@ class ProviderTestHttpClient implements ClientInterface{
 
 		// echo the request
 		if(strpos($path, OAuthProviderTestAbstract::ECHO_REQUEST) !== false){
-			$response = (new Response)->withHeader('x-request-uri', (string)$request->getUri());
+			$response = $this->responseFactory->createResponse()->withHeader('x-request-uri', (string)$request->getUri());
 
 			foreach($request->getHeaders() as $header => $values){
 				foreach($values as $value){
@@ -49,10 +55,10 @@ class ProviderTestHttpClient implements ClientInterface{
 
 		// nope
 		if(!isset($this->responses[$path])){
-			return new Response(404);
+			return $this->responseFactory->createResponse(404);
 		}
 
-		return (new Response)->withBody(create_stream_from_input($this->responses[$path]));
+		return $this->responseFactory->createResponse()->withBody($this->streamFactory->createStream($this->responses[$path]));
 	}
 
 }

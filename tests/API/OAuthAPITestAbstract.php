@@ -42,10 +42,6 @@ abstract class OAuthAPITestAbstract extends ProviderTestAbstract{
 			'key'              => $this->dotEnv->get($this->ENV.'_KEY'),
 			'secret'           => $this->dotEnv->get($this->ENV.'_SECRET'),
 			'tokenAutoRefresh' => true,
-			// HTTPOptionsTrait
-			'ca_info'          => $this->CFG.DIRECTORY_SEPARATOR.'cacert.pem',
-			'userAgent'        => 'chillerlanPhpOAuth/4.0.0 +https://github.com/chillerlan/php-oauth-core',
-			'sleep'            => 0.25, // see OAuthTestHttpClient::sendRequest()
 		]);
 	}
 
@@ -54,7 +50,7 @@ abstract class OAuthAPITestAbstract extends ProviderTestAbstract{
 	}
 
 	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger, array $responses):ClientInterface{
-		return new OAuthTestHttpClient($options, null, $logger);
+		return new OAuthTestHttpClient($this->CFG, $logger);
 	}
 
 }

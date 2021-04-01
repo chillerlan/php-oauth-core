@@ -11,7 +11,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\HTTP\Psr17\{RequestFactory, ResponseFactory, StreamFactory};
+use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface};
 use chillerlan\OAuth\Core\OAuthInterface;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\MemoryStorage;
@@ -22,14 +22,20 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use ReflectionClass, ReflectionMethod, ReflectionProperty;
+use Exception, ReflectionClass, ReflectionMethod, ReflectionProperty;
 
-use function chillerlan\HTTP\Psr7\{get_json, get_xml};
-use function defined, file_exists, ini_set, realpath;
+use function chillerlan\HTTP\Utils\{get_json, get_xml};
+use function constant, defined, file_exists, ini_set, realpath;
 
 use const DIRECTORY_SEPARATOR;
 
 abstract class ProviderTestAbstract extends TestCase{
+
+	protected const FACTORIES = [
+		'requestFactory'  => 'REQUEST_FACTORY',
+		'responseFactory' => 'RESPONSE_FACTORY',
+		'streamFactory'   => 'STREAM_FACTORY',
+	];
 
 	/** @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface */
 	protected SettingsContainerInterface $options;
@@ -38,9 +44,9 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected DotEnv $dotEnv;
 
 	// PSR interfaces
-	protected RequestFactory $requestFactory;
-	protected ResponseFactory $responseFactory;
-	protected StreamFactory $streamFactory;
+	protected RequestFactoryInterface $requestFactory;
+	protected ResponseFactoryInterface $responseFactory;
+	protected StreamFactoryInterface $streamFactory;
 	protected ClientInterface $http;
 	protected LoggerInterface $logger;
 
@@ -60,15 +66,21 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->dotEnv = (new DotEnv($this->CFG, $envFile))->load();
 
 		// are we running on CI? (travis, github) -> see phpunit.xml
-		$this->is_ci = defined('TEST_IS_CI') && TEST_IS_CI === true;
+		$this->is_ci = defined('TEST_IS_CI') && constant('TEST_IS_CI') === true;
 
 		// logger output only when not on CI
 		$this->logger = new OAuthTestLogger($this->is_ci ? 'none' : 'debug');
 
 		// init some PSR-17 factories
-		$this->requestFactory  = new RequestFactory;
-		$this->responseFactory = new ResponseFactory;
-		$this->streamFactory   = new StreamFactory;
+		foreach($this::FACTORIES as $property => $const){
+
+			if(!defined($const)){
+				throw new Exception('constant "'.$const.'" not defined -> see phpunit.xml');
+			}
+
+			$class             = constant($const);
+			$this->{$property} = new $class;
+		}
 
 		$this->options    = $this->initOptions();
 		$this->storage    = $this->initStorage($this->options);
