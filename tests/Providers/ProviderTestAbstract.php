@@ -11,7 +11,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\DotEnv\DotEnv;
-use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface};
+use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface, UriFactoryInterface};
 use chillerlan\OAuth\Core\OAuthInterface;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\MemoryStorage;
@@ -35,6 +35,7 @@ abstract class ProviderTestAbstract extends TestCase{
 		'requestFactory'  => 'REQUEST_FACTORY',
 		'responseFactory' => 'RESPONSE_FACTORY',
 		'streamFactory'   => 'STREAM_FACTORY',
+		'uriFactory'      => 'URI_FACTORY',
 	];
 
 	/** @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface */
@@ -47,6 +48,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected RequestFactoryInterface $requestFactory;
 	protected ResponseFactoryInterface $responseFactory;
 	protected StreamFactoryInterface $streamFactory;
+	protected UriFactoryInterface $uriFactory;
 	protected ClientInterface $http;
 	protected LoggerInterface $logger;
 
@@ -88,6 +90,12 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->reflection = new ReflectionClass($this->FQN);
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->provider   = $this->reflection->newInstanceArgs([$this->http, $this->storage, $this->options, $this->logger]);
+
+		$this->provider
+			->setRequestFactory($this->requestFactory)
+			->setStreamFactory($this->streamFactory)
+			->setUriFactory($this->uriFactory)
+		;
 	}
 
 	protected function initOptions():SettingsContainerInterface{
