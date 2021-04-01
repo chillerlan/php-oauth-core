@@ -57,7 +57,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$request = $this->requestFactory
 			->createRequest('POST', $this->requestTokenURL)
-			->withHeader('Authorization', 'OAuth '.Query::build($params, true, ', ', '"'))
+			->withHeader('Authorization', 'OAuth '.Query::build($params, null, ', ', '"'))
 			->withHeader('Accept-Encoding', 'identity')
 			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
 		;
@@ -210,7 +210,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$parameters['oauth_session_handle'] = $query['oauth_session_handle']; // @codeCoverageIgnore
 		}
 
-		return $request->withHeader('Authorization', 'OAuth '.Query::build($parameters, true, ', ', '"'));
+		return $request->withHeader('Authorization', 'OAuth '.Query::build($parameters, null, ', ', '"'));
 	}
 
 }
