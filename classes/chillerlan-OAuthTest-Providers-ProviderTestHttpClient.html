@@ -94,7 +94,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestHttpClient.php"><a href="files/tests-providers-providertesthttpclient.html"><abbr title="tests/Providers/ProviderTestHttpClient.php">ProviderTestHttpClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 </aside>
 
             <p class="phpdocumentor-summary">a dummy client that returns a prepared set of responses</p>
@@ -126,9 +126,23 @@
 
 <dl class="phpdocumentor-table-of-contents">
                 <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestHttpClient.html#property_responseFactory">$responseFactory</a>
+    <span>
+                &nbsp;: <abbr title="\Psr\Http\Message\ResponseFactoryInterface">ResponseFactoryInterface</abbr>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestHttpClient.html#property_responses">$responses</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestHttpClient.html#property_streamFactory">$streamFactory</a>
+    <span>
+                &nbsp;: <abbr title="\Psr\Http\Message\StreamFactoryInterface">StreamFactoryInterface</abbr>            </span>
 </dt>
 <dd></dd>
 
@@ -165,9 +179,69 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_responseFactory">
+        $responseFactory
+        <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestHttpClient.html#property_responseFactory" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestHttpClient.php"><a href="files/tests-providers-providertesthttpclient.html"><abbr title="tests/Providers/ProviderTestHttpClient.php">ProviderTestHttpClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">24</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Psr\Http\Message\ResponseFactoryInterface">ResponseFactoryInterface</abbr></span>
+    <span class="phpdocumentor-signature__name">$responseFactory</span>
+    </code>
+
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_responses">
         $responses
         <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestHttpClient.html#property_responses" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestHttpClient.php"><a href="files/tests-providers-providertesthttpclient.html"><abbr title="tests/Providers/ProviderTestHttpClient.php">ProviderTestHttpClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">23</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$responses</span>
+    </code>
+
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_streamFactory">
+        $streamFactory
+        <a href="classes/chillerlan-OAuthTest-Providers-ProviderTestHttpClient.html#property_streamFactory" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -180,8 +254,8 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$responses</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Psr\Http\Message\StreamFactoryInterface">StreamFactoryInterface</abbr></span>
+    <span class="phpdocumentor-signature__name">$streamFactory</span>
     </code>
 
     
@@ -214,7 +288,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$responses</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$responses</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\ResponseFactoryInterface">ResponseFactoryInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$responseFactory</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\StreamFactoryInterface">StreamFactoryInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$streamFactory</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -222,6 +296,20 @@
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$responses</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$responseFactory</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\ResponseFactoryInterface">ResponseFactoryInterface</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$streamFactory</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\StreamFactoryInterface">StreamFactoryInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -250,7 +338,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/ProviderTestHttpClient.php"><a href="files/tests-providers-providertesthttpclient.html"><abbr title="tests/Providers/ProviderTestHttpClient.php">ProviderTestHttpClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 </aside>
 
     
