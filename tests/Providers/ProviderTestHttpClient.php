@@ -18,11 +18,11 @@ use function strpos;
 /**
  * a dummy client that returns a prepared set of responses
  */
-class ProviderTestHttpClient implements ClientInterface{
+final class ProviderTestHttpClient implements ClientInterface{
 
-	protected array $responses;
-	protected ResponseFactoryInterface $responseFactory;
-	protected StreamFactoryInterface $streamFactory;
+	private array $responses;
+	private ResponseFactoryInterface $responseFactory;
+	private StreamFactoryInterface $streamFactory;
 
 	public function __construct(
 		array $responses,

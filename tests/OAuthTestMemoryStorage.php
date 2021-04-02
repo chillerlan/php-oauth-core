@@ -16,7 +16,7 @@ use chillerlan\Settings\SettingsContainerInterface;
 
 use function file_exists, file_get_contents, file_put_contents;
 
-class OAuthTestMemoryStorage extends MemoryStorage{
+final class OAuthTestMemoryStorage extends MemoryStorage{
 
 	protected string $storagepath;
 

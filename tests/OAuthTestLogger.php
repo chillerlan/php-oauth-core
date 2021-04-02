@@ -15,7 +15,7 @@ use Exception;
 
 use function array_key_exists, date, sprintf, str_repeat, str_replace, strtolower, substr, trim, var_export;
 
-class OAuthTestLogger extends AbstractLogger{
+final class OAuthTestLogger extends AbstractLogger{
 
 	protected const E_NONE      = 0x00;
 	protected const E_DEBUG     = 0x01;

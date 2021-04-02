@@ -1,6 +1,6 @@
 <?php
 /**
- * Class GuzzleClientFactory
+ * Class GuzzleHttpClientFactory
  *
  * requires Guzzle >= 7.3 (and Guzzle PSR-7 >= 2.0 for the PSR-17 factories)
  *
@@ -17,7 +17,7 @@ namespace chillerlan\OAuthTest;
 use GuzzleHttp\Client;
 use Psr\Http\Client\ClientInterface;
 
-class GuzzleClientFactory implements OAuthTestHttpClientFactoryInterface{
+final class GuzzleHttpClientFactory implements OAuthTestHttpClientFactoryInterface{
 
 	public static function getClient(string $cfgdir):ClientInterface{
 		return new Client([

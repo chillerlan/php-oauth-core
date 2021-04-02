@@ -10,8 +10,7 @@
 
 namespace chillerlan\OAuthTest;
 
-use Psr\Http\Client\ClientExceptionInterface;
-use Psr\Http\Client\ClientInterface;
+use Psr\Http\Client\{ClientExceptionInterface, ClientInterface};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger};
 use Exception, Throwable;
@@ -19,7 +18,7 @@ use Exception, Throwable;
 use function chillerlan\HTTP\Utils\message_to_string;
 use function constant, defined, get_class, usleep;
 
-class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
+final class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
 	use LoggerAwareTrait;
 
 	protected ClientInterface $http;

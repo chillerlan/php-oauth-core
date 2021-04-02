@@ -14,9 +14,9 @@ use PHPUnit\Framework\TestCase;
 
 use function sleep, time;
 
-class AccessTokenTest extends TestCase{
+final class AccessTokenTest extends TestCase{
 
-	protected AccessToken $token;
+	private AccessToken $token;
 
 	protected function setUp():void{
 		$this->token = new AccessToken;

@@ -14,7 +14,7 @@ use chillerlan\OAuth\Core\{AccessToken, OAuthProvider};
 use chillerlan\OAuthTest\Providers\TestEndpoints;
 use Psr\Http\Message\{RequestInterface, UriInterface};
 
-class RequestTestProvider extends OAuthProvider{
+final class RequestTestProvider extends OAuthProvider{
 
 	protected ?string $apiURL = 'https://localhost';
 	protected ?string $endpointMap = TestEndpoints::class;

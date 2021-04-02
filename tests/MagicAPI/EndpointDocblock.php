@@ -18,11 +18,11 @@ use function count, dirname, file_get_contents, file_put_contents, implode, in_a
 
 use const JSON_PRETTY_PRINT, PHP_EOL;
 
-class EndpointDocblock{
+final class EndpointDocblock{
 
-	protected OAuthInterface $provider;
+	private OAuthInterface $provider;
 
-	protected EndpointMapInterface $endpointMap;
+	private EndpointMapInterface $endpointMap;
 
 	/**
 	 * EndpointDocblock constructor.

@@ -12,7 +12,7 @@ namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\MagicAPI\EndpointMap;
 
-class TestEndpoints extends EndpointMap{
+final class TestEndpoints extends EndpointMap{
 
 	protected string $API_BASE = '/api';
 

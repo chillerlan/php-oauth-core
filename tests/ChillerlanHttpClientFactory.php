@@ -14,7 +14,7 @@ use chillerlan\HTTP\HTTPOptions;
 use chillerlan\HTTP\Psr18\CurlClient;
 use Psr\Http\Client\ClientInterface;
 
-class ChillerlanHttpClientFactory implements OAuthTestHttpClientFactoryInterface{
+final class ChillerlanHttpClientFactory implements OAuthTestHttpClientFactoryInterface{
 
 	/**
 	 * @inheritDoc
