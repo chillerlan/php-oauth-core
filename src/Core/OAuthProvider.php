@@ -25,11 +25,11 @@ use Psr\Http\Message\{
 use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
 
-use function array_slice, class_exists, count, http_build_query, implode, in_array, is_array,
-	is_scalar, is_string, json_encode, parse_url, sprintf, strpos, strtolower;
+use function array_slice, class_exists, count, implode, in_array, is_array,
+	is_scalar, is_string, json_encode, sprintf, strpos, strtolower;
 
+use function chillerlan\HTTP\Utils\parseUrl;
 use const PHP_QUERY_RFC1738;
-use const PHP_URL_HOST;
 
 /**
  * Implements an abstract OAuth provider with all methods required by the OAuthInterface.
@@ -360,6 +360,27 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
+	 * Merges a set of parameters into the given querystring and returns the result querystring
+	 */
+	protected function mergeQuery(string $uri, array $query):string{
+		return Query::merge($uri, $query);
+	}
+
+	/**
+	 * Builds a query string from the given parameters
+	 */
+	protected function buildQuery(array $params, int $encoding = null, string $delimiter = null, string $enclosure = null):string{
+		return Query::build($params, $encoding, $delimiter, $enclosure);
+	}
+
+	/**
+	 * Parses the given querystring into an associative array
+	 */
+	protected function parseQuery(string $querystring, int $urlEncoding = null):array{
+		return Query::parse($querystring, $urlEncoding);
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function request(
@@ -371,7 +392,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	):ResponseInterface{
 
 		$request = $this->requestFactory
-			->createRequest($method ?? 'GET', Query::merge($this->getRequestTarget($path), $params ?? []));
+			->createRequest($method ?? 'GET', $this->mergeQuery($this->getRequestTarget($path), $params ?? []));
 
 		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
@@ -382,7 +403,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			if(is_array($body)){
 				if($contentType === 'application/x-www-form-urlencoded'){
-					$body = $this->streamFactory->createStream(http_build_query($body, '', '&', PHP_QUERY_RFC1738));
+					$body = $this->streamFactory->createStream($this->buildQuery($body, PHP_QUERY_RFC1738));
 				}
 				elseif($contentType === 'application/json' || $contentType === 'application/vnd.api+json'){
 					$body = $this->streamFactory->createStream(json_encode($body));
@@ -414,7 +435,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getRequestTarget(string $uri):string{
-		$parsedURL = parse_url($uri);
+		$parsedURL = parseUrl($uri);
 
 		if(!isset($parsedURL['path'])){
 			throw new ProviderException('invalid path');
@@ -424,7 +445,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		if(isset($parsedURL['host'])){
 
 			// back out if it doesn't match
-			if($parsedURL['host'] !== parse_url($this->apiURL, PHP_URL_HOST)){
+			if($parsedURL['host'] !== parseUrl($this->apiURL)['host']){
 				throw new ProviderException('given host does not match provider host');
 			}
 

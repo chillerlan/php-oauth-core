@@ -12,13 +12,11 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Utils\Query;
-use DateTime;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
-use function array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
-	implode, in_array, is_array, parse_url, random_bytes, strtoupper;
-use function chillerlan\HTTP\Utils\{decompress_content, r_rawurlencode};
+use function array_map, array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
+	implode, in_array, is_array, random_bytes, strtoupper, time;
+use function chillerlan\HTTP\Utils\{decompress_content, parseUrl};
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -36,7 +34,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	public function getAuthURL(array $params = null):UriInterface{
 		$params = array_merge($params ?? [], ['oauth_token' => $this->getRequestToken()->accessToken]);
 
-		return $this->uriFactory->createUri(Query::merge($this->authURL, $params));
+		return $this->uriFactory->createUri($this->mergeQuery($this->authURL, $params));
 	}
 
 	/**
@@ -49,7 +47,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			'oauth_consumer_key'     => $this->options->key,
 			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
-			'oauth_timestamp'        => (new DateTime)->format('U'),
+			'oauth_timestamp'        => time(),
 			'oauth_version'          => '1.0',
 		];
 
@@ -57,7 +55,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$request = $this->requestFactory
 			->createRequest('POST', $this->requestTokenURL)
-			->withHeader('Authorization', 'OAuth '.Query::build($params, null, ', ', '"'))
+			->withHeader('Authorization', 'OAuth '.$this->buildQuery($params, null, ', ', '"'))
 			->withHeader('Accept-Encoding', 'identity')
 			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
 		;
@@ -81,7 +79,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
-		$data = Query::parse(decompress_content($response));
+		$data = $this->parseQuery(decompress_content($response));
 
 		if(!$data || !is_array($data)){
 			throw new ProviderException('unable to parse token response');
@@ -125,6 +123,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$nonce = random_bytes(32);
 
 		// use the sodium extension if available
+		/** @noinspection PhpFullyQualifiedNameUsageInspection */
 		return function_exists('sodium_bin2hex')
 			? \sodium_bin2hex($nonce)
 			: bin2hex($nonce);
@@ -144,23 +143,23 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{
-		$parseURL = parse_url($url);
+		$parseURL = parseUrl($url);
 
 		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !in_array($parseURL['scheme'], ['http', 'https'], true)){
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		$query = Query::parse($parseURL['query'] ?? '');
+		$query = $this->parseQuery($parseURL['query'] ?? '');
 
 		$signatureParams = array_merge($query, $params);
 
 		unset($signatureParams['oauth_signature']);
 
-		$key  = implode('&', r_rawurlencode([$this->options->secret, $accessTokenSecret ?? '']));
-		$data = r_rawurlencode([
+		$key  = implode('&', array_map('rawurlencode', [$this->options->secret, $accessTokenSecret ?? '']));
+		$data = array_map('rawurlencode', [
 			strtoupper($method ?? 'POST'),
 			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
-			Query::build($signatureParams),
+			$this->buildQuery($signatureParams),
 		]);
 
 		return base64_encode(hash_hmac('sha1', implode('&', $data), $key, true));
@@ -172,7 +171,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	public function getAccessToken(string $token, string $verifier):AccessToken{
 
 		$request = $this->requestFactory
-			->createRequest('POST', Query::merge($this->accessTokenURL, ['oauth_verifier' => $verifier]))
+			->createRequest('POST', $this->mergeQuery($this->accessTokenURL, ['oauth_verifier' => $verifier]))
 			->withHeader('Accept-Encoding', 'identity')
 			->withHeader('Content-Length', '0')
 		;
@@ -188,13 +187,13 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 		$uri = $request->getUri();
 
-		$query = Query::parse($uri->getQuery());
+		$query = $this->parseQuery($uri->getQuery());
 
 		$parameters = [
 			'oauth_consumer_key'     => $this->options->key,
 			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
-			'oauth_timestamp'        => (new DateTime)->format('U'),
+			'oauth_timestamp'        => time(),
 			'oauth_token'            => $token->accessToken,
 			'oauth_version'          => '1.0',
 		];
@@ -210,7 +209,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$parameters['oauth_session_handle'] = $query['oauth_session_handle']; // @codeCoverageIgnore
 		}
 
-		return $request->withHeader('Authorization', 'OAuth '.Query::build($parameters, null, ', ', '"'));
+		return $request->withHeader('Authorization', 'OAuth '.$this->buildQuery($parameters, null, ', ', '"'));
 	}
 
 }
