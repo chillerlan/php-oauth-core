@@ -2,10 +2,14 @@
 /**
  * Class GuzzleClientFactory
  *
+ * requires Guzzle >= 7.3 (and Guzzle PSR-7 >= 2.0 for the PSR-17 factories)
+ *
  * @created      01.04.2021
  * @author       smiley <smiley@chillerlan.net>
  * @copyright    2021 smiley
  * @license      MIT
+ *
+ * @noinspection ALL
  */
 
 namespace chillerlan\OAuthTest;
