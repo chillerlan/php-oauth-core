@@ -445,6 +445,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		if(isset($parsedURL['host'])){
 
 			// back out if it doesn't match
+			/** @phan-suppress-next-line PhanTypeArraySuspiciousNullable - $this->>apiURL should always return a host */
 			if($parsedURL['host'] !== parseUrl($this->apiURL)['host']){
 				throw new ProviderException('given host does not match provider host');
 			}

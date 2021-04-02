@@ -149,8 +149,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		$query = $this->parseQuery($parseURL['query'] ?? '');
-
+		$query           = $this->parseQuery($parseURL['query'] ?? '');
 		$signatureParams = array_merge($query, $params);
 
 		unset($signatureParams['oauth_signature']);
@@ -185,8 +184,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @inheritDoc
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
-		$uri = $request->getUri();
-
+		$uri   = $request->getUri();
 		$query = $this->parseQuery($uri->getQuery());
 
 		$parameters = [
