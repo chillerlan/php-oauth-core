@@ -336,6 +336,21 @@ Search.appendIndex(
             "summary": "Cleans\u0020an\u0020array\u0020of\u0020body\u0020parameters",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_cleanBodyParams"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AmergeQuery\u0028\u0029",
+            "name": "mergeQuery",
+            "summary": "Merges\u0020a\u0020set\u0020of\u0020parameters\u0020into\u0020the\u0020given\u0020querystring\u0020and\u0020returns\u0020the\u0020result\u0020querystring",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_mergeQuery"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AbuildQuery\u0028\u0029",
+            "name": "buildQuery",
+            "summary": "Builds\u0020a\u0020query\u0020string\u0020from\u0020the\u0020given\u0020parameters",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_buildQuery"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AparseQuery\u0028\u0029",
+            "name": "parseQuery",
+            "summary": "Parses\u0020the\u0020given\u0020querystring\u0020into\u0020an\u0020associative\u0020array",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_parseQuery"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003Arequest\u0028\u0029",
             "name": "request",
             "summary": "Prepares\u0020an\u0020API\u0020request\u0020to\u0020\u0024path\u0020with\u0020the\u0020given\u0020parameters,\u0020gets\u0020authorization,\u0020fires\u0020the\u0020request\nand\u0020returns\u0020a\u0020PSR\u002D7\u0020ResponseInterface\u0020with\u0020the\u0020corresponding\u0020API\u0020response",

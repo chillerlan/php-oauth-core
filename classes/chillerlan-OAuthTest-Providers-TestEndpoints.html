@@ -220,7 +220,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$postNoPathNoQuery</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/nopathnoquery/__echo__&#039;, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; null, &#039;path_elements&#039; =&gt; null, &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/nopathnoquery&#039; . chillerlanOAuthTestProvidersOAuthProviderTestAbstract::ECHO_REQUEST, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; null, &#039;path_elements&#039; =&gt; null, &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
 
     
     
@@ -250,7 +250,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$postNoPathWithQuery</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/nopathwithquery/__echo__&#039;, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; [&#039;query&#039;], &#039;path_elements&#039; =&gt; null, &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/nopathwithquery&#039; . chillerlanOAuthTestProvidersOAuthProviderTestAbstract::ECHO_REQUEST, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; [&#039;query&#039;], &#039;path_elements&#039; =&gt; null, &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
 
     
     
@@ -280,7 +280,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$postWithPathAndQuery</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/%1$s/__echo__&#039;, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; [&#039;query&#039;], &#039;path_elements&#039; =&gt; [&#039;pathandquery&#039;], &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/%1$s&#039; . chillerlanOAuthTestProvidersOAuthProviderTestAbstract::ECHO_REQUEST, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; [&#039;query&#039;], &#039;path_elements&#039; =&gt; [&#039;pathandquery&#039;], &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
 
     
     
@@ -310,7 +310,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$postWithPathNoQuery</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/%1$s/__echo__&#039;, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; null, &#039;path_elements&#039; =&gt; [&#039;path&#039;], &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/post/%1$s&#039; . chillerlanOAuthTestProvidersOAuthProviderTestAbstract::ECHO_REQUEST, &#039;method&#039; =&gt; &#039;POST&#039;, &#039;query&#039; =&gt; null, &#039;path_elements&#039; =&gt; [&#039;path&#039;], &#039;body&#039; =&gt; [&#039;foo&#039;], &#039;headers&#039; =&gt; [&#039;content-type&#039; =&gt; &#039;application/json&#039;]]</span></code>
 
     
     
@@ -340,7 +340,7 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$test</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/test/%1$s/%2$s/__echo__&#039;, &#039;method&#039; =&gt; &#039;GET&#039;, &#039;query&#039; =&gt; [&#039;foo&#039;], &#039;path_elements&#039; =&gt; [&#039;a&#039;, &#039;b&#039;], &#039;body&#039; =&gt; null, &#039;headers&#039; =&gt; null]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;path&#039; =&gt; &#039;/test/%1$s/%2$s&#039; . chillerlanOAuthTestProvidersOAuthProviderTestAbstract::ECHO_REQUEST, &#039;method&#039; =&gt; &#039;GET&#039;, &#039;query&#039; =&gt; [&#039;foo&#039;], &#039;path_elements&#039; =&gt; [&#039;a&#039;, &#039;b&#039;], &#039;body&#039; =&gt; null, &#039;headers&#039; =&gt; null]</span></code>
 
     
     
