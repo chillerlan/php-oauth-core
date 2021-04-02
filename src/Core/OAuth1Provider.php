@@ -56,7 +56,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$request = $this->requestFactory
 			->createRequest('POST', $this->requestTokenURL)
 			->withHeader('Authorization', 'OAuth '.$this->buildQuery($params, null, ', ', '"'))
-			->withHeader('Accept-Encoding', 'identity')
+			->withHeader('Accept-Encoding', 'identity') // try to avoid compression
 			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
 		;
 
