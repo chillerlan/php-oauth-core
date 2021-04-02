@@ -90,13 +90,13 @@
     
             <span class="phpdocumentor-element__extends">
             Uses
-                            <a href="classes/chillerlan-OAuth-OAuthOptionsTrait.html"><abbr title="\chillerlan\OAuth\OAuthOptionsTrait">OAuthOptionsTrait</abbr></a>                    </span>
+                            <a href="classes/chillerlan-OAuth-OAuthOptionsTrait.html"><abbr title="\chillerlan\OAuth\OAuthOptionsTrait">OAuthOptionsTrait</abbr></a>,                             <abbr title="\chillerlan\HTTP\HTTPOptionsTrait">HTTPOptionsTrait</abbr>                    </span>
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 </aside>
 
             <p class="phpdocumentor-summary">This class holds all settings related to the OAuth provider as well as the default HTTP client.</p>
@@ -132,6 +132,13 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_curl_check_OCSP">$curl_check_OCSP</a>
+    <span>
+                &nbsp;: bool            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_curl_multi_options">$curl_multi_options</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
@@ -142,13 +149,6 @@
     <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_curl_options">$curl_options</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_curlHandle">$curlHandle</a>
-    <span>
-                &nbsp;: string            </span>
 </dt>
 <dd></dd>
 
@@ -230,7 +230,7 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_windowSize">$windowSize</a>
+    <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_window_size">$window_size</a>
     <span>
                 &nbsp;: int            </span>
 </dt>
@@ -366,6 +366,37 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_curl_check_OCSP">
+        $curl_check_OCSP
+        <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_curl_check_OCSP" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$curl_check_OCSP</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_curl_multi_options">
         $curl_multi_options
         <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_curl_multi_options" class="headerlink"><i class="fas fa-link"></i></a>
@@ -414,37 +445,6 @@
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$curl_options</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_curlHandle">
-        $curlHandle
-        <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_curlHandle" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$curlHandle</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -801,9 +801,9 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_windowSize">
-        $windowSize
-        <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_windowSize" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_window_size">
+        $window_size
+        <a href="classes/chillerlan-OAuth-OAuthOptions.html#property_window_size" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -817,7 +817,7 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$windowSize</span>
+    <span class="phpdocumentor-signature__name">$window_size</span>
     </code>
 
         <section class="phpdocumentor-description"></section>

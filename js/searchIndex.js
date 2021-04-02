@@ -916,15 +916,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Core-AccessTokenTest.html#property_token"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\GuzzleClientFactory",
-            "name": "GuzzleClientFactory",
+            "fqsen": "\\chillerlan\\OAuthTest\\GuzzleHttpClientFactory",
+            "name": "GuzzleHttpClientFactory",
             "summary": "",
-            "url": "classes/chillerlan-OAuthTest-GuzzleClientFactory.html"
+            "url": "classes/chillerlan-OAuthTest-GuzzleHttpClientFactory.html"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\GuzzleClientFactory\u003A\u003AgetClient\u0028\u0029",
+            "fqsen": "\\chillerlan\\OAuthTest\\GuzzleHttpClientFactory\u003A\u003AgetClient\u0028\u0029",
             "name": "getClient",
             "summary": "Returns\u0020a\u0020fully\u0020prepared\u0020http\u0020client\u0020instance",
-            "url": "classes/chillerlan-OAuthTest-GuzzleClientFactory.html#method_getClient"
+            "url": "classes/chillerlan-OAuthTest-GuzzleHttpClientFactory.html#method_getClient"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock",
             "name": "EndpointDocblock",
