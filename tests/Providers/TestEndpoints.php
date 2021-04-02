@@ -17,7 +17,7 @@ class TestEndpoints extends EndpointMap{
 	protected string $API_BASE = '/api';
 
 	protected array $test = [
-		'path'          => '/test/%1$s/%2$s/__echo__',
+		'path'          => '/test/%1$s/%2$s'.OAuthProviderTestAbstract::ECHO_REQUEST,
 		'method'        => 'GET',
 		'query'         => ['foo'],
 		'path_elements' => ['a', 'b'],
@@ -26,7 +26,7 @@ class TestEndpoints extends EndpointMap{
 	];
 
 	protected array $postNoPathNoQuery = [
-		'path'          => '/post/nopathnoquery/__echo__',
+		'path'          => '/post/nopathnoquery'.OAuthProviderTestAbstract::ECHO_REQUEST,
 		'method'        => 'POST',
 		'query'         => null,
 		'path_elements' => null,
@@ -35,7 +35,7 @@ class TestEndpoints extends EndpointMap{
 	];
 
 	protected array $postWithPathNoQuery = [
-		'path'          => '/post/%1$s/__echo__',
+		'path'          => '/post/%1$s'.OAuthProviderTestAbstract::ECHO_REQUEST,
 		'method'        => 'POST',
 		'query'         => null,
 		'path_elements' => ['path'],
@@ -44,7 +44,7 @@ class TestEndpoints extends EndpointMap{
 	];
 
 	protected array $postNoPathWithQuery = [
-		'path'          => '/post/nopathwithquery/__echo__',
+		'path'          => '/post/nopathwithquery'.OAuthProviderTestAbstract::ECHO_REQUEST,
 		'method'        => 'POST',
 		'query'         => ['query'],
 		'path_elements' => null,
@@ -53,7 +53,7 @@ class TestEndpoints extends EndpointMap{
 	];
 
 	protected array $postWithPathAndQuery = [
-		'path'          => '/post/%1$s/__echo__',
+		'path'          => '/post/%1$s'.OAuthProviderTestAbstract::ECHO_REQUEST,
 		'method'        => 'POST',
 		'query'         => ['query'],
 		'path_elements' => ['pathandquery'],

@@ -14,10 +14,7 @@ use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Inte
 use chillerlan\OAuth\OAuthException;
 use chillerlan\HTTP\Utils\Query;
 
-use function chillerlan\HTTP\Utils\get_json;
-
 use function explode, parse_url, sleep, time;
-
 use const PHP_URL_QUERY;
 
 /**
@@ -131,7 +128,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this::assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
+		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
 	}
 
 	public function testRequestInvalidAuthTypeException():void{
@@ -229,7 +226,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 		sleep(2);
 
-		$this::assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
+		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
 	}
 
 	public function testGetClientCredentials():void{

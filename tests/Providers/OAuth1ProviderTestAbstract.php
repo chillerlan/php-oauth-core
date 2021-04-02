@@ -13,7 +13,6 @@ namespace chillerlan\OAuthTest\Providers;
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
 use chillerlan\HTTP\Utils\Query;
 
-use function chillerlan\HTTP\Utils\get_json;
 use function parse_url;
 
 use const PHP_URL_QUERY;
@@ -143,7 +142,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$token = new AccessToken(['accessTokenSecret' => 'test_token']);
 		$this->storage->storeAccessToken($this->provider->serviceName, $token);
 
-		$this::assertSame('such data! much wow!', get_json($this->provider->request('/request'))->data);
+		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
 
 		// coverage, @todo
 		$this->provider

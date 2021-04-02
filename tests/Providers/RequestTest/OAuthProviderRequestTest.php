@@ -69,7 +69,7 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 		// get with path segment and query
 		$r = $this->provider->test('withpath', 'andquery', ['foo' => 'bar', 'this-param' => 'does not exist']);
 		$this::assertSame(
-			'https://localhost/api/test/withpath/andquery/__echo__?foo=bar',
+			'https://localhost/api/test/withpath/andquery'.$this::ECHO_REQUEST.'?foo=bar',
 			$r->getHeaderLine('x-request-uri')
 		);
 
@@ -81,7 +81,7 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 		$r = $this->provider->postNoPathNoQuery($body);
 		$this::assertSame($expectedBody, (string)$r->getBody());
 		$this::assertSame(
-			'https://localhost/api/post/nopathnoquery/__echo__',
+			'https://localhost/api/post/nopathnoquery'.$this::ECHO_REQUEST,
 			$r->getHeaderLine('x-request-uri')
 		);
 
@@ -89,7 +89,7 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 		$r = $this->provider->postWithPathNoQuery('withpathnoquery', $body);
 		$this::assertSame($expectedBody, (string)$r->getBody());
 		$this::assertSame(
-			'https://localhost/api/post/withpathnoquery/__echo__',
+			'https://localhost/api/post/withpathnoquery'.$this::ECHO_REQUEST,
 			$r->getHeaderLine('x-request-uri')
 		);
 
@@ -97,7 +97,7 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 		$r = $this->provider->postNoPathWithQuery($params, $body);
 		$this::assertSame($expectedBody, (string)$r->getBody());
 		$this::assertSame(
-			'https://localhost/api/post/nopathwithquery/__echo__?query=whatever',
+			'https://localhost/api/post/nopathwithquery'.$this::ECHO_REQUEST.'?query=whatever',
 			$r->getHeaderLine('x-request-uri')
 		);
 
@@ -105,7 +105,7 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 		$r = $this->provider->postWithPathAndQuery('withpathandquery', $params, $body);
 		$this::assertSame($expectedBody, (string)$r->getBody());
 		$this::assertSame(
-			'https://localhost/api/post/withpathandquery/__echo__?query=whatever',
+			'https://localhost/api/post/withpathandquery'.$this::ECHO_REQUEST.'?query=whatever',
 			$r->getHeaderLine('x-request-uri')
 		);
 

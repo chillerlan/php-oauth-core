@@ -18,8 +18,6 @@ use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerInterface;
 
-use const DIRECTORY_SEPARATOR;
-
 abstract class OAuthAPITestAbstract extends ProviderTestAbstract{
 
 	protected string $ENV;
