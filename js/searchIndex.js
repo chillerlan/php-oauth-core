@@ -831,11 +831,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#method_setUp"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003AinitOptions\u0028\u0029",
-            "name": "initOptions",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#method_initOptions"
-        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003AinitStorage\u0028\u0029",
             "name": "initStorage",
             "summary": "",
@@ -846,10 +841,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#method_initHttp"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003A\u0024ENV",
-            "name": "ENV",
+            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003A\u0024CFG",
+            "name": "CFG",
             "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#property_ENV"
+            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#property_CFG"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003A\u0024testuser",
             "name": "testuser",
@@ -1531,11 +1526,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_storage"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\ProviderTestAbstract\u003A\u003A\u0024dotEnv",
-            "name": "dotEnv",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_dotEnv"
-        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\ProviderTestAbstract\u003A\u003A\u0024requestFactory",
             "name": "requestFactory",
             "summary": "",
@@ -1570,11 +1560,6 @@ Search.appendIndex(
             "name": "reflection",
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_reflection"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\ProviderTestAbstract\u003A\u003A\u0024CFG",
-            "name": "CFG",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-Providers-ProviderTestAbstract.html#property_CFG"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\ProviderTestAbstract\u003A\u003A\u0024FQN",
             "name": "FQN",
