@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
 
 abstract class OAuthAPITestAbstract extends ProviderTestAbstract{
 
-	protected string $CFG = '';
+	protected string $CFG;
 
 	/** a test username for live API tests, defined in .env as {ENV-PREFIX}_TESTUSER*/
 	protected string $testuser;
