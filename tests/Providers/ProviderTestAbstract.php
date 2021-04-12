@@ -10,7 +10,6 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\DotEnv\DotEnv;
 use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface, UriFactoryInterface};
 use chillerlan\OAuth\Core\OAuthInterface;
 use chillerlan\OAuth\OAuthOptions;
@@ -24,9 +23,7 @@ use Psr\Log\LoggerInterface;
 use Exception, ReflectionClass, ReflectionMethod, ReflectionProperty;
 
 use function chillerlan\HTTP\Utils\{get_json, get_xml};
-use function constant, defined, file_exists, ini_set, realpath;
-
-use const DIRECTORY_SEPARATOR;
+use function constant, defined, ini_set;
 
 abstract class ProviderTestAbstract extends TestCase{
 
