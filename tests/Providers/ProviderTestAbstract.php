@@ -41,7 +41,6 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected SettingsContainerInterface $options;
 	protected OAuthInterface $provider;
 	protected OAuthStorageInterface $storage;
-	protected DotEnv $dotEnv;
 
 	// PSR interfaces
 	protected RequestFactoryInterface $requestFactory;
@@ -53,18 +52,12 @@ abstract class ProviderTestAbstract extends TestCase{
 
 	protected ReflectionClass $reflection;
 	// config dir & fqcn of the test subject
-	protected string $CFG = __DIR__.'/../../config';
 	protected string $FQN;
 	protected bool $is_ci;
 	protected array $testResponses = [];
 
 	protected function setUp():void{
 		ini_set('date.timezone', 'Europe/Amsterdam');
-
-		// get the .env config
-		$this->CFG    = realpath($this->CFG);
-		$envFile      = file_exists($this->CFG.DIRECTORY_SEPARATOR.'.env') ? '.env' : '.env_example';
-		$this->dotEnv = (new DotEnv($this->CFG, $envFile))->load();
 
 		// are we running on CI? (travis, github) -> see phpunit.xml
 		$this->is_ci = defined('TEST_IS_CI') && constant('TEST_IS_CI') === true;

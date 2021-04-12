@@ -20,7 +20,7 @@ use Psr\Log\LoggerInterface;
 
 abstract class OAuthAPITestAbstract extends ProviderTestAbstract{
 
-	protected string $ENV;
+	protected string $CFG;
 
 	/** a test username for live API tests, defined in .env as {ENV-PREFIX}_TESTUSER*/
 	protected string $testuser;
@@ -32,15 +32,6 @@ abstract class OAuthAPITestAbstract extends ProviderTestAbstract{
 			$this->markTestSkipped('not on CI (set TEST_IS_CI in phpunit.xml to "false" if you want to run live API tests)');
 		}
 
-		$this->testuser = (string)$this->dotEnv->get($this->ENV.'_TESTUSER');
-	}
-
-	protected function initOptions():SettingsContainerInterface{
-		return new OAuthOptions([
-			'key'              => $this->dotEnv->get($this->ENV.'_KEY'),
-			'secret'           => $this->dotEnv->get($this->ENV.'_SECRET'),
-			'tokenAutoRefresh' => true,
-		]);
 	}
 
 	protected function initStorage(SettingsContainerInterface $options):OAuthStorageInterface{
