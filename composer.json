@@ -46,7 +46,6 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"chillerlan\\OAuthExamples\\": "examples/",
 			"chillerlan\\OAuthTest\\": "tests/"
 		}
 	}
