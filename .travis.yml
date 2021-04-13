@@ -9,8 +9,7 @@ matrix:
     - php: nightly
 
 install:
-  - curl -o config/cacert.pem https://curl.haxx.se/ca/cacert.pem
-  - travis_retry composer install --no-interaction --prefer-source
+  - composer install --no-interaction --no-progress --no-suggest --prefer-source
 
 script: vendor/bin/phpunit --configuration phpunit.xml.dist
 

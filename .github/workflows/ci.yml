@@ -1,11 +1,15 @@
 # https://help.github.com/en/categories/automating-your-workflow-with-github-actions
 # https://github.com/sebastianbergmann/phpunit/blob/master/.github/workflows/ci.yml
 
-on:
-  - pull_request
-  - push
-
 name: "Continuous Integration"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
@@ -31,7 +35,7 @@ jobs:
           extensions: ast, curl, json, simplexml, zlib
 
       - name: "Update dependencies with composer"
-        run: composer update --no-interaction --no-ansi --no-progress --no-suggest
+        run: composer update --no-interaction --no-ansi --no-progress --no-suggest --prefer-source
 
       - name: "Run phan"
         run: php vendor/bin/phan
@@ -53,7 +57,7 @@ jobs:
 
     steps:
       - name: "Configure git to avoid issues with line endings"
-        if: runner.os == 'Windows'
+        if: ${{ runner.os == 'Windows' }}
         run: git config --global core.autocrlf false
 
       - name: "Checkout"
@@ -68,7 +72,7 @@ jobs:
 #          ini-values:
 
       - name: "Install dependencies with composer"
-        run: composer update --no-ansi --no-interaction --no-progress --no-suggest
+        run: composer update --no-ansi --no-interaction --no-progress --no-suggest --prefer-source
 
       - name: "Run tests with phpunit"
         run: php vendor/phpunit/phpunit/phpunit --configuration=phpunit.xml.dist
