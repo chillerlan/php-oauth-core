@@ -143,25 +143,31 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{
-		$parseURL = parseUrl($url);
+		$parsed = parseUrl($url);
 
-		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !in_array($parseURL['scheme'], ['http', 'https'], true)){
+		if(!isset($parsed['host']) || !isset($parsed['scheme']) || !in_array($parsed['scheme'], ['http', 'https'], true)){
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		$query           = $this->parseQuery($parseURL['query'] ?? '');
+		$query           = $this->parseQuery($parsed['query'] ?? '');
 		$signatureParams = array_merge($query, $params);
 
 		unset($signatureParams['oauth_signature']);
 
-		$key  = implode('&', array_map('rawurlencode', [$this->options->secret, $accessTokenSecret ?? '']));
+		// https://tools.ietf.org/html/rfc5849#section-3.4.1.1
 		$data = array_map('rawurlencode', [
 			strtoupper($method ?? 'POST'),
-			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
+			$parsed['scheme'].'://'.$parsed['host'].($parsed['path'] ?? ''),
 			$this->buildQuery($signatureParams),
 		]);
 
-		return base64_encode(hash_hmac('sha1', implode('&', $data), $key, true));
+		// https://tools.ietf.org/html/rfc5849#section-3.4.2
+		$key  = array_map('rawurlencode', [
+			$this->options->secret,
+			$accessTokenSecret ?? ''
+		]);
+
+		return base64_encode(hash_hmac('sha1', implode('&', $data), implode('&', $key), true));
 	}
 
 	/**
