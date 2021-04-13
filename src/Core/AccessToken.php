@@ -27,7 +27,7 @@ use function time;
  * @property int    $expires
  * @property string $provider
  */
-class AccessToken extends SettingsContainerAbstract{
+final class AccessToken extends SettingsContainerAbstract{
 
 	/**
 	 * Denotes an unknown end of life time.
