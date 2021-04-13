@@ -144,11 +144,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * OAuthProvider constructor.
 	 *
-	 * @param \Psr\Http\Client\ClientInterface                $http
-	 * @param \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
-	 * @param \chillerlan\Settings\SettingsContainerInterface $options
-	 * @param \Psr\Log\LoggerInterface|null                   $logger
-	 *
 	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
 	 */
 	public function __construct(
@@ -240,10 +235,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * Magic API endpoint access. ugly, isn't it?
 	 *
-	 * @param string $endpointName
-	 * @param array  $arguments
-	 *
-	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
 	 */
 	public function __call(string $endpointName, array $arguments):ResponseInterface{

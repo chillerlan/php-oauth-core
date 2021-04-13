@@ -72,10 +72,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @link https://tools.ietf.org/html/rfc5849#section-2.1
 	 *
-	 * @param \Psr\Http\Message\ResponseInterface $response
-	 * @param bool|null                           $checkCallbackConfirmed
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
@@ -116,8 +112,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 	/**
 	 * returns a 32 byte random string (in hexadecimal representation) for use as a nonce
-	 *
-	 * @return string
 	 */
 	protected function nonce():string{
 		$nonce = random_bytes(32);
@@ -134,12 +128,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @link https://tools.ietf.org/html/rfc5849#section-3.4
 	 *
-	 * @param string      $url
-	 * @param array       $params
-	 * @param string      $method
-	 * @param string|null $accessTokenSecret
-	 *
-	 * @return string
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{

@@ -99,9 +99,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @link https://tools.ietf.org/html/rfc6749#section-4.1.4
 	 *
-	 * @param \Psr\Http\Message\ResponseInterface $response
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @throws \JsonException
 	 */
@@ -196,9 +193,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @see \chillerlan\OAuth\Core\ClientCredentials
 	 *
-	 * @param array|null $scopes
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function getClientCredentialsToken(array $scopes = null):AccessToken{
@@ -237,9 +231,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @see \chillerlan\OAuth\Core\TokenRefresh
 	 *
-	 * @param \chillerlan\OAuth\Core\AccessToken|null $token
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken $token = null):AccessToken{
@@ -296,9 +287,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @see \chillerlan\OAuth\Core\CSRFToken
 	 *
-	 * @param string|null $state
-	 *
-	 * @return void
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @internal
 	 */
@@ -326,9 +314,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @see \chillerlan\OAuth\Core\CSRFToken
 	 *
-	 * @param array $params
-	 *
-	 * @return array
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @internal
 	 */
