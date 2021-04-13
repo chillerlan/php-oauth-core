@@ -15,7 +15,7 @@ namespace chillerlan\OAuth\Core;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 use function array_map, array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
-	implode, in_array, is_array, random_bytes, strtoupper, time;
+	implode, in_array, random_bytes, strtoupper, time;
 use function chillerlan\HTTP\Utils\{decompress_content, parseUrl};
 
 /**
@@ -81,7 +81,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
 		$data = $this->parseQuery(decompress_content($response));
 
-		if(!$data || !is_array($data)){
+		if(empty($data)){
 			throw new ProviderException('unable to parse token response');
 		}
 		elseif(isset($data['error'])){
