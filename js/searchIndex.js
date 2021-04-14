@@ -791,76 +791,6 @@ Search.appendIndex(
             "summary": "the\u0020key\u0020name\u0020for\u0020the\u0020CSRF\u0020token\u0020storage\u0020array\u0020in\u0020\u0024_SESSION",
             "url": "classes/chillerlan-OAuth-Storage-SessionStorage.html#property_stateVar"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuth1APITestAbstract",
-            "name": "OAuth1APITestAbstract",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuth1APITestAbstract.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuth1APITestAbstract\u003A\u003AtestOAuth1Instance\u0028\u0029",
-            "name": "testOAuth1Instance",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuth1APITestAbstract.html#method_testOAuth1Instance"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuth2APITestAbstract",
-            "name": "OAuth2APITestAbstract",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuth2APITestAbstract.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuth2APITestAbstract\u003A\u003AtestOAuth2Instance\u0028\u0029",
-            "name": "testOAuth2Instance",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuth2APITestAbstract.html#method_testOAuth2Instance"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuth2APITestAbstract\u003A\u003AtestRequestCredentialsToken\u0028\u0029",
-            "name": "testRequestCredentialsToken",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuth2APITestAbstract.html#method_testRequestCredentialsToken"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuth2APITestAbstract\u003A\u003A\u0024clientCredentialsScopes",
-            "name": "clientCredentialsScopes",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuth2APITestAbstract.html#property_clientCredentialsScopes"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract",
-            "name": "OAuthAPITestAbstract",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003AsetUp\u0028\u0029",
-            "name": "setUp",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#method_setUp"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003AinitStorage\u0028\u0029",
-            "name": "initStorage",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#method_initStorage"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003AinitHttp\u0028\u0029",
-            "name": "initHttp",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#method_initHttp"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003A\u0024CFG",
-            "name": "CFG",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#property_CFG"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API\\OAuthAPITestAbstract\u003A\u003A\u0024testuser",
-            "name": "testuser",
-            "summary": "a\u0020test\u0020username\u0020for\u0020live\u0020API\u0020tests,\u0020defined\u0020in\u0020.env\u0020as\u0020\u007BENV\u002DPREFIX\u007D_TESTUSER",
-            "url": "classes/chillerlan-OAuthTest-API-OAuthAPITestAbstract.html#property_testuser"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\ChillerlanHttpClientFactory",
-            "name": "ChillerlanHttpClientFactory",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-ChillerlanHttpClientFactory.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\ChillerlanHttpClientFactory\u003A\u003AgetClient\u0028\u0029",
-            "name": "getClient",
-            "summary": "Returns\u0020a\u0020fully\u0020prepared\u0020http\u0020client\u0020instance",
-            "url": "classes/chillerlan-OAuthTest-ChillerlanHttpClientFactory.html#method_getClient"
-        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Core\\AccessTokenTest",
             "name": "AccessTokenTest",
             "summary": "",
@@ -910,81 +840,6 @@ Search.appendIndex(
             "name": "token",
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Core-AccessTokenTest.html#property_token"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\GuzzleHttpClientFactory",
-            "name": "GuzzleHttpClientFactory",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-GuzzleHttpClientFactory.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\GuzzleHttpClientFactory\u003A\u003AgetClient\u0028\u0029",
-            "name": "getClient",
-            "summary": "Returns\u0020a\u0020fully\u0020prepared\u0020http\u0020client\u0020instance",
-            "url": "classes/chillerlan-OAuthTest-GuzzleHttpClientFactory.html#method_getClient"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock",
-            "name": "EndpointDocblock",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "EndpointDocblock\u0020constructor.",
-            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method___construct"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003Acreate\u0028\u0029",
-            "name": "create",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method_create"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003AcreateInterface\u0028\u0029",
-            "name": "createInterface",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method_createInterface"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003AcreateJSON\u0028\u0029",
-            "name": "createJSON",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#method_createJSON"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003A\u0024provider",
-            "name": "provider",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#property_provider"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI\\EndpointDocblock\u003A\u003A\u0024endpointMap",
-            "name": "endpointMap",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-MagicAPI-EndpointDocblock.html#property_endpointMap"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestHttpClient",
-            "name": "OAuthTestHttpClient",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-OAuthTestHttpClient.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestHttpClient\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-OAuthTestHttpClient.html#method___construct"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestHttpClient\u003A\u003AsendRequest\u0028\u0029",
-            "name": "sendRequest",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-OAuthTestHttpClient.html#method_sendRequest"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestHttpClient\u003A\u003A\u0024http",
-            "name": "http",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-OAuthTestHttpClient.html#property_http"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestHttpClientFactoryInterface",
-            "name": "OAuthTestHttpClientFactoryInterface",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-OAuthTestHttpClientFactoryInterface.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestHttpClientFactoryInterface\u003A\u003AgetClient\u0028\u0029",
-            "name": "getClient",
-            "summary": "Returns\u0020a\u0020fully\u0020prepared\u0020http\u0020client\u0020instance",
-            "url": "classes/chillerlan-OAuthTest-OAuthTestHttpClientFactoryInterface.html#method_getClient"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestLogger",
             "name": "OAuthTestLogger",
@@ -1871,25 +1726,15 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/chillerlan-oauth-storage.html"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\API",
-            "name": "API",
-            "summary": "",
-            "url": "namespaces/chillerlan-oauthtest-api.html"
-        },                {
-            "fqsen": "\\chillerlan\\OAuthTest",
-            "name": "OAuthTest",
-            "summary": "",
-            "url": "namespaces/chillerlan-oauthtest.html"
-        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Core",
             "name": "Core",
             "summary": "",
             "url": "namespaces/chillerlan-oauthtest-core.html"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\MagicAPI",
-            "name": "MagicAPI",
+            "fqsen": "\\chillerlan\\OAuthTest",
+            "name": "OAuthTest",
             "summary": "",
-            "url": "namespaces/chillerlan-oauthtest-magicapi.html"
+            "url": "namespaces/chillerlan-oauthtest.html"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\OAuth1",
             "name": "OAuth1",
