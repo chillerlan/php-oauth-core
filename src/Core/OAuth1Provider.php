@@ -94,9 +94,8 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('oauth callback unconfirmed');
 		}
 
-		$token = new AccessToken;
+		$token = $this->createAccessToken();
 
-		$token->provider          = $this->serviceName;
 		$token->accessToken       = $data['oauth_token'];
 		$token->accessTokenSecret = $data['oauth_token_secret'];
 		$token->expires           = AccessToken::EOL_NEVER_EXPIRES;

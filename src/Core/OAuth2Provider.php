@@ -122,9 +122,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new ProviderException('token missing');
 		}
 
-		$token = new AccessToken;
+		$token = $this->createAccessToken();
 
-		$token->provider     = $this->serviceName;
 		$token->accessToken  = $data['access_token'];
 		$token->expires      = $data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES;
 		$token->refreshToken = $data['refresh_token'] ?? null;

@@ -233,6 +233,13 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
+	 * Creates an access token with the provider set to $this->serviceName
+	 */
+	protected function createAccessToken():AccessToken{
+		return new AccessToken(['provider' => $this->serviceName]);
+	}
+
+	/**
 	 * Magic API endpoint access. ugly, isn't it?
 	 *
 	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
