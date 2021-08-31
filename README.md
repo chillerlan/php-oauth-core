@@ -4,7 +4,6 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [![PHP Version Support][php-badge]][php]
 [![Packagist version][packagist-badge]][packagist]
 [![License][license-badge]][license]
-[![Travis CI][travis-badge]][travis]
 [![CodeCov][coverage-badge]][coverage]
 [![Scrunitizer CI][scrutinizer-badge]][scrutinizer]
 [![Packagist downloads][downloads-badge]][downloads]<br/>
@@ -17,8 +16,6 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [packagist]: https://packagist.org/packages/chillerlan/php-oauth-core
 [license-badge]: https://img.shields.io/github/license/chillerlan/php-oauth-core.svg
 [license]: https://github.com/chillerlan/php-oauth-core/blob/main/LICENSE
-[travis-badge]: https://img.shields.io/travis/com/chillerlan/php-oauth-core/main.svg?logo=travis
-[travis]: https://travis-ci.com/github/chillerlan/php-oauth-core
 [coverage-badge]: https://img.shields.io/codecov/c/github/chillerlan/php-oauth-core.svg?logo=codecov
 [coverage]: https://codecov.io/github/chillerlan/php-oauth-core
 [scrutinizer-badge]: https://img.shields.io/scrutinizer/g/chillerlan/php-oauth-core.svg?logo=scrutinizer
