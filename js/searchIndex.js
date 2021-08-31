@@ -311,6 +311,11 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D17\u0020UriFactoryInterface",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_setUriFactory"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AcreateAccessToken\u0028\u0029",
+            "name": "createAccessToken",
+            "summary": "Creates\u0020an\u0020access\u0020token\u0020with\u0020the\u0020provider\u0020set\u0020to\u0020\u0024this\u002D\u003EserviceName",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_createAccessToken"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A__call\u0028\u0029",
             "name": "__call",
             "summary": "Magic\u0020API\u0020endpoint\u0020access.\u0020ugly,\u0020isn\u0027t\u0020it\u003F",
