@@ -263,7 +263,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/MagicAPI/ApiClientInterface.php"><a href="files/src-magicapi-apiclientinterface.html"><abbr title="src/MagicAPI/ApiClientInterface.php">ApiClientInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 </aside>
 
         <p class="phpdocumentor-summary">Implements the Magic API client</p>
@@ -281,16 +281,14 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</dd>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$arguments</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
@@ -316,7 +314,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuth2Interface.php"><a href="files/src-core-oauth2interface.html"><abbr title="src/Core/OAuth2Interface.php">OAuth2Interface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 </aside>
 
         <p class="phpdocumentor-summary">Obtains an OAuth2 access token with the given $code, verifies the $state
@@ -324,7 +322,7 @@ if the provider implements the CSRFToken interface, and returns an AccessToken o
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">getAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$code</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$state</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a></span></code>
+                <span class="phpdocumentor-signature__name">getAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$code</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$state</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a></span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -335,16 +333,14 @@ if the provider implements the CSRFToken interface, and returns an AccessToken o
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$state</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
@@ -385,7 +381,7 @@ if the provider implements the CSRFToken interface, and returns an AccessToken o
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuth2Interface.php"><a href="files/src-core-oauth2interface.html"><abbr title="src/Core/OAuth2Interface.php">OAuth2Interface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 </aside>
 
         <p class="phpdocumentor-summary">Prepares the URL with optional $params and $scopes which redirects to the provider&#039;s authorization prompt
@@ -439,7 +435,7 @@ and returns a PSR-7 UriInterface with all necessary parameters set</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 </aside>
 
         <p class="phpdocumentor-summary">Prepares an API request to $path with the given parameters, gets authorization, fires the request
@@ -532,7 +528,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 </aside>
 
         <p class="phpdocumentor-summary">Sets an optional PSR-17 RequestFactoryInterface</p>
@@ -550,8 +546,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\RequestFactoryInterface">RequestFactoryInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
@@ -577,7 +572,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 </aside>
 
         <p class="phpdocumentor-summary">Sets an optional OAuthStorageInterface</p>
@@ -595,8 +590,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
@@ -622,7 +616,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 </aside>
 
         <p class="phpdocumentor-summary">Sets an optional PSR-17 StreamFactoryInterface</p>
@@ -640,8 +634,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\StreamFactoryInterface">StreamFactoryInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
@@ -667,7 +660,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 </aside>
 
         <p class="phpdocumentor-summary">Sets an optional PSR-17 UriFactoryInterface</p>
@@ -685,8 +678,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\UriFactoryInterface">UriFactoryInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
