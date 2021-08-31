@@ -18,17 +18,17 @@ trait OAuthOptionsTrait{
 	/**
 	 * The application key (or id) given by your provider
 	 */
-	protected string $key;
+	protected string $key = '';
 
 	/**
 	 * The application secret given by your provider
 	 */
-	protected string $secret;
+	protected string $secret = '';
 
 	/**
 	 * The callback URL associated with your application
 	 */
-	protected string $callbackURL;
+	protected string $callbackURL = '';
 
 	/**
 	 * Whether or not to start the session when session storage is used
