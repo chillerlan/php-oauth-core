@@ -29,9 +29,6 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 
 	/**
 	 * OAuthStorageAbstract constructor.
-	 *
-	 * @param \chillerlan\Settings\SettingsContainerInterface|null $options
-	 * @param \Psr\Log\LoggerInterface|null                        $logger
 	 */
 	public function __construct(SettingsContainerInterface $options = null, LoggerInterface $logger = null){
 		$this->options = $options ?? new OAuthOptions;

@@ -24,10 +24,6 @@ interface OAuth2Interface extends OAuthInterface{
 	 * Obtains an OAuth2 access token with the given $code, verifies the $state
 	 * if the provider implements the CSRFToken interface, and returns an AccessToken object
 	 *
-	 * @param string      $code
-	 * @param string|null $state
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function getAccessToken(string $code, string $state = null):AccessToken;
@@ -38,8 +34,6 @@ interface OAuth2Interface extends OAuthInterface{
 	 *
 	 * @param array|null    $params
 	 * @param string[]|null $scopes
-	 *
-	 * @return \Psr\Http\Message\UriInterface
 	 */
 	public function getAuthURL(array $params = null, array $scopes = null):UriInterface;
 

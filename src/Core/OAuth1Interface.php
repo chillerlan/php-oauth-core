@@ -22,7 +22,6 @@ interface OAuth1Interface extends OAuthInterface{
 	 *
 	 * @see \chillerlan\OAuth\Core\OAuth1Provider::getAuthURL()
 	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function getRequestToken():AccessToken;
@@ -32,10 +31,6 @@ interface OAuth1Interface extends OAuthInterface{
 	 *
 	 * @link https://tools.ietf.org/html/rfc5849#section-2.3
 	 *
-	 * @param string $token
-	 * @param string $verifier
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function getAccessToken(string $token, string $verifier):AccessToken;

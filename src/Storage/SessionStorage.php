@@ -34,8 +34,6 @@ class SessionStorage extends OAuthStorageAbstract{
 
 	/**
 	 * SessionStorage constructor.
-	 *
-	 * @param \chillerlan\Settings\SettingsContainerInterface|null $options
 	 */
 	public function __construct(SettingsContainerInterface $options = null){
 		parent::__construct($options);

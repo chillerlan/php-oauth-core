@@ -16,11 +16,6 @@ interface ApiClientInterface{
 
 	/**
 	 * Implements the Magic API client
-	 *
-	 * @param string $endpointName
-	 * @param array  $arguments
-	 *
-	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function __call(string $endpointName, array $arguments):ResponseInterface;
 

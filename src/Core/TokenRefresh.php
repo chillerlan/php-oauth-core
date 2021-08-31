@@ -20,9 +20,6 @@ interface TokenRefresh{
 	/**
 	 * Tries to refresh an existing AccessToken with an associated refresh token and returns a fresh AccessToken.
 	 *
-	 * @param \chillerlan\OAuth\Core\AccessToken|null $token
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken $token = null):AccessToken;

@@ -179,8 +179,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * Magic getter for the properties specified in self::ALLOWED_PROPERTIES
 	 *
-	 * @param string $name
-	 *
 	 * @return mixed|null
 	 */
 	public function __get(string $name){
