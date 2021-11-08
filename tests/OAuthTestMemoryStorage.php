@@ -11,7 +11,7 @@
 namespace chillerlan\OAuthTest;
 
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageException};
+use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageException, OAuthStorageInterface};
 use chillerlan\Settings\SettingsContainerInterface;
 
 use function file_exists, file_get_contents, file_put_contents;
@@ -29,14 +29,14 @@ final class OAuthTestMemoryStorage extends MemoryStorage{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):bool{
+	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
 		parent::storeAccessToken($service, $token);
 
 		if(file_put_contents($this->storagepath.'/'.$service.'.token.json', $token->toJSON()) === false){
 			throw new OAuthStorageException('unable to access file storage');
 		}
 
-		return true;
+		return $this;
 	}
 
 	/**

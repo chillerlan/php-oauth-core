@@ -23,7 +23,7 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):bool;
+	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface;
 
 	/**
 	 * Retrieves an AccessToken for the given $service
@@ -39,18 +39,24 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 
 	/**
 	 * Deletes the access token for a given $service (and current user)
+	 *
+	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearAccessToken(string $service):bool;
+	public function clearAccessToken(string $service):OAuthStorageInterface;
 
 	/**
 	 * Deletes all access tokens (for the current user)
+	 *
+	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearAllAccessTokens():bool;
+	public function clearAllAccessTokens():OAuthStorageInterface;
 
 	/**
 	 * Stores a CSRF <state> value for the given $service
+	 *
+	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function storeCSRFState(string $service, string $state):bool;
+	public function storeCSRFState(string $service, string $state):OAuthStorageInterface;
 
 	/**
 	 * Retrieves a CSRF <state> value for the given $service
@@ -66,13 +72,17 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 
 	/**
 	 * Deletes a CSRF state for the given $service (and current user)
+	 *
+	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearCSRFState(string $service):bool;
+	public function clearCSRFState(string $service):OAuthStorageInterface;
 
 	/**
 	 * Deletes all stored CSRF states (for the current user)
+	 *
+	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearAllCSRFStates():bool;
+	public function clearAllCSRFStates():OAuthStorageInterface;
 
 	/**
 	 * Prepares an AccessToken for storage (serialize, encrypt etc.)

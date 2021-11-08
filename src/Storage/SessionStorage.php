@@ -71,10 +71,10 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):bool{
+	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
 		$_SESSION[$this->tokenVar][$service] = $this->toStorage($token);
 
-		return true;
+		return $this;
 	}
 
 	/**
@@ -99,19 +99,19 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service):bool{
+	public function clearAccessToken(string $service):OAuthStorageInterface{
 
 		if(array_key_exists($service, $_SESSION[$this->tokenVar])){
 			unset($_SESSION[$this->tokenVar][$service]);
 		}
 
-		return true;
+		return $this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllAccessTokens():bool{
+	public function clearAllAccessTokens():OAuthStorageInterface{
 
 		foreach(array_keys($_SESSION[$this->tokenVar]) as $service){
 			unset($_SESSION[$this->tokenVar][$service]);
@@ -119,16 +119,16 @@ class SessionStorage extends OAuthStorageAbstract{
 
 		unset($_SESSION[$this->tokenVar]);
 
-		return true;
+		return $this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $service, string $state):bool{
+	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
 		$_SESSION[$this->stateVar][$service] = $state;
 
-		return true;
+		return $this;
 	}
 
 	/**
@@ -153,22 +153,22 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service):bool{
+	public function clearCSRFState(string $service):OAuthStorageInterface{
 
 		if(array_key_exists($service, $_SESSION[$this->stateVar])){
 			unset($_SESSION[$this->stateVar][$service]);
 		}
 
-		return true;
+		return $this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllCSRFStates():bool{
+	public function clearAllCSRFStates():OAuthStorageInterface{
 		unset($_SESSION[$this->stateVar]);
 
-		return true;
+		return $this;
 	}
 
 }
