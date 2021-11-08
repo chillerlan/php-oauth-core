@@ -13,7 +13,8 @@ namespace chillerlan\OAuthTest;
 use Psr\Log\{AbstractLogger, LogLevel};
 use Exception;
 
-use function array_key_exists, date, sprintf, str_repeat, str_replace, strtolower, substr, trim, var_export;
+use function array_key_exists, date, explode, implode, sprintf, str_pad,
+	str_repeat, str_replace, strtolower, substr, trim, var_export;
 
 final class OAuthTestLogger extends AbstractLogger{
 
@@ -78,24 +79,25 @@ final class OAuthTestLogger extends AbstractLogger{
 		}
 
 		if($this::LEVELS[$level] >= $this::LEVELS[$this->loglevel]){
-			echo sprintf(
-				'[%s][%s] %s',
+			$indent = str_repeat(' ', 34);
+			$msg    = sprintf(
+				"[%s][%s] %s\n",
 				date('Y-m-d H:i:s'),
-				substr($level, 0, 4),
-				str_replace("\n", "\n".str_repeat(' ', 28), trim($message))
-			)."\n";
+				str_pad($level, 10),
+				str_replace("\n", "\n$indent", trim($message))
+			);
 
 			if(!empty($context)){
-				$c = "\n--- CONTEXT START ---\n";
+				$msg .= "\n$indent--- CONTEXT START ---\n";
 
 				foreach($context as $k => $v){
-					$c .= '\''.$k.'\' => '.var_export($v, true)."\n";
+					$msg .= sprintf("%s'%s' => '%s\n", $indent, $k, implode("\n$indent", explode("\n", var_export($v, true))));
 				}
 
-				$c .= "--- CONTEXT END ---\n\n";
-
-				echo $c;
+				$msg .= "$indent--- CONTEXT END ---\n\n";
 			}
+
+			echo $msg;
 		}
 
 	}
