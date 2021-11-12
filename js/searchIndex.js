@@ -261,6 +261,11 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020optional\u0020OAuthStorageInterface",
             "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_setStorage"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003AgetStorage\u0028\u0029",
+            "name": "getStorage",
+            "summary": "Returns\u0020the\u0020current\u0020OAuthStorageInterface",
+            "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_getStorage"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003AsetRequestFactory\u0028\u0029",
             "name": "setRequestFactory",
             "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D17\u0020RequestFactoryInterface",
@@ -295,6 +300,11 @@ Search.appendIndex(
             "name": "setStorage",
             "summary": "Sets\u0020an\u0020optional\u0020OAuthStorageInterface",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_setStorage"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AgetStorage\u0028\u0029",
+            "name": "getStorage",
+            "summary": "Returns\u0020the\u0020current\u0020OAuthStorageInterface",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_getStorage"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AsetRequestFactory\u0028\u0029",
             "name": "setRequestFactory",
