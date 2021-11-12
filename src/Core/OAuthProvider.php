@@ -204,6 +204,14 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
+	public function getStorage():OAuthStorageInterface{
+		return $this->storage;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @codeCoverageIgnore
+	 */
 	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface{
 		$this->requestFactory = $requestFactory;
 

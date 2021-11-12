@@ -72,6 +72,11 @@ interface OAuthInterface extends ApiClientInterface, ClientInterface, LoggerAwar
 	public function setStorage(OAuthStorageInterface $storage):OAuthInterface;
 
 	/**
+	 * Returns the current OAuthStorageInterface
+	 */
+	public function getStorage():OAuthStorageInterface;
+
+	/**
 	 * Sets an optional PSR-17 RequestFactoryInterface
 	 */
 	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface;
