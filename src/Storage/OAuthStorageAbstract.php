@@ -47,6 +47,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 
 	/**
 	 * @inheritDoc
+	 * @phan-suppress PhanTypeMismatchReturnSuperType
 	 */
 	public function fromStorage($data):AccessToken{
 
