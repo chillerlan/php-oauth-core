@@ -47,5 +47,14 @@
 		"psr-4": {
 			"chillerlan\\OAuthTest\\": "tests/"
 		}
+	},
+	"scripts": {
+		"phpunit": "@php vendor/bin/phpunit",
+		"phan": "@php vendor/bin/phan"
+	},
+	"config": {
+		"lock": false,
+		"sort-packages": true,
+		"platform-check": true
 	}
 }
