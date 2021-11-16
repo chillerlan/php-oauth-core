@@ -26,6 +26,7 @@ use Exception, ReflectionClass, ReflectionMethod, ReflectionProperty;
 
 use function chillerlan\HTTP\Utils\{get_json, get_xml};
 use function constant, defined, ini_set;
+use const JSON_UNESCAPED_SLASHES;
 
 abstract class ProviderTestAbstract extends TestCase{
 
@@ -65,10 +66,11 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->logger = new Logger('oauthProviderTest', [new NullHandler]); // PSR-3
 
 		if(!$this->is_ci){
-			$handler = (new StreamHandler('php://stdout'))
-				->setFormatter(new LineFormatter(null, 'Y-m-d H:i:s', true, true));
+			$formatter = new LineFormatter(null, 'Y-m-d H:i:s', true, true);
+			$formatter->setJsonPrettyPrint(true);
+			$formatter->addJsonEncodeOption(JSON_UNESCAPED_SLASHES);
 
-			$this->logger->pushHandler($handler);
+			$this->logger->pushHandler((new StreamHandler('php://stdout'))->setFormatter($formatter));
 		}
 
 		// init some PSR-17 factories
