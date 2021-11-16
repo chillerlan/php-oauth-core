@@ -10,11 +10,13 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\{NullHandler, StreamHandler};
+use Monolog\Logger;
 use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface, UriFactoryInterface};
 use chillerlan\OAuth\Core\OAuthInterface;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
-use chillerlan\OAuthTest\OAuthTestLogger;
 use chillerlan\Settings\SettingsContainerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -60,7 +62,14 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->is_ci = defined('TEST_IS_CI') && constant('TEST_IS_CI') === true;
 
 		// logger output only when not on CI
-		$this->logger = new OAuthTestLogger($this->is_ci ? 'none' : 'debug');
+		$this->logger = new Logger('oauthProviderTest', [new NullHandler]); // PSR-3
+
+		if(!$this->is_ci){
+			$handler = (new StreamHandler('php://stdout'))
+				->setFormatter(new LineFormatter(null, 'Y-m-d H:i:s', true, true));
+
+			$this->logger->pushHandler($handler);
+		}
 
 		// init some PSR-17 factories
 		foreach($this::FACTORIES as $property => $const){
