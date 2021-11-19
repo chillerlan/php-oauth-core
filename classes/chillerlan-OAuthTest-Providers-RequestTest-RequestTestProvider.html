@@ -8,12 +8,16 @@
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -48,17 +52,27 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
-    
-    <section class="phpdocumentor-sidebar__category">
-        <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
-                                                <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/chillerlan.html"><abbr title="\chillerlan">chillerlan</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                            <li><a href="namespaces/chillerlan-oauth.html"><abbr title="\chillerlan\OAuth">OAuth</abbr></a></li>
-                                            <li><a href="namespaces/chillerlan-oauthtest.html"><abbr title="\chillerlan\OAuthTest">OAuthTest</abbr></a></li>
-                                    </ul>
-                        </section>
+                    <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/chillerlan.html">chillerlan</a></h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="namespaces/chillerlan-oauth.html">OAuth</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/chillerlan-oauthtest.html">OAuthTest</a>
+                
+            </li>
+            </ul>
 
-    
+                        </section>
+                <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace"><a href="packages/Application.html">Application</a></h4>
+
+                        </section>
+            
     <section class="phpdocumentor-sidebar__category">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
@@ -88,6 +102,12 @@
         extends <a href="classes/chillerlan-OAuth-Core-OAuthProvider.html"><abbr title="\chillerlan\OAuth\Core\OAuthProvider">OAuthProvider</abbr></a>
     </span>
     
+            <div class="phpdocumentor-element__package">
+            in package
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                            </ul>
+        </div>
     
     
     </h2>
@@ -96,7 +116,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/RequestTest/RequestTestProvider.php"><a href="files/tests-providers-requesttest-requesttestprovider.html"><abbr title="tests/Providers/RequestTest/RequestTestProvider.php">RequestTestProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">17</span>
-</aside>
+
+    </aside>
 
             <p class="phpdocumentor-summary">Implements an abstract OAuth provider with all methods required by the OAuthInterface.</p>
 
@@ -460,7 +481,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">48</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -471,7 +493,10 @@ anything except host and path will be ignored, scheme will always be set to &quo
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -500,7 +525,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -509,6 +535,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$apiDocs</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -531,7 +558,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -540,6 +568,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$apiURL</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -562,7 +591,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -571,6 +601,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$applicationURL</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -593,7 +624,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -602,6 +634,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$endpoints</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -624,7 +657,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -633,6 +667,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$serviceName</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -655,7 +690,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -664,6 +700,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$userRevokeURL</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -686,7 +723,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">127</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the provider&#039;s access token exchange URL</p>
 
@@ -696,6 +734,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$accessTokenURL</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -718,7 +757,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">102</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional link to the provider&#039;s API docs (magic)</p>
 
@@ -728,6 +768,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$apiDocs</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -750,7 +791,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">142</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">additional headers to use during API access</p>
 
@@ -760,6 +802,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$apiHeaders</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -782,7 +825,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/RequestTest/RequestTestProvider.php"><a href="files/tests-providers-requesttest-requesttestprovider.html"><abbr title="tests/Providers/RequestTest/RequestTestProvider.php">RequestTestProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">19</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the API base URL (magic)</p>
 
@@ -792,6 +836,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$apiURL</span>
      = <span class="phpdocumentor-signature__default-value">&#039;https://localhost&#039;</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -814,7 +859,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">112</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional URL to the provider&#039;s credential registration/application page (magic)</p>
 
@@ -824,6 +870,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$applicationURL</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -846,7 +893,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">137</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">additional headers to use during authentication</p>
 
@@ -856,6 +904,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$authHeaders</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -878,7 +927,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">97</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the authentication URL</p>
 
@@ -888,6 +938,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$authURL</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -910,7 +961,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/RequestTest/RequestTestProvider.php"><a href="files/tests-providers-requesttest-requesttestprovider.html"><abbr title="tests/Providers/RequestTest/RequestTestProvider.php">RequestTestProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">20</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional EndpointMapInterface FQCN</p>
 
@@ -920,6 +972,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$endpointMap</span>
      = <span class="phpdocumentor-signature__default-value">chillerlanOAuthTestProvidersTestEndpoints::class</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -942,7 +995,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">72</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the API endpoints (optional) (magic)</p>
 
@@ -952,6 +1006,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$endpoints</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -974,7 +1029,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">55</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the http client instance</p>
 
@@ -984,6 +1040,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$http</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1006,7 +1063,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">67</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the options instance</p>
 
@@ -1016,8 +1074,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$options</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1038,7 +1096,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">77</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional PSR-17 request factory</p>
 
@@ -1048,6 +1107,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$requestFactory</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1070,7 +1130,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">122</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional URL for application side token revocation</p>
 
@@ -1080,6 +1141,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$revokeURL</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1102,7 +1164,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">92</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the name of the provider (class) (magic)</p>
 
@@ -1112,6 +1175,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$serviceName</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1134,7 +1198,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">60</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">the token storage instance</p>
 
@@ -1144,6 +1209,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$storage</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1166,7 +1232,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">82</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional PSR-17 stream factory</p>
 
@@ -1176,6 +1243,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$streamFactory</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1198,7 +1266,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">87</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional PSR-17 URI factory</p>
 
@@ -1208,6 +1277,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$uriFactory</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1230,7 +1300,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">117</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">an optional link to the page where a user can revoke access tokens (magic)</p>
 
@@ -1240,6 +1311,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__name">$userRevokeURL</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1266,7 +1338,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">253</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Magic API endpoint access. ugly, isn&#039;t it?</p>
 
@@ -1274,8 +1347,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">__call</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$endpointName</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$arguments</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1283,14 +1355,16 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$arguments</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1306,16 +1380,14 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-MagicAPI-ApiClientException.html"><abbr title="\chillerlan\OAuth\MagicAPI\ApiClientException">ApiClientException</abbr></a></span>
                                                             
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1332,7 +1404,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">149</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">OAuthProvider constructor.</p>
 
@@ -1340,8 +1413,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Client\ClientInterface">ClientInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$http</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storage</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\chillerlan\Settings\SettingsContainerInterface">SettingsContainerInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Log\LoggerInterface">LoggerInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$logger</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1349,28 +1421,32 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Client\ClientInterface">ClientInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$storage</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$options</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\chillerlan\Settings\SettingsContainerInterface">SettingsContainerInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$logger</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Log\LoggerInterface">LoggerInterface</abbr></span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1386,16 +1462,14 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-MagicAPI-ApiClientException.html"><abbr title="\chillerlan\OAuth\MagicAPI\ApiClientException">ApiClientException</abbr></a></span>
                                                             
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1412,7 +1486,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">184</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Magic getter for the properties specified in self::ALLOWED_PROPERTIES</p>
 
@@ -1420,8 +1495,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">__get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1429,7 +1503,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1438,8 +1513,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed|null</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1456,14 +1530,16 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/RequestTest/RequestTestProvider.php"><a href="files/tests-providers-requesttest-requesttestprovider.html"><abbr title="tests/Providers/RequestTest/RequestTestProvider.php">RequestTestProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">22</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">getAuthURL</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\UriInterface">UriInterface</abbr></span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1471,7 +1547,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1480,8 +1557,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\UriInterface">UriInterface</abbr></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1498,14 +1574,16 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="tests/Providers/RequestTest/RequestTestProvider.php"><a href="files/tests-providers-requesttest-requesttestprovider.html"><abbr title="tests/Providers/RequestTest/RequestTestProvider.php">RequestTestProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">26</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">getRequestAuthorization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\RequestInterface">RequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\RequestInterface">RequestInterface</abbr></span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1513,14 +1591,16 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\RequestInterface">RequestInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$token</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1529,8 +1609,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\RequestInterface">RequestInterface</abbr></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1547,7 +1626,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">207</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Returns the current OAuthStorageInterface</p>
 
@@ -1555,8 +1635,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">getStorage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -1569,24 +1648,21 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">codeCoverageIgnore</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1603,7 +1679,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">390</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Prepares an API request to $path with the given parameters, gets authorization, fires the request
 and returns a PSR-7 ResponseInterface with the corresponding API response</p>
@@ -1612,8 +1689,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">request</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$method</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$body</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$headers</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1621,40 +1697,35 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$params</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$method</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$body</span>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$headers</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
@@ -1669,16 +1740,14 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1695,15 +1764,15 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">468</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">sendRequest</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\RequestInterface">RequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1711,7 +1780,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\RequestInterface">RequestInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1726,16 +1796,14 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1752,7 +1820,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">215</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Sets an optional PSR-17 RequestFactoryInterface</p>
 
@@ -1760,8 +1829,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">setRequestFactory</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\RequestFactoryInterface">RequestFactoryInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$requestFactory</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1769,7 +1837,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\RequestFactoryInterface">RequestFactoryInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1784,24 +1853,21 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">codeCoverageIgnore</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1818,7 +1884,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">197</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Sets an optional OAuthStorageInterface</p>
 
@@ -1826,8 +1893,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">setStorage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storage</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1835,7 +1901,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1850,24 +1917,21 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">codeCoverageIgnore</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1884,7 +1948,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">225</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Sets an optional PSR-17 StreamFactoryInterface</p>
 
@@ -1892,8 +1957,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">setStreamFactory</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\StreamFactoryInterface">StreamFactoryInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$streamFactory</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1901,7 +1965,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\StreamFactoryInterface">StreamFactoryInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1916,24 +1981,21 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">codeCoverageIgnore</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1950,7 +2012,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">235</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Sets an optional PSR-17 UriFactoryInterface</p>
 
@@ -1958,8 +2021,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">setUriFactory</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\UriFactoryInterface">UriFactoryInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$uriFactory</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1967,7 +2029,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Psr\Http\Message\UriFactoryInterface">UriFactoryInterface</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1982,24 +2045,21 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">codeCoverageIgnore</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html"><abbr title="\chillerlan\OAuth\Core\OAuthInterface">OAuthInterface</abbr></a></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2016,7 +2076,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">376</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Builds a query string from the given parameters</p>
 
@@ -2024,8 +2085,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">buildQuery</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$encoding</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$delimiter</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$enclosure</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2033,28 +2093,32 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$encoding</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$delimiter</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$enclosure</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2063,8 +2127,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2081,7 +2144,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">362</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Cleans an array of body parameters</p>
 
@@ -2089,8 +2153,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">cleanBodyParams</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">iteratable&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2098,7 +2161,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type">iteratable&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2107,8 +2171,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2125,7 +2188,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">355</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Cleans an array of query parameters</p>
 
@@ -2133,8 +2197,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">cleanQueryParams</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">iteratable&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2142,7 +2205,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                 : <span class="phpdocumentor-signature__argument__return-type">iteratable&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2151,8 +2215,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2169,7 +2232,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">244</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Creates an access token with the provider set to $this-&gt;serviceName</p>
 
@@ -2177,16 +2241,14 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">createAccessToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2203,7 +2265,8 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">441</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Determine the request target from the given URI (path segment or URL) with respect to $apiURL,
 anything except host and path will be ignored, scheme will always be set to &quot;https&quot;.</p>
@@ -2222,7 +2285,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2238,8 +2302,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html#method_request"><abbr title="\chillerlan\OAuth\Core\OAuthInterface::request()">OAuthInterface::request()</abbr></a></span>
                                         
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
@@ -2247,16 +2310,14 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-Core-ProviderException.html"><abbr title="\chillerlan\OAuth\Core\ProviderException">ProviderException</abbr></a></span>
                                                             
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2273,7 +2334,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">369</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Merges a set of parameters into the given querystring and returns the result querystring</p>
 
@@ -2281,8 +2343,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">mergeQuery</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$uri</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2290,14 +2351,16 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$query</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2306,8 +2369,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2324,7 +2386,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">314</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Checks the given path elements and returns the given path with placeholders replaced</p>
 
@@ -2332,8 +2395,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">parsePathElements</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path_elements</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path_element_count</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$arguments</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2341,28 +2403,32 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$path_elements</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$path_element_count</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$arguments</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2378,16 +2444,14 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-MagicAPI-ApiClientException.html"><abbr title="\chillerlan\OAuth\MagicAPI\ApiClientException">ApiClientException</abbr></a></span>
                                                             
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2404,7 +2468,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">383</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Parses the given querystring into an associative array</p>
 
@@ -2412,8 +2477,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">parseQuery</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$querystring</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$urlEncoding</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2421,14 +2485,16 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$urlEncoding</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2437,8 +2503,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -2455,7 +2520,8 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthProvider.php"><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">337</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Checks an array against an allowlist and removes any parameter that is not allowed</p>
 
@@ -2463,8 +2529,7 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <span class="phpdocumentor-signature__visibility">protected</span>
                 <span class="phpdocumentor-signature__name">removeUnlistedParams</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowed</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2472,14 +2537,16 @@ anything except host and path will be ignored, scheme will always be set to &quo
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$allowed</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2488,11 +2555,72 @@ anything except host and path will be ignored, scheme will always be set to &quo
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
             </section>
+
+        
+    <script type="text/javascript">
+        function loadExternalCodeSnippets(line) {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                pre.setAttribute('data-line', line)
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        var modals = document.querySelectorAll("[data-modal]");
+
+        modals.forEach(function (trigger) {
+            trigger.addEventListener("click", function (event) {
+                //event.preventDefault();
+                const modal = document.getElementById(trigger.dataset.modal);
+                modal.classList.add("phpdocumentor-modal__open");
+                loadExternalCodeSnippets(trigger.dataset.line)
+                const exits = modal.querySelectorAll("[data-exit-button]");
+                exits.forEach(function (exit) {
+                    exit.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        modal.classList.remove("phpdocumentor-modal__open");
+                    });
+                });
+            });
+        });
+    </script>
 
     </article>
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
@@ -2515,5 +2643,9 @@ anything except host and path will be ignored, scheme will always be set to &quo
     <script>
         cssVars({});
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
 </body>
 </html>

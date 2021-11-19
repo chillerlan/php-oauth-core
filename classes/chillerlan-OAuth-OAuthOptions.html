@@ -8,12 +8,16 @@
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -48,17 +52,27 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
-    
-    <section class="phpdocumentor-sidebar__category">
-        <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
-                                                <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/chillerlan.html"><abbr title="\chillerlan">chillerlan</abbr></a></h4>
-                <ul class="phpdocumentor-list">
-                                            <li><a href="namespaces/chillerlan-oauth.html"><abbr title="\chillerlan\OAuth">OAuth</abbr></a></li>
-                                            <li><a href="namespaces/chillerlan-oauthtest.html"><abbr title="\chillerlan\OAuthTest">OAuthTest</abbr></a></li>
-                                    </ul>
-                        </section>
+                    <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/chillerlan.html">chillerlan</a></h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="namespaces/chillerlan-oauth.html">OAuth</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/chillerlan-oauthtest.html">OAuthTest</a>
+                
+            </li>
+            </ul>
 
-    
+                        </section>
+                <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace"><a href="packages/Application.html">Application</a></h4>
+
+                        </section>
+            
     <section class="phpdocumentor-sidebar__category">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
@@ -86,6 +100,12 @@
         extends <abbr title="\chillerlan\Settings\SettingsContainerAbstract">SettingsContainerAbstract</abbr>
     </span>
     
+            <div class="phpdocumentor-element__package">
+            in package
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                            </ul>
+        </div>
     
     
             <span class="phpdocumentor-element__extends">
@@ -97,7 +117,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">43</span>
-</aside>
+
+    </aside>
 
             <p class="phpdocumentor-summary">This class holds all settings related to the OAuth provider as well as the default HTTP client.</p>
 
@@ -314,7 +335,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -323,6 +345,7 @@
     <span class="phpdocumentor-signature__name">$ca_info</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -345,7 +368,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -354,6 +378,7 @@
     <span class="phpdocumentor-signature__name">$callbackURL</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -376,7 +401,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -385,6 +411,7 @@
     <span class="phpdocumentor-signature__name">$curl_check_OCSP</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -407,7 +434,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -416,6 +444,7 @@
     <span class="phpdocumentor-signature__name">$curl_multi_options</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -438,7 +467,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -447,6 +477,7 @@
     <span class="phpdocumentor-signature__name">$curl_options</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -469,7 +500,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -478,6 +510,7 @@
     <span class="phpdocumentor-signature__name">$key</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -500,7 +533,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -509,6 +543,7 @@
     <span class="phpdocumentor-signature__name">$retries</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -531,7 +566,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -540,6 +576,7 @@
     <span class="phpdocumentor-signature__name">$secret</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -562,7 +599,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -571,6 +609,7 @@
     <span class="phpdocumentor-signature__name">$sessionStart</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -593,7 +632,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -602,6 +642,7 @@
     <span class="phpdocumentor-signature__name">$sessionStateVar</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -624,7 +665,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -633,6 +675,7 @@
     <span class="phpdocumentor-signature__name">$sessionTokenVar</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -655,7 +698,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -664,6 +708,7 @@
     <span class="phpdocumentor-signature__name">$sleep</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -686,7 +731,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -695,6 +741,7 @@
     <span class="phpdocumentor-signature__name">$ssl_verifypeer</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -717,7 +764,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -726,6 +774,7 @@
     <span class="phpdocumentor-signature__name">$timeout</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -748,7 +797,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -759,6 +809,8 @@
 
         <section class="phpdocumentor-description"><p>HTTPOptionsTrait</p>
 </section>
+
+        <section class="phpdocumentor-description"></section>
 
     
 
@@ -780,7 +832,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -789,6 +842,7 @@
     <span class="phpdocumentor-signature__name">$user_agent</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -811,7 +865,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptions.php"><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -820,6 +875,7 @@
     <span class="phpdocumentor-signature__name">$window_size</span>
     </code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -842,7 +898,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptionsTrait.php"><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">31</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The callback URL associated with your application</p>
 
@@ -852,6 +909,7 @@
     <span class="phpdocumentor-signature__name">$callbackURL</span>
      = <span class="phpdocumentor-signature__default-value">&#039;&#039;</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -874,7 +932,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptionsTrait.php"><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">21</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The application key (or id) given by your provider</p>
 
@@ -884,6 +943,7 @@
     <span class="phpdocumentor-signature__name">$key</span>
      = <span class="phpdocumentor-signature__default-value">&#039;&#039;</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -906,7 +966,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptionsTrait.php"><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">26</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The application secret given by your provider</p>
 
@@ -916,6 +977,7 @@
     <span class="phpdocumentor-signature__name">$secret</span>
      = <span class="phpdocumentor-signature__default-value">&#039;&#039;</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -938,7 +1000,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptionsTrait.php"><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">38</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Whether or not to start the session when session storage is used</p>
 
@@ -948,6 +1011,7 @@
     <span class="phpdocumentor-signature__name">$sessionStart</span>
      = <span class="phpdocumentor-signature__default-value">true</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -962,8 +1026,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-Storage-SessionStorage.html"><abbr title="\chillerlan\OAuth\Storage\SessionStorage">SessionStorage</abbr></a></span>
                                         
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -985,7 +1048,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptionsTrait.php"><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">52</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The session array key for &lt;state&gt; storage (OAuth2)</p>
 
@@ -995,6 +1059,7 @@
     <span class="phpdocumentor-signature__name">$sessionStateVar</span>
      = <span class="phpdocumentor-signature__default-value">&#039;chillerlan-oauth-state&#039;</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1009,8 +1074,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-Storage-SessionStorage.html"><abbr title="\chillerlan\OAuth\Storage\SessionStorage">SessionStorage</abbr></a></span>
                                         
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -1032,7 +1096,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptionsTrait.php"><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">45</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The session array key for token storage</p>
 
@@ -1042,6 +1107,7 @@
     <span class="phpdocumentor-signature__name">$sessionTokenVar</span>
      = <span class="phpdocumentor-signature__default-value">&#039;chillerlan-oauth-token&#039;</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1056,8 +1122,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-Storage-SessionStorage.html"><abbr title="\chillerlan\OAuth\Storage\SessionStorage">SessionStorage</abbr></a></span>
                                         
-                                                 <section class="phpdocumentor-description"></section>
-
+                                             
                                     </dd>
                         </dl>
 
@@ -1079,7 +1144,8 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/OAuthOptionsTrait.php"><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">57</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Whether or not to automatically refresh access tokens (OAuth2)</p>
 
@@ -1089,6 +1155,7 @@
     <span class="phpdocumentor-signature__name">$tokenAutoRefresh</span>
      = <span class="phpdocumentor-signature__default-value">true</span></code>
 
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -1097,6 +1164,68 @@
             </section>
 
         
+        
+    <script type="text/javascript">
+        function loadExternalCodeSnippets(line) {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                pre.setAttribute('data-line', line)
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        var modals = document.querySelectorAll("[data-modal]");
+
+        modals.forEach(function (trigger) {
+            trigger.addEventListener("click", function (event) {
+                //event.preventDefault();
+                const modal = document.getElementById(trigger.dataset.modal);
+                modal.classList.add("phpdocumentor-modal__open");
+                loadExternalCodeSnippets(trigger.dataset.line)
+                const exits = modal.querySelectorAll("[data-exit-button]");
+                exits.forEach(function (exit) {
+                    exit.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        modal.classList.remove("phpdocumentor-modal__open");
+                    });
+                });
+            });
+        });
+    </script>
+
     </article>
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
@@ -1118,5 +1247,9 @@
     <script>
         cssVars({});
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
 </body>
 </html>
