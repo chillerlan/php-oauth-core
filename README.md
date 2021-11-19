@@ -8,7 +8,6 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [![Scrunitizer CI][scrutinizer-badge]][scrutinizer]
 [![Packagist downloads][downloads-badge]][downloads]<br/>
 [![Continuous Integration][gh-action-badge]][gh-action]
-[![phpDocs][gh-docs-badge]][gh-docs]
 
 [php-badge]: https://img.shields.io/packagist/php-v/chillerlan/php-oauth-core?logo=php&color=8892BF
 [php]: https://www.php.net/supported-versions.php
@@ -24,8 +23,6 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth-core/stats
 [gh-action-badge]: https://github.com/chillerlan/php-oauth-core/workflows/Continuous%20Integration/badge.svg
 [gh-action]: https://github.com/chillerlan/php-oauth-core/actions
-[gh-docs-badge]: https://github.com/chillerlan/php-oauth-core/workflows/Docs/badge.svg
-[gh-docs]: https://github.com/chillerlan/php-oauth-core/actions?query=workflow%3ADocs
 
 # Documentation
 See [the wiki](https://github.com/chillerlan/php-oauth-core/wiki) for advanced documentation.
@@ -49,9 +46,11 @@ An API documentation created with [phpDocumentor](https://www.phpdoc.org/) can b
 	}
 }
 ```
+In case you want to keep using `dev-main`, specify the hash of a commit to avoid running into unforseen issues like so: `dev-main#ff85785139b9531a6c29d41cc161e4878d54491d`
+
 Profit!
 
 # Disclaimer
 OAuth tokens are secrets and should be treated as such. Store them in a safe place,
-[consider encryption](http://php.net/manual/book.sodium.php).<br/>
+[consider encryption](http://php.net/manual/book.sodium.php). <br/>
 I won't take responsibility for stolen auth tokens. Use at your own risk.
