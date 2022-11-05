@@ -15,10 +15,10 @@
 
 namespace chillerlan\OAuth\Core;
 
+use chillerlan\HTTP\Utils\MessageUtil;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 use function array_merge, base64_encode, date, hash_equals, implode, is_array, json_decode, random_bytes, sha1, sprintf;
-use function chillerlan\HTTP\Utils\decompress_content;
 
 use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 
@@ -104,7 +104,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
 		// silly amazon sends compressed data...
-		$data = json_decode(decompress_content($response), true, 512, JSON_THROW_ON_ERROR);
+		$data = json_decode(MessageUtil::decompress($response), true, 512, JSON_THROW_ON_ERROR);
 
 		if(!is_array($data)){
 			throw new ProviderException('unable to parse token response');

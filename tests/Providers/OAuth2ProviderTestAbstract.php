@@ -12,7 +12,7 @@ namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
-use chillerlan\HTTP\Utils\Query;
+use chillerlan\HTTP\Utils\QueryUtil;
 
 use function explode, parse_url, sleep, time;
 use const PHP_URL_QUERY;
@@ -50,7 +50,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 	public function testGetAuthURL():void{
 		$url   = $this->provider->getAuthURL(['client_secret' => 'foo'], ['some_scope']);
-		$query = Query::parse(parse_url($url, PHP_URL_QUERY));
+		$query = QueryUtil::parse(parse_url($url, PHP_URL_QUERY));
 
 		$this::assertArrayNotHasKey('client_secret', $query);
 		$this::assertSame($this->options->key, $query['client_id']);

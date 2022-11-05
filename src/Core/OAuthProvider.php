@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
-use chillerlan\HTTP\Utils\Query;
+use chillerlan\HTTP\Utils\QueryUtil;
 use chillerlan\OAuth\MagicAPI\{ApiClientException, EndpointMap, EndpointMapInterface};
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
@@ -28,7 +28,6 @@ use ReflectionClass;
 use function array_slice, class_exists, count, implode, in_array, is_array,
 	is_scalar, is_string, json_encode, sprintf, strpos, strtolower;
 
-use function chillerlan\HTTP\Utils\parseUrl;
 use const PHP_QUERY_RFC1738;
 
 /**
@@ -353,35 +352,35 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * Cleans an array of query parameters
 	 */
 	protected function cleanQueryParams(iterable $params):array{
-		return Query::cleanParams($params, Query::BOOLEANS_AS_INT_STRING, true);
+		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_INT_STRING, true);
 	}
 
 	/**
 	 * Cleans an array of body parameters
 	 */
 	protected function cleanBodyParams(iterable $params):array{
-		return Query::cleanParams($params, Query::BOOLEANS_AS_BOOL, true);
+		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_BOOL, true);
 	}
 
 	/**
 	 * Merges a set of parameters into the given querystring and returns the result querystring
 	 */
 	protected function mergeQuery(string $uri, array $query):string{
-		return Query::merge($uri, $query);
+		return QueryUtil::merge($uri, $query);
 	}
 
 	/**
 	 * Builds a query string from the given parameters
 	 */
 	protected function buildQuery(array $params, int $encoding = null, string $delimiter = null, string $enclosure = null):string{
-		return Query::build($params, $encoding, $delimiter, $enclosure);
+		return QueryUtil::build($params, $encoding, $delimiter, $enclosure);
 	}
 
 	/**
 	 * Parses the given querystring into an associative array
 	 */
 	protected function parseQuery(string $querystring, int $urlEncoding = null):array{
-		return Query::parse($querystring, $urlEncoding);
+		return QueryUtil::parse($querystring, $urlEncoding);
 	}
 
 	/**
@@ -439,7 +438,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getRequestTarget(string $uri):string{
-		$parsedURL = parseUrl($uri);
+		$parsedURL = QueryUtil::parseUrl($uri);
 
 		if(!isset($parsedURL['path'])){
 			throw new ProviderException('invalid path');
@@ -450,7 +449,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			// back out if it doesn't match
 			/** @phan-suppress-next-line PhanTypeArraySuspiciousNullable - $this->>apiURL should always return a host */
-			if($parsedURL['host'] !== parseUrl($this->apiURL)['host']){
+			if($parsedURL['host'] !== QueryUtil::parseUrl($this->apiURL)['host']){
 				throw new ProviderException('given host does not match provider host');
 			}
 

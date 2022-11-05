@@ -12,11 +12,11 @@
 
 namespace chillerlan\OAuth\Core;
 
+use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
 use function array_map, array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
 	implode, in_array, random_bytes, strtoupper, time;
-use function chillerlan\HTTP\Utils\{decompress_content, parseUrl};
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -75,7 +75,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
-		$data = $this->parseQuery(decompress_content($response));
+		$data = $this->parseQuery(MessageUtil::decompress($response));
 
 		if(empty($data)){
 			throw new ProviderException('unable to parse token response');
@@ -130,7 +130,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{
-		$parsed = parseUrl($url);
+		$parsed = QueryUtil::parseUrl($url);
 
 		if(!isset($parsed['host']) || !isset($parsed['scheme']) || !in_array($parsed['scheme'], ['http', 'https'], true)){
 			throw new ProviderException('getSignature: invalid url');

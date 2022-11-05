@@ -11,7 +11,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
-use chillerlan\HTTP\Utils\Query;
+use chillerlan\HTTP\Utils\QueryUtil;
 
 use function parse_url;
 
@@ -45,7 +45,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetAuthURL():void{
-		$query = Query::parse(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY));
+		$query = QueryUtil::parse(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY));
 
 		$this::assertSame('test_request_token', $query['oauth_token']);
 	}

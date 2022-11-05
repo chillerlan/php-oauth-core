@@ -10,6 +10,7 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
+use chillerlan\HTTP\Utils\MessageUtil;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\{NullHandler, StreamHandler};
 use Monolog\Logger;
@@ -24,7 +25,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Exception, ReflectionClass, ReflectionMethod, ReflectionProperty;
 
-use function chillerlan\HTTP\Utils\{get_json, get_xml};
 use function constant, defined, ini_set;
 use const JSON_UNESCAPED_SLASHES;
 
@@ -164,7 +164,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected function responseJson(ResponseInterface $response){
 		$response->getBody()->rewind();
 
-		return get_json($response);
+		return MessageUtil::decodeJSON($response);
 	}
 
 	/**
@@ -175,7 +175,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected function responseXML(ResponseInterface $response){
 		$response->getBody()->rewind();
 
-		return get_xml($response);
+		return MessageUtil::decodeXML($response);
 	}
 
 }
