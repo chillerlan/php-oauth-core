@@ -35,7 +35,7 @@ jobs:
           extensions: ast, curl, json, simplexml, zlib
 
       - name: "Update dependencies with composer"
-        run: composer update --no-interaction --no-progress --prefer-source
+        uses: ramsey/composer-install@v2
 
       - name: "Run phan"
         run: php vendor/bin/phan
@@ -98,7 +98,7 @@ jobs:
           extensions: curl, json, simplexml, zlib
 
       - name: "Install dependencies with composer"
-        run: composer update --no-interaction --no-progress --prefer-source
+        uses: ramsey/composer-install@v2
 
       - name: "Run tests with phpunit"
         run: php vendor/phpunit/phpunit/phpunit --configuration=phpunit.xml.dist
