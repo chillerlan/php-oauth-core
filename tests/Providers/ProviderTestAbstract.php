@@ -161,9 +161,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	 *
 	 * @return \stdClass|array|bool
 	 */
-	protected function responseJson(ResponseInterface $response){
-		$response->getBody()->rewind();
-
+	protected function responseJson(ResponseInterface $response):mixed{
 		return MessageUtil::decodeJSON($response);
 	}
 
@@ -172,9 +170,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	 *
 	 * @return \SimpleXMLElement|array|bool
 	 */
-	protected function responseXML(ResponseInterface $response){
-		$response->getBody()->rewind();
-
+	protected function responseXML(ResponseInterface $response):mixed{
 		return MessageUtil::decodeXML($response);
 	}
 

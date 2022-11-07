@@ -13,6 +13,7 @@ namespace chillerlan\OAuthTest\Providers\RequestTest;
 use chillerlan\OAuth\Core\{AccessToken, OAuthProvider};
 use chillerlan\OAuthTest\Providers\TestEndpoints;
 use Psr\Http\Message\{RequestInterface, UriInterface};
+use Exception;
 
 final class RequestTestProvider extends OAuthProvider{
 
@@ -20,7 +21,7 @@ final class RequestTestProvider extends OAuthProvider{
 	protected ?string $endpointMap = TestEndpoints::class;
 
 	public function getAuthURL(array $params = null):UriInterface{
-		// unused
+		throw new Exception('should not happen (unused method)');
 	}
 
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{

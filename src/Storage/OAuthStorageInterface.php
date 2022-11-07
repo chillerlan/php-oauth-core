@@ -88,19 +88,16 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 * Prepares an AccessToken for storage (serialize, encrypt etc.)
 	 * and returns a value that is suited for the underlying storage engine
 	 *
-	 * @return mixed
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function toStorage(AccessToken $token);
+	public function toStorage(AccessToken $token):mixed;
 
 	/**
 	 * Retrieves token data from the underlying storage engine
 	 * (decrypt, unserialize etc.) and returns an AccessToken
 	 *
-	 * @param mixed $data
-
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function fromStorage($data):AccessToken;
+	public function fromStorage(mixed $data):AccessToken;
 
 }

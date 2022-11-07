@@ -26,7 +26,7 @@ use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
 
 use function array_slice, class_exists, count, implode, in_array, is_array,
-	is_scalar, is_string, json_encode, sprintf, strpos, strtolower;
+	is_scalar, is_string, json_encode, sprintf, strtolower, str_starts_with;
 
 use const PHP_QUERY_RFC1738;
 
@@ -180,7 +180,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 *
 	 * @return mixed|null
 	 */
-	public function __get(string $name){
+	public function __get(string $name):mixed{
 
 		if(in_array($name, $this::ALLOWED_PROPERTIES, true)){
 			return $this->{$name};
@@ -390,7 +390,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		string $path,
 		array $params = null,
 		string $method = null,
-		$body = null,
+		StreamInterface|array|string $body = null,
 		array $headers = null
 	):ResponseInterface{
 
@@ -408,7 +408,7 @@ abstract class OAuthProvider implements OAuthInterface{
 				if($contentType === 'application/x-www-form-urlencoded'){
 					$body = $this->streamFactory->createStream($this->buildQuery($body, PHP_QUERY_RFC1738));
 				}
-				elseif($contentType === 'application/json' || $contentType === 'application/vnd.api+json'){
+				elseif(in_array($contentType, ['application/json', 'application/vnd.api+json'])){
 					$body = $this->streamFactory->createStream(json_encode($body));
 				}
 			}
@@ -446,10 +446,11 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		// for some reason we were given a host name
 		if(isset($parsedURL['host'])){
+			$api  = QueryUtil::parseUrl($this->apiURL);
+			$host = $api['host'] ?? null;
 
 			// back out if it doesn't match
-			/** @phan-suppress-next-line PhanTypeArraySuspiciousNullable - $this->>apiURL should always return a host */
-			if($parsedURL['host'] !== QueryUtil::parseUrl($this->apiURL)['host']){
+			if($parsedURL['host'] !== $host){
 				throw new ProviderException('given host does not match provider host');
 			}
 
@@ -467,7 +468,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 
 		// get authorization only if we request the provider API
-		if(strpos((string)$request->getUri(), $this->apiURL) === 0){
+		if(str_starts_with((string)$request->getUri(), $this->apiURL)){
 			$token = $this->storage->getAccessToken($this->serviceName);
 
 			// attempt to refresh an expired token

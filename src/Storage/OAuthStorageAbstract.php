@@ -49,7 +49,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	 * @inheritDoc
 	 * @phan-suppress PhanTypeMismatchReturnSuperType
 	 */
-	public function fromStorage($data):AccessToken{
+	public function fromStorage(mixed $data):AccessToken{
 
 		if(!is_string($data)){
 			throw new OAuthStorageException('invalid data');

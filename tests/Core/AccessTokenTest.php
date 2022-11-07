@@ -33,12 +33,8 @@ final class AccessTokenTest extends TestCase{
 
 	/**
 	 * @dataProvider tokenDataProvider
-	 *
-	 * @param string $property
-	 * @param mixed  $value
-	 * @param mixed  $data
 	 */
-	public function testDefaultsGetSet(string $property, $value, $data):void{
+	public function testDefaultsGetSet(string $property, mixed $value, mixed $data):void{
 		// test defaults
 		$this::assertSame($value, $this->token->{$property});
 
@@ -61,9 +57,6 @@ final class AccessTokenTest extends TestCase{
 
 	/**
 	 * @dataProvider expiryDataProvider
-	 *
-	 * @param int|null $expires
-	 * @param int      $expected
 	 */
 	public function testSetExpiry(?int $expires, int $expected):void{
 		$this->token->expires = $expires;
@@ -81,9 +74,6 @@ final class AccessTokenTest extends TestCase{
 
 	/**
 	 * @dataProvider isExpiredDataProvider
-	 *
-	 * @param int  $expires
-	 * @param bool $isExpired
 	 */
 	public function testIsExpired(int $expires, bool $isExpired):void{
 		$this->token->setExpiry($expires);

@@ -15,7 +15,7 @@ namespace chillerlan\OAuth\Core;
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
-use function array_map, array_merge, base64_encode, function_exists, hash_hmac,
+use function array_map, array_merge, base64_encode, hash_hmac,
 	implode, in_array, random_bytes, sodium_bin2hex, strtoupper, time;
 
 /**

@@ -16,7 +16,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Http\Message\{
 	RequestFactoryInterface, RequestInterface, ResponseInterface,
-	StreamFactoryInterface, UriFactoryInterface, UriInterface
+	StreamFactoryInterface, StreamInterface, UriFactoryInterface, UriInterface
 };
 
 /**
@@ -50,19 +50,13 @@ interface OAuthInterface extends ApiClientInterface, ClientInterface, LoggerAwar
 	 * Prepares an API request to $path with the given parameters, gets authorization, fires the request
 	 * and returns a PSR-7 ResponseInterface with the corresponding API response
 	 *
-	 * @param string                                               $path
-	 * @param array|null                                           $params
-	 * @param string|null                                          $method
-	 * @param array|string|\Psr\Http\Message\StreamInterface|null  $body
-	 * @param array|null                                           $headers
-
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function request(
 		string $path,
 		array $params = null,
 		string $method = null,
-		$body = null,
+		StreamInterface|array|string $body = null,
 		array $headers = null
 	):ResponseInterface;
 

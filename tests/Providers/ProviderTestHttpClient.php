@@ -13,7 +13,7 @@ namespace chillerlan\OAuthTest\Providers;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
 
-use function strpos;
+use function str_contains;
 
 /**
  * a dummy client that returns a prepared set of responses
@@ -41,7 +41,7 @@ final class ProviderTestHttpClient implements ClientInterface{
 		$path = $request->getUri()->getPath();
 
 		// echo the request
-		if(strpos($path, OAuthProviderTestAbstract::ECHO_REQUEST) !== false){
+		if(str_contains($path, OAuthProviderTestAbstract::ECHO_REQUEST)){
 			$response = $this->responseFactory->createResponse()->withHeader('x-request-uri', (string)$request->getUri());
 
 			foreach($request->getHeaders() as $header => $values){
