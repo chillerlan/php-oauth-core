@@ -29,7 +29,7 @@ jobs:
       - name: "Install PHP"
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "7.4"
+          php-version: "8.1"
           tools: pecl
           coverage: none
           extensions: ast, curl, json, simplexml, zlib
@@ -53,7 +53,7 @@ jobs:
       - name: "Install PHP"
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "7.4"
+          php-version: "8.1"
           coverage: none
           tools: phpDocumentor
           extensions: curl, json, simplexml, zlib
@@ -81,8 +81,6 @@ jobs:
           - ubuntu-latest
           - windows-latest
         php-version:
-          - "7.4"
-          - "8.0"
           - "8.1"
           - "8.2"
 
