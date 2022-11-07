@@ -15,8 +15,8 @@ namespace chillerlan\OAuth\Core;
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 
-use function array_map, array_merge, base64_encode, bin2hex, function_exists, hash_hmac,
-	implode, in_array, random_bytes, strtoupper, time;
+use function array_map, array_merge, base64_encode, function_exists, hash_hmac,
+	implode, in_array, random_bytes, sodium_bin2hex, strtoupper, time;
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -113,13 +113,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * returns a 32 byte random string (in hexadecimal representation) for use as a nonce
 	 */
 	protected function nonce():string{
-		$nonce = random_bytes(32);
-
-		// use the sodium extension if available
-		/** @noinspection PhpFullyQualifiedNameUsageInspection */
-		return function_exists('sodium_bin2hex')
-			? \sodium_bin2hex($nonce)
-			: bin2hex($nonce);
+		return sodium_bin2hex(random_bytes(32));
 	}
 
 	/**

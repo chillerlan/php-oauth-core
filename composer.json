@@ -29,6 +29,7 @@
 		"ext-curl":"*",
 		"ext-json":"*",
 		"ext-simplexml":"*",
+		"ext-sodium":"*",
 		"ext-zlib": "*",
 		"chillerlan/php-httpinterface": "dev-main#877910fc2c46bc268a48e34a3c1e0f4556baf26b",
 		"psr/http-client":"^1.0",

@@ -56,7 +56,7 @@ jobs:
           php-version: "8.1"
           coverage: none
           tools: phpDocumentor
-          extensions: curl, json, simplexml, zlib
+          extensions: curl, json, simplexml, sodium, zlib
 
       - name: "Build Docs"
         run: phpdoc --config=phpdoc.xml
@@ -93,7 +93,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           coverage: pcov
-          extensions: curl, json, simplexml, zlib
+          extensions: curl, json, simplexml, sodium, zlib
 
       - name: "Install dependencies with composer"
         uses: ramsey/composer-install@v2
