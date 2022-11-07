@@ -1,13 +1,13 @@
 # chillerlan/php-oauth-core
-A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://github.com/codemasher/PHPoAuthLib) on [Lusitanian/PHPoAuthLib](https://github.com/Lusitanian/PHPoAuthLib).
+A PHP OAuth1/2 client with an integrated API wrapper, [loosely based](https://github.com/codemasher/PHPoAuthLib) on [Lusitanian/PHPoAuthLib](https://github.com/Lusitanian/PHPoAuthLib).
 
 [![PHP Version Support][php-badge]][php]
 [![Packagist version][packagist-badge]][packagist]
 [![License][license-badge]][license]
+[![Continuous Integration][gh-action-badge]][gh-action]
 [![CodeCov][coverage-badge]][coverage]
 [![Scrunitizer CI][scrutinizer-badge]][scrutinizer]
-[![Packagist downloads][downloads-badge]][downloads]<br/>
-[![Continuous Integration][gh-action-badge]][gh-action]
+[![Packagist downloads][downloads-badge]][downloads]
 
 [php-badge]: https://img.shields.io/packagist/php-v/chillerlan/php-oauth-core?logo=php&color=8892BF
 [php]: https://www.php.net/supported-versions.php
@@ -21,7 +21,7 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-oauth-core
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth-core.svg?logo=packagist
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth-core/stats
-[gh-action-badge]: https://github.com/chillerlan/php-oauth-core/workflows/Continuous%20Integration/badge.svg
+[gh-action-badge]: https://img.shields.io/github/workflow/status/chillerlan/php-oauth-core/Continuous%20Integration?logo=github
 [gh-action]: https://github.com/chillerlan/php-oauth-core/actions
 
 # Documentation
@@ -29,7 +29,8 @@ See [the wiki](https://github.com/chillerlan/php-oauth-core/wiki) for advanced d
 An API documentation created with [phpDocumentor](https://www.phpdoc.org/) can be found at https://chillerlan.github.io/php-oauth-core/ (WIP).
 
 ## Requirements
-- PHP 7.4+
+- PHP 8.1+
+  - extensions: `curl`, `json`, `simplexml`, `sodium`, `zlib`
 - a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library of your choice ([there is one included](https://github.com/chillerlan/php-httpinterface), though)
   - optional [PSR-17](https://www.php-fig.org/psr/psr-17/) compatible Request-, Response- and UriFactories
 - see [`chillerlan/php-oauth-providers`](https://github.com/chillerlan/php-oauth-providers) for already implemented providers
@@ -41,7 +42,7 @@ An API documentation created with [phpDocumentor](https://www.phpdoc.org/) can b
 ```json
 {
 	"require": {
-		"php": "^7.4 || ^8.0",
+		"php": "^8.1",
 		"chillerlan/php-oauth-core": "dev-main"
 	}
 }
