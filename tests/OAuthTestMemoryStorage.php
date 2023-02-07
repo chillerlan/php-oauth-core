@@ -1,6 +1,6 @@
 <?php
 /**
- * Class OAuthTestSessionStorage
+ * Class OAuthTestMemoryStorage
  *
  * @created      26.07.2019
  * @author       smiley <smiley@chillerlan.net>

@@ -8,12 +8,24 @@
 >
 	<testsuites>
 		<testsuite name="php-oauth-core test suite">
-			<directory suffix=".php">./tests</directory>
+			<directory suffix=".php">tests</directory>
+			<!-- exclude abstract/dummy/helper classes -->
+			<exclude>tests/Providers/OAuth1ProviderTestAbstract.php</exclude>
+			<exclude>tests/Providers/OAuth2ProviderTestAbstract.php</exclude>
+			<exclude>tests/Providers/OAuthProviderTestAbstract.php</exclude>
+			<exclude>tests/Providers/ProviderTestAbstract.php</exclude>
+			<exclude>tests/Storage/StorageTestAbstract.php</exclude>
+			<exclude>tests/Providers/OAuth1/DummyOAuth1Provider.php</exclude>
+			<exclude>tests/Providers/OAuth2/DummyOAuth2BasicProvider.php</exclude>
+			<exclude>tests/Providers/OAuth2/DummyOAuth2Provider.php</exclude>
+			<exclude>tests/Providers/RequestTest/RequestTestProvider.php</exclude>
+			<exclude>tests/Providers/ProviderTestHttpClient.php</exclude>
+			<exclude>tests/OAuthTestMemoryStorage.php</exclude>
 		</testsuite>
 	</testsuites>
 	<coverage>
 		<include>
-			<directory suffix=".php">./src</directory>
+			<directory suffix=".php">src</directory>
 		</include>
 		<report>
 			<clover outputFile=".build/coverage/clover.xml"/>
