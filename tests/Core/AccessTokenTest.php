@@ -26,7 +26,7 @@ final class AccessTokenTest extends TestCase{
 		$this->token = new AccessToken;
 	}
 
-	public function tokenDataProvider():array{
+	public static function tokenDataProvider():array{
 		return [
 			'accessTokenSecret'  => ['accessTokenSecret',  null, 'ACCESS_TOKEN'],
 			'accessToken'        => ['accessToken',        null, 'ACCESS_TOKEN_SECRET'],
@@ -48,7 +48,7 @@ final class AccessTokenTest extends TestCase{
 		$this::assertSame($data, $this->token->{$property});
 	}
 
-	public function expiryDataProvider():array{
+	public static function expiryDataProvider():array{
 		return [
 			'EOL_UNKNOWN (null)'        => [null,       AccessToken::EOL_UNKNOWN],
 			'EOL_UNKNOWN (-9001)'       => [-9001,      AccessToken::EOL_UNKNOWN],
@@ -68,7 +68,7 @@ final class AccessTokenTest extends TestCase{
 		$this::assertSame($expected, $this->token->expires);
 	}
 
-	public function isExpiredDataProvider():array{
+	public static function isExpiredDataProvider():array{
 		return [
 			'0 (f)'                 => [0,                              false],
 			'EOL_NEVER_EXPIRES (f)' => [AccessToken::EOL_NEVER_EXPIRES, false],
