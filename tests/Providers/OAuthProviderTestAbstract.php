@@ -10,7 +10,7 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\Core\{AccessToken};
+use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerInterface;

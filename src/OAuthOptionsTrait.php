@@ -31,7 +31,7 @@ trait OAuthOptionsTrait{
 	protected string $callbackURL = '';
 
 	/**
-	 * Whether or not to start the session when session storage is used
+	 * Whether to start the session when session storage is used
 	 *
 	 * @see \chillerlan\OAuth\Storage\SessionStorage
 	 */
@@ -52,7 +52,7 @@ trait OAuthOptionsTrait{
 	protected string $sessionStateVar = 'chillerlan-oauth-state';
 
 	/**
-	 * Whether or not to automatically refresh access tokens (OAuth2)
+	 * Whether to automatically refresh access tokens (OAuth2)
 	 */
 	protected bool $tokenAutoRefresh = true;
 

@@ -29,9 +29,9 @@ final class ProviderTestHttpClient implements ClientInterface{
 		ResponseFactoryInterface $responseFactory,
 		StreamFactoryInterface $streamFactory
 	){
-		$this->responses = $responses;
+		$this->responses       = $responses;
 		$this->responseFactory = $responseFactory;
-		$this->streamFactory = $streamFactory;
+		$this->streamFactory   = $streamFactory;
 	}
 
 	/**

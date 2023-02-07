@@ -6,15 +6,13 @@
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
- *
- * @phan-file-suppress PhanUndeclaredProperty (MagicAPI\ApiClientInterface)
  */
 
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
 use chillerlan\HTTP\Utils\QueryUtil;
-use chillerlan\OAuth\MagicAPI\{ApiClientException, EndpointMap, EndpointMapInterface};
+use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
@@ -24,28 +22,31 @@ use Psr\Http\Message\{
 };
 use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
 use ReflectionClass;
-
-use function array_slice, class_exists, count, implode, in_array, is_array,
-	is_scalar, is_string, json_encode, sprintf, strtolower, str_starts_with;
-
+use function array_merge;
+use function in_array;
+use function is_array;
+use function is_string;
+use function json_encode;
+use function sprintf;
+use function str_starts_with;
+use function strtolower;
 use const PHP_QUERY_RFC1738;
 
 /**
  * Implements an abstract OAuth provider with all methods required by the OAuthInterface.
  * It also implements a magic getter that allows to access the properties listed below.
  *
- * @property string|null                                     $apiDocs
- * @property string                                          $apiURL
- * @property string|null                                     $applicationURL
- * @property \chillerlan\OAuth\MagicAPI\EndpointMapInterface $endpoints
- * @property string                                          $serviceName
- * @property string|null                                     $userRevokeURL
+ * @property string|null $apiDocs
+ * @property string      $apiURL
+ * @property string|null $applicationURL
+ * @property string      $serviceName
+ * @property string|null $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface{
 	use LoggerAwareTrait;
 
 	protected const ALLOWED_PROPERTIES = [
-		'apiDocs', 'apiURL', 'applicationURL', 'endpoints', 'serviceName', 'userRevokeURL'
+		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL'
 	];
 
 	/**
@@ -60,15 +61,8 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * the options instance
-	 *
-	 * @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface
 	 */
-	protected SettingsContainerInterface $options;
-
-	/**
-	 * the API endpoints (optional) (magic)
-	 */
-	protected ?EndpointMapInterface $endpoints = null;
+	protected OAuthOptions|SettingsContainerInterface $options;
 
 	/**
 	 * an optional PSR-17 request factory
@@ -126,11 +120,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	protected string $accessTokenURL;
 
 	/**
-	 * an optional EndpointMapInterface FQCN
-	 */
-	protected ?string $endpointMap = null;
-
-	/**
 	 * additional headers to use during authentication
 	 */
 	protected array $authHeaders = [];
@@ -142,13 +131,11 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * OAuthProvider constructor.
-	 *
-	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
 	 */
 	public function __construct(
 		ClientInterface $http,
 		OAuthStorageInterface $storage,
-		SettingsContainerInterface $options,
+		OAuthOptions|SettingsContainerInterface $options,
 		LoggerInterface $logger = null
 	){
 		$this->http    = $http;
@@ -157,22 +144,11 @@ abstract class OAuthProvider implements OAuthInterface{
 		$this->logger  = $logger ?? new NullLogger;
 
 		// i hate this, but i also hate adding 3 more params to the constructor
-		// no i won't use a DI container for this. don't @ me
+		// no, i won't use a DI container for this. don't @ me
 		$this->requestFactory = new RequestFactory;
 		$this->streamFactory  = new StreamFactory;
 		$this->uriFactory     = new UriFactory;
-
-		$this->serviceName = (new ReflectionClass($this))->getShortName();
-
-		if(!empty($this->endpointMap) && class_exists($this->endpointMap)){
-			$this->endpoints = new $this->endpointMap;
-
-			if(!$this->endpoints instanceof EndpointMapInterface){
-				throw new ApiClientException('invalid endpoint map'); // @codeCoverageIgnore
-			}
-
-		}
-
+		$this->serviceName    = (new ReflectionClass($this))->getShortName();
 	}
 
 	/**
@@ -245,145 +221,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * Magic API endpoint access. ugly, isn't it?
-	 *
-	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
-	 */
-	public function __call(string $endpointName, array $arguments):ResponseInterface{
-
-		if(!$this->endpoints instanceof EndpointMap){
-			throw new ApiClientException('MagicAPI not available'); // @codeCoverageIgnore
-		}
-
-		if(!isset($this->endpoints->{$endpointName})){
-			throw new ApiClientException('endpoint not found: "'.$endpointName.'"');
-		}
-
-		// metadata for the current endpoint
-		$endpointMeta  = $this->endpoints->{$endpointName};
-		$path          = $this->endpoints->API_BASE.($endpointMeta['path'] ?? '');
-		$method        = $endpointMeta['method'] ?? 'GET';
-		$path_elements = $endpointMeta['path_elements'] ?? [];
-		$query_params  = $endpointMeta['query'] ?? [];
-		$headers       = $endpointMeta['headers'] ?? [];
-		// the body value of the metadata is only informational
-		$has_body      = isset($endpointMeta['body']) && !empty($endpointMeta['body']);
-
-		$params = null;
-		$body   = null;
-
-		$path_element_count = count($path_elements);
-		$query_param_count  = count($query_params);
-
-		if($path_element_count > 0){
-			$path = $this->parsePathElements($path, $path_elements, $path_element_count, $arguments);
-		}
-
-		if($query_param_count > 0){
-			// $params is the first argument after path segments
-			$params = $arguments[$path_element_count] ?? null;
-
-			if(is_array($params)){
-				$params = $this->cleanQueryParams($this->removeUnlistedParams($params, $query_params));
-			}
-		}
-
-		if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE']) && $has_body){
-			// if no query params are present, $body is the first argument after any path segments
-			$argPos = $query_param_count > 0 ? 1 : 0;
-			$body   = $arguments[$path_element_count + $argPos] ?? null;
-
-			if(is_array($body)){
-				$body = $this->cleanBodyParams($body);
-			}
-		}
-
-		$this->logger->debug('OAuthProvider::__call() -> '.$this->serviceName.'::'.$endpointName.'()', [
-			'$endpoint' => $path, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers,
-		]);
-
-		return $this->request($path, $params, $method, $body, $headers);
-	}
-
-	/**
-	 * Checks the given path elements and returns the given path with placeholders replaced
-	 *
-	 * @throws \chillerlan\OAuth\MagicAPI\ApiClientException
-	 */
-	protected function parsePathElements(string $path, array $path_elements, int $path_element_count, array $arguments):string{
-		// we don't know if all of the given arguments are path elements...
-		$urlparams = array_slice($arguments, 0, $path_element_count);
-
-		if(count($urlparams) !== $path_element_count){
-			throw new APIClientException('too few URL params, required: '.implode(', ', $path_elements));
-		}
-
-		foreach($urlparams as $i => $param){
-			// ...but we do know that the arguments after the path elements are usually array or null
-			if(!is_scalar($param)){
-				$msg = 'invalid path element value for "%s": %s';
-
-				throw new APIClientException(sprintf($msg, $path_elements[$i], var_export($param, true)));
-			}
-		}
-
-		return sprintf($path, ...$urlparams);
-	}
-
-	/**
-	 * Checks an array against an allowlist and removes any parameter that is not allowed
-	 */
-	protected function removeUnlistedParams(array $params, array $allowed):array{
-		$query = [];
-		// remove any params that are not listed
-		foreach($params as $key => $value){
-
-			if(!in_array($key, $allowed, true)){
-				continue;
-			}
-
-			$query[$key] = $value;
-		}
-
-		return $query;
-	}
-
-	/**
-	 * Cleans an array of query parameters
-	 */
-	protected function cleanQueryParams(iterable $params):array{
-		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_INT_STRING, true);
-	}
-
-	/**
-	 * Cleans an array of body parameters
-	 */
-	protected function cleanBodyParams(iterable $params):array{
-		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_BOOL, true);
-	}
-
-	/**
-	 * Merges a set of parameters into the given querystring and returns the result querystring
-	 */
-	protected function mergeQuery(string $uri, array $query):string{
-		return QueryUtil::merge($uri, $query);
-	}
-
-	/**
-	 * Builds a query string from the given parameters
-	 */
-	protected function buildQuery(array $params, int $encoding = null, string $delimiter = null, string $enclosure = null):string{
-		return QueryUtil::build($params, $encoding, $delimiter, $enclosure);
-	}
-
-	/**
-	 * Parses the given querystring into an associative array
-	 */
-	protected function parseQuery(string $querystring, int $urlEncoding = null):array{
-		return QueryUtil::parse($querystring, $urlEncoding);
-	}
-
-	/**
 	 * @inheritDoc
 	 */
 	public function request(
@@ -395,7 +232,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	):ResponseInterface{
 
 		$request = $this->requestFactory
-			->createRequest($method ?? 'GET', $this->mergeQuery($this->getRequestTarget($path), $params ?? []));
+			->createRequest($method ?? 'GET', QueryUtil::merge($this->getRequestTarget($path), $params ?? []));
 
 		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
@@ -406,7 +243,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			if(is_array($body)){
 				if($contentType === 'application/x-www-form-urlencoded'){
-					$body = $this->streamFactory->createStream($this->buildQuery($body, PHP_QUERY_RFC1738));
+					$body = $this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738));
 				}
 				elseif(in_array($contentType, ['application/json', 'application/vnd.api+json'])){
 					$body = $this->streamFactory->createStream(json_encode($body));
@@ -451,7 +288,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			// back out if it doesn't match
 			if($parsedURL['host'] !== $host){
-				throw new ProviderException('given host does not match provider host');
+				throw new ProviderException(sprintf('given host (%s) does not match provider (%s)', $parsedURL['host'] , $host));
 			}
 
 			// we explicitly ignore any existing parameters here

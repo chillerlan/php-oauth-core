@@ -9,18 +9,26 @@
  * @copyright    2017 Smiley
  * @license      MIT
  *
- * @phan-file-suppress PhanUndeclaredProperty (MagicAPI\ApiClientInterface)
  * @phan-file-suppress PhanUndeclaredMethod (CSRFToken, ClientCredentials, TokenRefresh)
  */
 
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\HTTP\Utils\QueryUtil;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-
-use function array_merge, base64_encode, date, hash_equals, implode, is_array, json_decode, random_bytes, sha1, sprintf;
-
-use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
+use function array_merge;
+use function base64_encode;
+use function date;
+use function hash_equals;
+use function implode;
+use function is_array;
+use function json_decode;
+use function random_bytes;
+use function sha1;
+use function sprintf;
+use const JSON_THROW_ON_ERROR;
+use const PHP_QUERY_RFC1738;
 
 /**
  * Implements an abstract OAuth2 provider with all methods required by the OAuth2Interface.
@@ -91,7 +99,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$params = $this->setState($params);
 		}
 
-		return $this->uriFactory->createUri($this->mergeQuery($this->authURL, $params));
+		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $params));
 	}
 
 	/**
@@ -156,7 +164,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->createRequest('POST', $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream($this->buildQuery($body, PHP_QUERY_RFC1738)));
+			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)));
 
 		foreach($this->authHeaders as $header => $value){
 			$request = $request->withHeader($header, $value);
@@ -179,7 +187,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if($this->authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
-			$uri = $this->mergeQuery((string)$request->getUri(), [$this->authMethodQuery => $token->accessToken]);
+			$uri = QueryUtil::merge((string)$request->getUri(), [$this->authMethodQuery => $token->accessToken]);
 
 			return $request->withUri($this->uriFactory->createUri($uri));
 		}
@@ -211,7 +219,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream($this->buildQuery($params, PHP_QUERY_RFC1738)))
+			->withBody($this->streamFactory->createStream(QueryUtil::build($params, PHP_QUERY_RFC1738)))
 		;
 
 		foreach($this->authHeaders as $header => $value){
@@ -262,7 +270,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->createRequest('POST', $this->refreshTokenURL ?? $this->accessTokenURL)
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream($this->buildQuery($body, PHP_QUERY_RFC1738)))
+			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
 		;
 
 		foreach($this->authHeaders as $header => $value){

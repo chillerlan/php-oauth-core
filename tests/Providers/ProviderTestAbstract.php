@@ -11,21 +11,25 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\{NullHandler, StreamHandler};
-use Monolog\Logger;
-use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface, UriFactoryInterface};
 use chillerlan\OAuth\Core\OAuthInterface;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
 use chillerlan\Settings\SettingsContainerInterface;
+use Exception;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\{NullHandler, StreamHandler};
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface, UriFactoryInterface};
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use Exception, ReflectionClass, ReflectionMethod, ReflectionProperty;
-
-use function constant, defined, ini_set;
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionProperty;
+use function constant;
+use function defined;
+use function ini_set;
 use const JSON_UNESCAPED_SLASHES;
 
 abstract class ProviderTestAbstract extends TestCase{
@@ -37,10 +41,10 @@ abstract class ProviderTestAbstract extends TestCase{
 		'uriFactory'      => 'URI_FACTORY',
 	];
 
-	/** @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface */
-	protected SettingsContainerInterface $options;
+	protected OAuthOptions|SettingsContainerInterface $options;
 	protected OAuthInterface $provider;
 	protected OAuthStorageInterface $storage;
+	protected ReflectionClass $reflection; // reflection of the test subject
 
 	// PSR interfaces
 	protected RequestFactoryInterface $requestFactory;
@@ -50,12 +54,13 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected ClientInterface $http;
 	protected LoggerInterface $logger;
 
-	protected ReflectionClass $reflection;
-	// config dir & fqcn of the test subject
-	protected string $FQN;
+	protected string $FQN; // the test subject
 	protected bool $is_ci;
 	protected array $testResponses = [];
 
+	/**
+	 * @throws \Exception
+	 */
 	protected function setUp():void{
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
@@ -88,7 +93,6 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->storage    = $this->initStorage($this->options);
 		$this->http       = $this->initHttp($this->options, $this->logger, $this->testResponses);
 		$this->reflection = new ReflectionClass($this->FQN);
-		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->provider   = $this->reflection->newInstanceArgs([$this->http, $this->storage, $this->options, $this->logger]);
 
 		$this->provider
@@ -145,13 +149,9 @@ abstract class ProviderTestAbstract extends TestCase{
 	}
 
 	/**
-	 * @param object $object
-	 * @param string $property
-	 * @param mixed  $value
 	 *
-	 * @return void
 	 */
-	protected function setProperty(object $object, string $property, $value):void{
+	protected function setProperty(object $object, string $property, mixed $value):void{
 		$property = $this->getProperty($property);
 		$property->setValue($object, $value);
 	}

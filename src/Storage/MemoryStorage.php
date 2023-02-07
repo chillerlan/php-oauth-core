@@ -11,8 +11,8 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
-
-use function array_keys, array_key_exists;
+use function array_key_exists;
+use function array_keys;
 
 /**
  * Implements a memory storage adapter. Memory storage is not persistent as tokens are only stored during script runtime.

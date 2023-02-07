@@ -12,9 +12,11 @@ namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\Settings\SettingsContainerInterface;
-
-use function array_keys, array_key_exists, session_start, session_status, session_write_close;
-
+use function array_key_exists;
+use function array_keys;
+use function session_start;
+use function session_status;
+use function session_write_close;
 use const PHP_SESSION_NONE;
 
 /**

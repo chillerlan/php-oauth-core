@@ -11,8 +11,6 @@
 namespace chillerlan\OAuthTest\Providers\OAuth2;
 
 use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
-use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider, OAuthInterface, TokenRefresh};
-use ReflectionClass;
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider

@@ -10,7 +10,6 @@
 
 namespace chillerlan\OAuthTest\Providers\OAuth2;
 
-use chillerlan\OAuthTest\Providers\TestEndpoints;
 use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider, TokenRefresh};
 
 /**
@@ -22,7 +21,6 @@ final class DummyOAuth2Provider extends OAuth2Provider implements ClientCredenti
 	protected string $accessTokenURL = 'https://example.com/oauth2/token';
 	protected ?string $apiURL        = 'https://api.example.com/';
 	protected ?string $userRevokeURL = 'https://account.example.com/apps/';
-	protected ?string $endpointMap   = TestEndpoints::class;
 	protected array $authHeaders     = ['foo' => 'bar'];
 	protected array $apiHeaders      = ['foo' => 'bar'];
 	protected int $authMethod        = OAuth2Provider::AUTH_METHOD_QUERY;

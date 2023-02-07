@@ -22,18 +22,14 @@ use function is_string;
 abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	use LoggerAwareTrait;
 
-	/**
-	 * @var \chillerlan\OAuth\OAuthOptions|\chillerlan\Settings\SettingsContainerInterface
-	 */
-	protected SettingsContainerInterface $options;
+	protected OAuthOptions|SettingsContainerInterface $options;
 
 	/**
 	 * OAuthStorageAbstract constructor.
 	 */
-	public function __construct(SettingsContainerInterface $options = null, LoggerInterface $logger = null){
+	public function __construct(OAuthOptions|SettingsContainerInterface $options = null, LoggerInterface $logger = null){
 		$this->options = $options ?? new OAuthOptions;
-
-		$this->setLogger($logger ?? new NullLogger);
+		$this->logger  = $logger ?? new NullLogger;
 	}
 
 	/**

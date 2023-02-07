@@ -1,5 +1,6 @@
 <?php
 /**
+ * Class AccessTokenTest
  *
  * @created      09.07.2017
  * @author       Smiley <smiley@chillerlan.net>
@@ -11,9 +12,12 @@ namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\AccessToken;
 use PHPUnit\Framework\TestCase;
+use function sleep;
+use function time;
 
-use function sleep, time;
-
+/**
+ * Tests the AccessToken class
+ */
 final class AccessTokenTest extends TestCase{
 
 	private AccessToken $token;

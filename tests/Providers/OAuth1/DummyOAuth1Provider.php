@@ -11,7 +11,6 @@
 namespace chillerlan\OAuthTest\Providers\OAuth1;
 
 use chillerlan\OAuth\Core\OAuth1Provider;
-use chillerlan\OAuthTest\Providers\TestEndpoints;
 
 /**
  * An OAuth1 provider implementation
@@ -23,7 +22,6 @@ final class DummyOAuth1Provider extends OAuth1Provider{
 	protected string $requestTokenURL = 'https://example.com/oauth/request_token';
 	protected ?string $apiURL         = 'https://api.example.com';
 	protected ?string $userRevokeURL  = 'https://account.example.com/apps/';
-	protected ?string $endpointMap    = TestEndpoints::class;
 	protected array $authHeaders      = ['foo' => 'bar'];
 	protected array $apiHeaders       = ['foo' => 'bar'];
 
