@@ -1,5 +1,5 @@
 # chillerlan/php-oauth-core
-A PHP OAuth1/2 client with an integrated API wrapper, [loosely based](https://github.com/codemasher/PHPoAuthLib) on [Lusitanian/PHPoAuthLib](https://github.com/Lusitanian/PHPoAuthLib).
+A PHP OAuth1/2 client, [loosely based](https://github.com/codemasher/PHPoAuthLib) on [Lusitanian/PHPoAuthLib](https://github.com/Lusitanian/PHPoAuthLib).
 
 [![PHP Version Support][php-badge]][php]
 [![Packagist version][packagist-badge]][packagist]
@@ -21,8 +21,8 @@ A PHP OAuth1/2 client with an integrated API wrapper, [loosely based](https://gi
 [scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-oauth-core
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth-core.svg?logo=packagist
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth-core/stats
-[gh-action-badge]: https://img.shields.io/github/workflow/status/chillerlan/php-oauth-core/Continuous%20Integration?logo=github
-[gh-action]: https://github.com/chillerlan/php-oauth-core/actions
+[gh-action-badge]: https://img.shields.io/github/actions/workflow/status/chillerlan/php-oauth-core/ci.yml?branch=main&logo=github
+[gh-action]: https://github.com/chillerlan/php-oauth-core/actions/workflows/ci.yml?query=branch%3Amain
 
 # Documentation
 See [the wiki](https://github.com/chillerlan/php-oauth-core/wiki) for advanced documentation.
