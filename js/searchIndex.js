@@ -281,6 +281,11 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D17\u0020UriFactoryInterface",
             "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_setUriFactory"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003Ame\u0028\u0029",
+            "name": "me",
+            "summary": "Returns\u0020information\u0020about\u0020the\u0020currently\u0020authenticated\u0020user\u0020\u0028usually\u0020a\u0020\/me\u0020or\u0020\/user\u0020endpoint\u0029.",
+            "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_me"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider",
             "name": "OAuthProvider",
             "summary": "Implements\u0020an\u0020abstract\u0020OAuth\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuthInterface.",
@@ -340,6 +345,11 @@ Search.appendIndex(
             "name": "sendRequest",
             "summary": "",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_sendRequest"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003Ame\u0028\u0029",
+            "name": "me",
+            "summary": "Returns\u0020information\u0020about\u0020the\u0020currently\u0020authenticated\u0020user\u0020\u0028usually\u0020a\u0020\/me\u0020or\u0020\/user\u0020endpoint\u0029.",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_me"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AALLOWED_PROPERTIES",
             "name": "ALLOWED_PROPERTIES",
