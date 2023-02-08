@@ -323,4 +323,12 @@ abstract class OAuthProvider implements OAuthInterface{
 		return $this->http->sendRequest($request);
 	}
 
+	/**
+	 * @inheritDoc
+	 * @codeCoverageIgnore
+	 */
+	public function me():ResponseInterface{
+		throw new ProviderException('not implemented');
+	}
+
 }

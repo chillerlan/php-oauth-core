@@ -83,4 +83,12 @@ interface OAuthInterface extends ClientInterface, LoggerAwareInterface{
 	 */
 	public function setUriFactory(UriFactoryInterface $uriFactory):OAuthInterface;
 
+	/**
+	 * Returns information about the currently authenticated user (usually a /me or /user endpoint).
+	 * Throws a ProviderException if no such information is available or if the method cannot be implemnted.
+	 *
+	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 */
+	public function me():ResponseInterface;
+
 }
