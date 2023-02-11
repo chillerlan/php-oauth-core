@@ -210,7 +210,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$params = ['grant_type' => 'client_credentials'];
 
-		if($scopes !== null){
+		if(!empty($scopes)){
 			$params['scope'] = implode($this->scopesDelimiter, $scopes);
 		}
 
