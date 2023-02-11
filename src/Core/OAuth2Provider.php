@@ -172,7 +172,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$token = $this->parseTokenResponse($this->http->sendRequest($request));
 
-		$this->storage->storeAccessToken($this->serviceName, $token);
+		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $token;
 	}
@@ -228,7 +228,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$token = $this->parseTokenResponse($this->http->sendRequest($request));
 
-		$this->storage->storeAccessToken($this->serviceName, $token);
+		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $token;
 	}
@@ -283,7 +283,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$newToken->refreshToken = $refreshToken;
 		}
 
-		$this->storage->storeAccessToken($this->serviceName, $newToken);
+		$this->storage->storeAccessToken($newToken, $this->serviceName);
 
 		return $newToken;
 	}
@@ -334,7 +334,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$params['state'] = sha1(random_bytes(256));
 		}
 
-		$this->storage->storeCSRFState($this->serviceName, $params['state']);
+		$this->storage->storeCSRFState($params['state'], $this->serviceName);
 
 		return $params;
 	}

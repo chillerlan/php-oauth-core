@@ -32,8 +32,8 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
-		$this->tokens[$service] = $token;
+	public function storeAccessToken(AccessToken $token, string $service = null):OAuthStorageInterface{
+		$this->tokens[$this->getServiceName($service)] = $token;
 
 		return $this;
 	}
@@ -41,10 +41,10 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAccessToken(string $service):AccessToken{
+	public function getAccessToken(string $service = null):AccessToken{
 
 		if($this->hasAccessToken($service)){
-			return $this->tokens[$service];
+			return $this->tokens[$this->getServiceName($service)];
 		}
 
 		throw new OAuthStorageException('token not found');
@@ -53,17 +53,20 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasAccessToken(string $service):bool{
-		return isset($this->tokens[$service]) && $this->tokens[$service] instanceof AccessToken;
+	public function hasAccessToken(string $service = null):bool{
+		$serviceName = $this->getServiceName($service);
+
+		return isset($this->tokens[$serviceName]) && $this->tokens[$serviceName] instanceof AccessToken;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service):OAuthStorageInterface{
+	public function clearAccessToken(string $service = null):OAuthStorageInterface{
+		$serviceName = $this->getServiceName($service);
 
-		if(array_key_exists($service, $this->tokens)){
-			unset($this->tokens[$service]);
+		if(array_key_exists($serviceName, $this->tokens)){
+			unset($this->tokens[$serviceName]);
 		}
 
 		return $this;
@@ -86,8 +89,8 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
-		$this->states[$service] = $state;
+	public function storeCSRFState(string $state, string $service = null):OAuthStorageInterface{
+		$this->states[$this->getServiceName($service)] = $state;
 
 		return $this;
 	}
@@ -95,10 +98,10 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getCSRFState(string $service):string{
+	public function getCSRFState(string $service = null):string{
 
 		if($this->hasCSRFState($service)){
-			return $this->states[$service];
+			return $this->states[$this->getServiceName($service)];
 		}
 
 		throw new OAuthStorageException('state not found');
@@ -107,17 +110,20 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasCSRFState(string $service):bool{
-		return isset($this->states[$service]) && null !== $this->states[$service];
+	public function hasCSRFState(string $service = null):bool{
+		$serviceName = $this->getServiceName($service);
+
+		return isset($this->states[$serviceName]) && null !== $this->states[$serviceName];
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service):OAuthStorageInterface{
+	public function clearCSRFState(string $service = null):OAuthStorageInterface{
+		$serviceName = $this->getServiceName($service);
 
-		if(array_key_exists($service, $this->states)){
-			unset($this->states[$service]);
+		if(array_key_exists($serviceName, $this->states)){
+			unset($this->states[$serviceName]);
 		}
 
 		return $this;

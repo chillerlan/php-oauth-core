@@ -43,7 +43,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->setProperty($this->provider, 'refreshTokenURL', 'https://localhost/oauth2/refresh_token');
 		$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
 
-		$this->storage->storeCSRFState($this->provider->serviceName, 'test_state');
+		$this->storage->storeCSRFState('test_state', $this->provider->serviceName);
 	}
 
 	public function testOAuth2Instance():void{

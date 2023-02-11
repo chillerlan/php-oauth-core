@@ -11,6 +11,7 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\OAuthOptions;
 use chillerlan\Settings\SettingsContainerInterface;
 use function array_key_exists;
 use function array_keys;
@@ -37,7 +38,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * SessionStorage constructor.
 	 */
-	public function __construct(SettingsContainerInterface $options = null){
+	public function __construct(OAuthOptions|SettingsContainerInterface $options = null){
 		parent::__construct($options);
 
 		$this->tokenVar = $this->options->sessionTokenVar;
@@ -73,8 +74,8 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
-		$_SESSION[$this->tokenVar][$service] = $this->toStorage($token);
+	public function storeAccessToken(AccessToken $token, string $service = null):OAuthStorageInterface{
+		$_SESSION[$this->tokenVar][$this->getServiceName($service)] = $this->toStorage($token);
 
 		return $this;
 	}
@@ -82,10 +83,10 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAccessToken(string $service):AccessToken{
+	public function getAccessToken(string $service = null):AccessToken{
 
 		if($this->hasAccessToken($service)){
-			return $this->fromStorage($_SESSION[$this->tokenVar][$service]);
+			return $this->fromStorage($_SESSION[$this->tokenVar][$this->getServiceName($service)]);
 		}
 
 		throw new OAuthStorageException('token not found');
@@ -94,17 +95,18 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasAccessToken(string $service):bool{
-		return isset($_SESSION[$this->tokenVar], $_SESSION[$this->tokenVar][$service]);
+	public function hasAccessToken(string $service = null):bool{
+		return isset($_SESSION[$this->tokenVar], $_SESSION[$this->tokenVar][$this->getServiceName($service)]);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service):OAuthStorageInterface{
+	public function clearAccessToken(string $service = null):OAuthStorageInterface{
+		$serviceName = $this->getServiceName($service);
 
-		if(array_key_exists($service, $_SESSION[$this->tokenVar])){
-			unset($_SESSION[$this->tokenVar][$service]);
+		if(array_key_exists($serviceName, $_SESSION[$this->tokenVar])){
+			unset($_SESSION[$this->tokenVar][$serviceName]);
 		}
 
 		return $this;
@@ -127,8 +129,8 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
-		$_SESSION[$this->stateVar][$service] = $state;
+	public function storeCSRFState(string $state, string $service = null):OAuthStorageInterface{
+		$_SESSION[$this->stateVar][$this->getServiceName($service)] = $state;
 
 		return $this;
 	}
@@ -136,10 +138,10 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getCSRFState(string $service):string{
+	public function getCSRFState(string $service = null):string{
 
 		if($this->hasCSRFState($service)){
-			return $_SESSION[$this->stateVar][$service];
+			return $_SESSION[$this->stateVar][$this->getServiceName($service)];
 		}
 
 		throw new OAuthStorageException('state not found');
@@ -148,17 +150,18 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasCSRFState(string $service):bool{
-		return isset($_SESSION[$this->stateVar], $_SESSION[$this->stateVar][$service]);
+	public function hasCSRFState(string $service = null):bool{
+		return isset($_SESSION[$this->stateVar], $_SESSION[$this->stateVar][$this->getServiceName($service)]);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service):OAuthStorageInterface{
+	public function clearCSRFState(string $service = null):OAuthStorageInterface{
+		$serviceName = $this->getServiceName($service);
 
-		if(array_key_exists($service, $_SESSION[$this->stateVar])){
-			unset($_SESSION[$this->stateVar][$service]);
+		if(array_key_exists($serviceName, $_SESSION[$this->stateVar])){
+			unset($_SESSION[$this->stateVar][$serviceName]);
 		}
 
 		return $this;

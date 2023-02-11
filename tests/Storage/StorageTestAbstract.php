@@ -26,16 +26,46 @@ abstract class StorageTestAbstract extends TestCase{
 	protected string $tsn = 'testService';
 
 	protected function setUp():void{
-		$this->token = new AccessToken(['accessToken' => 'foobar']);
+		$this->token   = new AccessToken(['accessToken' => 'foobar']);
+		$this->storage = $this->initStorage();
+	}
+
+	abstract protected function initStorage():OAuthStorageInterface;
+
+	public function testSetServiceName():void{
+		$this->storage->setServiceName(' foo ');
+
+		$this::assertSame('foo', $this->storage->getServiceName());
+	}
+
+	public function testSetServiceNameEmptyException():void{
+		$this::expectException(OAuthStorageException::class);
+		$this::expectExceptionMessage('service name must not be empty');
+
+		$this->storage->setServiceName(' ');
+	}
+
+	public function testGetServiceNameInvalidServiceException():void{
+		$this::expectException(OAuthStorageException::class);
+		$this::expectExceptionMessage('invalid service');
+
+		$this->storage->getServiceName();
+	}
+
+	public function testGetServiceNameEmptyServiceException():void{
+		$this::expectException(OAuthStorageException::class);
+		$this::expectExceptionMessage('service name must not be empty');
+
+		$this->storage->getServiceName('');
 	}
 
 	public function testTokenStorage():void{
 
-		$this->storage->storeAccessToken($this->tsn, $this->token);
+		$this->storage->storeAccessToken($this->token, $this->tsn);
 		$this::assertTrue($this->storage->hasAccessToken($this->tsn));
 		$this::assertSame('foobar', $this->storage->getAccessToken($this->tsn)->accessToken);
 
-		$this->storage->storeCSRFState($this->tsn, 'foobar');
+		$this->storage->storeCSRFState('foobar', $this->tsn);
 		$this::assertTrue($this->storage->hasCSRFState($this->tsn));
 		$this::assertSame('foobar', $this->storage->getCSRFState($this->tsn));
 
@@ -50,11 +80,11 @@ abstract class StorageTestAbstract extends TestCase{
 		$this->storage->clearAllAccessTokens();
 
 		$this::assertFalse($this->storage->hasAccessToken($this->tsn));
-		$this->storage->storeAccessToken($this->tsn, $this->token);
+		$this->storage->storeAccessToken($this->token, $this->tsn);
 		$this::assertTrue($this->storage->hasAccessToken($this->tsn));
 
 		$this::assertFalse($this->storage->hasCSRFState($this->tsn));
-		$this->storage->storeCSRFState($this->tsn, 'foobar');
+		$this->storage->storeCSRFState('foobar', $this->tsn);
 		$this::assertTrue($this->storage->hasCSRFState($this->tsn));
 
 		$this->storage->clearAllCSRFStates();
@@ -97,11 +127,11 @@ abstract class StorageTestAbstract extends TestCase{
 	}
 
 	public function testStoreWithExistingToken():void{
-		$this->storage->storeAccessToken($this->tsn, $this->token);
+		$this->storage->storeAccessToken($this->token, $this->tsn);
 
 		$this->token->extraParams = array_merge($this->token->extraParams, ['q' => 'u here?']);
 
-		$this->storage->storeAccessToken($this->tsn, $this->token);
+		$this->storage->storeAccessToken($this->token, $this->tsn);
 
 		$token = $this->storage->getAccessToken($this->tsn);
 

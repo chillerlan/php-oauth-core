@@ -149,6 +149,8 @@ abstract class OAuthProvider implements OAuthInterface{
 		$this->streamFactory  = new StreamFactory;
 		$this->uriFactory     = new UriFactory;
 		$this->serviceName    = (new ReflectionClass($this))->getShortName();
+
+		$this->storage->setServiceName($this->serviceName);
 	}
 
 	/**
@@ -171,6 +173,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	public function setStorage(OAuthStorageInterface $storage):OAuthInterface{
 		$this->storage = $storage;
+		$this->storage->setServiceName($this->serviceName);
 
 		return $this;
 	}
@@ -188,7 +191,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @codeCoverageIgnore
 	 */
 	public function storeAccessToken(AccessToken $token):OAuthInterface{
-		$this->storage->storeAccessToken($this->serviceName, $token);
+		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $this;
 	}

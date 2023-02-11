@@ -10,14 +10,12 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\OAuth\Storage\MemoryStorage;
+use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
 
 class MemoryStorageTest extends StorageTestAbstract{
 
-	protected function setUp():void{
-		parent::setUp();
-
-		$this->storage = new MemoryStorage;
+	protected function initStorage():OAuthStorageInterface{
+		return new MemoryStorage;
 	}
 
 }

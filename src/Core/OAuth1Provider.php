@@ -111,7 +111,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$token->extraParams = $data;
 
-		$this->storage->storeAccessToken($this->serviceName, $token);
+		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $token;
 	}

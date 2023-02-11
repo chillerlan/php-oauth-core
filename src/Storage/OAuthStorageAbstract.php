@@ -13,16 +13,16 @@ namespace chillerlan\OAuth\Storage;
 use chillerlan\OAuth\{Core\AccessToken, OAuthOptions};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
-
 use function is_string;
 
 /**
- * Implements ab anstract OAuth storage adapter
+ * Implements an abstract OAuth storage adapter
  */
 abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	use LoggerAwareTrait;
 
 	protected OAuthOptions|SettingsContainerInterface $options;
+	protected string $serviceName;
 
 	/**
 	 * OAuthStorageAbstract constructor.
@@ -34,8 +34,39 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 
 	/**
 	 * @inheritDoc
-	 *
-	 * @return string
+	 */
+	public function setServiceName(string $service):OAuthStorageInterface{
+		$service = trim($service);
+
+		if(empty($service)){
+			throw new OAuthStorageException('service name must not be empty');
+		}
+
+		$this->serviceName = $service;
+
+		return $this;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getServiceName(string $service = null):string{
+
+		if($service === null && !isset($this->serviceName)){
+			throw new OAuthStorageException('invalid service');
+		}
+
+		$name = trim($service ?? $this->serviceName);
+
+		if(empty($name)){
+			throw new OAuthStorageException('service name must not be empty');
+		}
+
+		return $name;
+	}
+
+	/**
+	 * @inheritDoc
 	 */
 	public function toStorage(AccessToken $token):string{
 		return $token->toJSON();

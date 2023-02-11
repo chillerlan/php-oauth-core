@@ -11,80 +11,21 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Storage\{OAuthStorageException, SessionStorage};
+use chillerlan\OAuth\Storage\{OAuthStorageInterface, SessionStorage};
 
 class SessionStorageTest extends StorageTestAbstract{
 
-	protected function setUp():void{
-		parent::setUp();
-
-		$this->storage = new SessionStorage(new OAuthOptions(['sessionStart' => true]));
+	protected function initStorage():OAuthStorageInterface{
+		return new SessionStorage(new OAuthOptions(['sessionStart' => true]));
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 */
-	public function testTokenStorage():void{
-		parent::testTokenStorage();
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 */
-	public function testClearAllAccessTokens():void{
-		parent::testClearAllAccessTokens();
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 */
-	public function testRetrieveCSRFStateNotFoundException():void{
-		$this->expectException(OAuthStorageException::class);
-		$this->expectExceptionMessage('state not found');
-
-		parent::testRetrieveCSRFStateNotFoundException();
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 */
-	public function testRetrieveAccessTokenNotFoundException():void{
-		$this->expectException(OAuthStorageException::class);
-		$this->expectExceptionMessage('token not found');
-
-		parent::testRetrieveAccessTokenNotFoundException();
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 */
-	public function testToStorage():void{
-		parent::testToStorage();
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 */
-	public function testStoreWithExistingToken():void{
-		parent::testStoreWithExistingToken();
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 */
-	public function testFromStorageInvalidInputException():void{
-		parent::testFromStorageInvalidInputException();
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testStoreStateWithNonExistentArray():void{
 		$options = new OAuthOptions;
 		unset($_SESSION[$options->sessionStateVar]);
 
 		$this::assertFalse($this->storage->hasCSRFState($this->tsn));
-		$this->storage->storeCSRFState($this->tsn, 'foobar');
+		$this->storage->storeCSRFState('foobar', $this->tsn);
 		$this::assertTrue($this->storage->hasCSRFState($this->tsn));
 	}
+
 }
