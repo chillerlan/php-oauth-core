@@ -128,7 +128,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 	public function testRequest():void{
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+		$this->provider->storeAccessToken($token);
 
 		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
 	}
@@ -139,7 +139,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 		$this->setProperty($this->provider, 'authMethod', -1);
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+		$this->provider->storeAccessToken($token);
 
 		$this->provider->request('/request');
 	}
@@ -196,7 +196,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectExceptionMessage('no refresh token available, token expired [');
 
 		$token = new AccessToken(['expires' => 1, 'refreshToken' => null]);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+		$this->provider->storeAccessToken($token);
 
 		$this->provider->refreshAccessToken();
 	}
@@ -208,7 +208,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		}
 
 		$token = new AccessToken(['expires' => 1, 'refreshToken' => 'test_refresh_token']);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+		$this->provider->storeAccessToken($token);
 
 		$token = $this->provider->refreshAccessToken();
 
@@ -224,7 +224,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		}
 
 		$token = new AccessToken(['accessToken' => 'test_access_token', 'refreshToken' => 'test_refresh_token', 'expires' => 1]);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+		$this->provider->storeAccessToken($token);
 
 		sleep(2);
 

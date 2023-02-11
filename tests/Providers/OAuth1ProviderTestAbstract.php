@@ -72,7 +72,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 	public function testGetAccessToken():void{
 		$token = new AccessToken(['accessTokenSecret' => 'test_request_token_secret']);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+		$this->provider->storeAccessToken($token);
 
 		$token = $this->provider->getAccessToken('test_request_token', 'verifier');
 
@@ -140,7 +140,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 	public function testRequest():void{
 		$token = new AccessToken(['accessTokenSecret' => 'test_token']);
-		$this->storage->storeAccessToken($this->provider->serviceName, $token);
+		$this->provider->storeAccessToken($token);
 
 		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
 

@@ -22,7 +22,7 @@ abstract class OAuthProviderTestAbstract extends ProviderTestAbstract{
 	protected function setUp():void{
 		parent::setUp();
 
-		$this->storage->storeAccessToken($this->provider->serviceName, new AccessToken(['accessToken' => 'foo']));
+		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
 	}
 
 	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger, array $responses):ClientInterface{

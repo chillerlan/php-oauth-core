@@ -69,6 +69,11 @@ interface OAuthInterface extends ClientInterface, LoggerAwareInterface{
 	public function getStorage():OAuthStorageInterface;
 
 	/**
+	 * Sets an access token in the current OAuthStorageInterface (shorthand/convenience)
+	 */
+	public function storeAccessToken(AccessToken $token):OAuthInterface;
+
+	/**
 	 * Sets an optional PSR-17 RequestFactoryInterface
 	 */
 	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface;
