@@ -10,6 +10,7 @@
 
 namespace chillerlan\OAuth\Core;
 
+use chillerlan\OAuth\Storage\MemoryStorage;
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
 use chillerlan\HTTP\Utils\QueryUtil;
 use chillerlan\OAuth\OAuthOptions;
@@ -134,12 +135,11 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	public function __construct(
 		ClientInterface $http,
-		OAuthStorageInterface $storage,
 		OAuthOptions|SettingsContainerInterface $options,
 		LoggerInterface $logger = null
 	){
 		$this->http    = $http;
-		$this->storage = $storage;
+		$this->storage = new MemoryStorage;
 		$this->options = $options;
 		$this->logger  = $logger ?? new NullLogger;
 

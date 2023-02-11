@@ -93,9 +93,10 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->storage    = $this->initStorage($this->options);
 		$this->http       = $this->initHttp($this->options, $this->logger, $this->testResponses);
 		$this->reflection = new ReflectionClass($this->FQN);
-		$this->provider   = $this->reflection->newInstanceArgs([$this->http, $this->storage, $this->options, $this->logger]);
+		$this->provider   = $this->reflection->newInstanceArgs([$this->http, $this->options, $this->logger]);
 
 		$this->provider
+			->setStorage($this->storage)
 			->setRequestFactory($this->requestFactory)
 			->setStreamFactory($this->streamFactory)
 			->setUriFactory($this->uriFactory)
