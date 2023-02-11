@@ -20,6 +20,9 @@ use function time;
  * // Oauth1
  * @property string $accessTokenSecret
  *
+ * // Oauth2
+ * @property array  $scopes
+ *
  * // Oauth1/2
  * @property string $accessToken
  * @property string $refreshToken
@@ -69,6 +72,14 @@ final class AccessToken extends SettingsContainerAbstract{
 	 * Additional token parameters supplied by the provider
 	 */
 	protected array $extraParams = [];
+
+	/**
+	 * The scopes that are attached to this token (OAuth2)
+	 *
+	 * Please note that the scopes have to be stored manually after receiving the token
+	 * as the initial authurl request data is discarded before the callback comes in.
+	 */
+	protected array $scopes = [];
 
 	/**
 	 * the provider who issued this token

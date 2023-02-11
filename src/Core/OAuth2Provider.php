@@ -227,6 +227,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$token = $this->parseTokenResponse($this->http->sendRequest($request));
+		$token->scopes = $scopes ?? [];
 
 		$this->storage->storeAccessToken($token, $this->serviceName);
 
