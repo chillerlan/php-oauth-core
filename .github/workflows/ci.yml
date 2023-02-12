@@ -6,10 +6,10 @@ name: "Continuous Integration"
 on:
   push:
     branches:
-      - main
+      - v4.x-php7.4
   pull_request:
     branches:
-      - main
+      - v4.x-php7.4
 
 jobs:
 
