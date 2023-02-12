@@ -85,8 +85,10 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * an optional URL for application side token revocation
+	 *
+	 * @see \chillerlan\OAuth\Core\TokenInvalidate
 	 */
-	protected ?string $revokeURL = null;
+	protected string $revokeURL;
 
 	/**
 	 * the provider's access token exchange URL
@@ -353,6 +355,15 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @codeCoverageIgnore
 	 */
 	public function me():ResponseInterface{
+		throw new ProviderException('not implemented');
+	}
+
+	/**
+	 * @implements \chillerlan\OAuth\Core\TokenInvalidate
+	 * @inheritDoc
+	 * @codeCoverageIgnore
+	 */
+	public function invalidateAccessToken(AccessToken $token = null):bool{
 		throw new ProviderException('not implemented');
 	}
 
