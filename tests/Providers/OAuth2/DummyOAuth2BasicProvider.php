@@ -17,9 +17,9 @@ use chillerlan\OAuth\Core\OAuth2Provider;
  */
 final class DummyOAuth2BasicProvider extends OAuth2Provider{
 
-	protected string $authURL        = 'https://example.com/oauth2/authorize';
-	protected string $accessTokenURL = 'https://example.com/oauth2/token';
-	protected ?string $apiURL        = 'https://api.example.com/';
-	protected ?string $userRevokeURL = 'https://account.example.com/apps/';
+	protected string  $authURL        = 'https://example.com/oauth2/authorize';
+	protected string  $accessTokenURL = 'https://example.com/oauth2/token';
+	protected string  $apiURL         = 'https://api.example.com/';
+	protected ?string $userRevokeURL  = 'https://account.example.com/apps/';
 
 }

@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Core;
 
 /**
- * Specifies whether the provider is capable of the OAuth2 client credentials authentication flow.
+ * Indicates whether the provider is capable of the OAuth2 client credentials authentication flow.
  *
  * @link https://tools.ietf.org/html/rfc6749#section-4.4
  */

@@ -17,12 +17,12 @@ use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider, TokenRe
  */
 final class DummyOAuth2Provider extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
 
-	protected string $authURL        = 'https://example.com/oauth2/authorize';
-	protected string $accessTokenURL = 'https://example.com/oauth2/token';
-	protected ?string $apiURL        = 'https://api.example.com/';
-	protected ?string $userRevokeURL = 'https://account.example.com/apps/';
-	protected array $authHeaders     = ['foo' => 'bar'];
-	protected array $apiHeaders      = ['foo' => 'bar'];
-	protected int $authMethod        = OAuth2Provider::AUTH_METHOD_QUERY;
+	protected string  $authURL        = 'https://example.com/oauth2/authorize';
+	protected string  $accessTokenURL = 'https://example.com/oauth2/token';
+	protected string  $apiURL         = 'https://api.example.com/';
+	protected ?string $userRevokeURL  = 'https://account.example.com/apps/';
+	protected array   $authHeaders    = ['foo' => 'bar'];
+	protected array   $apiHeaders     = ['foo' => 'bar'];
+	protected int     $authMethod     = OAuth2Provider::AUTH_METHOD_QUERY;
 
 }

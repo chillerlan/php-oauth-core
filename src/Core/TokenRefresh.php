@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Core;
 
 /**
- * Specifies whether the provider is capable of the OAuth2 token refresh.
+ * Indicates whether the provider is capable of the OAuth2 token refresh.
  *
  * @link https://tools.ietf.org/html/rfc6749#section-10.4
  */

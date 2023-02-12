@@ -16,7 +16,7 @@ use Exception;
 
 final class RequestTestProvider extends OAuthProvider{
 
-	protected ?string $apiURL = 'https://localhost';
+	protected string $apiURL = 'https://localhost';
 
 	public function getAuthURL(array $params = null):UriInterface{
 		throw new Exception('should not happen (unused method)');

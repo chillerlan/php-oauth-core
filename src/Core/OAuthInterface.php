@@ -21,11 +21,11 @@ use Psr\Http\Message\{
 /**
  * Specifies the basic methods for an OAuth provider.
  *
- * @property string $apiDocs
- * @property string $apiURL
- * @property string $applicationURL
- * @property string $serviceName
- * @property string $userRevokeURL
+ * @property string      $serviceName
+ * @property string      $apiURL
+ * @property string|null $apiDocs
+ * @property string|null $applicationURL
+ * @property string|null $userRevokeURL
  */
 interface OAuthInterface extends ClientInterface, LoggerAwareInterface{
 

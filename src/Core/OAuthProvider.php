@@ -36,12 +36,6 @@ use const PHP_QUERY_RFC1738;
 /**
  * Implements an abstract OAuth provider with all methods required by the OAuthInterface.
  * It also implements a magic getter that allows to access the properties listed below.
- *
- * @property string|null $apiDocs
- * @property string      $apiURL
- * @property string|null $applicationURL
- * @property string      $serviceName
- * @property string|null $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface{
 	use LoggerAwareTrait;
@@ -51,9 +45,9 @@ abstract class OAuthProvider implements OAuthInterface{
 	];
 
 	/**
-	 * the http client instance
+	 * the options instance
 	 */
-	protected ClientInterface $http;
+	protected OAuthOptions|SettingsContainerInterface $options;
 
 	/**
 	 * the token storage instance
@@ -61,54 +55,29 @@ abstract class OAuthProvider implements OAuthInterface{
 	protected OAuthStorageInterface $storage;
 
 	/**
-	 * the options instance
+	 * the PSR-18 http client instance
 	 */
-	protected OAuthOptions|SettingsContainerInterface $options;
+	protected ClientInterface $http;
 
 	/**
-	 * an optional PSR-17 request factory
+	 * a PSR-17 request factory
 	 */
 	protected RequestFactoryInterface $requestFactory;
 
 	/**
-	 * an optional PSR-17 stream factory
+	 * a PSR-17 stream factory
 	 */
 	protected StreamFactoryInterface  $streamFactory;
 
 	/**
-	 * an optional PSR-17 URI factory
+	 * a PSR-17 URI factory
 	 */
 	protected UriFactoryInterface $uriFactory;
-
-	/**
-	 * the name of the provider (class) (magic)
-	 */
-	protected ?string $serviceName = null;
 
 	/**
 	 * the authentication URL
 	 */
 	protected string $authURL;
-
-	/**
-	 * an optional link to the provider's API docs (magic)
-	 */
-	protected ?string $apiDocs = null;
-
-	/**
-	 * the API base URL (magic)
-	 */
-	protected ?string $apiURL = null;
-
-	/**
-	 * an optional URL to the provider's credential registration/application page (magic)
-	 */
-	protected ?string $applicationURL = null;
-
-	/**
-	 * an optional link to the page where a user can revoke access tokens (magic)
-	 */
-	protected ?string $userRevokeURL = null;
 
 	/**
 	 * an optional URL for application side token revocation
@@ -129,6 +98,35 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * additional headers to use during API access
 	 */
 	protected array $apiHeaders = [];
+
+	/*
+	 * magic properties (public readonly would be cool it the implementation wasn't fucking stupid)
+	 */
+
+	/**
+	 * the name of the provider (class) (magic)
+	 */
+	protected string $serviceName;
+
+	/**
+	 * the API base URL (magic)
+	 */
+	protected string $apiURL;
+
+	/**
+	 * an optional link to the provider's API docs (magic)
+	 */
+	protected ?string $apiDocs = null;
+
+	/**
+	 * an optional URL to the provider's credential registration/application page (magic)
+	 */
+	protected ?string $applicationURL = null;
+
+	/**
+	 * an optional link to the page where a user can revoke access tokens (magic)
+	 */
+	protected ?string $userRevokeURL = null;
 
 	/**
 	 * OAuthProvider constructor.
