@@ -18,7 +18,7 @@ namespace chillerlan\OAuth\Core;
 interface TokenRefresh{
 
 	/**
-	 * Tries to refresh an existing AccessToken with an associated refresh token and returns a fresh AccessToken.
+	 * Attempts to refresh an existing AccessToken with an associated refresh token and returns a fresh AccessToken.
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
