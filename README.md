@@ -22,7 +22,7 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth-core.svg?logo=packagist
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth-core/stats
 [gh-action-badge]: https://img.shields.io/github/actions/workflow/status/chillerlan/php-oauth-core/ci.yml?logo=github&branch=v4.x-php7.4
-[gh-action]: https://github.com/chillerlan/php-oauth-core/actions/workflows/ci.yml?query=branch%3Aphp-7.4
+[gh-action]: https://github.com/chillerlan/php-oauth-core/actions/workflows/ci.yml?query=branch%3Av4.x-php7.4
 
 # Documentation
 
