@@ -78,7 +78,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\ClientCredentials",
             "name": "ClientCredentials",
-            "summary": "Specifies\u0020whether\u0020the\u0020provider\u0020is\u0020capable\u0020of\u0020the\u0020OAuth2\u0020client\u0020credentials\u0020authentication\u0020flow.",
+            "summary": "Indicates\u0020whether\u0020the\u0020provider\u0020is\u0020capable\u0020of\u0020the\u0020OAuth2\u0020client\u0020credentials\u0020authentication\u0020flow.",
             "url": "classes/chillerlan-OAuth-Core-ClientCredentials.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\ClientCredentials\u003A\u003AgetClientCredentialsToken\u0028\u0029",
@@ -203,12 +203,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuth2Provider\u003A\u003AgetClientCredentialsToken\u0028\u0029",
             "name": "getClientCredentialsToken",
-            "summary": "Obtains\u0020an\u0020OAuth2\u0020client\u0020credentials\u0020token\u0020and\u0020returns\u0020an\u0020AccessToken",
+            "summary": "",
             "url": "classes/chillerlan-OAuth-Core-OAuth2Provider.html#method_getClientCredentialsToken"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuth2Provider\u003A\u003ArefreshAccessToken\u0028\u0029",
             "name": "refreshAccessToken",
-            "summary": "Tries\u0020to\u0020refresh\u0020an\u0020existing\u0020AccessToken\u0020with\u0020an\u0020associated\u0020refresh\u0020token\u0020and\u0020returns\u0020a\u0020fresh\u0020AccessToken.",
+            "summary": "",
             "url": "classes/chillerlan-OAuth-Core-OAuth2Provider.html#method_refreshAccessToken"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuth2Provider\u003A\u003A\u0024authMethod",
@@ -276,6 +276,11 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020access\u0020token\u0020in\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
             "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_storeAccessToken"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003AsetLogger\u0028\u0029",
+            "name": "setLogger",
+            "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D3\u0020LoggerInterface",
+            "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_setLogger"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003AsetRequestFactory\u0028\u0029",
             "name": "setRequestFactory",
             "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D17\u0020RequestFactoryInterface",
@@ -326,6 +331,11 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020access\u0020token\u0020in\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_storeAccessToken"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AsetLogger\u0028\u0029",
+            "name": "setLogger",
+            "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D3\u0020LoggerInterface",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_setLogger"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AsetRequestFactory\u0028\u0029",
             "name": "setRequestFactory",
             "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D17\u0020RequestFactoryInterface",
@@ -366,70 +376,55 @@ Search.appendIndex(
             "summary": "Returns\u0020information\u0020about\u0020the\u0020currently\u0020authenticated\u0020user\u0020\u0028usually\u0020a\u0020\/me\u0020or\u0020\/user\u0020endpoint\u0029.",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_me"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AinvalidateAccessToken\u0028\u0029",
+            "name": "invalidateAccessToken",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_invalidateAccessToken"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AALLOWED_PROPERTIES",
             "name": "ALLOWED_PROPERTIES",
             "summary": "",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#constant_ALLOWED_PROPERTIES"
-        },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024http",
-            "name": "http",
-            "summary": "the\u0020http\u0020client\u0020instance",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_http"
-        },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024storage",
-            "name": "storage",
-            "summary": "the\u0020token\u0020storage\u0020instance",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_storage"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024options",
             "name": "options",
             "summary": "the\u0020options\u0020instance",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_options"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024storage",
+            "name": "storage",
+            "summary": "the\u0020token\u0020storage\u0020instance",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_storage"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024logger",
+            "name": "logger",
+            "summary": "a\u0020PSR\u002D3\u0020logger\u0020instance.",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_logger"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024http",
+            "name": "http",
+            "summary": "the\u0020PSR\u002D18\u0020http\u0020client\u0020instance",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_http"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024requestFactory",
             "name": "requestFactory",
-            "summary": "an\u0020optional\u0020PSR\u002D17\u0020request\u0020factory",
+            "summary": "a\u0020PSR\u002D17\u0020request\u0020factory",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_requestFactory"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024streamFactory",
             "name": "streamFactory",
-            "summary": "an\u0020optional\u0020PSR\u002D17\u0020stream\u0020factory",
+            "summary": "a\u0020PSR\u002D17\u0020stream\u0020factory",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_streamFactory"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024uriFactory",
             "name": "uriFactory",
-            "summary": "an\u0020optional\u0020PSR\u002D17\u0020URI\u0020factory",
+            "summary": "a\u0020PSR\u002D17\u0020URI\u0020factory",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_uriFactory"
-        },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024serviceName",
-            "name": "serviceName",
-            "summary": "the\u0020name\u0020of\u0020the\u0020provider\u0020\u0028class\u0029\u0020\u0028magic\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_serviceName"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024authURL",
             "name": "authURL",
             "summary": "the\u0020authentication\u0020URL",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_authURL"
-        },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024apiDocs",
-            "name": "apiDocs",
-            "summary": "an\u0020optional\u0020link\u0020to\u0020the\u0020provider\u0027s\u0020API\u0020docs\u0020\u0028magic\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_apiDocs"
-        },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024apiURL",
-            "name": "apiURL",
-            "summary": "the\u0020API\u0020base\u0020URL\u0020\u0028magic\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_apiURL"
-        },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024applicationURL",
-            "name": "applicationURL",
-            "summary": "an\u0020optional\u0020URL\u0020to\u0020the\u0020provider\u0027s\u0020credential\u0020registration\/application\u0020page\u0020\u0028magic\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_applicationURL"
-        },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024userRevokeURL",
-            "name": "userRevokeURL",
-            "summary": "an\u0020optional\u0020link\u0020to\u0020the\u0020page\u0020where\u0020a\u0020user\u0020can\u0020revoke\u0020access\u0020tokens\u0020\u0028magic\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_userRevokeURL"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024revokeURL",
             "name": "revokeURL",
@@ -451,19 +446,54 @@ Search.appendIndex(
             "summary": "additional\u0020headers\u0020to\u0020use\u0020during\u0020API\u0020access",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_apiHeaders"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024serviceName",
+            "name": "serviceName",
+            "summary": "the\u0020name\u0020of\u0020the\u0020provider\u0020\u0028class\u0029\u0020\u0028magic\u0029",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_serviceName"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024apiURL",
+            "name": "apiURL",
+            "summary": "the\u0020API\u0020base\u0020URL\u0020\u0028magic\u0029",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_apiURL"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024apiDocs",
+            "name": "apiDocs",
+            "summary": "an\u0020optional\u0020link\u0020to\u0020the\u0020provider\u0027s\u0020API\u0020docs\u0020\u0028magic\u0029",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_apiDocs"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024applicationURL",
+            "name": "applicationURL",
+            "summary": "an\u0020optional\u0020URL\u0020to\u0020the\u0020provider\u0027s\u0020credential\u0020registration\/application\u0020page\u0020\u0028magic\u0029",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_applicationURL"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024userRevokeURL",
+            "name": "userRevokeURL",
+            "summary": "an\u0020optional\u0020link\u0020to\u0020the\u0020page\u0020where\u0020a\u0020user\u0020can\u0020revoke\u0020access\u0020tokens\u0020\u0028magic\u0029",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_userRevokeURL"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\ProviderException",
             "name": "ProviderException",
             "summary": "",
             "url": "classes/chillerlan-OAuth-Core-ProviderException.html"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\TokenInvalidate",
+            "name": "TokenInvalidate",
+            "summary": "Indicates\u0020whether\u0020the\u0020service\u0020is\u0020capable\u0020of\u0020invalidating\u0020access\u0020tokens",
+            "url": "classes/chillerlan-OAuth-Core-TokenInvalidate.html"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\TokenInvalidate\u003A\u003AinvalidateAccessToken\u0028\u0029",
+            "name": "invalidateAccessToken",
+            "summary": "Allows\u0020to\u0020invalidate\u0020an\u0020access\u0020token",
+            "url": "classes/chillerlan-OAuth-Core-TokenInvalidate.html#method_invalidateAccessToken"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\TokenRefresh",
             "name": "TokenRefresh",
-            "summary": "Specifies\u0020whether\u0020the\u0020provider\u0020is\u0020capable\u0020of\u0020the\u0020OAuth2\u0020token\u0020refresh.",
+            "summary": "Indicates\u0020whether\u0020the\u0020provider\u0020is\u0020capable\u0020of\u0020the\u0020OAuth2\u0020token\u0020refresh.",
             "url": "classes/chillerlan-OAuth-Core-TokenRefresh.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\TokenRefresh\u003A\u003ArefreshAccessToken\u0028\u0029",
             "name": "refreshAccessToken",
-            "summary": "Tries\u0020to\u0020refresh\u0020an\u0020existing\u0020AccessToken\u0020with\u0020an\u0020associated\u0020refresh\u0020token\u0020and\u0020returns\u0020a\u0020fresh\u0020AccessToken.",
+            "summary": "Attempts\u0020to\u0020refresh\u0020an\u0020existing\u0020AccessToken\u0020with\u0020an\u0020associated\u0020refresh\u0020token\u0020and\u0020returns\u0020a\u0020fresh\u0020AccessToken.",
             "url": "classes/chillerlan-OAuth-Core-TokenRefresh.html#method_refreshAccessToken"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\OAuthException",
