@@ -25,7 +25,6 @@ A PHP7.4+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [gh-action]: https://github.com/chillerlan/php-oauth-core/actions/workflows/ci.yml?query=branch%3Aphp-7.4
 
 # Documentation
-An API documentation created with [phpDocumentor](https://www.phpdoc.org/) can be found at https://chillerlan.github.io/php-oauth-core/ (WIP).
 
 ## Requirements
 - PHP 7.4+
