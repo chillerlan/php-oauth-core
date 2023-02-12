@@ -12,7 +12,7 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\OAuth\Storage\OAuthStorageInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Psr\Http\Message\{
 	RequestFactoryInterface, RequestInterface, ResponseInterface,
 	StreamFactoryInterface, StreamInterface, UriFactoryInterface, UriInterface
@@ -27,7 +27,7 @@ use Psr\Http\Message\{
  * @property string|null $applicationURL
  * @property string|null $userRevokeURL
  */
-interface OAuthInterface extends ClientInterface, LoggerAwareInterface{
+interface OAuthInterface extends ClientInterface{
 
 	/**
 	 * Prepares the URL with optional $params which redirects to the provider's authorization prompt
@@ -72,6 +72,11 @@ interface OAuthInterface extends ClientInterface, LoggerAwareInterface{
 	 * Sets an access token in the current OAuthStorageInterface (shorthand/convenience)
 	 */
 	public function storeAccessToken(AccessToken $token):OAuthInterface;
+
+	/**
+	 * Sets an optional PSR-3 LoggerInterface
+	 */
+	public function setLogger(LoggerInterface $logger):OAuthInterface;
 
 	/**
 	 * Sets an optional PSR-17 RequestFactoryInterface

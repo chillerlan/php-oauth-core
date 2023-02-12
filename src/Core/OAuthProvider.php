@@ -21,7 +21,7 @@ use Psr\Http\Message\{
 	RequestFactoryInterface, RequestInterface, ResponseInterface,
 	StreamFactoryInterface, StreamInterface, UriFactoryInterface
 };
-use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
+use Psr\Log\{LoggerInterface, NullLogger};
 use ReflectionClass;
 use function array_merge;
 use function in_array;
@@ -38,7 +38,6 @@ use const PHP_QUERY_RFC1738;
  * It also implements a magic getter that allows to access the properties listed below.
  */
 abstract class OAuthProvider implements OAuthInterface{
-	use LoggerAwareTrait;
 
 	protected const ALLOWED_PROPERTIES = [
 		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL'
@@ -53,6 +52,11 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * the token storage instance
 	 */
 	protected OAuthStorageInterface $storage;
+
+	/**
+	 * a PSR-3 logger instance.
+	 */
+	protected LoggerInterface $logger;
 
 	/**
 	 * the PSR-18 http client instance
@@ -190,6 +194,16 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	public function storeAccessToken(AccessToken $token):OAuthInterface{
 		$this->storage->storeAccessToken($token, $this->serviceName);
+
+		return $this;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @codeCoverageIgnore
+	 */
+	public function setLogger(LoggerInterface $logger):OAuthInterface{
+		$this->logger = $logger;
 
 		return $this;
 	}
