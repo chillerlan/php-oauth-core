@@ -15,8 +15,14 @@ jobs:
 
   static-code-analysis:
     name: "Static Code Analysis"
-
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php-version:
+          - "8.1"
+          - "8.2"
 
     env:
       PHAN_ALLOW_XDEBUG: 0
@@ -38,12 +44,12 @@ jobs:
         uses: ramsey/composer-install@v2
 
       - name: "Run phan"
-        run: php vendor/bin/phan
+        run: php vendor/bin/phan --target-php-version=${{ matrix.php-version }}
 
 
   build-docs:
     name: "Build and publish Docs"
-
+    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
 
     steps:
@@ -71,7 +77,7 @@ jobs:
 
   tests:
     name: "Unit Tests"
-
+    needs: static-code-analysis
     runs-on: ${{ matrix.os }}
 
     strategy:
