@@ -28,7 +28,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AEOL_UNKNOWN",
             "name": "EOL_UNKNOWN",
-            "summary": "Denotes\u0020an\u0020unknown\u0020end\u0020of\u0020life\u0020time.",
+            "summary": "Denotes\u0020an\u0020unknown\u0020end\u0020of\u0020lifetime.",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#constant_EOL_UNKNOWN"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AEOL_NEVER_EXPIRES",
@@ -901,10 +901,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-OAuthTestMemoryStorage.html#method_getAccessToken"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestMemoryStorage\u003A\u003A\u0024storagepath",
-            "name": "storagepath",
+            "fqsen": "\\chillerlan\\OAuthTest\\OAuthTestMemoryStorage\u003A\u003A\u0024storagePath",
+            "name": "storagePath",
             "summary": "",
-            "url": "classes/chillerlan-OAuthTest-OAuthTestMemoryStorage.html#property_storagepath"
+            "url": "classes/chillerlan-OAuthTest-OAuthTestMemoryStorage.html#property_storagePath"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\OAuth1\\DummyOAuth1Provider",
             "name": "DummyOAuth1Provider",
