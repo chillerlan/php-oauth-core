@@ -256,32 +256,14 @@ abstract class OAuthProvider implements OAuthInterface{
 		StreamInterface|array|string $body = null,
 		array $headers = null
 	):ResponseInterface{
+		$request = $this->requestFactory->createRequest($method ?? 'GET', $this->getRequestURL($path, $params));
 
-		$request = $this->requestFactory
-			->createRequest($method ?? 'GET', QueryUtil::merge($this->getRequestTarget($path), $params ?? []));
-
-		foreach(array_merge($this->apiHeaders, $headers ?? []) as $header => $value){
+		foreach($this->getRequestHeaders($headers) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 
-		if($request->hasHeader('content-type')){
-			$contentType = strtolower($request->getHeaderLine('content-type'));
-
-			if(is_array($body)){
-				if($contentType === 'application/x-www-form-urlencoded'){
-					$body = $this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738));
-				}
-				elseif(in_array($contentType, ['application/json', 'application/vnd.api+json'])){
-					$body = $this->streamFactory->createStream(json_encode($body));
-				}
-			}
-			elseif(is_string($body)){
-				// we don't check if the given string matches the content type - this is the implementor's responsibility
-				$body = $this->streamFactory->createStream($body);
-			}
-		}
-
-		if($body instanceof StreamInterface){
+		if($body !== null){
+			$body    = $this->getRequestBody($body, $request);
 			$request = $request
 				->withBody($body)
 				->withHeader('Content-length', (string)$body->getSize())
@@ -289,6 +271,67 @@ abstract class OAuthProvider implements OAuthInterface{
 		}
 
 		return $this->sendRequest($request);
+	}
+
+	/**
+	 * Prepare request headers
+	 */
+	protected function getRequestHeaders(array $headers = null):array{
+		return array_merge($this->apiHeaders, $headers ?? []);
+	}
+
+	/**
+	 * Prepares the request URL
+	 */
+	protected function getRequestURL(string $path, array $params = null):string{
+		return QueryUtil::merge($this->getRequestTarget($path), $this->cleanQueryParams($params ?? []));
+	}
+
+	/**
+	 * Cleans an array of query parameters
+	 */
+	protected function cleanQueryParams(iterable $params):array{
+		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_INT_STRING, true);
+	}
+
+	/**
+	 * Prepares the request body
+	 *
+	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 */
+	protected function getRequestBody(StreamInterface|array|string $body, RequestInterface $request):StreamInterface{
+
+		if($body instanceof StreamInterface){
+			return $body; // @codeCoverageIgnore
+		}
+
+		if(is_string($body)){
+			// we don't check if the given string matches the content type - this is the implementor's responsibility
+			return $this->streamFactory->createStream($body);
+		}
+
+		if(is_array($body)){
+			$body        = $this->cleanBodyParams($body);
+			$contentType = strtolower($request->getHeaderLine('content-type'));
+
+			if($contentType === 'application/x-www-form-urlencoded'){
+				return $this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738));
+			}
+
+			if(in_array($contentType, ['application/json', 'application/vnd.api+json'])){
+				return $this->streamFactory->createStream(json_encode($body));
+			}
+
+		}
+
+		throw new ProviderException('invalid body/content-type');  // @codeCoverageIgnore
+	}
+
+	/**
+	 * Cleans an array of body parameters
+	 */
+	protected function cleanBodyParams(iterable $params):array{
+		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_BOOL, true);
 	}
 
 	/**
