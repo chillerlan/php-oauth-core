@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="php-qrcode-cs"
+<ruleset name="php-oauth-core-cs"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
-	<description>php-qrcode rules for phpcs</description>
+	<description>php-oauth-core rules for phpcs</description>
 
 	<file>examples</file>
 	<file>src</file>
