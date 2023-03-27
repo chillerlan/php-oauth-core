@@ -6,7 +6,7 @@ A PHP OAuth1/2 client, [loosely based](https://github.com/codemasher/PHPoAuthLib
 [![License][license-badge]][license]
 [![Continuous Integration][gh-action-badge]][gh-action]
 [![CodeCov][coverage-badge]][coverage]
-[![Scrunitizer CI][scrutinizer-badge]][scrutinizer]
+[![Codacy][codacy-badge]][codacy]
 [![Packagist downloads][downloads-badge]][downloads]
 
 [php-badge]: https://img.shields.io/packagist/php-v/chillerlan/php-oauth-core?logo=php&color=8892BF
@@ -17,8 +17,8 @@ A PHP OAuth1/2 client, [loosely based](https://github.com/codemasher/PHPoAuthLib
 [license]: https://github.com/chillerlan/php-oauth-core/blob/main/LICENSE
 [coverage-badge]: https://img.shields.io/codecov/c/github/chillerlan/php-oauth-core.svg?logo=codecov
 [coverage]: https://codecov.io/github/chillerlan/php-oauth-core
-[scrutinizer-badge]: https://img.shields.io/scrutinizer/g/chillerlan/php-oauth-core.svg?logo=scrutinizer
-[scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-oauth-core
+[codacy-badge]: https://img.shields.io/codacy/grade/de971588f9a44f1a99e7bbd2a0737951?logo=codacy
+[codacy]: https://www.codacy.com/gh/chillerlan/php-oauth-core/dashboard
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth-core.svg?logo=packagist
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth-core/stats
 [gh-action-badge]: https://img.shields.io/github/actions/workflow/status/chillerlan/php-oauth-core/ci.yml?branch=main&logo=github
