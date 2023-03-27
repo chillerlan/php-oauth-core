@@ -326,11 +326,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020current\u0020OAuthStorageInterface",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_getStorage"
         },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AstoreAccessToken\u0028\u0029",
-            "name": "storeAccessToken",
-            "summary": "Sets\u0020an\u0020access\u0020token\u0020in\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_storeAccessToken"
-        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AsetLogger\u0028\u0029",
             "name": "setLogger",
             "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D3\u0020LoggerInterface",
@@ -351,6 +346,11 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020optional\u0020PSR\u002D17\u0020UriFactoryInterface",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_setUriFactory"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AstoreAccessToken\u0028\u0029",
+            "name": "storeAccessToken",
+            "summary": "Sets\u0020an\u0020access\u0020token\u0020in\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_storeAccessToken"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AcreateAccessToken\u0028\u0029",
             "name": "createAccessToken",
             "summary": "Creates\u0020an\u0020access\u0020token\u0020with\u0020the\u0020provider\u0020set\u0020to\u0020\u0024this\u002D\u003EserviceName",
@@ -360,6 +360,31 @@ Search.appendIndex(
             "name": "request",
             "summary": "Prepares\u0020an\u0020API\u0020request\u0020to\u0020\u0024path\u0020with\u0020the\u0020given\u0020parameters,\u0020gets\u0020authorization,\u0020fires\u0020the\u0020request\nand\u0020returns\u0020a\u0020PSR\u002D7\u0020ResponseInterface\u0020with\u0020the\u0020corresponding\u0020API\u0020response",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_request"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AgetRequestHeaders\u0028\u0029",
+            "name": "getRequestHeaders",
+            "summary": "Prepare\u0020request\u0020headers",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_getRequestHeaders"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AgetRequestURL\u0028\u0029",
+            "name": "getRequestURL",
+            "summary": "Prepares\u0020the\u0020request\u0020URL",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_getRequestURL"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AcleanQueryParams\u0028\u0029",
+            "name": "cleanQueryParams",
+            "summary": "Cleans\u0020an\u0020array\u0020of\u0020query\u0020parameters",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_cleanQueryParams"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AgetRequestBody\u0028\u0029",
+            "name": "getRequestBody",
+            "summary": "Prepares\u0020the\u0020request\u0020body",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_getRequestBody"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AcleanBodyParams\u0028\u0029",
+            "name": "cleanBodyParams",
+            "summary": "Cleans\u0020an\u0020array\u0020of\u0020body\u0020parameters",
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_cleanBodyParams"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AgetRequestTarget\u0028\u0029",
             "name": "getRequestTarget",
