@@ -21,7 +21,7 @@ interface TokenInvalidate{
 	 * If a token is given via $token, that token should be invalidated,
 	 * otherwise the current user token from the internal storage should be used.
 	 * Returns true if the operation was successful, false otherwise.
-	 * May throw a ProviderException if an error occured.
+	 * May throw a ProviderException if an error occurred.
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */

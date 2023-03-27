@@ -22,7 +22,7 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 	];
 
 	public function testRequestURI():void{
-		// just the path segemt
+		// just the path segment
 		$r = $this->provider->request('/api/gimme');
 		$this::assertSame('much data', (string)$r->getBody());
 

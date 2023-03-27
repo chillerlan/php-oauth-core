@@ -95,7 +95,7 @@ interface OAuthInterface extends ClientInterface{
 
 	/**
 	 * Returns information about the currently authenticated user (usually a /me or /user endpoint).
-	 * Throws a ProviderException if no such information is available or if the method cannot be implemnted.
+	 * Throws a ProviderException if no such information is available or if the method cannot be implemented.
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */

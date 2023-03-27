@@ -23,12 +23,12 @@ use function sprintf;
  */
 final class OAuthTestMemoryStorage extends MemoryStorage{
 
-	protected string $storagepath;
+	protected string $storagePath;
 
-	public function __construct(OAuthOptions|SettingsContainerInterface $options = null, string $storagepath = null){
+	public function __construct(OAuthOptions|SettingsContainerInterface $options = null, string $storagePath = null){
 		parent::__construct($options);
 
-		$this->storagepath = $storagepath ?? __DIR__;
+		$this->storagePath = $storagePath ?? __DIR__;
 	}
 
 	/**
@@ -37,9 +37,9 @@ final class OAuthTestMemoryStorage extends MemoryStorage{
 	public function storeAccessToken(AccessToken $token, string $service = null):OAuthStorageInterface{
 		parent::storeAccessToken($token, $service);
 
-		$tokenfile = sprintf('%s/%s.token.json', $this->storagepath, $this->getServiceName($service));
+		$tokenFile = sprintf('%s/%s.token.json', $this->storagePath, $this->getServiceName($service));
 
-		if(file_put_contents($tokenfile, $token->toJSON()) === false){
+		if(file_put_contents($tokenFile, $token->toJSON()) === false){
 			throw new OAuthStorageException('unable to access file storage');
 		}
 
@@ -56,11 +56,11 @@ final class OAuthTestMemoryStorage extends MemoryStorage{
 			return $this->tokens[$serviceName];
 		}
 
-		$tokenfile = sprintf('%s/%s.token.json', $this->storagepath, $serviceName);
+		$tokenFile = sprintf('%s/%s.token.json', $this->storagePath, $serviceName);
 
-		if(file_exists($tokenfile)){
+		if(file_exists($tokenFile)){
 			/** @noinspection PhpIncompatibleReturnTypeInspection */
-			return (new AccessToken)->fromJSON(file_get_contents($tokenfile));
+			return (new AccessToken)->fromJSON(file_get_contents($tokenFile));
 		}
 
 		throw new OAuthStorageException('token not found');

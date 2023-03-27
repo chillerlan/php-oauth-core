@@ -47,7 +47,7 @@ An API documentation created with [phpDocumentor](https://www.phpdoc.org/) can b
 	}
 }
 ```
-In case you want to keep using `dev-main`, specify the hash of a commit to avoid running into unforseen issues like so: `dev-main#ff85785139b9531a6c29d41cc161e4878d54491d`
+In case you want to keep using `dev-main`, specify the hash of a commit to avoid running into unforeseen issues like so: `dev-main#ff85785139b9531a6c29d41cc161e4878d54491d`
 
 Profit!
 

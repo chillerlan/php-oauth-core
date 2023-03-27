@@ -147,8 +147,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		$this->logger         = $logger ?? new NullLogger;
 		$this->serviceName    = (new ReflectionClass($this))->getShortName();
 
-		// i hate this, but i also hate adding 3 more params to the constructor
-		// no, i won't use a DI container for this. don't @ me
+		// no, I won't use a DI container for this. don't @ me
 		$this->requestFactory = new RequestFactory;
 		$this->streamFactory  = new StreamFactory;
 		$this->uriFactory     = new UriFactory;

@@ -33,7 +33,7 @@ use function time;
 final class AccessToken extends SettingsContainerAbstract{
 
 	/**
-	 * Denotes an unknown end of life time.
+	 * Denotes an unknown end of lifetime.
 	 */
 	public const EOL_UNKNOWN = -9001;
 
@@ -77,7 +77,7 @@ final class AccessToken extends SettingsContainerAbstract{
 	 * The scopes that are attached to this token (OAuth2)
 	 *
 	 * Please note that the scopes have to be stored manually after receiving the token
-	 * as the initial authurl request data is discarded before the callback comes in.
+	 * as the initial auth URL request data is discarded before the callback comes in.
 	 */
 	protected array $scopes = [];
 
