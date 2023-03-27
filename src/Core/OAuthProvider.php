@@ -142,19 +142,18 @@ abstract class OAuthProvider implements OAuthInterface{
 		OAuthOptions|SettingsContainerInterface $options,
 		LoggerInterface $logger = null
 	){
-		$this->http    = $http;
-		$this->storage = new MemoryStorage;
-		$this->options = $options;
-		$this->logger  = $logger ?? new NullLogger;
+		$this->http           = $http;
+		$this->options        = $options;
+		$this->logger         = $logger ?? new NullLogger;
+		$this->serviceName    = (new ReflectionClass($this))->getShortName();
 
 		// i hate this, but i also hate adding 3 more params to the constructor
 		// no, i won't use a DI container for this. don't @ me
 		$this->requestFactory = new RequestFactory;
 		$this->streamFactory  = new StreamFactory;
 		$this->uriFactory     = new UriFactory;
-		$this->serviceName    = (new ReflectionClass($this))->getShortName();
 
-		$this->storage->setServiceName($this->serviceName);
+		$this->setStorage(new MemoryStorage);
 	}
 
 	/**
@@ -194,16 +193,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function storeAccessToken(AccessToken $token):OAuthInterface{
-		$this->storage->storeAccessToken($token, $this->serviceName);
-
-		return $this;
-	}
-
-	/**
-	 * @inheritDoc
-	 * @codeCoverageIgnore
-	 */
 	public function setLogger(LoggerInterface $logger):OAuthInterface{
 		$this->logger = $logger;
 
@@ -236,6 +225,16 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	public function setUriFactory(UriFactoryInterface $uriFactory):OAuthInterface{
 		$this->uriFactory = $uriFactory;
+
+		return $this;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @codeCoverageIgnore
+	 */
+	public function storeAccessToken(AccessToken $token):OAuthInterface{
+		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $this;
 	}
