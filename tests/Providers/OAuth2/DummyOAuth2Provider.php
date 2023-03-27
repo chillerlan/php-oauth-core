@@ -23,6 +23,6 @@ final class DummyOAuth2Provider extends OAuth2Provider implements ClientCredenti
 	protected ?string $userRevokeURL  = 'https://account.example.com/apps/';
 	protected array   $authHeaders    = ['foo' => 'bar'];
 	protected array   $apiHeaders     = ['foo' => 'bar'];
-	protected int     $authMethod     = OAuth2Provider::AUTH_METHOD_QUERY;
+	protected int     $authMethod     = self::AUTH_METHOD_QUERY;
 
 }

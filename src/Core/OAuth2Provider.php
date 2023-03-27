@@ -198,7 +198,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @inheritDoc
 	 * @implements \chillerlan\OAuth\Core\ClientCredentials
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
@@ -235,7 +234,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @inheritDoc
 	 * @implements \chillerlan\OAuth\Core\TokenRefresh
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
@@ -288,7 +286,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @inheritDoc
 	 * @implements \chillerlan\OAuth\Core\CSRFToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @internal
@@ -312,7 +309,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @inheritDoc
 	 * @implements \chillerlan\OAuth\Core\CSRFToken
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @internal

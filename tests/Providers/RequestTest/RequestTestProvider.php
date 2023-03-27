@@ -18,6 +18,9 @@ final class RequestTestProvider extends OAuthProvider{
 
 	protected string $apiURL = 'https://localhost';
 
+	/**
+	 * @throws \Exception
+	 */
 	public function getAuthURL(array $params = null):UriInterface{
 		throw new Exception('should not happen (unused method)');
 	}

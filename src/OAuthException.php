@@ -10,4 +10,6 @@
 
 namespace chillerlan\OAuth;
 
-class OAuthException extends \Exception{}
+use Exception;
+
+class OAuthException extends Exception{}

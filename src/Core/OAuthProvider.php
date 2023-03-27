@@ -402,8 +402,8 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * @implements \chillerlan\OAuth\Core\TokenInvalidate
-	 * @inheritDoc
 	 * @codeCoverageIgnore
+	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function invalidateAccessToken(AccessToken $token = null):bool{
 		throw new ProviderException('not implemented');

@@ -137,6 +137,7 @@ abstract class ProviderTestAbstract extends TestCase{
 
 	protected function getMethod(string $method):ReflectionMethod{
 		$method = $this->reflection->getMethod($method);
+		/** @noinspection PhpExpressionResultUnusedInspection this is a void method??? */
 		$method->setAccessible(true);
 
 		return $method;
@@ -144,6 +145,7 @@ abstract class ProviderTestAbstract extends TestCase{
 
 	protected function getProperty(string $property):ReflectionProperty{
 		$property = $this->reflection->getProperty($property);
+		/** @noinspection PhpExpressionResultUnusedInspection this is a void method??? */
 		$property->setAccessible(true);
 
 		return $property;
