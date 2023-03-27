@@ -40,7 +40,7 @@ use const PHP_QUERY_RFC1738;
 abstract class OAuthProvider implements OAuthInterface{
 
 	protected const ALLOWED_PROPERTIES = [
-		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL'
+		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL',
 	];
 
 	/**
@@ -144,7 +144,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	){
 		$this->http           = $http;
 		$this->options        = $options;
-		$this->logger         = $logger ?? new NullLogger;
+		$this->logger         = ($logger ?? new NullLogger);
 		$this->serviceName    = (new ReflectionClass($this))->getShortName();
 
 		// no, I won't use a DI container for this. don't @ me
@@ -255,7 +255,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		StreamInterface|array|string $body = null,
 		array $headers = null
 	):ResponseInterface{
-		$request = $this->requestFactory->createRequest($method ?? 'GET', $this->getRequestURL($path, $params));
+		$request = $this->requestFactory->createRequest(($method ?? 'GET'), $this->getRequestURL($path, $params));
 
 		foreach($this->getRequestHeaders($headers) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
@@ -276,14 +276,14 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * Prepare request headers
 	 */
 	protected function getRequestHeaders(array $headers = null):array{
-		return array_merge($this->apiHeaders, $headers ?? []);
+		return array_merge($this->apiHeaders, ($headers ?? []));
 	}
 
 	/**
 	 * Prepares the request URL
 	 */
 	protected function getRequestURL(string $path, array $params = null):string{
-		return QueryUtil::merge($this->getRequestTarget($path), $this->cleanQueryParams($params ?? []));
+		return QueryUtil::merge($this->getRequestTarget($path), $this->cleanQueryParams(($params ?? [])));
 	}
 
 	/**
@@ -352,7 +352,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		// for some reason we were given a host name
 		if(isset($parsedURL['host'])){
 			$api  = QueryUtil::parseUrl($this->apiURL);
-			$host = $api['host'] ?? null;
+			$host = ($api['host'] ?? null);
 
 			// back out if it doesn't match
 			if($parsedURL['host'] !== $host){

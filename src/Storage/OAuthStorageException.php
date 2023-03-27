@@ -12,4 +12,6 @@ namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\OAuthException;
 
-class OAuthStorageException extends OAuthException{}
+class OAuthStorageException extends OAuthException{
+
+}

@@ -28,10 +28,10 @@ final class AccessTokenTest extends TestCase{
 
 	public static function tokenDataProvider():array{
 		return [
-			'accessTokenSecret'  => ['accessTokenSecret',  null, 'ACCESS_TOKEN'],
-			'accessToken'        => ['accessToken',        null, 'ACCESS_TOKEN_SECRET'],
-			'refreshToken'       => ['refreshToken',       null, 'REFRESH_TOKEN'],
-			'extraParams'        => ['extraParams',        []  , ['foo' => 'bar']],
+			'accessTokenSecret' => ['accessTokenSecret', null, 'ACCESS_TOKEN'],
+			'accessToken'       => ['accessToken',       null, 'ACCESS_TOKEN_SECRET'],
+			'refreshToken'      => ['refreshToken',      null, 'REFRESH_TOKEN'],
+			'extraParams'       => ['extraParams',       []  , ['foo' => 'bar']],
 		];
 	}
 
@@ -87,7 +87,7 @@ final class AccessTokenTest extends TestCase{
 	public function testIsExpiredVariable():void{
 
 		$now     = time();
-		$expiry1 = $now + 3600;
+		$expiry1 = ($now + 3600);
 		$this->token->setExpiry($expiry1);
 		$this::assertSame($expiry1, $this->token->expires);
 		$this::assertFalse($this->token->isExpired());
@@ -95,18 +95,18 @@ final class AccessTokenTest extends TestCase{
 		$now     = time();
 		$expiry2 = 3600;
 		$this->token->setExpiry($expiry2);
-		$this::assertSame($now+$expiry2, $this->token->expires);
+		$this::assertSame(($now + $expiry2), $this->token->expires);
 		$this::assertFalse($this->token->isExpired());
 
 		$now     = time();
 		$expiry3 = 2;
 		$this->token->setExpiry($expiry3);
-		$this::assertSame($now+$expiry3, $this->token->expires);
+		$this::assertSame(($now + $expiry3), $this->token->expires);
 		sleep(3);
 		$this::assertTrue($this->token->isExpired());
 
 		$now     = time();
-		$expiry4 = $now + 2;
+		$expiry4 = ($now + 2);
 		$this->token->setExpiry($expiry4);
 		$this::assertSame($expiry4, $this->token->expires);
 		sleep(3);

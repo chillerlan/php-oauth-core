@@ -40,12 +40,20 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 		$this::assertSame('payload', (string)$r->getBody());
 
 		$r = $this->provider->request(
-			$this::ECHO_REQUEST, [], 'POST', ['data' => 'payload'], ['content-type' => 'application/json']
+			$this::ECHO_REQUEST,
+			[],
+			'POST',
+			['data' => 'payload'],
+			['content-type' => 'application/json']
 		);
 		$this::assertSame('{"data":"payload"}', (string)$r->getBody());
 
 		$r = $this->provider->request(
-			$this::ECHO_REQUEST, [], 'POST', ['data' => 'payload'], ['content-type' => 'application/x-www-form-urlencoded']
+			$this::ECHO_REQUEST,
+			[],
+			'POST',
+			['data' => 'payload'],
+			['content-type' => 'application/x-www-form-urlencoded']
 		);
 		$this::assertSame('data=payload', (string)$r->getBody());
 	}

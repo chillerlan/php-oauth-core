@@ -12,4 +12,6 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\OAuth\OAuthException;
 
-class ProviderException extends OAuthException{}
+class ProviderException extends OAuthException{
+
+}

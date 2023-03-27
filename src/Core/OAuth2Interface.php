@@ -17,8 +17,8 @@ use Psr\Http\Message\UriInterface;
  */
 interface OAuth2Interface extends OAuthInterface{
 
-	const AUTH_METHOD_HEADER = 1;
-	const AUTH_METHOD_QUERY  = 2;
+	public const AUTH_METHOD_HEADER = 1;
+	public const AUTH_METHOD_QUERY  = 2;
 
 	/**
 	 * Obtains an OAuth2 access token with the given $code, verifies the $state

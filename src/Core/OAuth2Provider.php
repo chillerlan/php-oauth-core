@@ -135,8 +135,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token = $this->createAccessToken();
 
 		$token->accessToken  = $data['access_token'];
-		$token->expires      = $data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES;
-		$token->refreshToken = $data['refresh_token'] ?? null;
+		$token->expires      = ($data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
+		$token->refreshToken = ($data['refresh_token'] ?? null);
 
 		unset($data['expires_in'], $data['refresh_token'], $data['access_token']);
 
@@ -214,7 +214,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$request = $this->requestFactory
-			->createRequest('POST', $this->clientCredentialsTokenURL ?? $this->accessTokenURL)
+			->createRequest('POST', ($this->clientCredentialsTokenURL ?? $this->accessTokenURL))
 			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
@@ -226,7 +226,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$token = $this->parseTokenResponse($this->http->sendRequest($request));
-		$token->scopes = $scopes ?? [];
+		$token->scopes = ($scopes ?? []);
 
 		$this->storage->storeAccessToken($token, $this->serviceName);
 
@@ -264,7 +264,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		];
 
 		$request = $this->requestFactory
-			->createRequest('POST', $this->refreshTokenURL ?? $this->accessTokenURL)
+			->createRequest('POST', ($this->refreshTokenURL ?? $this->accessTokenURL))
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
 			->withHeader('Accept-Encoding', 'identity')
 			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))

@@ -28,7 +28,7 @@ final class OAuthTestMemoryStorage extends MemoryStorage{
 	public function __construct(OAuthOptions|SettingsContainerInterface $options = null, string $storagePath = null){
 		parent::__construct($options);
 
-		$this->storagePath = $storagePath ?? __DIR__;
+		$this->storagePath = ($storagePath ?? __DIR__);
 	}
 
 	/**

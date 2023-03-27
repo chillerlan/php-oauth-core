@@ -39,7 +39,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @inheritDoc
 	 */
 	public function getAuthURL(array $params = null):UriInterface{
-		$params = array_merge($params ?? [], ['oauth_token' => $this->getRequestToken()->accessToken]);
+		$params = array_merge(($params ?? []), ['oauth_token' => $this->getRequestToken()->accessToken]);
 
 		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $params));
 	}
@@ -137,14 +137,14 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		$query           = QueryUtil::parse($parsed['query'] ?? '');
+		$query           = QueryUtil::parse(($parsed['query'] ?? ''));
 		$signatureParams = array_merge($query, $params);
 
 		unset($signatureParams['oauth_signature']);
 
 		// https://tools.ietf.org/html/rfc5849#section-3.4.1.1
 		$data = array_map('rawurlencode', [
-			strtoupper($method ?? 'POST'),
+			strtoupper(($method ?? 'POST')),
 			$parsed['scheme'].'://'.$parsed['host'].($parsed['path'] ?? ''),
 			QueryUtil::build($signatureParams),
 		]);
@@ -152,7 +152,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		// https://tools.ietf.org/html/rfc5849#section-3.4.2
 		$key  = array_map('rawurlencode', [
 			$this->options->secret,
-			$accessTokenSecret ?? ''
+			($accessTokenSecret ?? ''),
 		]);
 
 		return base64_encode(hash_hmac('sha1', implode('&', $data), implode('&', $key), true));

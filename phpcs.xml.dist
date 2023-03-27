@@ -128,6 +128,7 @@
 		<exclude name="PSR12.Files.FileHeader.SpacingAfterBlock" />
 		<exclude name="PSR12.Functions.ReturnTypeDeclaration" />
 		<exclude name="PSR12.Operators.OperatorSpacing" />
+		<exclude name="PSR12.Traits.UseDeclaration.MultipleImport" />
 	</rule>
 
 	<rule ref="PSR12.Namespaces.CompoundNamespaceDepth">
@@ -138,6 +139,7 @@
 
 	<rule ref="Squiz">
 		<exclude name="Squiz.Arrays.ArrayDeclaration.IndexNoNewline" />
+		<exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed" />
 		<exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed" />
 		<exclude name="Squiz.Arrays.ArrayDeclaration.ValueNoNewline" />
 		<exclude name="Squiz.Classes.ClassDeclaration" />

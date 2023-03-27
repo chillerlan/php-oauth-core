@@ -45,7 +45,7 @@ final class AccessToken extends SettingsContainerAbstract{
 	/**
 	 * defines a maximum expiry period (1 year)
 	 */
-	public const EXPIRY_MAX = 86400 * 365;
+	public const EXPIRY_MAX = (86400 * 365);
 
 	/**
 	 * the access token secret (OAuth1)
@@ -121,7 +121,7 @@ final class AccessToken extends SettingsContainerAbstract{
 			$this->expires = $expires;
 		}
 		elseif($expires > 0 && $expires < $this::EXPIRY_MAX){
-			$this->expires = $now + $expires;
+			$this->expires = ($now + $expires);
 		}
 		else{
 			$this->expires = $this::EOL_UNKNOWN;
