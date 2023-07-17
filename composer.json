@@ -40,7 +40,7 @@
 		"monolog/monolog": "^3.3",
 		"phan/phan": "^5.4",
 		"phpmd/phpmd": "^2.13",
-		"phpunit/phpunit": "^10.0",
+		"phpunit/phpunit": "^10.2",
 		"squizlabs/php_codesniffer": "^3.7"
 	},
 	"autoload": {
