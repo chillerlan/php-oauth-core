@@ -61,7 +61,7 @@ interface OAuthInterface extends ClientInterface{
 	/**
 	 * Sets an optional OAuthStorageInterface
 	 */
-	public function setStorage(OAuthStorageInterface $storage):OAuthInterface;
+	public function setStorage(OAuthStorageInterface $storage):static;
 
 	/**
 	 * Returns the current OAuthStorageInterface
@@ -71,27 +71,27 @@ interface OAuthInterface extends ClientInterface{
 	/**
 	 * Sets an access token in the current OAuthStorageInterface (shorthand/convenience)
 	 */
-	public function storeAccessToken(AccessToken $token):OAuthInterface;
+	public function storeAccessToken(AccessToken $token):static;
 
 	/**
 	 * Sets an optional PSR-3 LoggerInterface
 	 */
-	public function setLogger(LoggerInterface $logger):OAuthInterface;
+	public function setLogger(LoggerInterface $logger):static;
 
 	/**
 	 * Sets an optional PSR-17 RequestFactoryInterface
 	 */
-	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface;
+	public function setRequestFactory(RequestFactoryInterface $requestFactory):static;
 
 	/**
 	 * Sets an optional PSR-17 StreamFactoryInterface
 	 */
-	public function setStreamFactory(StreamFactoryInterface $streamFactory):OAuthInterface;
+	public function setStreamFactory(StreamFactoryInterface $streamFactory):static;
 
 	/**
 	 * Sets an optional PSR-17 UriFactoryInterface
 	 */
-	public function setUriFactory(UriFactoryInterface $uriFactory):OAuthInterface;
+	public function setUriFactory(UriFactoryInterface $uriFactory):static;
 
 	/**
 	 * Returns information about the currently authenticated user (usually a /me or /user endpoint).

@@ -74,7 +74,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(AccessToken $token, string $service = null):OAuthStorageInterface{
+	public function storeAccessToken(AccessToken $token, string $service = null):static{
 		$_SESSION[$this->tokenVar][$this->getServiceName($service)] = $this->toStorage($token);
 
 		return $this;
@@ -102,7 +102,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service = null):OAuthStorageInterface{
+	public function clearAccessToken(string $service = null):static{
 		$serviceName = $this->getServiceName($service);
 
 		if(array_key_exists($serviceName, $_SESSION[$this->tokenVar])){
@@ -115,7 +115,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllAccessTokens():OAuthStorageInterface{
+	public function clearAllAccessTokens():static{
 
 		foreach(array_keys($_SESSION[$this->tokenVar]) as $service){
 			unset($_SESSION[$this->tokenVar][$service]);
@@ -129,7 +129,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $state, string $service = null):OAuthStorageInterface{
+	public function storeCSRFState(string $state, string $service = null):static{
 		$_SESSION[$this->stateVar][$this->getServiceName($service)] = $state;
 
 		return $this;
@@ -157,7 +157,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service = null):OAuthStorageInterface{
+	public function clearCSRFState(string $service = null):static{
 		$serviceName = $this->getServiceName($service);
 
 		if(array_key_exists($serviceName, $_SESSION[$this->stateVar])){
@@ -170,7 +170,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAllCSRFStates():OAuthStorageInterface{
+	public function clearAllCSRFStates():static{
 		unset($_SESSION[$this->stateVar]);
 
 		return $this;

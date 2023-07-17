@@ -23,7 +23,7 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function setServiceName(string $service):OAuthStorageInterface;
+	public function setServiceName(string $service):static;
 
 	/**
 	 * Gets the current service provider name
@@ -37,7 +37,7 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function storeAccessToken(AccessToken $token, string $service = null):OAuthStorageInterface;
+	public function storeAccessToken(AccessToken $token, string $service = null):static;
 
 	/**
 	 * Retrieves an AccessToken for the given $service
@@ -56,21 +56,21 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearAccessToken(string $service = null):OAuthStorageInterface;
+	public function clearAccessToken(string $service = null):static;
 
 	/**
 	 * Deletes all access tokens (for the current user)
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearAllAccessTokens():OAuthStorageInterface;
+	public function clearAllAccessTokens():static;
 
 	/**
 	 * Stores a CSRF <state> value for the given $service
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function storeCSRFState(string $state, string $service = null):OAuthStorageInterface;
+	public function storeCSRFState(string $state, string $service = null):static;
 
 	/**
 	 * Retrieves a CSRF <state> value for the given $service
@@ -89,14 +89,14 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearCSRFState(string $service = null):OAuthStorageInterface;
+	public function clearCSRFState(string $service = null):static;
 
 	/**
 	 * Deletes all stored CSRF states (for the current user)
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearAllCSRFStates():OAuthStorageInterface;
+	public function clearAllCSRFStates():static;
 
 	/**
 	 * Prepares an AccessToken for storage (serialize, encrypt etc.)

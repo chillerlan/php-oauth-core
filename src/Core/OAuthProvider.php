@@ -173,7 +173,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setStorage(OAuthStorageInterface $storage):OAuthInterface{
+	public function setStorage(OAuthStorageInterface $storage):static{
 		$this->storage = $storage;
 		$this->storage->setServiceName($this->serviceName);
 
@@ -192,7 +192,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setLogger(LoggerInterface $logger):OAuthInterface{
+	public function setLogger(LoggerInterface $logger):static{
 		$this->logger = $logger;
 
 		return $this;
@@ -202,7 +202,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setRequestFactory(RequestFactoryInterface $requestFactory):OAuthInterface{
+	public function setRequestFactory(RequestFactoryInterface $requestFactory):static{
 		$this->requestFactory = $requestFactory;
 
 		return $this;
@@ -212,7 +212,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setStreamFactory(StreamFactoryInterface $streamFactory):OAuthInterface{
+	public function setStreamFactory(StreamFactoryInterface $streamFactory):static{
 		$this->streamFactory = $streamFactory;
 
 		return $this;
@@ -222,7 +222,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setUriFactory(UriFactoryInterface $uriFactory):OAuthInterface{
+	public function setUriFactory(UriFactoryInterface $uriFactory):static{
 		$this->uriFactory = $uriFactory;
 
 		return $this;
@@ -232,7 +232,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function storeAccessToken(AccessToken $token):OAuthInterface{
+	public function storeAccessToken(AccessToken $token):static{
 		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $this;

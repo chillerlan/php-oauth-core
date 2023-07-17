@@ -36,7 +36,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	/**
 	 * @inheritDoc
 	 */
-	public function setServiceName(string $service):OAuthStorageInterface{
+	public function setServiceName(string $service):static{
 		$service = trim($service);
 
 		if(empty($service)){
