@@ -104,6 +104,8 @@ final class AccessToken extends SettingsContainerAbstract{
 
 	/**
 	 * Sets the expiration for this token
+	 *
+	 * @phan-suppress PhanPossiblyNullTypeMismatchProperty
 	 */
 	public function setExpiry(int $expires = null):AccessToken{
 		$now = time();
