@@ -138,9 +138,9 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * OAuthProvider constructor.
 	 */
 	public function __construct(
-		ClientInterface $http,
+		ClientInterface                         $http,
 		OAuthOptions|SettingsContainerInterface $options,
-		LoggerInterface $logger = null
+		LoggerInterface                         $logger = null
 	){
 		$this->http           = $http;
 		$this->options        = $options;
@@ -249,12 +249,12 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 */
 	public function request(
-		string $path,
-		array $params = null,
-		string $method = null,
+		string                       $path,
+		array                        $params = null,
+		string                       $method = null,
 		StreamInterface|array|string $body = null,
-		array $headers = null,
-		string $protocolVersion = null
+		array                        $headers = null,
+		string                       $protocolVersion = null
 	):ResponseInterface{
 		$request = $this->requestFactory->createRequest(($method ?? 'GET'), $this->getRequestURL($path, $params));
 

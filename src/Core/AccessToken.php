@@ -43,27 +43,27 @@ final class AccessToken extends SettingsContainerAbstract{
 	public const EOL_NEVER_EXPIRES = -9002;
 
 	/**
-	 * defines a maximum expiry period (1 year)
+	 * Defines a maximum expiry period (1 year)
 	 */
 	public const EXPIRY_MAX = (86400 * 365);
 
 	/**
-	 * the access token secret (OAuth1)
+	 * The access token secret (OAuth1)
 	 */
 	protected ?string $accessTokenSecret = null;
 
 	/**
-	 * the oauth access token
+	 * The oauth access token
 	 */
 	protected ?string $accessToken = null;
 
 	/**
-	 * an optional refresh token (OAuth2)
+	 * An optional refresh token (OAuth2)
 	 */
 	protected ?string $refreshToken = null;
 
 	/**
-	 * the token expiration date/time
+	 * The token expiration date/time
 	 * @todo: change to DateInterval?
 	 */
 	protected ?int $expires = self::EOL_UNKNOWN;
@@ -82,14 +82,12 @@ final class AccessToken extends SettingsContainerAbstract{
 	protected array $scopes = [];
 
 	/**
-	 * the provider who issued this token
+	 * The provider who issued this token
 	 */
 	protected ?string $provider = null;
 
 	/**
 	 * AccessToken constructor.
-	 *
-	 * @param iterable|null $properties
 	 */
 	public function __construct(iterable $properties = null){
 		parent::__construct($properties);
@@ -98,18 +96,14 @@ final class AccessToken extends SettingsContainerAbstract{
 	}
 
 	/**
-	 * @param int|null $expires
-	 *
-	 * @return void
+	 * Expiry setter
 	 */
 	protected function set_expires(int $expires = null):void{
 		$this->setExpiry($expires);
 	}
 
 	/**
-	 * @param int|null $expires
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * Sets the expiration for this token
 	 */
 	public function setExpiry(int $expires = null):AccessToken{
 		$now = time();
@@ -131,7 +125,7 @@ final class AccessToken extends SettingsContainerAbstract{
 	}
 
 	/**
-	 * @return bool
+	 * Checks whether this token is expired
 	 */
 	public function isExpired():bool{
 		return $this->expires !== $this::EOL_NEVER_EXPIRES && $this->expires !== $this::EOL_UNKNOWN && time() > $this->expires;

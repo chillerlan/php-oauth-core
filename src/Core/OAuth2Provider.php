@@ -14,8 +14,7 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\HTTP\Utils\QueryUtil;
+use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 use function array_merge;
 use function base64_encode;
