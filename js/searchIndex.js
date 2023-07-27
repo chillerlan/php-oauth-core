@@ -13,17 +13,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003Aset_expires\u0028\u0029",
             "name": "set_expires",
-            "summary": "",
+            "summary": "Expiry\u0020setter",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#method_set_expires"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AsetExpiry\u0028\u0029",
             "name": "setExpiry",
-            "summary": "",
+            "summary": "Sets\u0020the\u0020expiration\u0020for\u0020this\u0020token",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#method_setExpiry"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AisExpired\u0028\u0029",
             "name": "isExpired",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020this\u0020token\u0020is\u0020expired",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#method_isExpired"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AEOL_UNKNOWN",
@@ -38,27 +38,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AEXPIRY_MAX",
             "name": "EXPIRY_MAX",
-            "summary": "defines\u0020a\u0020maximum\u0020expiry\u0020period\u0020\u00281\u0020year\u0029",
+            "summary": "Defines\u0020a\u0020maximum\u0020expiry\u0020period\u0020\u00281\u0020year\u0029",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#constant_EXPIRY_MAX"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003A\u0024accessTokenSecret",
             "name": "accessTokenSecret",
-            "summary": "the\u0020access\u0020token\u0020secret\u0020\u0028OAuth1\u0029",
+            "summary": "The\u0020access\u0020token\u0020secret\u0020\u0028OAuth1\u0029",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#property_accessTokenSecret"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003A\u0024accessToken",
             "name": "accessToken",
-            "summary": "the\u0020oauth\u0020access\u0020token",
+            "summary": "The\u0020oauth\u0020access\u0020token",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#property_accessToken"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003A\u0024refreshToken",
             "name": "refreshToken",
-            "summary": "an\u0020optional\u0020refresh\u0020token\u0020\u0028OAuth2\u0029",
+            "summary": "An\u0020optional\u0020refresh\u0020token\u0020\u0028OAuth2\u0029",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#property_refreshToken"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003A\u0024expires",
             "name": "expires",
-            "summary": "the\u0020token\u0020expiration\u0020date\/time",
+            "summary": "The\u0020token\u0020expiration\u0020date\/time",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#property_expires"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003A\u0024extraParams",
@@ -73,7 +73,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003A\u0024provider",
             "name": "provider",
-            "summary": "the\u0020provider\u0020who\u0020issued\u0020this\u0020token",
+            "summary": "The\u0020provider\u0020who\u0020issued\u0020this\u0020token",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#property_provider"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\ClientCredentials",
