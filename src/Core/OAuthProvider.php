@@ -253,7 +253,8 @@ abstract class OAuthProvider implements OAuthInterface{
 		array $params = null,
 		string $method = null,
 		StreamInterface|array|string $body = null,
-		array $headers = null
+		array $headers = null,
+		string $protocolVersion = null
 	):ResponseInterface{
 		$request = $this->requestFactory->createRequest(($method ?? 'GET'), $this->getRequestURL($path, $params));
 
@@ -267,6 +268,10 @@ abstract class OAuthProvider implements OAuthInterface{
 				->withBody($body)
 				->withHeader('Content-length', (string)$body->getSize())
 			;
+		}
+
+		if($protocolVersion !== null){
+			$request = $request->withProtocolVersion($protocolVersion);
 		}
 
 		return $this->sendRequest($request);
