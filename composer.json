@@ -31,9 +31,10 @@
 		"ext-simplexml":"*",
 		"ext-sodium":"*",
 		"ext-zlib": "*",
-		"chillerlan/php-httpinterface": "dev-main#427a60fb0949c797e26aedf2bd0e7dc6915d7815",
+		"chillerlan/php-httpinterface": "dev-main#16739940dec9316caa66bf7fc32f63f05c576ddf",
+		"chillerlan/php-settings-container":"^2.1.4 || ^3.1",
 		"psr/http-client":"^1.0",
-		"psr/http-message": "^1.0",
+		"psr/http-message": "^1.1",
 		"psr/log": "^1.1 || ^2.0 || ^3.0"
 	},
 	"require-dev": {
