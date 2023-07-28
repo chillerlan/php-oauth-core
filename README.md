@@ -18,7 +18,7 @@ A PHP OAuth1/2 client, [loosely based](https://github.com/codemasher/PHPoAuthLib
 [coverage-badge]: https://img.shields.io/codecov/c/github/chillerlan/php-oauth-core.svg?logo=codecov
 [coverage]: https://codecov.io/github/chillerlan/php-oauth-core
 [codacy-badge]: https://img.shields.io/codacy/grade/de971588f9a44f1a99e7bbd2a0737951?logo=codacy
-[codacy]: https://www.codacy.com/gh/chillerlan/php-oauth-core/dashboard
+[codacy]: https://app.codacy.com/gh/chillerlan/php-oauth-core/dashboard
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth-core.svg?logo=packagist
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth-core/stats
 [gh-action-badge]: https://img.shields.io/github/actions/workflow/status/chillerlan/php-oauth-core/ci.yml?branch=main&logo=github
