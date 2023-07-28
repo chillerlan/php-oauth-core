@@ -13,7 +13,6 @@
 			<exclude>tests/Providers/OAuth1ProviderTestAbstract.php</exclude>
 			<exclude>tests/Providers/OAuth2ProviderTestAbstract.php</exclude>
 			<exclude>tests/Providers/OAuthProviderTestAbstract.php</exclude>
-			<exclude>tests/Providers/ProviderTestAbstract.php</exclude>
 			<exclude>tests/Storage/StorageTestAbstract.php</exclude>
 			<exclude>tests/Providers/OAuth1/DummyOAuth1Provider.php</exclude>
 			<exclude>tests/Providers/OAuth2/DummyOAuth2BasicProvider.php</exclude>
