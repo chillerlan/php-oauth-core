@@ -163,7 +163,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/TokenInvalidate.php"><a href="files/src-core-tokeninvalidate.html"><abbr title="src/Core/TokenInvalidate.php">TokenInvalidate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -173,7 +173,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">invalidateAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
-        <section class="phpdocumentor-description"><p>If a token is given via $token, that token should be invalidated,
+        <section class="phpdocumentor-description"><p>Clients shall set the optional OAuthProvider::$revokeURL for use in this method.
+If a token is given via $token, that token should be invalidated,
 otherwise the current user token from the internal storage should be used.
 Returns true if the operation was successful, false otherwise.
 May throw a ProviderException if an error occurred.</p>
