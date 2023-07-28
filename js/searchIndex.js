@@ -971,6 +971,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Providers-OAuth1ProviderTestAbstract.html"
         },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\OAuth1ProviderTestAbstract\u003A\u003AsetUp\u0028\u0029",
+            "name": "setUp",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-Providers-OAuth1ProviderTestAbstract.html#method_setUp"
+        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\OAuth1ProviderTestAbstract\u003A\u003AtestOAuth1Instance\u0028\u0029",
             "name": "testOAuth1Instance",
             "summary": "",
@@ -1415,6 +1420,11 @@ Search.appendIndex(
             "name": "OAuthProviderRequestTest",
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Providers-RequestTest-OAuthProviderRequestTest.html"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\RequestTest\\OAuthProviderRequestTest\u003A\u003AsetUp\u0028\u0029",
+            "name": "setUp",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-Providers-RequestTest-OAuthProviderRequestTest.html#method_setUp"
         },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\RequestTest\\OAuthProviderRequestTest\u003A\u003AtestRequestURI\u0028\u0029",
             "name": "testRequestURI",
