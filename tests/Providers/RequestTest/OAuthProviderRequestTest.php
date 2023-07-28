@@ -10,6 +10,7 @@
 
 namespace chillerlan\OAuthTest\Providers\RequestTest;
 
+use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuthTest\Providers\{OAuthProviderTestAbstract, ProviderTestHttpClient};
 
@@ -20,6 +21,12 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 	protected array $testResponses = [
 		'/api/gimme' => 'much data',
 	];
+
+	protected function setUp():void{
+		parent::setUp();
+
+		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
+	}
 
 	public function testRequestURI():void{
 		// just the path segment

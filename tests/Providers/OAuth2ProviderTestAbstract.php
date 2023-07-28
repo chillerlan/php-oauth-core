@@ -45,6 +45,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 	protected function setUp():void{
 		parent::setUp();
 
+		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
 		$this->storage->storeCSRFState('test_state', $this->provider->serviceName);
 	}
 

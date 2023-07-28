@@ -38,9 +38,11 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 			'{"data":"such data! much wow!"}',
 	];
 
-#	protected function setUp():void{
-#		parent::setUp();
-#	}
+	protected function setUp():void{
+		parent::setUp();
+
+		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
+	}
 
 	public function testOAuth1Instance():void{
 		$this::assertInstanceOf(OAuth1Interface::class, $this->provider);

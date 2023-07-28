@@ -75,7 +75,6 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 			$this->reflection->getProperty($property)->setValue($this->provider, $value);
 		}
 
-		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
 	}
 
 	protected function initFactories():void{
