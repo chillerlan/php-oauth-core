@@ -88,7 +88,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 *
 	 * @see \chillerlan\OAuth\Core\TokenInvalidate
 	 */
-	protected ?string $revokeURL = null;
+	protected string $revokeURL;
 
 	/**
 	 * the provider's access token exchange URL

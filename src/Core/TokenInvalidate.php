@@ -18,6 +18,7 @@ interface TokenInvalidate{
 	/**
 	 * Allows to invalidate an access token
 	 *
+	 * Clients shall set the optional OAuthProvider::$revokeURL for use in this method.
 	 * If a token is given via $token, that token should be invalidated,
 	 * otherwise the current user token from the internal storage should be used.
 	 * Returns true if the operation was successful, false otherwise.
