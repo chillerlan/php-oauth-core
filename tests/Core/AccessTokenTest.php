@@ -11,9 +11,9 @@
 namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\AccessToken;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use function sleep;
-use function time;
+use function sleep, time;
 
 /**
  * Tests the AccessToken class
@@ -35,9 +35,7 @@ final class AccessTokenTest extends TestCase{
 		];
 	}
 
-	/**
-	 * @dataProvider tokenDataProvider
-	 */
+	#[DataProvider('tokenDataProvider')]
 	public function testDefaultsGetSet(string $property, mixed $value, mixed $data):void{
 		// test defaults
 		$this::assertSame($value, $this->token->{$property});
@@ -59,9 +57,7 @@ final class AccessTokenTest extends TestCase{
 		];
 	}
 
-	/**
-	 * @dataProvider expiryDataProvider
-	 */
+	#[DataProvider('expiryDataProvider')]
 	public function testSetExpiry(?int $expires, int $expected):void{
 		$this->token->expires = $expires;
 
@@ -76,39 +72,32 @@ final class AccessTokenTest extends TestCase{
 		];
 	}
 
-	/**
-	 * @dataProvider isExpiredDataProvider
-	 */
+	#[DataProvider('isExpiredDataProvider')]
 	public function testIsExpired(int $expires, bool $isExpired):void{
 		$this->token->setExpiry($expires);
 		$this::assertSame($isExpired, $this->token->isExpired());
 	}
 
 	public function testIsExpiredVariable():void{
-
-		$now     = time();
-		$expiry1 = ($now + 3600);
-		$this->token->setExpiry($expiry1);
-		$this::assertSame($expiry1, $this->token->expires);
+		$expiry = (time() + 3600);
+		$this->token->setExpiry($expiry);
+		$this::assertSame($expiry, $this->token->expires);
 		$this::assertFalse($this->token->isExpired());
 
-		$now     = time();
-		$expiry2 = 3600;
-		$this->token->setExpiry($expiry2);
-		$this::assertSame(($now + $expiry2), $this->token->expires);
+		$expiry = 3600;
+		$this->token->setExpiry($expiry);
+		$this::assertSame((time() + $expiry), $this->token->expires);
 		$this::assertFalse($this->token->isExpired());
 
-		$now     = time();
-		$expiry3 = 2;
-		$this->token->setExpiry($expiry3);
-		$this::assertSame(($now + $expiry3), $this->token->expires);
+		$expiry = 2;
+		$this->token->setExpiry($expiry);
+		$this::assertSame((time() + $expiry), $this->token->expires);
 		sleep(3);
 		$this::assertTrue($this->token->isExpired());
 
-		$now     = time();
-		$expiry4 = ($now + 2);
-		$this->token->setExpiry($expiry4);
-		$this::assertSame($expiry4, $this->token->expires);
+		$expiry = (time() + 2);
+		$this->token->setExpiry($expiry);
+		$this::assertSame($expiry, $this->token->expires);
 		sleep(3);
 		$this::assertTrue($this->token->isExpired());
 	}

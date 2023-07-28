@@ -11,7 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\RequestTest;
 
 use chillerlan\OAuth\Core\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract;
+use chillerlan\OAuthTest\Providers\{OAuthProviderTestAbstract, ProviderTestHttpClient};
 
 final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 
@@ -36,25 +36,35 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 	}
 
 	public function testRequestBody():void{
-		$r = $this->provider->request($this::ECHO_REQUEST, [], 'POST', 'payload', ['content-type' => 'application/whatever']);
+
+		$r = $this->provider->request(
+			ProviderTestHttpClient::ECHO_REQUEST,
+			[],
+			'POST',
+			'payload',
+			['content-type' => 'application/whatever']
+		);
+
 		$this::assertSame('payload', (string)$r->getBody());
 
 		$r = $this->provider->request(
-			$this::ECHO_REQUEST,
+			ProviderTestHttpClient::ECHO_REQUEST,
 			[],
 			'POST',
 			['data' => 'payload'],
 			['content-type' => 'application/json']
 		);
+
 		$this::assertSame('{"data":"payload"}', (string)$r->getBody());
 
 		$r = $this->provider->request(
-			$this::ECHO_REQUEST,
+			ProviderTestHttpClient::ECHO_REQUEST,
 			[],
 			'POST',
 			['data' => 'payload'],
 			['content-type' => 'application/x-www-form-urlencoded']
 		);
+
 		$this::assertSame('data=payload', (string)$r->getBody());
 	}
 

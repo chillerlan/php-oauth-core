@@ -10,13 +10,10 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\HTTP\Utils\QueryUtil;
+use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
-use function explode;
-use function parse_url;
-use function sleep;
-use function time;
+use function explode, parse_url, sleep, time;
 use const PHP_URL_QUERY;
 
 /**
@@ -24,11 +21,21 @@ use const PHP_URL_QUERY;
  */
 abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
+	protected array $testProperties = [
+		'apiURL'                    => 'https://localhost/oauth2/api',
+		'accessTokenURL'            => 'https://localhost/oauth2/access_token',
+		'refreshTokenURL'           => 'https://localhost/oauth2/refresh_token',
+		'clientCredentialsTokenURL' => 'https://localhost/oauth2/client_credentials',
+		'revokeURL'                 => 'https://localhost/oauth2/revoke_token',
+	];
+
 	protected array $testResponses = [
 		'/oauth2/access_token'       =>
 			'{"access_token":"test_access_token","expires_in":3600,"state":"test_state"}',
 		'/oauth2/refresh_token'      =>
 			'{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
+		'/oauth2/revoke_token'       =>
+			'{"message":"token revoked"}',
 		'/oauth2/client_credentials' =>
 			'{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
 		'/oauth2/api/request'        =>
@@ -37,11 +44,6 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 	protected function setUp():void{
 		parent::setUp();
-
-		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth2/api');
-		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth2/access_token');
-		$this->setProperty($this->provider, 'refreshTokenURL', 'https://localhost/oauth2/refresh_token');
-		$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
 
 		$this->storage->storeCSRFState('test_state', $this->provider->serviceName);
 	}
@@ -57,7 +59,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this::assertArrayNotHasKey('client_secret', $query);
 		$this::assertSame($this->options->key, $query['client_id']);
 		$this::assertSame('code', $query['response_type']);
-		$this::assertSame(explode('?', $url)[0], $this->getProperty('authURL')->getValue($this->provider));
+		$this::assertSame(explode('?', $url)[0], $this->reflection->getProperty('authURL')->getValue($this->provider));
 	}
 
 	public function testGetAccessToken():void{
@@ -71,7 +73,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('unable to parse token response');
 
-		$this
+		$this->reflection
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
 				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('""')),
@@ -83,7 +85,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('error retrieving access token');
 
-		$this
+		$this->reflection
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
 				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"error":"whatever"}')),
@@ -95,7 +97,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('token missing');
 
-		$this
+		$this->reflection
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
 				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"foo":"bar"}')),
@@ -107,19 +109,19 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$request = $this->requestFactory->createRequest('GET', 'https://foo.bar');
 		$token   = new AccessToken(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token']);
 
-		$authMethod = $this->getProperty('authMethod')->getValue($this->provider);
+		$authMethod = $this->reflection->getProperty('authMethod')->getValue($this->provider);
 
 		// header (default)
 		if($authMethod === OAuth2Interface::AUTH_METHOD_HEADER){
 			$this::assertStringContainsString(
-				$this->getProperty('authMethodHeader')->getValue($this->provider).' test_token',
+				$this->reflection->getProperty('authMethodHeader')->getValue($this->provider).' test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization')
 			);
 		}
 		// query
 		elseif($authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
 			$this::assertStringContainsString(
-				$this->getProperty('authMethodQuery')->getValue($this->provider).'=test_token',
+				$this->reflection->getProperty('authMethodQuery')->getValue($this->provider).'=test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery()
 			);
 		}
@@ -130,14 +132,15 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->provider->storeAccessToken($token);
 
-		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
+		$this::assertSame('such data! much wow!', MessageUtil::decodeJSON($this->provider->request('/request'))->data);
 	}
 
 	public function testRequestInvalidAuthTypeException():void{
 		$this->expectException(OAuthException::class);
 		$this->expectExceptionMessage('invalid auth type');
 
-		$this->setProperty($this->provider, 'authMethod', -1);
+		$this->reflection->getProperty('authMethod')->setValue($this->provider, -1);
+
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->provider->storeAccessToken($token);
 
@@ -151,7 +154,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		}
 
 		// will throw an exception if it goes wrong
-		$this
+		$this->reflection
 			->getMethod('checkState')
 			->invokeArgs($this->provider, ['test_state']);
 
@@ -167,7 +170,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid state');
 
-		$this
+		$this->reflection
 			->getMethod('checkState')
 			->invoke($this->provider);
 	}
@@ -181,7 +184,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid CSRF state');
 
-		$this
+		$this->reflection
 			->getMethod('checkState')
 			->invokeArgs($this->provider, ['invalid_test_state']);
 	}
@@ -228,7 +231,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 		sleep(2);
 
-		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
+		$this::assertSame('such data! much wow!', MessageUtil::decodeJSON($this->provider->request('/request'))->data);
 	}
 
 	public function testGetClientCredentials():void{

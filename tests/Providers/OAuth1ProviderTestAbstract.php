@@ -11,10 +11,8 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
-use chillerlan\HTTP\Utils\QueryUtil;
-
+use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use function parse_url;
-
 use const PHP_URL_QUERY;
 
 /**
@@ -22,23 +20,27 @@ use const PHP_URL_QUERY;
  */
 abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
+	protected array $testProperties = [
+		'requestTokenURL' => 'https://localhost/oauth1/request_token',
+		'accessTokenURL'  => 'https://localhost/oauth1/access_token',
+		'revokeURL'       => 'https://localhost/oauth1/revoke_token',
+		'apiURL'          => 'https://localhost/oauth1/api',
+	];
+
 	protected array $testResponses =  [
 		'/oauth1/request_token' =>
 			'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',
 		'/oauth1/access_token'  =>
 			'oauth_token=test_access_token&oauth_token_secret=test_access_token_secret&oauth_callback_confirmed=true',
+		'/oauth1/revoke_token'  =>
+			'{"message":"token revoked"}',
 		'/oauth1/api/request'   =>
 			'{"data":"such data! much wow!"}',
 	];
 
-	protected function setUp():void{
-		parent::setUp();
-
-		$this->setProperty($this->provider, 'requestTokenURL', 'https://localhost/oauth1/request_token');
-		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth1/access_token');
-		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth1/api');
-
-	}
+#	protected function setUp():void{
+#		parent::setUp();
+#	}
 
 	public function testOAuth1Instance():void{
 		$this::assertInstanceOf(OAuth1Interface::class, $this->provider);
@@ -51,7 +53,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetSignature():void{
-		$signature = $this
+		$signature = $this->reflection
 			->getMethod('getSignature')
 			->invokeArgs(
 				$this->provider,
@@ -65,7 +67,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('getSignature: invalid url');
 
-		$this
+		$this->reflection
 			->getMethod('getSignature')
 			->invokeArgs($this->provider, ['whatever', [], 'GET']);
 	}
@@ -84,14 +86,16 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('unable to parse token response');
 
-		$this->getMethod('parseTokenResponse')->invokeArgs($this->provider, [$this->responseFactory->createResponse()]);
+		$this->reflection
+			->getMethod('parseTokenResponse')
+			->invokeArgs($this->provider, [$this->responseFactory->createResponse()]);
 	}
 
 	public function testParseTokenResponseErrorException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('error retrieving access token');
 
-		$this
+		$this->reflection
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
 				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('error=whatever')),
@@ -103,7 +107,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid token');
 
-		$this
+		$this->reflection
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
 				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('oauth_token=whatever')),
@@ -115,10 +119,11 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('oauth callback unconfirmed');
 
-		$this
+		$this->reflection
 			->getMethod('parseTokenResponse')
 			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()
+				$this->responseFactory
+					->createResponse()
 					->withBody($this->streamFactory->createStream('oauth_token=whatever&oauth_token_secret=whatever_secret')),
 				true,
 			])
@@ -142,7 +147,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$token = new AccessToken(['accessTokenSecret' => 'test_token']);
 		$this->provider->storeAccessToken($token);
 
-		$this::assertSame('such data! much wow!', $this->responseJson($this->provider->request('/request'))->data);
+		$this::assertSame('such data! much wow!', MessageUtil::decodeJSON($this->provider->request('/request'))->data);
 
 		// coverage, @todo
 		$this->provider

@@ -14,7 +14,6 @@ use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageException};
 use chillerlan\Settings\SettingsContainerInterface;
-
 use function file_exists, file_get_contents, file_put_contents, sprintf;
 
 /**

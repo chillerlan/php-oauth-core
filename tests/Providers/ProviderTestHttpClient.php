@@ -12,7 +12,6 @@ namespace chillerlan\OAuthTest\Providers;
 
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
-
 use function str_contains;
 
 /**
@@ -20,9 +19,11 @@ use function str_contains;
  */
 final class ProviderTestHttpClient implements ClientInterface{
 
-	private array $responses;
+	public const ECHO_REQUEST = '/__echo__';
+
+	private array                    $responses;
 	private ResponseFactoryInterface $responseFactory;
-	private StreamFactoryInterface $streamFactory;
+	private StreamFactoryInterface   $streamFactory;
 
 	public function __construct(
 		array $responses,
@@ -41,7 +42,7 @@ final class ProviderTestHttpClient implements ClientInterface{
 		$path = $request->getUri()->getPath();
 
 		// echo the request
-		if(str_contains($path, OAuthProviderTestAbstract::ECHO_REQUEST)){
+		if(str_contains($path, self::ECHO_REQUEST)){
 			$response = $this->responseFactory->createResponse()->withHeader('x-request-uri', (string)$request->getUri());
 
 			foreach($request->getHeaders() as $header => $values){
@@ -56,6 +57,11 @@ final class ProviderTestHttpClient implements ClientInterface{
 		// nope
 		if(!isset($this->responses[$path])){
 			return $this->responseFactory->createResponse(404);
+		}
+
+		// return 204 on empty body
+		if($this->responses[$path] === ''){
+			return $this->responseFactory->createResponse(204);
 		}
 
 		return $this->responseFactory->createResponse()->withBody($this->streamFactory->createStream($this->responses[$path]));

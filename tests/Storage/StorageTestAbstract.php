@@ -17,13 +17,8 @@ use PHPUnit\Framework\TestCase;
 abstract class StorageTestAbstract extends TestCase{
 
 	protected OAuthStorageInterface $storage;
-
-	protected AccessToken $token;
-
-	/**
-	 * test service name
-	 */
-	protected string $tsn = 'testService';
+	protected AccessToken           $token;
+	protected string                $tsn = 'testService'; // test service name
 
 	protected function setUp():void{
 		$this->token   = new AccessToken(['accessToken' => 'foobar']);
@@ -60,7 +55,6 @@ abstract class StorageTestAbstract extends TestCase{
 	}
 
 	public function testTokenStorage():void{
-
 		$this->storage->storeAccessToken($this->token, $this->tsn);
 		$this::assertTrue($this->storage->hasAccessToken($this->tsn));
 		$this::assertSame('foobar', $this->storage->getAccessToken($this->tsn)->accessToken);
