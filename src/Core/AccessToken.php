@@ -11,7 +11,6 @@
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\Settings\SettingsContainerAbstract;
-
 use function time;
 
 /**

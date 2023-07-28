@@ -16,18 +16,8 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_merge;
-use function base64_encode;
-use function date;
-use function hash_equals;
-use function implode;
-use function is_array;
-use function json_decode;
-use function random_bytes;
-use function sha1;
-use function sprintf;
-use const JSON_THROW_ON_ERROR;
-use const PHP_QUERY_RFC1738;
+use function array_merge, base64_encode, date, hash_equals, implode, is_array, json_decode, random_bytes, sha1, sprintf;
+use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 
 /**
  * Implements an abstract OAuth2 provider with all methods required by the OAuth2Interface.

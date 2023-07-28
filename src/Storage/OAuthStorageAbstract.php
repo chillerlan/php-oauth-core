@@ -14,7 +14,7 @@ use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Log\{LoggerAwareTrait, LoggerInterface, NullLogger};
-use function is_string;
+use function is_string, trim;
 
 /**
  * Implements an abstract OAuth storage adapter

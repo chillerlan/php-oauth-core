@@ -23,14 +23,7 @@ use Psr\Http\Message\{
 };
 use Psr\Log\{LoggerInterface, NullLogger};
 use ReflectionClass;
-use function array_merge;
-use function in_array;
-use function is_array;
-use function is_string;
-use function json_encode;
-use function sprintf;
-use function str_starts_with;
-use function strtolower;
+use function array_merge, in_array, is_array, is_string, json_encode, sprintf, str_starts_with, strtolower;
 use const PHP_QUERY_RFC1738;
 
 /**

@@ -14,16 +14,7 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_map;
-use function array_merge;
-use function base64_encode;
-use function hash_hmac;
-use function implode;
-use function in_array;
-use function random_bytes;
-use function sodium_bin2hex;
-use function strtoupper;
-use function time;
+use function array_map, array_merge, base64_encode, hash_hmac, implode, in_array, random_bytes, sodium_bin2hex, strtoupper, time;
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
