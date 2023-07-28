@@ -12,11 +12,10 @@ namespace chillerlan\OAuthTest;
 
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageException, OAuthStorageInterface};
+use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageException};
 use chillerlan\Settings\SettingsContainerInterface;
 
-use function file_exists, file_get_contents, file_put_contents;
-use function sprintf;
+use function file_exists, file_get_contents, file_put_contents, sprintf;
 
 /**
  * Extends the standard memory storage so that it also saves tokens as JSON in the given path
@@ -34,7 +33,7 @@ final class OAuthTestMemoryStorage extends MemoryStorage{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(AccessToken $token, string $service = null):OAuthStorageInterface{
+	public function storeAccessToken(AccessToken $token, string $service = null):static{
 		parent::storeAccessToken($token, $service);
 
 		$tokenFile = sprintf('%s/%s.token.json', $this->storagePath, $this->getServiceName($service));
@@ -59,7 +58,6 @@ final class OAuthTestMemoryStorage extends MemoryStorage{
 		$tokenFile = sprintf('%s/%s.token.json', $this->storagePath, $serviceName);
 
 		if(file_exists($tokenFile)){
-			/** @noinspection PhpIncompatibleReturnTypeInspection */
 			return (new AccessToken)->fromJSON(file_get_contents($tokenFile));
 		}
 
