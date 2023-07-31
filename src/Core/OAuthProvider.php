@@ -10,11 +10,10 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\OAuth\Storage\MemoryStorage;
+use chillerlan\HTTP\Utils\{UriUtil, QueryUtil};
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
-use chillerlan\HTTP\Utils\QueryUtil;
 use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Storage\OAuthStorageInterface;
+use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{
@@ -341,7 +340,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getRequestTarget(string $uri):string{
-		$parsedURL = QueryUtil::parseUrl($uri);
+		$parsedURL = UriUtil::parseUrl($uri);
 
 		if(!isset($parsedURL['path'])){
 			throw new ProviderException('invalid path');
@@ -349,7 +348,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		// for some reason we were given a host name
 		if(isset($parsedURL['host'])){
-			$api  = QueryUtil::parseUrl($this->apiURL);
+			$api  = UriUtil::parseUrl($this->apiURL);
 			$host = ($api['host'] ?? null);
 
 			// back out if it doesn't match

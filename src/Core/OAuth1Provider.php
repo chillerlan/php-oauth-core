@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
+use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil, UriUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 use function array_map, array_merge, base64_encode, hash_hmac, implode, in_array,
 	ltrim, random_bytes, sodium_bin2hex, sprintf, strtoupper, time;
@@ -123,7 +123,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{
-		$parsed = QueryUtil::parseUrl($url);
+		$parsed = UriUtil::parseUrl($url);
 
 		if(!isset($parsed['host']) || !isset($parsed['scheme']) || !in_array($parsed['scheme'], ['http', 'https'], true)){
 			throw new ProviderException('getSignature: invalid url');
