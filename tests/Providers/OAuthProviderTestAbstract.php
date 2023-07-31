@@ -17,6 +17,7 @@ use chillerlan\Settings\SettingsContainerInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\{NullHandler, StreamHandler};
 use Monolog\Logger;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface, UriFactoryInterface};
@@ -150,6 +151,24 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		$this::assertTrue($this->storage->hasAccessToken());
 		$this::assertTrue($this->provider->invalidateAccessToken());
 		$this::assertFalse($this->storage->hasAccessToken());
+	}
+
+	public static function requestTargetProvider():array{
+		return [
+			'no slashes'     => ['a', 'https://localhost/api/a'],
+			'leading slash'  => ['/b', 'https://localhost/api/b'],
+			'trailing slash' => ['c/', 'https://localhost/api/c/'],
+			'full url given' => ['https://localhost/other/path/d', 'https://localhost/other/path/d'],
+			'ignore params'  => ['https://localhost/api/e/?with=param', 'https://localhost/api/e/'],
+		];
+	}
+
+	#[DataProvider('requestTargetProvider')]
+	public function testGetRequestTarget(string $path, string $expected):void{
+		$this->reflection->getProperty('apiURL')->setValue($this->provider, 'https://localhost/api/');
+		$requestTarget = $this->reflection->getMethod('getRequestTarget')->invokeArgs($this->provider, [$path]);
+
+		$this::assertSame($expected, $requestTarget);
 	}
 
 }

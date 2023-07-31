@@ -23,7 +23,7 @@ use Psr\Http\Message\{
 };
 use Psr\Log\{LoggerInterface, NullLogger};
 use ReflectionClass;
-use function array_merge, in_array, is_array, is_string, json_encode, sprintf, str_starts_with, strtolower;
+use function array_merge, in_array, is_array, is_string, json_encode, ltrim, rtrim, sprintf, str_starts_with, strtolower;
 use const PHP_QUERY_RFC1738;
 
 /**
@@ -358,11 +358,11 @@ abstract class OAuthProvider implements OAuthInterface{
 			}
 
 			// we explicitly ignore any existing parameters here
-			return 'https://'.$parsedURL['host'].$parsedURL['path'];
+			return sprintf('https://%s/%s', $parsedURL['host'], ltrim($parsedURL['path'], '/'));
 		}
 
 		// $apiURL may already include a part of the path
-		return $this->apiURL.$parsedURL['path'];
+		return sprintf('%s/%s', rtrim($this->apiURL, '/'), ltrim($parsedURL['path'], '/'));
 	}
 
 	/**

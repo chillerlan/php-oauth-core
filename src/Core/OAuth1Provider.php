@@ -14,7 +14,8 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_map, array_merge, base64_encode, hash_hmac, implode, in_array, random_bytes, sodium_bin2hex, strtoupper, time;
+use function array_map, array_merge, base64_encode, hash_hmac, implode, in_array,
+	ltrim, random_bytes, sodium_bin2hex, sprintf, strtoupper, time;
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -128,15 +129,14 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		$query           = QueryUtil::parse(($parsed['query'] ?? ''));
-		$signatureParams = array_merge($query, $params);
+		$signatureParams = array_merge(QueryUtil::parse(($parsed['query'] ?? '')), $params);
 
 		unset($signatureParams['oauth_signature']);
 
 		// https://tools.ietf.org/html/rfc5849#section-3.4.1.1
 		$data = array_map('rawurlencode', [
-			strtoupper(($method ?? 'POST')),
-			$parsed['scheme'].'://'.$parsed['host'].($parsed['path'] ?? ''),
+			strtoupper($method),
+			sprintf('%s://%s/%s', $parsed['scheme'], $parsed['host'], ltrim(($parsed['path'] ?? ''), '/')),
 			QueryUtil::build($signatureParams),
 		]);
 
