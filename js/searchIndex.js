@@ -1311,6 +1311,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Providers-OAuthProviderTestAbstract.html#method_testTokenInvalidate"
         },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\OAuthProviderTestAbstract\u003A\u003ArequestTargetProvider\u0028\u0029",
+            "name": "requestTargetProvider",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-Providers-OAuthProviderTestAbstract.html#method_requestTargetProvider"
+        },                {
+            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\OAuthProviderTestAbstract\u003A\u003AtestGetRequestTarget\u0028\u0029",
+            "name": "testGetRequestTarget",
+            "summary": "",
+            "url": "classes/chillerlan-OAuthTest-Providers-OAuthProviderTestAbstract.html#method_testGetRequestTarget"
+        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\OAuthProviderTestAbstract\u003A\u003A\u0024is_ci",
             "name": "is_ci",
             "summary": "",
