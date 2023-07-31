@@ -14,7 +14,7 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil, UriUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_map, array_merge, base64_encode, hash_hmac, implode, in_array,
+use function array_merge, base64_encode, hash_hmac, implode, in_array,
 	ltrim, random_bytes, sodium_bin2hex, sprintf, strtoupper, time;
 
 /**
@@ -129,22 +129,22 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('getSignature: invalid url');
 		}
 
+		$url  = sprintf('%s://%s', $parsed['scheme'], $parsed['host']);
+		$path = ltrim(($parsed['path'] ?? ''), '/');
+
+		if(!empty($path)){
+			$url = sprintf('%s/%s', $url, $path);
+		}
+
 		$signatureParams = array_merge(QueryUtil::parse(($parsed['query'] ?? '')), $params);
 
 		unset($signatureParams['oauth_signature']);
 
 		// https://tools.ietf.org/html/rfc5849#section-3.4.1.1
-		$data = array_map('rawurlencode', [
-			strtoupper($method),
-			sprintf('%s://%s/%s', $parsed['scheme'], $parsed['host'], ltrim(($parsed['path'] ?? ''), '/')),
-			QueryUtil::build($signatureParams),
-		]);
+		$data = QueryUtil::recursiveRawurlencode([strtoupper($method), $url, QueryUtil::build($signatureParams)]);
 
 		// https://tools.ietf.org/html/rfc5849#section-3.4.2
-		$key  = array_map('rawurlencode', [
-			$this->options->secret,
-			($accessTokenSecret ?? ''),
-		]);
+		$key  = QueryUtil::recursiveRawurlencode([$this->options->secret, ($accessTokenSecret ?? '')]);
 
 		return base64_encode(hash_hmac('sha1', implode('&', $data), implode('&', $key), true));
 	}

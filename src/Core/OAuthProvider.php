@@ -361,7 +361,14 @@ abstract class OAuthProvider implements OAuthInterface{
 		}
 
 		// $apiURL may already include a part of the path
-		return sprintf('%s/%s', rtrim($this->apiURL, '/'), ltrim($parsedURL['path'], '/'));
+		$api  = rtrim($this->apiURL, '/');
+		$path = ltrim($parsedURL['path'], '/');
+
+		if(empty($path)){
+			return $api;
+		}
+
+		return sprintf('%s/%s', $api, $path);
 	}
 
 	/**
