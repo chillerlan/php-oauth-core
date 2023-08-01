@@ -1446,11 +1446,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuthTest-Providers-RequestTest-OAuthProviderRequestTest.html#method_testRequestBody"
         },                {
-            "fqsen": "\\chillerlan\\OAuthTest\\Providers\\RequestTest\\OAuthProviderRequestTest\u003A\u003AtestRequestInvalidPathException\u0028\u0029",
-            "name": "testRequestInvalidPathException",
-            "summary": "",
-            "url": "classes/chillerlan-OAuthTest-Providers-RequestTest-OAuthProviderRequestTest.html#method_testRequestInvalidPathException"
-        },                {
             "fqsen": "\\chillerlan\\OAuthTest\\Providers\\RequestTest\\OAuthProviderRequestTest\u003A\u003AtestRequestHostMismatchException\u0028\u0029",
             "name": "testRequestHostMismatchException",
             "summary": "",
