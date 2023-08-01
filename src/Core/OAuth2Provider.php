@@ -16,7 +16,7 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_merge, base64_encode, date, hash_equals, implode, is_array, json_decode, random_bytes, sha1, sprintf;
+use function array_merge, base64_encode, date, explode, hash_equals, implode, is_array, json_decode, random_bytes, sha1, sprintf;
 use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 
 /**
@@ -110,11 +110,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		foreach(['error_description', 'error'] as $field){
-
 			if(isset($data[$field])){
 				throw new ProviderException('error retrieving access token: "'.$data[$field].'"');
 			}
-
 		}
 
 		if(!isset($data['access_token'])){
@@ -127,7 +125,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token->expires      = ($data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
 		$token->refreshToken = ($data['refresh_token'] ?? null);
 
-		unset($data['expires_in'], $data['refresh_token'], $data['access_token']);
+		if(isset($data['scope']) || isset($data['scopes'])){
+			$scope = ($data['scope'] ?? $data['scopes'] ?? []);
+
+			$token->scopes = (is_array($scope)) ? $scope : explode($this->scopesDelimiter, $scope);
+		}
+
+		unset($data['expires_in'], $data['refresh_token'], $data['access_token'], $data['scope'], $data['scopes']);
 
 		$token->extraParams = $data;
 
@@ -215,7 +219,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$token = $this->parseTokenResponse($this->http->sendRequest($request));
-		$token->scopes = ($scopes ?? []);
+
+		// provider didn't send a set of scopes with the token response, so add the given ones manually
+		if(empty($token->scopes)){
+			$token->scopes = ($scopes ?? []);
+		}
 
 		$this->storage->storeAccessToken($token, $this->serviceName);
 

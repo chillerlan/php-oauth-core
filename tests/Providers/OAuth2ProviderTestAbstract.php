@@ -31,7 +31,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 	protected array $testResponses = [
 		'/oauth2/access_token'       =>
-			'{"access_token":"test_access_token","expires_in":3600,"state":"test_state"}',
+			'{"access_token":"test_access_token","expires_in":3600,"state":"test_state","scope":"some_scope other_scope"}',
 		'/oauth2/refresh_token'      =>
 			'{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
 		'/oauth2/revoke_token'       =>
@@ -67,6 +67,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$token = $this->provider->getAccessToken('foo', 'test_state');
 
 		$this::assertSame('test_access_token', $token->accessToken);
+		$this::assertSame(['some_scope', 'other_scope'], $token->scopes);
 		$this::assertGreaterThan(time(), $token->expires);
 	}
 

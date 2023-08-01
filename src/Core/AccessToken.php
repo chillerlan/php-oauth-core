@@ -74,9 +74,6 @@ final class AccessToken extends SettingsContainerAbstract{
 
 	/**
 	 * The scopes that are attached to this token (OAuth2)
-	 *
-	 * Please note that the scopes have to be stored manually after receiving the token
-	 * as the initial auth URL request data is discarded before the callback comes in.
 	 */
 	protected array $scopes = [];
 
