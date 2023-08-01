@@ -156,12 +156,12 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	public static function requestTargetProvider():array{
 		return [
 			'empty'          => ['', 'https://localhost/api'],
-			'slash'          => ['/', 'https://localhost/api'],
+			'slash'          => ['/', 'https://localhost/api/'],
 			'no slashes'     => ['a', 'https://localhost/api/a'],
 			'leading slash'  => ['/b', 'https://localhost/api/b'],
 			'trailing slash' => ['c/', 'https://localhost/api/c/'],
 			'full url given' => ['https://localhost/other/path/d', 'https://localhost/other/path/d'],
-			'ignore params'  => ['https://localhost/api/e/?with=param', 'https://localhost/api/e/'],
+			'ignore params'  => ['https://localhost/api/e/?with=param#foo', 'https://localhost/api/e/'],
 		];
 	}
 

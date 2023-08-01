@@ -12,10 +12,9 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil, UriUtil};
+use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_merge, base64_encode, hash_hmac, implode, in_array,
-	ltrim, random_bytes, sodium_bin2hex, sprintf, strtoupper, time;
+use function array_merge, base64_encode, hash_hmac, implode, in_array, random_bytes, sodium_bin2hex, strtoupper, time;
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -123,20 +122,14 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{
-		$parsed = UriUtil::parseUrl($url);
+		$parsed = $this->uriFactory->createUri($url);
 
-		if(!isset($parsed['host']) || !isset($parsed['scheme']) || !in_array($parsed['scheme'], ['http', 'https'], true)){
+		if($parsed->getHost() == '' || $parsed->getScheme() === '' || !in_array($parsed->getScheme(), ['http', 'https'])){
 			throw new ProviderException('getSignature: invalid url');
 		}
 
-		$url  = sprintf('%s://%s', $parsed['scheme'], $parsed['host']);
-		$path = ltrim(($parsed['path'] ?? ''), '/');
-
-		if(!empty($path)){
-			$url = sprintf('%s/%s', $url, $path);
-		}
-
-		$signatureParams = array_merge(QueryUtil::parse(($parsed['query'] ?? '')), $params);
+		$signatureParams = array_merge(QueryUtil::parse($parsed->getQuery()), $params);
+		$url             = (string)$parsed->withQuery('')->withFragment('');
 
 		unset($signatureParams['oauth_signature']);
 

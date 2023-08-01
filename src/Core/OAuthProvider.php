@@ -10,7 +10,7 @@
 
 namespace chillerlan\OAuth\Core;
 
-use chillerlan\HTTP\Utils\{UriUtil, QueryUtil};
+use chillerlan\HTTP\Utils\QueryUtil;
 use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
@@ -340,35 +340,31 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	protected function getRequestTarget(string $uri):string{
-		$parsedURL = UriUtil::parseUrl($uri);
-
-		if(!isset($parsedURL['path'])){
-			throw new ProviderException('invalid path');
-		}
+		$parsedURL  = $this->uriFactory->createUri($uri);
+		$parsedHost = $parsedURL->getHost();
+		$api        = $this->uriFactory->createUri($this->apiURL);
 
 		// for some reason we were given a host name
-		if(isset($parsedURL['host'])){
-			$api  = UriUtil::parseUrl($this->apiURL);
-			$host = ($api['host'] ?? null);
+		if($parsedHost !== ''){
+			$apiHost = $api->getHost();
 
 			// back out if it doesn't match
-			if($parsedURL['host'] !== $host){
-				throw new ProviderException(sprintf('given host (%s) does not match provider (%s)', $parsedURL['host'] , $host));
+			if($parsedHost !== $apiHost){
+				throw new ProviderException(sprintf('given host (%s) does not match provider (%s)', $parsedHost , $apiHost));
 			}
 
 			// we explicitly ignore any existing parameters here
-			return sprintf('https://%s/%s', $parsedURL['host'], ltrim($parsedURL['path'], '/'));
+			return (string)$parsedURL->withQuery('')->withFragment('');
 		}
 
-		// $apiURL may already include a part of the path
-		$api  = rtrim($this->apiURL, '/');
-		$path = ltrim($parsedURL['path'], '/');
+		$parsedPath = $parsedURL->getPath();
+		$apiURL     = rtrim((string)$api, '/');
 
-		if(empty($path)){
-			return $api;
+		if($parsedPath === ''){
+			return $apiURL;
 		}
 
-		return sprintf('%s/%s', $api, $path);
+		return sprintf('%s/%s', $apiURL, ltrim($parsedPath, '/'));
 	}
 
 	/**

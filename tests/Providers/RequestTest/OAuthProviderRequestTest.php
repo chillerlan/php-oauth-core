@@ -75,13 +75,6 @@ final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
 		$this::assertSame('data=payload', (string)$r->getBody());
 	}
 
-	public function testRequestInvalidPathException():void{
-		$this::expectException(ProviderException::class);
-		$this::expectExceptionMessage('invalid path');
-
-		$this->provider->request('?query');
-	}
-
 	public function testRequestHostMismatchException():void{
 		$this::expectException(ProviderException::class);
 		$this::expectExceptionMessage('given host (notlocalhost) does not match provider (localhost)');
