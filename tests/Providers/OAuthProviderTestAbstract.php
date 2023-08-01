@@ -10,7 +10,7 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\Core\{AccessToken, OAuthInterface, TokenInvalidate};
+use chillerlan\OAuth\Core\{OAuth1Interface, OAuth2Interface, OAuthInterface, TokenInvalidate};
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
 use chillerlan\Settings\SettingsContainerInterface;
@@ -39,10 +39,10 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	protected LoggerInterface          $logger;
 
 	// OAuth related properties
-	protected OAuthOptions|SettingsContainerInterface $options;
-	protected OAuthInterface                          $provider;
-	protected OAuthStorageInterface                   $storage;
-	protected ReflectionClass                         $reflection; // reflection of the test subject
+	protected OAuthOptions|SettingsContainerInterface        $options;
+	protected OAuthInterface|OAuth1Interface|OAuth2Interface $provider;
+	protected OAuthStorageInterface                          $storage;
+	protected ReflectionClass                                $reflection; // reflection of the test subject
 
 	protected string $FQN; // fully qualified class name of the test subject
 	protected array  $testProperties = [];
@@ -63,19 +63,9 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		$this->storage    = $this->initStorage($this->options);
 		$this->http       = $this->initHttp($this->options, $this->logger, $this->testResponses); // PSR-18 HTTP client
 		$this->reflection = new ReflectionClass($this->FQN);
-		$this->provider   = $this->reflection->newInstanceArgs([$this->http, $this->options, $this->logger]);
+		$this->provider   = $this->initProvider();
 
-		$this->provider
-			->setStorage($this->storage)
-			->setRequestFactory($this->requestFactory)
-			->setStreamFactory($this->streamFactory)
-			->setUriFactory($this->uriFactory)
-		;
-
-		foreach($this->testProperties as $property => $value){
-			$this->reflection->getProperty($property)->setValue($this->provider, $value);
-		}
-
+		$this->initTestProperties($this->testProperties);
 	}
 
 	protected function initFactories():void{
@@ -129,6 +119,25 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		return new ProviderTestHttpClient($responses, $this->responseFactory, $this->streamFactory);
 	}
 
+	protected function initProvider():OAuthInterface|OAuth1Interface|OAuth2Interface{
+		$provider = $this->reflection->newInstanceArgs([$this->http, $this->options, $this->logger]);
+
+		$provider
+			->setStorage($this->storage)
+			->setRequestFactory($this->requestFactory)
+			->setStreamFactory($this->streamFactory)
+			->setUriFactory($this->uriFactory)
+		;
+
+		return $provider;
+	}
+
+	protected function initTestProperties(array $properties):void{
+		foreach($properties as $property => $value){
+			$this->reflection->getProperty($property)->setValue($this->provider, $value);
+		}
+	}
+
 	public function testOAuthInstance():void{
 		$this::assertInstanceOf(OAuthInterface::class, $this->provider);
 	}
@@ -139,6 +148,7 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 
 	public function testMagicGet():void{
 		$this::assertSame($this->reflection->getShortName(), $this->provider->serviceName);
+		/** @noinspection PhpUndefinedFieldInspection */
 		$this::assertNull($this->provider->foo);
 	}
 
