@@ -7,6 +7,7 @@
  * @copyright    2023 smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -26,6 +27,6 @@ interface TokenInvalidate{
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function invalidateAccessToken(AccessToken $token = null):bool;
+	public function invalidateAccessToken(AccessToken|null $token = null):bool;
 
 }

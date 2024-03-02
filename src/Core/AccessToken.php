@@ -7,6 +7,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -49,23 +50,23 @@ final class AccessToken extends SettingsContainerAbstract{
 	/**
 	 * The access token secret (OAuth1)
 	 */
-	protected ?string $accessTokenSecret = null;
+	protected string|null $accessTokenSecret = null;
 
 	/**
 	 * The oauth access token
 	 */
-	protected ?string $accessToken = null;
+	protected string|null $accessToken = null;
 
 	/**
 	 * An optional refresh token (OAuth2)
 	 */
-	protected ?string $refreshToken = null;
+	protected string|null $refreshToken = null;
 
 	/**
 	 * The token expiration date/time
 	 * @todo: change to DateInterval?
 	 */
-	protected ?int $expires = self::EOL_UNKNOWN;
+	protected int $expires = self::EOL_UNKNOWN;
 
 	/**
 	 * Additional token parameters supplied by the provider
@@ -80,12 +81,12 @@ final class AccessToken extends SettingsContainerAbstract{
 	/**
 	 * The provider who issued this token
 	 */
-	protected ?string $provider = null;
+	protected string|null $provider = null;
 
 	/**
 	 * AccessToken constructor.
 	 */
-	public function __construct(iterable $properties = null){
+	public function __construct(iterable|null $properties = null){
 		parent::__construct($properties);
 
 		$this->setExpiry($this->expires);
@@ -94,7 +95,7 @@ final class AccessToken extends SettingsContainerAbstract{
 	/**
 	 * Expiry setter
 	 */
-	protected function set_expires(int $expires = null):void{
+	protected function set_expires(int|null $expires = null):void{
 		$this->setExpiry($expires);
 	}
 
@@ -103,7 +104,7 @@ final class AccessToken extends SettingsContainerAbstract{
 	 *
 	 * @phan-suppress PhanPossiblyNullTypeMismatchProperty
 	 */
-	public function setExpiry(int $expires = null):AccessToken{
+	public function setExpiry(int|null $expires = null):AccessToken{
 		$now = time();
 
 		if($expires === 0 || $expires === $this::EOL_NEVER_EXPIRES){

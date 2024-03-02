@@ -7,6 +7,7 @@
  * @copyright    2018 smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuthTest\Providers;
 
@@ -49,7 +50,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetAuthURL():void{
-		$query = QueryUtil::parse(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY));
+		$query = QueryUtil::parse(parse_url((string)$this->provider->getAuthURL(), PHP_URL_QUERY));
 
 		$this::assertSame('test_request_token', $query['oauth_token']);
 	}

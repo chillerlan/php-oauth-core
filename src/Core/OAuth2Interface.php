@@ -7,6 +7,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -26,7 +27,7 @@ interface OAuth2Interface extends OAuthInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function getAccessToken(string $code, string $state = null):AccessToken;
+	public function getAccessToken(string $code, string|null $state = null):AccessToken;
 
 	/**
 	 * Prepares the URL with optional $params and $scopes which redirects to the provider's authorization prompt
@@ -35,6 +36,6 @@ interface OAuth2Interface extends OAuthInterface{
 	 * @param array|null    $params
 	 * @param string[]|null $scopes
 	 */
-	public function getAuthURL(array $params = null, array $scopes = null):UriInterface;
+	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface;
 
 }

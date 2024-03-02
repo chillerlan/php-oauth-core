@@ -7,6 +7,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Storage;
 
@@ -51,7 +52,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	/**
 	 * @inheritDoc
 	 */
-	public function getServiceName(string $service = null):string{
+	public function getServiceName(string|null $service = null):string{
 
 		if($service === null && !isset($this->serviceName)){
 			throw new OAuthStorageException('invalid service');

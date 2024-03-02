@@ -11,6 +11,7 @@
  *
  * @phan-file-suppress PhanUndeclaredMethod (CSRFToken, ClientCredentials, TokenRefresh)
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -59,7 +60,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * An optional client credentials token endpoint in case the provider supports ClientCredentials.
 	 * If the provider supports client credentials and $clientCredentialsTokenURL is null, $accessTokenURL will be used instead.
 	 */
-	protected ?string $clientCredentialsTokenURL = null;
+	protected string|null $clientCredentialsTokenURL = null;
 
 	/**
 	 * Default scopes to apply if none were provided via the $scopes parameter in OAuth2Provider::getAuthURL()
@@ -69,7 +70,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAuthURL(array $params = null, array $scopes = null):UriInterface{
+	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		$params ??= [];
 		$scopes ??= $this->defaultScopes;
 
@@ -141,7 +142,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAccessToken(string $code, string $state = null):AccessToken{
+	public function getAccessToken(string $code, string|null $state = null):AccessToken{
 
 		if($this instanceof CSRFToken){
 			$this->checkState($state);
@@ -194,7 +195,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @implements \chillerlan\OAuth\Core\ClientCredentials
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function getClientCredentialsToken(array $scopes = null):AccessToken{
+	public function getClientCredentialsToken(array|null $scopes = null):AccessToken{
 
 		if(!$this instanceof ClientCredentials){
 			throw new ProviderException('client credentials token not supported');
@@ -234,7 +235,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @implements \chillerlan\OAuth\Core\TokenRefresh
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function refreshAccessToken(AccessToken $token = null):AccessToken{
+	public function refreshAccessToken(AccessToken|null $token = null):AccessToken{
 
 		if(!$this instanceof TokenRefresh){
 			throw new ProviderException('token refresh not supported');
@@ -287,7 +288,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @internal
 	 */
-	public function checkState(string $state = null):void{
+	public function checkState(string|null $state = null):void{
 
 		if(!$this instanceof CSRFToken){
 			throw new ProviderException('CSRF protection not supported');

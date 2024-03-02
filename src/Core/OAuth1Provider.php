@@ -9,6 +9,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -29,7 +30,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAuthURL(array $params = null):UriInterface{
+	public function getAuthURL(array|null $params = null):UriInterface{
 		$params = array_merge(($params ?? []), ['oauth_token' => $this->getRequestToken()->accessToken]);
 
 		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $params));
@@ -121,7 +122,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	protected function getSignature(string $url, array $params, string $method, string $accessTokenSecret = null):string{
+	protected function getSignature(string $url, array $params, string $method, string|null $accessTokenSecret = null):string{
 		$parsed = $this->uriFactory->createUri($url);
 
 		if($parsed->getHost() == '' || $parsed->getScheme() === '' || !in_array($parsed->getScheme(), ['http', 'https'])){

@@ -7,6 +7,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -33,7 +34,7 @@ interface OAuthInterface extends ClientInterface{
 	 * Prepares the URL with optional $params which redirects to the provider's authorization prompt
 	 * and returns a PSR-7 UriInterface with all necessary parameters set
 	 */
-	public function getAuthURL(array $params = null):UriInterface;
+	public function getAuthURL(array|null $params = null):UriInterface;
 
 	/**
 	 * Authorizes the $request with the credentials from the given $token
@@ -51,11 +52,11 @@ interface OAuthInterface extends ClientInterface{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
 	public function request(
-		string $path,
-		array $params = null,
-		string $method = null,
-		StreamInterface|array|string $body = null,
-		array $headers = null
+		string                            $path,
+		array|null                        $params = null,
+		string|null                       $method = null,
+		StreamInterface|array|string|null $body = null,
+		array|null                        $headers = null
 	):ResponseInterface;
 
 	/**

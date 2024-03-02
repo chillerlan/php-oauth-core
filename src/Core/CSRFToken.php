@@ -7,6 +7,7 @@
  * @copyright    2018 smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -24,7 +25,7 @@ interface CSRFToken{
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @internal
 	 */
-	public function checkState(string $state = null):void;
+	public function checkState(string|null $state = null):void;
 
 	/**
 	 * Sets the CSRF state parameter in a given array of query parameters and stores that value

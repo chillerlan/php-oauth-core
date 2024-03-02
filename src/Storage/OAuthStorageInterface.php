@@ -7,6 +7,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Storage;
 
@@ -30,33 +31,33 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function getServiceName(string $service = null):string;
+	public function getServiceName(string|null $service = null):string;
 
 	/**
 	 * Stores an AccessToken for the given $service
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function storeAccessToken(AccessToken $token, string $service = null):static;
+	public function storeAccessToken(AccessToken $token, string|null $service = null):static;
 
 	/**
 	 * Retrieves an AccessToken for the given $service
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function getAccessToken(string $service = null):AccessToken;
+	public function getAccessToken(string|null $service = null):AccessToken;
 
 	/**
 	 * Checks if a token for $service exists
 	 */
-	public function hasAccessToken(string $service = null):bool;
+	public function hasAccessToken(string|null $service = null):bool;
 
 	/**
 	 * Deletes the access token for a given $service (and current user)
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearAccessToken(string $service = null):static;
+	public function clearAccessToken(string|null $service = null):static;
 
 	/**
 	 * Deletes all access tokens (for the current user)
@@ -70,26 +71,26 @@ interface OAuthStorageInterface extends LoggerAwareInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function storeCSRFState(string $state, string $service = null):static;
+	public function storeCSRFState(string $state, string|null $service = null):static;
 
 	/**
 	 * Retrieves a CSRF <state> value for the given $service
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function getCSRFState(string $service = null):string;
+	public function getCSRFState(string|null $service = null):string;
 
 	/**
 	 * Checks if a CSRF state for the given provider exists
 	 */
-	public function hasCSRFState(string $service = null):bool;
+	public function hasCSRFState(string|null $service = null):bool;
 
 	/**
 	 * Deletes a CSRF state for the given $service (and current user)
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function clearCSRFState(string $service = null):static;
+	public function clearCSRFState(string|null $service = null):static;
 
 	/**
 	 * Deletes all stored CSRF states (for the current user)

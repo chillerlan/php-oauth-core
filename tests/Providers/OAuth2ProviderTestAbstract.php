@@ -7,6 +7,7 @@
  * @copyright    2018 smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuthTest\Providers;
 
@@ -55,12 +56,12 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 	public function testGetAuthURL():void{
 		$url   = $this->provider->getAuthURL(['client_secret' => 'foo'], ['some_scope']);
-		$query = QueryUtil::parse(parse_url($url, PHP_URL_QUERY));
+		$query = QueryUtil::parse(parse_url((string)$url, PHP_URL_QUERY));
 
 		$this::assertArrayNotHasKey('client_secret', $query);
 		$this::assertSame($this->options->key, $query['client_id']);
 		$this::assertSame('code', $query['response_type']);
-		$this::assertSame(explode('?', $url)[0], $this->reflection->getProperty('authURL')->getValue($this->provider));
+		$this::assertSame(explode('?', (string)$url)[0], $this->reflection->getProperty('authURL')->getValue($this->provider));
 	}
 
 	public function testGetAccessToken():void{

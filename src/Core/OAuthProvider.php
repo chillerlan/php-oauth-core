@@ -7,6 +7,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -114,17 +115,17 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * an optional link to the provider's API docs (magic)
 	 */
-	protected ?string $apiDocs = null;
+	protected string|null $apiDocs = null;
 
 	/**
 	 * an optional URL to the provider's credential registration/application page (magic)
 	 */
-	protected ?string $applicationURL = null;
+	protected string|null $applicationURL = null;
 
 	/**
 	 * an optional link to the page where a user can revoke access tokens (magic)
 	 */
-	protected ?string $userRevokeURL = null;
+	protected string|null $userRevokeURL = null;
 
 	/**
 	 * OAuthProvider constructor.
@@ -247,6 +248,12 @@ abstract class OAuthProvider implements OAuthInterface{
 		StreamInterface|array|string $body = null,
 		array                        $headers = null,
 		string                       $protocolVersion = null
+		string                            $path,
+		array|null                        $params = null,
+		string|null                       $method = null,
+		StreamInterface|array|string|null $body = null,
+		array|null                        $headers = null,
+		string|null                       $protocolVersion = null
 	):ResponseInterface{
 		$request = $this->requestFactory->createRequest(($method ?? 'GET'), $this->getRequestURL($path, $params));
 
@@ -272,14 +279,14 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * Prepare request headers
 	 */
-	protected function getRequestHeaders(array $headers = null):array{
+	protected function getRequestHeaders(array|null $headers = null):array{
 		return array_merge($this->apiHeaders, ($headers ?? []));
 	}
 
 	/**
 	 * Prepares the request URL
 	 */
-	protected function getRequestURL(string $path, array $params = null):string{
+	protected function getRequestURL(string $path, array|null $params = null):string{
 		return QueryUtil::merge($this->getRequestTarget($path), $this->cleanQueryParams(($params ?? [])));
 	}
 
@@ -404,7 +411,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @codeCoverageIgnore
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function invalidateAccessToken(AccessToken $token = null):bool{
+	public function invalidateAccessToken(AccessToken|null $token = null):bool{
 		throw new ProviderException('not implemented');
 	}
 

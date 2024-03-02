@@ -7,6 +7,7 @@
  * @copyright    2018 smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -22,6 +23,6 @@ interface TokenRefresh{
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function refreshAccessToken(AccessToken $token = null):AccessToken;
+	public function refreshAccessToken(AccessToken|null $token = null):AccessToken;
 
 }

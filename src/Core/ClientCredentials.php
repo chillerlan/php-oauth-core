@@ -7,6 +7,7 @@
  * @copyright    2018 smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
@@ -24,6 +25,6 @@ interface ClientCredentials{
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	public function getClientCredentialsToken(array $scopes = null):AccessToken;
+	public function getClientCredentialsToken(array|null $scopes = null):AccessToken;
 
 }

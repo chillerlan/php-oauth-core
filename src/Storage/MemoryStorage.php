@@ -7,6 +7,7 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
+declare(strict_types=1);
 
 namespace chillerlan\OAuth\Storage;
 
@@ -31,7 +32,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(AccessToken $token, string $service = null):static{
+	public function storeAccessToken(AccessToken $token, string|null $service = null):static{
 		$this->tokens[$this->getServiceName($service)] = $token;
 
 		return $this;
@@ -40,7 +41,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAccessToken(string $service = null):AccessToken{
+	public function getAccessToken(string|null $service = null):AccessToken{
 
 		if($this->hasAccessToken($service)){
 			return $this->tokens[$this->getServiceName($service)];
@@ -52,7 +53,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasAccessToken(string $service = null):bool{
+	public function hasAccessToken(string|null $service = null):bool{
 		$serviceName = $this->getServiceName($service);
 
 		return isset($this->tokens[$serviceName]) && $this->tokens[$serviceName] instanceof AccessToken;
@@ -61,7 +62,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service = null):static{
+	public function clearAccessToken(string|null $service = null):static{
 		$serviceName = $this->getServiceName($service);
 
 		if(array_key_exists($serviceName, $this->tokens)){
@@ -88,7 +89,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $state, string $service = null):static{
+	public function storeCSRFState(string $state, string|null $service = null):static{
 		$this->states[$this->getServiceName($service)] = $state;
 
 		return $this;
@@ -97,7 +98,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getCSRFState(string $service = null):string{
+	public function getCSRFState(string|null $service = null):string{
 
 		if($this->hasCSRFState($service)){
 			return $this->states[$this->getServiceName($service)];
@@ -109,7 +110,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasCSRFState(string $service = null):bool{
+	public function hasCSRFState(string|null $service = null):bool{
 		$serviceName = $this->getServiceName($service);
 
 		return isset($this->states[$serviceName]) && null !== $this->states[$serviceName];
@@ -118,7 +119,7 @@ class MemoryStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service = null):static{
+	public function clearCSRFState(string|null $service = null):static{
 		$serviceName = $this->getServiceName($service);
 
 		if(array_key_exists($serviceName, $this->states)){
