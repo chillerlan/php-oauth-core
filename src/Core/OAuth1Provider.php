@@ -73,7 +73,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
-	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed = null):AccessToken{
+	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed):AccessToken{
 		$data = QueryUtil::parse(MessageUtil::decompress($response));
 
 		if(empty($data)){
@@ -156,7 +156,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$request = $this->getRequestAuthorization($request, $this->storage->getAccessToken($this->serviceName));
 
-		return $this->parseTokenResponse($this->http->sendRequest($request));
+		return $this->parseTokenResponse($this->http->sendRequest($request), false);
 	}
 
 	/**

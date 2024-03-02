@@ -91,18 +91,18 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 		$this->reflection
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$this->responseFactory->createResponse()]);
+			->invokeArgs($this->provider, [$this->responseFactory->createResponse(), false]);
 	}
 
 	public function testParseTokenResponseErrorException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('error retrieving access token');
 
+		$body = $this->streamFactory->createStream('error=whatever');
+
 		$this->reflection
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('error=whatever')),
-			])
+			->invokeArgs($this->provider, [$this->responseFactory->createResponse()->withBody($body), false])
 		;
 	}
 
@@ -110,11 +110,11 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid token');
 
+		$body = $this->streamFactory->createStream('oauth_token=whatever');
+
 		$this->reflection
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('oauth_token=whatever')),
-			])
+			->invokeArgs($this->provider, [$this->responseFactory->createResponse()->withBody($body), false])
 		;
 	}
 
@@ -122,14 +122,11 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('oauth callback unconfirmed');
 
+		$body = $this->streamFactory->createStream('oauth_token=whatever&oauth_token_secret=whatever_secret');
+
 		$this->reflection
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [
-				$this->responseFactory
-					->createResponse()
-					->withBody($this->streamFactory->createStream('oauth_token=whatever&oauth_token_secret=whatever_secret')),
-				true,
-			])
+			->invokeArgs($this->provider, [$this->responseFactory->createResponse()->withBody($body), true])
 		;
 	}
 
