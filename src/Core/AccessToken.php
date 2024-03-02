@@ -107,18 +107,12 @@ final class AccessToken extends SettingsContainerAbstract{
 	public function setExpiry(int|null $expires = null):AccessToken{
 		$now = time();
 
-		if($expires === 0 || $expires === $this::EOL_NEVER_EXPIRES){
-			$this->expires = $this::EOL_NEVER_EXPIRES;
-		}
-		elseif($expires > $now){
-			$this->expires = $expires;
-		}
-		elseif($expires > 0 && $expires < $this::EXPIRY_MAX){
-			$this->expires = ($now + $expires);
-		}
-		else{
-			$this->expires = $this::EOL_UNKNOWN;
-		}
+		$this->expires = match(true){
+			$expires === 0 || $expires === $this::EOL_NEVER_EXPIRES => $this::EOL_NEVER_EXPIRES,
+			$expires > $now                                         => $expires,
+			$expires > 0 && $expires < $this::EXPIRY_MAX            => ($now + $expires),
+			default                                                 => $this::EOL_UNKNOWN,
+		};
 
 		return $this;
 	}
