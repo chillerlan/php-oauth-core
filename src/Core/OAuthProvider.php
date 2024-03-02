@@ -242,12 +242,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 */
 	public function request(
-		string                       $path,
-		array                        $params = null,
-		string                       $method = null,
-		StreamInterface|array|string $body = null,
-		array                        $headers = null,
-		string                       $protocolVersion = null
 		string                            $path,
 		array|null                        $params = null,
 		string|null                       $method = null,
