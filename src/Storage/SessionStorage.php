@@ -14,6 +14,7 @@ namespace chillerlan\OAuth\Storage;
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\Settings\SettingsContainerInterface;
+use Psr\Log\{LoggerInterface, NullLogger};
 use function array_key_exists, array_keys, session_start, session_status, session_write_close;
 use const PHP_SESSION_NONE;
 
@@ -35,8 +36,11 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * SessionStorage constructor.
 	 */
-	public function __construct(OAuthOptions|SettingsContainerInterface $options = null){
-		parent::__construct($options);
+	public function __construct(
+		OAuthOptions|SettingsContainerInterface $options = new OAuthOptions,
+		LoggerInterface                         $logger = new NullLogger
+	){
+		parent::__construct($options, $logger);
 
 		$this->tokenVar = $this->options->sessionTokenVar;
 		$this->stateVar = $this->options->sessionStateVar;

@@ -12,12 +12,17 @@ declare(strict_types=1);
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\Core\AccessToken;
-use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Specifies the methods required for an OAuth storage adapter
  */
-interface OAuthStorageInterface extends LoggerAwareInterface{
+interface OAuthStorageInterface{
+
+	/**
+	 * Sets a logger. (LoggerAwareInterface is stupid)
+	 */
+	public function setLogger(LoggerInterface $logger):static;
 
 	/**
 	 * Sets the current service provider name
