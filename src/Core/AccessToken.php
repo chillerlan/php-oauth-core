@@ -87,15 +87,6 @@ final class AccessToken extends SettingsContainerAbstract{
 	protected string|null $provider = null;
 
 	/**
-	 * AccessToken constructor.
-	 */
-	public function __construct(iterable|null $properties = null){
-		parent::__construct($properties);
-
-		$this->setExpiry($this->expires);
-	}
-
-	/**
 	 * Expiry setter
 	 */
 	protected function set_expires(int|null $expires = null):void{
@@ -111,7 +102,7 @@ final class AccessToken extends SettingsContainerAbstract{
 		$this->expires = match(true){
 			$expires === 0 || $expires === $this::EOL_NEVER_EXPIRES => $this::EOL_NEVER_EXPIRES,
 			$expires > $now                                         => $expires,
-			$expires > 0 && $expires < $this::EXPIRY_MAX            => ($now + $expires),
+			$expires > 0 && $expires <= $this::EXPIRY_MAX           => ($now + $expires),
 			default                                                 => $this::EOL_UNKNOWN,
 		};
 
@@ -122,7 +113,16 @@ final class AccessToken extends SettingsContainerAbstract{
 	 * Checks whether this token is expired
 	 */
 	public function isExpired():bool{
-		return $this->expires !== $this::EOL_NEVER_EXPIRES && $this->expires !== $this::EOL_UNKNOWN && time() > $this->expires;
+
+		if($this->expires === $this::EOL_NEVER_EXPIRES){
+			return false;
+		}
+
+		if($this->expires === $this::EOL_UNKNOWN){
+			return true;
+		}
+
+		return time() > $this->expires;
 	}
 
 }

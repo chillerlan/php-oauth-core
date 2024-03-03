@@ -59,7 +59,7 @@ final class AccessTokenTest extends TestCase{
 	}
 
 	#[DataProvider('expiryDataProvider')]
-	public function testSetExpiry(?int $expires, int $expected):void{
+	public function testSetExpiry(int|null $expires, int $expected):void{
 		$this->token->expires = $expires;
 
 		$this::assertSame($expected, $this->token->expires);
@@ -69,7 +69,7 @@ final class AccessTokenTest extends TestCase{
 		return [
 			'0 (f)'                 => [0,                              false],
 			'EOL_NEVER_EXPIRES (f)' => [AccessToken::EOL_NEVER_EXPIRES, false],
-			'EOL_UNKNOWN (f)'       => [AccessToken::EOL_UNKNOWN,       false],
+			'EOL_UNKNOWN (t)'       => [AccessToken::EOL_UNKNOWN,       true],
 		];
 	}
 
