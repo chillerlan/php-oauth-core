@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -42,7 +43,22 @@
 
     <nav class="phpdocumentor-topnav">
     <ul class="phpdocumentor-topnav__menu">
-        </ul>
+                        <li class="phpdocumentor-topnav__menu-item -menu">
+                <a href="https://php-oauth.readthedocs.io">
+                    <span>
+                                                                        User Manual
+                    </span>
+                </a>
+            </li>
+                                <li class="phpdocumentor-topnav__menu-item -social">
+                <a href="https://github.com/chillerlan/php-oauth-core">
+                    <span>
+                                                                        <i class="fab fa-github"></i>
+                                                
+                    </span>
+                </a>
+            </li>
+                </ul>
 </nav>
 </header>
 
@@ -52,7 +68,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -91,74 +107,77 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    
-    <h2 class="phpdocumentor-content__title">Files</h2>
-                            <h3>A</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/src-core-accesstoken.html"><abbr title="src/Core/AccessToken.php">AccessToken.php</abbr></a></li>
-                    <li><a href="files/tests-core-accesstokentest.html"><abbr title="tests/Core/AccessTokenTest.php">AccessTokenTest.php</abbr></a></li>
-                </ul>
-                                                        <h3>C</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/src-core-csrftoken.html"><abbr title="src/Core/CSRFToken.php">CSRFToken.php</abbr></a></li>
-                    <li><a href="files/src-core-clientcredentials.html"><abbr title="src/Core/ClientCredentials.php">ClientCredentials.php</abbr></a></li>
-                </ul>
-                                    <h3>D</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/tests-providers-oauth1-dummyoauth1provider.html"><abbr title="tests/Providers/OAuth1/DummyOAuth1Provider.php">DummyOAuth1Provider.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauth1-dummyoauth1test.html"><abbr title="tests/Providers/OAuth1/DummyOAuth1Test.php">DummyOAuth1Test.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauth2-dummyoauth2basicprovider.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2BasicProvider.php">DummyOAuth2BasicProvider.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauth2-dummyoauth2provider.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2Provider.php">DummyOAuth2Provider.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauth2-dummyoauth2test.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2Test.php">DummyOAuth2Test.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauth2-dummyoauth2testbasic.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2TestBasic.php">DummyOAuth2TestBasic.php</abbr></a></li>
-                </ul>
-                                                                                                                                                                                                    <h3>M</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/src-storage-memorystorage.html"><abbr title="src/Storage/MemoryStorage.php">MemoryStorage.php</abbr></a></li>
-                    <li><a href="files/tests-storage-memorystoragetest.html"><abbr title="tests/Storage/MemoryStorageTest.php">MemoryStorageTest.php</abbr></a></li>
-                </ul>
-                                                        <h3>O</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/src-core-oauth1interface.html"><abbr title="src/Core/OAuth1Interface.php">OAuth1Interface.php</abbr></a></li>
-                    <li><a href="files/src-core-oauth1provider.html"><abbr title="src/Core/OAuth1Provider.php">OAuth1Provider.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauth1providertestabstract.html"><abbr title="tests/Providers/OAuth1ProviderTestAbstract.php">OAuth1ProviderTestAbstract.php</abbr></a></li>
-                    <li><a href="files/src-core-oauth2interface.html"><abbr title="src/Core/OAuth2Interface.php">OAuth2Interface.php</abbr></a></li>
-                    <li><a href="files/src-core-oauth2provider.html"><abbr title="src/Core/OAuth2Provider.php">OAuth2Provider.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauth2providertestabstract.html"><abbr title="tests/Providers/OAuth2ProviderTestAbstract.php">OAuth2ProviderTestAbstract.php</abbr></a></li>
-                    <li><a href="files/src-oauthexception.html"><abbr title="src/OAuthException.php">OAuthException.php</abbr></a></li>
-                    <li><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></li>
-                    <li><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></li>
-                    <li><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></li>
-                    <li><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></li>
-                    <li><a href="files/tests-providers-requesttest-oauthproviderrequesttest.html"><abbr title="tests/Providers/RequestTest/OAuthProviderRequestTest.php">OAuthProviderRequestTest.php</abbr></a></li>
-                    <li><a href="files/tests-providers-oauthprovidertestabstract.html"><abbr title="tests/Providers/OAuthProviderTestAbstract.php">OAuthProviderTestAbstract.php</abbr></a></li>
-                    <li><a href="files/src-storage-oauthstorageabstract.html"><abbr title="src/Storage/OAuthStorageAbstract.php">OAuthStorageAbstract.php</abbr></a></li>
-                    <li><a href="files/src-storage-oauthstorageexception.html"><abbr title="src/Storage/OAuthStorageException.php">OAuthStorageException.php</abbr></a></li>
-                    <li><a href="files/src-storage-oauthstorageinterface.html"><abbr title="src/Storage/OAuthStorageInterface.php">OAuthStorageInterface.php</abbr></a></li>
-                    <li><a href="files/tests-oauthtestmemorystorage.html"><abbr title="tests/OAuthTestMemoryStorage.php">OAuthTestMemoryStorage.php</abbr></a></li>
-                </ul>
-                                    <h3>P</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/src-core-providerexception.html"><abbr title="src/Core/ProviderException.php">ProviderException.php</abbr></a></li>
-                    <li><a href="files/tests-providers-providertesthttpclient.html"><abbr title="tests/Providers/ProviderTestHttpClient.php">ProviderTestHttpClient.php</abbr></a></li>
-                </ul>
-                                                        <h3>R</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/tests-providers-requesttest-requesttestprovider.html"><abbr title="tests/Providers/RequestTest/RequestTestProvider.php">RequestTestProvider.php</abbr></a></li>
-                </ul>
-                                    <h3>S</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/src-storage-sessionstorage.html"><abbr title="src/Storage/SessionStorage.php">SessionStorage.php</abbr></a></li>
-                    <li><a href="files/tests-storage-sessionstoragetest.html"><abbr title="tests/Storage/SessionStorageTest.php">SessionStorageTest.php</abbr></a></li>
-                    <li><a href="files/tests-storage-storagetestabstract.html"><abbr title="tests/Storage/StorageTestAbstract.php">StorageTestAbstract.php</abbr></a></li>
-                </ul>
-                                    <h3>T</h3>
-        <ul class="phpdocumentor-list">
-                    <li><a href="files/src-core-tokeninvalidate.html"><abbr title="src/Core/TokenInvalidate.php">TokenInvalidate.php</abbr></a></li>
-                    <li><a href="files/src-core-tokenrefresh.html"><abbr title="src/Core/TokenRefresh.php">TokenRefresh.php</abbr></a></li>
-                </ul>
-                                                                                                                                                    <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                        <section>
+        
+        <h2 class="phpdocumentor-content__title">Files</h2>
+                                            <h3>A</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/src-core-accesstoken.html"><abbr title="src/Core/AccessToken.php">AccessToken.php</abbr></a></li>
+                            <li><a href="files/tests-core-accesstokentest.html"><abbr title="tests/Core/AccessTokenTest.php">AccessTokenTest.php</abbr></a></li>
+                        </ul>
+                                                                                        <h3>C</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/src-core-csrftoken.html"><abbr title="src/Core/CSRFToken.php">CSRFToken.php</abbr></a></li>
+                            <li><a href="files/src-core-clientcredentials.html"><abbr title="src/Core/ClientCredentials.php">ClientCredentials.php</abbr></a></li>
+                        </ul>
+                                                        <h3>D</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/tests-providers-oauth1-dummyoauth1provider.html"><abbr title="tests/Providers/OAuth1/DummyOAuth1Provider.php">DummyOAuth1Provider.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauth1-dummyoauth1test.html"><abbr title="tests/Providers/OAuth1/DummyOAuth1Test.php">DummyOAuth1Test.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauth2-dummyoauth2basicprovider.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2BasicProvider.php">DummyOAuth2BasicProvider.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauth2-dummyoauth2provider.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2Provider.php">DummyOAuth2Provider.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauth2-dummyoauth2test.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2Test.php">DummyOAuth2Test.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauth2-dummyoauth2testbasic.html"><abbr title="tests/Providers/OAuth2/DummyOAuth2TestBasic.php">DummyOAuth2TestBasic.php</abbr></a></li>
+                        </ul>
+                                                                                                                                                                                                                                                                                                                        <h3>M</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/src-storage-memorystorage.html"><abbr title="src/Storage/MemoryStorage.php">MemoryStorage.php</abbr></a></li>
+                            <li><a href="files/tests-storage-memorystoragetest.html"><abbr title="tests/Storage/MemoryStorageTest.php">MemoryStorageTest.php</abbr></a></li>
+                        </ul>
+                                                                                        <h3>O</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/src-core-oauth1interface.html"><abbr title="src/Core/OAuth1Interface.php">OAuth1Interface.php</abbr></a></li>
+                            <li><a href="files/src-core-oauth1provider.html"><abbr title="src/Core/OAuth1Provider.php">OAuth1Provider.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauth1providertestabstract.html"><abbr title="tests/Providers/OAuth1ProviderTestAbstract.php">OAuth1ProviderTestAbstract.php</abbr></a></li>
+                            <li><a href="files/src-core-oauth2interface.html"><abbr title="src/Core/OAuth2Interface.php">OAuth2Interface.php</abbr></a></li>
+                            <li><a href="files/src-core-oauth2provider.html"><abbr title="src/Core/OAuth2Provider.php">OAuth2Provider.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauth2providertestabstract.html"><abbr title="tests/Providers/OAuth2ProviderTestAbstract.php">OAuth2ProviderTestAbstract.php</abbr></a></li>
+                            <li><a href="files/src-oauthexception.html"><abbr title="src/OAuthException.php">OAuthException.php</abbr></a></li>
+                            <li><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></li>
+                            <li><a href="files/src-oauthoptions.html"><abbr title="src/OAuthOptions.php">OAuthOptions.php</abbr></a></li>
+                            <li><a href="files/src-oauthoptionstrait.html"><abbr title="src/OAuthOptionsTrait.php">OAuthOptionsTrait.php</abbr></a></li>
+                            <li><a href="files/src-core-oauthprovider.html"><abbr title="src/Core/OAuthProvider.php">OAuthProvider.php</abbr></a></li>
+                            <li><a href="files/tests-providers-requesttest-oauthproviderrequesttest.html"><abbr title="tests/Providers/RequestTest/OAuthProviderRequestTest.php">OAuthProviderRequestTest.php</abbr></a></li>
+                            <li><a href="files/tests-providers-oauthprovidertestabstract.html"><abbr title="tests/Providers/OAuthProviderTestAbstract.php">OAuthProviderTestAbstract.php</abbr></a></li>
+                            <li><a href="files/src-storage-oauthstorageabstract.html"><abbr title="src/Storage/OAuthStorageAbstract.php">OAuthStorageAbstract.php</abbr></a></li>
+                            <li><a href="files/src-storage-oauthstorageexception.html"><abbr title="src/Storage/OAuthStorageException.php">OAuthStorageException.php</abbr></a></li>
+                            <li><a href="files/src-storage-oauthstorageinterface.html"><abbr title="src/Storage/OAuthStorageInterface.php">OAuthStorageInterface.php</abbr></a></li>
+                            <li><a href="files/tests-oauthtestmemorystorage.html"><abbr title="tests/OAuthTestMemoryStorage.php">OAuthTestMemoryStorage.php</abbr></a></li>
+                        </ul>
+                                                        <h3>P</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/src-core-providerexception.html"><abbr title="src/Core/ProviderException.php">ProviderException.php</abbr></a></li>
+                            <li><a href="files/tests-providers-providertesthttpclient.html"><abbr title="tests/Providers/ProviderTestHttpClient.php">ProviderTestHttpClient.php</abbr></a></li>
+                        </ul>
+                                                                                        <h3>R</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/tests-providers-requesttest-requesttestprovider.html"><abbr title="tests/Providers/RequestTest/RequestTestProvider.php">RequestTestProvider.php</abbr></a></li>
+                        </ul>
+                                                        <h3>S</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/src-storage-sessionstorage.html"><abbr title="src/Storage/SessionStorage.php">SessionStorage.php</abbr></a></li>
+                            <li><a href="files/tests-storage-sessionstoragetest.html"><abbr title="tests/Storage/SessionStorageTest.php">SessionStorageTest.php</abbr></a></li>
+                            <li><a href="files/tests-storage-storagetestabstract.html"><abbr title="tests/Storage/StorageTestAbstract.php">StorageTestAbstract.php</abbr></a></li>
+                        </ul>
+                                                        <h3>T</h3>
+            <ul class="phpdocumentor-list">
+                            <li><a href="files/src-core-tokeninvalidate.html"><abbr title="src/Core/TokenInvalidate.php">TokenInvalidate.php</abbr></a></li>
+                            <li><a href="files/src-core-tokenrefresh.html"><abbr title="src/Core/TokenRefresh.php">TokenRefresh.php</abbr></a></li>
+                        </ul>
+                                                                                                                                                                                                                        </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -169,7 +188,6 @@
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="indices/files.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
