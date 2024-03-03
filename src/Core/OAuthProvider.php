@@ -59,15 +59,16 @@ abstract class OAuthProvider implements OAuthInterface{
 	protected array $apiHeaders = [];
 
 	/*
-	 * magic properties (public readonly would be cool it the implementation wasn't fucking stupid)
+	 * magic properties (public readonly would be cool if the implementation wasn't fucking stupid)
 	 */
 
+	/** @var string[] */
 	protected const ALLOWED_PROPERTIES = [
 		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL',
 	];
 
 	/**
-	 * the name of the provider (class) (magic)
+	 * the name of the provider/class (magic)
 	 */
 	protected string $serviceName;
 
@@ -109,8 +110,6 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * Magic getter for the properties specified in self::ALLOWED_PROPERTIES
-	 *
-	 * @return mixed|null
 	 */
 	public function __get(string $name):mixed{
 

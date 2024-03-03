@@ -14,7 +14,8 @@ namespace chillerlan\OAuth\Core;
 /**
  * Specifies the methods required for the OAuth2 CSRF token validation ("state parameter")
  *
- * @link https://tools.ietf.org/html/rfc6749#section-10.12
+ * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
+ * @see https://datatracker.ietf.org/doc/html/rfc6749#section-10.12
  */
 interface CSRFToken{
 

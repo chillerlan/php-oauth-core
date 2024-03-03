@@ -2,8 +2,6 @@
 /**
  * Class OAuth1Provider
  *
- * @link https://tools.ietf.org/html/rfc5849
- *
  * @created      09.07.2017
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
@@ -19,6 +17,8 @@ use function array_merge, base64_encode, hash_hmac, implode, in_array, random_by
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
+
+ *  @see https://datatracker.ietf.org/doc/html/rfc5849
  */
 abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
@@ -69,7 +69,8 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	/**
 	 * Parses the response from a request to the token endpoint
 	 *
-	 * @link https://tools.ietf.org/html/rfc5849#section-2.1
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.1
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.3
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
@@ -110,6 +111,8 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 	/**
 	 * returns a 32 byte random string (in hexadecimal representation) for use as a nonce
+	 *
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-3.3
 	 */
 	protected function nonce():string{
 		return sodium_bin2hex(random_bytes(32));
@@ -118,7 +121,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	/**
 	 * Generates a request signature
 	 *
-	 * @link https://tools.ietf.org/html/rfc5849#section-3.4
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-3.4
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */
@@ -134,10 +137,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		unset($signatureParams['oauth_signature']);
 
-		// https://tools.ietf.org/html/rfc5849#section-3.4.1.1
+		// https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.1.1
 		$data = QueryUtil::recursiveRawurlencode([strtoupper($method), $url, QueryUtil::build($signatureParams)]);
 
-		// https://tools.ietf.org/html/rfc5849#section-3.4.2
+		// https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.2
 		$key  = QueryUtil::recursiveRawurlencode([$this->options->secret, ($accessTokenSecret ?? '')]);
 
 		return base64_encode(hash_hmac('sha1', implode('&', $data), implode('&', $key), true));

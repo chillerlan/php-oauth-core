@@ -19,7 +19,7 @@ interface OAuth1Interface extends OAuthInterface{
 	/**
 	 * Obtains an OAuth1 request token and returns an AccessToken object for use in the authentication request.
 	 *
-	 * @link https://tools.ietf.org/html/rfc5849#section-2.1
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.1
 	 *
 	 * @see \chillerlan\OAuth\Core\OAuth1Provider::getAuthURL()
 	 *
@@ -30,7 +30,7 @@ interface OAuth1Interface extends OAuthInterface{
 	/**
 	 * Obtains an OAuth1 access token with the given $token and $verifier and returns an AccessToken object.
 	 *
-	 * @link https://tools.ietf.org/html/rfc5849#section-2.3
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.3
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 */

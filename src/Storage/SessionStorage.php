@@ -19,7 +19,9 @@ use function array_key_exists, array_keys, session_start, session_status, sessio
 use const PHP_SESSION_NONE;
 
 /**
- * Implements a session storage adapter. Session storage is half persistent as tokens are stored for the duration of the session.
+ * Implements a session storage adapter.
+ *
+ * Note: the session storage is only half persistent, as tokens are stored for the duration of the session.
  */
 class SessionStorage extends OAuthStorageAbstract{
 
@@ -46,7 +48,7 @@ class SessionStorage extends OAuthStorageAbstract{
 		$this->stateVar = $this->options->sessionStateVar;
 
 		// Determine if the session has started.
-		// @link http://stackoverflow.com/a/18542272/1470961
+		// @see http://stackoverflow.com/a/18542272/1470961
 		if($this->options->sessionStart && !(session_status() !== PHP_SESSION_NONE)){
 			session_start();
 		}

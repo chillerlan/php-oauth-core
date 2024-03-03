@@ -2,14 +2,10 @@
 /**
  * Class OAuth2Provider
  *
- * @link https://tools.ietf.org/html/rfc6749
- *
  * @created      09.07.2017
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
- *
- * @phan-file-suppress PhanUndeclaredMethod (CSRFToken, ClientCredentials, TokenRefresh)
  */
 declare(strict_types=1);
 
@@ -23,6 +19,8 @@ use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 /**
  * Implements an abstract OAuth2 provider with all methods required by the OAuth2Interface.
  * It also implements the ClientCredentials, CSRFToken and TokenRefresh interfaces in favor over traits.
+
+ *  @see https://datatracker.ietf.org/doc/html/rfc6749
  */
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
@@ -97,7 +95,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * Parses the response from a request to the token endpoint
 	 *
-	 * @link https://tools.ietf.org/html/rfc6749#section-4.1.4
+	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.4
 	 *
 	 * @throws \chillerlan\OAuth\Core\ProviderException
 	 * @throws \JsonException

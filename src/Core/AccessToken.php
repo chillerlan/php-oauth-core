@@ -17,23 +17,26 @@ use function time;
 /**
  * Access token implementation for any OAuth version.
  *
+ * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.3
+ * @see https://datatracker.ietf.org/doc/html/rfc6749#section-1.4
+ *
  * // Oauth1
- * @property string $accessTokenSecret
+ * @property string|null $accessTokenSecret
  *
  * // Oauth2
- * @property array  $scopes
+ * @property array       $scopes
+ * @property string|null $refreshToken
  *
- * // Oauth1/2
- * @property string $accessToken
- * @property string $refreshToken
- * @property array  $extraParams
- * @property int    $expires
- * @property string $provider
+ * // common
+ * @property string|null $accessToken
+ * @property int         $expires
+ * @property array       $extraParams
+ * @property string      $provider
  */
 final class AccessToken extends SettingsContainerAbstract{
 
 	/**
-	 * Denotes an unknown end of lifetime.
+	 * Denotes an unknown end of lifetime, such a token should be considered as expired.
 	 */
 	public const EOL_UNKNOWN = -9001;
 
@@ -101,8 +104,6 @@ final class AccessToken extends SettingsContainerAbstract{
 
 	/**
 	 * Sets the expiration for this token
-	 *
-	 * @phan-suppress PhanPossiblyNullTypeMismatchProperty
 	 */
 	public function setExpiry(int|null $expires = null):AccessToken{
 		$now = time();
