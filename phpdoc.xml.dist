@@ -6,7 +6,7 @@
 >
 	<!-- https://docs.phpdoc.org/3.0/guide/references/configuration.html#configuration -->
 	<paths>
-		<output>docs</output>
+		<output>.build/phpdocs</output>
 		<cache>.build/phpdocs-cache</cache>
 	</paths>
 	<version number="3.0.0">
