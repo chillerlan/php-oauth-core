@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\QueryUtil;
-use chillerlan\HTTP\Psr17\{RequestFactory, StreamFactory, UriFactory};
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
 use chillerlan\Settings\SettingsContainerInterface;
@@ -31,45 +30,6 @@ use const PHP_QUERY_RFC1738;
  * It also implements a magic getter that allows to access the properties listed below.
  */
 abstract class OAuthProvider implements OAuthInterface{
-
-	protected const ALLOWED_PROPERTIES = [
-		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL',
-	];
-
-	/**
-	 * the options instance
-	 */
-	protected OAuthOptions|SettingsContainerInterface $options;
-
-	/**
-	 * the token storage instance
-	 */
-	protected OAuthStorageInterface $storage;
-
-	/**
-	 * a PSR-3 logger instance.
-	 */
-	protected LoggerInterface $logger;
-
-	/**
-	 * the PSR-18 http client instance
-	 */
-	protected ClientInterface $http;
-
-	/**
-	 * a PSR-17 request factory
-	 */
-	protected RequestFactoryInterface $requestFactory;
-
-	/**
-	 * a PSR-17 stream factory
-	 */
-	protected StreamFactoryInterface  $streamFactory;
-
-	/**
-	 * a PSR-17 URI factory
-	 */
-	protected UriFactoryInterface $uriFactory;
 
 	/**
 	 * the authentication URL
@@ -102,6 +62,10 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * magic properties (public readonly would be cool it the implementation wasn't fucking stupid)
 	 */
 
+	protected const ALLOWED_PROPERTIES = [
+		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL',
+	];
+
 	/**
 	 * the name of the provider (class) (magic)
 	 */
@@ -131,21 +95,16 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * OAuthProvider constructor.
 	 */
 	public function __construct(
-		ClientInterface                         $http,
-		OAuthOptions|SettingsContainerInterface $options,
-		LoggerInterface                         $logger = null
+		protected OAuthOptions|SettingsContainerInterface $options,
+		protected ClientInterface                         $http,
+		protected RequestFactoryInterface                 $requestFactory,
+		protected StreamFactoryInterface                  $streamFactory,
+		protected UriFactoryInterface                     $uriFactory,
+		protected OAuthStorageInterface                   $storage = new MemoryStorage,
+		protected LoggerInterface                         $logger = new NullLogger
 	){
-		$this->http           = $http;
-		$this->options        = $options;
-		$this->logger         = ($logger ?? new NullLogger);
-		$this->serviceName    = (new ReflectionClass($this))->getShortName();
-
-		// no, I won't use a DI container for this. don't @ me
-		$this->requestFactory = new RequestFactory;
-		$this->streamFactory  = new StreamFactory;
-		$this->uriFactory     = new UriFactory;
-
-		$this->setStorage(new MemoryStorage);
+		$this->serviceName = (new ReflectionClass($this))->getShortName();
+		$this->storage->setServiceName($this->serviceName);
 	}
 
 	/**

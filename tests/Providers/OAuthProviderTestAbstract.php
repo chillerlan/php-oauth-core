@@ -121,16 +121,18 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	}
 
 	protected function initProvider():OAuthInterface|OAuth1Interface|OAuth2Interface{
-		$provider = $this->reflection->newInstanceArgs([$this->http, $this->options, $this->logger]);
 
-		$provider
-			->setStorage($this->storage)
-			->setRequestFactory($this->requestFactory)
-			->setStreamFactory($this->streamFactory)
-			->setUriFactory($this->uriFactory)
-		;
+		$args = [
+			$this->options,
+			$this->http,
+			$this->requestFactory,
+			$this->streamFactory,
+			$this->uriFactory,
+			$this->storage,
+			$this->logger,
+		];
 
-		return $provider;
+		return $this->reflection->newInstanceArgs($args);
 	}
 
 	protected function initTestProperties(array $properties):void{
