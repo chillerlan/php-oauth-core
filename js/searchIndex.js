@@ -6,11 +6,6 @@ Search.appendIndex(
             "summary": "Access\u0020token\u0020implementation\u0020for\u0020any\u0020OAuth\u0020version.",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html"
         },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "AccessToken\u0020constructor.",
-            "url": "classes/chillerlan-OAuth-Core-AccessToken.html#method___construct"
-        },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003Aset_expires\u0028\u0029",
             "name": "set_expires",
             "summary": "Expiry\u0020setter",
@@ -28,7 +23,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AEOL_UNKNOWN",
             "name": "EOL_UNKNOWN",
-            "summary": "Denotes\u0020an\u0020unknown\u0020end\u0020of\u0020lifetime.",
+            "summary": "Denotes\u0020an\u0020unknown\u0020end\u0020of\u0020lifetime,\u0020such\u0020a\u0020token\u0020should\u0020be\u0020considered\u0020as\u0020expired.",
             "url": "classes/chillerlan-OAuth-Core-AccessToken.html#constant_EOL_UNKNOWN"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\AccessToken\u003A\u003AEOL_NEVER_EXPIRES",
@@ -438,7 +433,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024serviceName",
             "name": "serviceName",
-            "summary": "the\u0020name\u0020of\u0020the\u0020provider\u0020\u0028class\u0029\u0020\u0028magic\u0029",
+            "summary": "the\u0020name\u0020of\u0020the\u0020provider\/class\u0020\u0028magic\u0029",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#property_serviceName"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003A\u0024apiURL",
@@ -573,7 +568,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Storage\\MemoryStorage",
             "name": "MemoryStorage",
-            "summary": "Implements\u0020a\u0020memory\u0020storage\u0020adapter.\u0020Memory\u0020storage\u0020is\u0020not\u0020persistent\u0020as\u0020tokens\u0020are\u0020only\u0020stored\u0020during\u0020script\u0020runtime.",
+            "summary": "Implements\u0020a\u0020memory\u0020storage\u0020adapter.",
             "url": "classes/chillerlan-OAuth-Storage-MemoryStorage.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Storage\\MemoryStorage\u003A\u003AstoreAccessToken\u0028\u0029",
@@ -693,7 +688,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Storage\\OAuthStorageInterface",
             "name": "OAuthStorageInterface",
-            "summary": "Specifies\u0020the\u0020methods\u0020required\u0020for\u0020an\u0020OAuth\u0020storage\u0020adapter",
+            "summary": "Specifies\u0020the\u0020methods\u0020required\u0020for\u0020an\u0020OAuth\u0020token\u0020storage\u0020adapter",
             "url": "classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Storage\\OAuthStorageInterface\u003A\u003AsetLogger\u0028\u0029",
@@ -773,7 +768,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Storage\\SessionStorage",
             "name": "SessionStorage",
-            "summary": "Implements\u0020a\u0020session\u0020storage\u0020adapter.\u0020Session\u0020storage\u0020is\u0020half\u0020persistent\u0020as\u0020tokens\u0020are\u0020stored\u0020for\u0020the\u0020duration\u0020of\u0020the\u0020session.",
+            "summary": "Implements\u0020a\u0020session\u0020storage\u0020adapter.",
             "url": "classes/chillerlan-OAuth-Storage-SessionStorage.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Storage\\SessionStorage\u003A\u003A__construct\u0028\u0029",
