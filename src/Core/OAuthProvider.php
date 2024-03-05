@@ -106,6 +106,16 @@ abstract class OAuthProvider implements OAuthInterface{
 	){
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 		$this->storage->setServiceName($this->serviceName);
+
+		$this->construct();
+	}
+
+	/**
+	 * A replacement constructor that you can call in extended classes,
+	 * so that you don't have to implement the monstrous original `__construct()`
+	 */
+	protected function construct():void{
+		// noop
 	}
 
 	/**
