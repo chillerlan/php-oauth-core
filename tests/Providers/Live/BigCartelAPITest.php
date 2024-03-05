@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\BigCartel;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -31,7 +32,12 @@ class BigCartelAPITest extends OAuth2APITestAbstract{
 	}
 
 	public function testMe():void{
-		$this::assertSame($this->account_id, (int)MessageUtil::decodeJSON($this->provider->me())->data[0]->id);
+		try{
+			$this::assertSame($this->account_id, (int)MessageUtil::decodeJSON($this->provider->me())->data[0]->id);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

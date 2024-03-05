@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Stripe;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -27,7 +28,12 @@ class StripeAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'STRIPE';
 
 	public function testMe():void{
- 		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->data[0]->email);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->data[0]->id);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

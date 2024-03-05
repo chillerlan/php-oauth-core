@@ -12,6 +12,7 @@ namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Patreon;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 use function file_get_contents;
@@ -33,7 +34,12 @@ class Patreon1APITest extends OAuth2APITestAbstract{
 	}
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->data->attributes->email);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->data->attributes->email);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

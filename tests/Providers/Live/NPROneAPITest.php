@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\NPROne;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -23,7 +24,12 @@ class NPROneAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'NPRONE';
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->attributes->email);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->attributes->email);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

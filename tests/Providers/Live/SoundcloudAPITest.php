@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\SoundCloud;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -23,7 +24,12 @@ class SoundcloudAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'SOUNDCLOUD';
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->username);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->username);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 	public function testRequestCredentialsToken():void{

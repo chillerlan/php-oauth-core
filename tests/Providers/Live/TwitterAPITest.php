@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Twitter;
 use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
 
@@ -37,7 +38,12 @@ class TwitterAPITest extends OAuth1APITestAbstract{
 	}
 
 	public function testMe():void{
-		$this::assertSame($this->screen_name, MessageUtil::decodeJSON($this->provider->me())->screen_name);
+		try{
+			$this::assertSame($this->screen_name, MessageUtil::decodeJSON($this->provider->me())->screen_name);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

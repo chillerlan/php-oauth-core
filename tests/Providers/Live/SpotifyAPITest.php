@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Spotify;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -30,7 +31,12 @@ class SpotifyAPITest extends OAuth2APITestAbstract{
 
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->id);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->id);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

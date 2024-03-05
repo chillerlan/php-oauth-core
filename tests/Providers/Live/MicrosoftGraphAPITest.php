@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\MicrosoftGraph;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -23,7 +24,12 @@ class MicrosoftGraphAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'MICROSOFT_AAD';
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->userPrincipalName);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->userPrincipalName);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

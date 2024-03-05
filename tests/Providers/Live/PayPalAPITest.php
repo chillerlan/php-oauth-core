@@ -11,8 +11,10 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\PayPal;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use function is_array;
 
 /**
  * @property \chillerlan\OAuth\Providers\PayPal $provider
@@ -23,7 +25,12 @@ class PayPalAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'PAYPAL'; // PAYPAL_SANDBOX
 
 	public function testMe():void{
-		$json = MessageUtil::decodeJSON($this->provider->me());
+		try{
+			$json = MessageUtil::decodeJSON($this->provider->me());
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 
 		if(!isset($json->emails) || !is_array($json->emails) || empty($json->emails)){
 			$this->markTestSkipped('no email found');
@@ -35,7 +42,6 @@ class PayPalAPITest extends OAuth2APITestAbstract{
 				return;
 			}
 		}
-
 	}
 
 }

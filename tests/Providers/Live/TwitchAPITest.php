@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Twitch;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -23,7 +24,12 @@ class TwitchAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'TWITCH';
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->data[0]->display_name);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->data[0]->display_name);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

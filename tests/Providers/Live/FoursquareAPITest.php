@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Foursquare;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -27,7 +28,12 @@ class FoursquareAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'FOURSQUARE';
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->response->user->id);
+		try{
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->response->user->id);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

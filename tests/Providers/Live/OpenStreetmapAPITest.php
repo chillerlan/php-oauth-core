@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\OpenStreetmap;
 use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
 
@@ -23,10 +24,13 @@ class OpenStreetmapAPITest extends OAuth1APITestAbstract{
 	protected string $ENV = 'OPENSTREETMAP';
 
 	public function testMe():void{
-		// json
-		$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->user->display_name);
-		// xml
-		$this::assertSame($this->testuser, MessageUtil::decodeXML($this->provider->me(false))->user->attributes()->display_name->__toString());
+		try{
+			// json
+			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->user->display_name);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

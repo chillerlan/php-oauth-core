@@ -11,8 +11,10 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\BattleNet;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use function explode;
 
 /**
  * @property \chillerlan\OAuth\Providers\BattleNet $provider
@@ -23,7 +25,12 @@ class BattleNetAPITest extends OAuth2APITestAbstract{
 	protected string $ENV = 'BATTLENET';
 
 	public function testMe():void{
-		$this::assertSame($this->testuser, explode('#', MessageUtil::decodeJSON($this->provider->me())->battletag)[0]);
+		try{
+			$this::assertSame($this->testuser, explode('#', MessageUtil::decodeJSON($this->provider->me())->battletag)[0]);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

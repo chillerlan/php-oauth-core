@@ -12,6 +12,7 @@ namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\GuildWars2;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
@@ -39,7 +40,12 @@ class GuildWars2APITest extends OAuth2APITestAbstract{
 	}
 
 	public function testMe():void{
-		$this::assertSame($this->tokenname, MessageUtil::decodeJSON($this->provider->me())->name);
+		try{
+			$this::assertSame($this->tokenname, MessageUtil::decodeJSON($this->provider->me())->name);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
 	}
 
 }

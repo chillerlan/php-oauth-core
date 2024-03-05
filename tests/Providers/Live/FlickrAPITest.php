@@ -11,6 +11,7 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Flickr;
 use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
 
@@ -35,10 +36,16 @@ class FlickrAPITest extends OAuth1APITestAbstract{
 	}
 
 	public function testMe():void{
-		$j = MessageUtil::decodeJSON($this->provider->me());
+		try{
+			$j = MessageUtil::decodeJSON($this->provider->me());
 
-		$this::assertSame($this->test_name, $j->user->username->_content);
-		$this::assertSame($this->test_id, $j->user->id);
+			$this::assertSame($this->test_name, $j->user->username->_content);
+			$this::assertSame($this->test_id, $j->user->id);
+		}
+		catch(ProviderException){
+			$this::markTestSkipped('token is missing or expired');
+		}
+
 	}
 
 }
