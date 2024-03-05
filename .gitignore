@@ -15,7 +15,7 @@
 .docs/*
 vendor/*
 config/.env
-config/*.token*
+config/**/*.token*
 config/cacert.pem
 composer.lock
 phpcs.xml
