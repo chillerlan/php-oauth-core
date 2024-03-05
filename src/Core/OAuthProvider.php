@@ -102,7 +102,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		protected StreamFactoryInterface                  $streamFactory,
 		protected UriFactoryInterface                     $uriFactory,
 		protected OAuthStorageInterface                   $storage = new MemoryStorage,
-		protected LoggerInterface                         $logger = new NullLogger
+		protected LoggerInterface                         $logger = new NullLogger,
 	){
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
 		$this->storage->setServiceName($this->serviceName);
@@ -205,7 +205,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		string|null                       $method = null,
 		StreamInterface|array|string|null $body = null,
 		array|null                        $headers = null,
-		string|null                       $protocolVersion = null
+		string|null                       $protocolVersion = null,
 	):ResponseInterface{
 		$request = $this->requestFactory->createRequest(($method ?? 'GET'), $this->getRequestURL($path, $params));
 

@@ -58,7 +58,8 @@ interface OAuthInterface extends ClientInterface{
 		array|null                        $params = null,
 		string|null                       $method = null,
 		StreamInterface|array|string|null $body = null,
-		array|null                        $headers = null
+		array|null                        $headers = null,
+		string|null                       $protocolVersion = null,
 	):ResponseInterface;
 
 	/**
