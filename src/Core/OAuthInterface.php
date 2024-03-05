@@ -78,6 +78,11 @@ interface OAuthInterface extends ClientInterface{
 	public function storeAccessToken(AccessToken $token):static;
 
 	/**
+	 * Gets an access token from the current OAuthStorageInterface (shorthand/convenience)
+	 */
+	public function retrieveAccessToken():AccessToken;
+
+	/**
 	 * Sets an optional PSR-3 LoggerInterface
 	 */
 	public function setLogger(LoggerInterface $logger):static;
