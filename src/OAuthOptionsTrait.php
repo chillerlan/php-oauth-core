@@ -39,6 +39,15 @@ trait OAuthOptionsTrait{
 	protected bool $sessionStart = true;
 
 	/**
+	 * Whether to end the session when session storage is used
+	 *
+	 * Note: this is set to `false` by default to not interfere with other session managers
+	 *
+	 * @see \chillerlan\OAuth\Storage\SessionStorage
+	 */
+	protected bool $sessionStop = false;
+
+	/**
 	 * The session array key for token storage
 	 *
 	 * @see \chillerlan\OAuth\Storage\SessionStorage

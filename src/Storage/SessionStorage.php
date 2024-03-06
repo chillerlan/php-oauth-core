@@ -16,7 +16,7 @@ use chillerlan\OAuth\OAuthOptions;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Log\{LoggerInterface, NullLogger};
 use function array_key_exists, array_keys, session_start, session_status, session_write_close;
-use const PHP_SESSION_NONE;
+use const PHP_SESSION_ACTIVE, PHP_SESSION_DISABLED;
 
 /**
  * Implements a session storage adapter.
@@ -48,8 +48,9 @@ class SessionStorage extends OAuthStorageAbstract{
 		$this->stateVar = $this->options->sessionStateVar;
 
 		// Determine if the session has started.
-		// @see http://stackoverflow.com/a/18542272/1470961
-		if($this->options->sessionStart && !(session_status() !== PHP_SESSION_NONE)){
+		$status = session_status();
+
+		if($this->options->sessionStart && $status !== PHP_SESSION_DISABLED && $status !== PHP_SESSION_ACTIVE){
 			session_start();
 		}
 
@@ -69,7 +70,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	 * @codeCoverageIgnore
 	 */
 	public function __destruct(){
-		if($this->options->sessionStart){
+		if($this->options->sessionStop && session_status() === PHP_SESSION_ACTIVE){
 			session_write_close();
 		}
 	}
