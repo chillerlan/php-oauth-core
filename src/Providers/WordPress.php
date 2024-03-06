@@ -23,7 +23,7 @@ class WordPress extends OAuth2Provider implements CSRFToken{
 	public const SCOPE_AUTH   = 'auth';
 	public const SCOPE_GLOBAL = 'global';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_GLOBAL,
 	];
 

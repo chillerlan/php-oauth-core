@@ -29,7 +29,7 @@ class Amazon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	public const SCOPE_PROFILE_USER_ID = 'profile:user_id';
 	public const SCOPE_POSTAL_CODE     = 'postal_code';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_PROFILE,
 		self::SCOPE_PROFILE_USER_ID,
 	];

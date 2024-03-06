@@ -40,7 +40,7 @@ class Discord extends OAuth2Provider implements ClientCredentials, CSRFToken, To
 	public const SCOPE_RPC_NOTIFICATIONS_READ                   = 'rpc.notifications.read';
 	public const SCOPE_WEBHOOK_INCOMING                         = 'webhook.incoming';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_CONNECTIONS,
 		self::SCOPE_EMAIL,
 		self::SCOPE_IDENTIFY,

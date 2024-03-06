@@ -36,7 +36,7 @@ class OpenStreetmap2 extends OAuth2Provider implements CSRFToken{
 	public const SCOPE_WRITE_REDACTIONS = 'write_redactions';
 	public const SCOPE_OPENID           = 'openid';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_READ_GPX,
 		self::SCOPE_READ_PREFS,
 	];

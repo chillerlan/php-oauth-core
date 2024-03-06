@@ -24,10 +24,10 @@ use function sprintf;
  */
 class Stripe extends OAuth2Provider implements CSRFToken, TokenRefresh, TokenInvalidate{
 
-	public const SCOPE_READ_WRITE     = 'read_write';
-	public const SCOPE_READ_ONLY      = 'read_only';
+	public const SCOPE_READ_WRITE = 'read_write';
+	public const SCOPE_READ_ONLY  = 'read_only';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_READ_ONLY,
 	];
 

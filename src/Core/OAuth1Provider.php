@@ -60,7 +60,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
 		;
 
-		foreach($this->authHeaders as $header => $value){
+		foreach($this::HEADERS_AUTH as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 

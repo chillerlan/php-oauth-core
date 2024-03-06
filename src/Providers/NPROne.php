@@ -27,7 +27,7 @@ class NPROne extends OAuth2Provider implements CSRFToken, TokenRefresh, TokenInv
 	public const SCOPE_LISTENING_WRITE    = 'listening.write';
 	public const SCOPE_LOCALACTIVATION    = 'localactivation';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_IDENTITY_READONLY,
 		self::SCOPE_LISTENING_READONLY,
 	];

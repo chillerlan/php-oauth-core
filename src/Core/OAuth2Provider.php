@@ -26,28 +26,6 @@ use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
-	 * Specifies the authentication method:
-	 *   - OAuth2Interface::AUTH_METHOD_HEADER (Bearer, OAuth, ...)
-	 *   - OAuth2Interface::AUTH_METHOD_QUERY (access_token, ...)
-	 */
-	protected int $authMethod = self::AUTH_METHOD_HEADER;
-
-	/**
-	 * The name of the authentication header in case of OAuth2Interface::AUTH_METHOD_HEADER
-	 */
-	protected string $authMethodHeader = 'Bearer';
-
-	/**
-	 * The name of the authentication query parameter in case of OAuth2Interface::AUTH_METHOD_QUERY
-	 */
-	protected string $authMethodQuery = 'access_token';
-
-	/**
-	 * The delimiter string for scopes
-	 */
-	protected string $scopesDelimiter = ' ';
-
-	/**
 	 * An optional refresh token endpoint in case the provider supports TokenRefresh.
 	 * If the provider supports token refresh and $refreshTokenURL is null, $accessTokenURL will be used instead.
 	 *
@@ -62,16 +40,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected string|null $clientCredentialsTokenURL = null;
 
 	/**
-	 * Default scopes to apply if none were provided via the $scopes parameter in OAuth2Provider::getAuthURL()
-	 */
-	protected array $defaultScopes = [];
-
-	/**
 	 * @inheritDoc
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		$params ??= [];
-		$scopes ??= $this->defaultScopes;
+		$scopes ??= $this::DEFAULT_SCOPES;
 
 		unset($params['client_secret']);
 
@@ -83,7 +56,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		]);
 
 		if(!empty($scopes)){
-			$params['scope'] = implode($this->scopesDelimiter, $scopes);
+			$params['scope'] = implode($this::SCOPE_DELIMITER, $scopes);
 		}
 
 		if($this instanceof CSRFToken){
@@ -128,7 +101,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		if(isset($data['scope']) || isset($data['scopes'])){
 			$scope = ($data['scope'] ?? $data['scopes'] ?? []);
 
-			$token->scopes = (is_array($scope)) ? $scope : explode($this->scopesDelimiter, $scope);
+			$token->scopes = (is_array($scope)) ? $scope : explode($this::SCOPE_DELIMITER, $scope);
 		}
 
 		unset($data['expires_in'], $data['refresh_token'], $data['access_token'], $data['scope'], $data['scopes']);
@@ -161,7 +134,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->withHeader('Accept-Encoding', 'identity')
 			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)));
 
-		foreach($this->authHeaders as $header => $value){
+		foreach($this::HEADERS_AUTH as $header => $value){
 			$request = $request->withHeader($header, $value);
 		}
 
@@ -177,17 +150,17 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 
-		if($this->authMethod === OAuth2Interface::AUTH_METHOD_HEADER){
-			return $request->withHeader('Authorization', $this->authMethodHeader.' '.$token->accessToken);
+		if($this::AUTH_METHOD === OAuth2Interface::AUTH_METHOD_HEADER){
+			return $request->withHeader('Authorization', $this::AUTH_PREFIX_HEADER.' '.$token->accessToken);
 		}
 
-		if($this->authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
-			$uri = QueryUtil::merge((string)$request->getUri(), [$this->authMethodQuery => $token->accessToken]);
+		if($this::AUTH_METHOD === OAuth2Interface::AUTH_METHOD_QUERY){
+			$uri = QueryUtil::merge((string)$request->getUri(), [$this::AUTH_PREFIX_QUERY => $token->accessToken]);
 
 			return $request->withUri($this->uriFactory->createUri($uri));
 		}
 
-		throw new ProviderException('invalid auth type');
+		throw new ProviderException('invalid auth AUTH_METHOD');
 	}
 
 	/**
@@ -203,7 +176,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$params = ['grant_type' => 'client_credentials'];
 
 		if(!empty($scopes)){
-			$params['scope'] = implode($this->scopesDelimiter, $scopes);
+			$params['scope'] = implode($this::SCOPE_DELIMITER, $scopes);
 		}
 
 		$request = $this->requestFactory
@@ -214,7 +187,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->withBody($this->streamFactory->createStream(QueryUtil::build($params, PHP_QUERY_RFC1738)))
 		;
 
-		foreach($this->authHeaders as $header => $value){
+		foreach($this::HEADERS_AUTH as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 
@@ -267,7 +240,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
 		;
 
-		foreach($this->authHeaders as $header => $value){
+		foreach($this::HEADERS_AUTH as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 

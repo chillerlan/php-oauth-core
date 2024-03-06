@@ -24,15 +24,15 @@ use const PHP_QUERY_RFC1738;
  */
 class Deezer extends OAuth2Provider implements CSRFToken{
 
-	public const SCOPE_BASIC              = 'basic_access';
-	public const SCOPE_EMAIL              = 'email';
-	public const SCOPE_OFFLINE_ACCESS     = 'offline_access';
-	public const SCOPE_MANAGE_LIBRARY     = 'manage_library';
-	public const SCOPE_MANAGE_COMMUNITY   = 'manage_community';
-	public const SCOPE_DELETE_LIBRARY     = 'delete_library';
-	public const SCOPE_LISTENING_HISTORY  = 'listening_history';
+	public const SCOPE_BASIC             = 'basic_access';
+	public const SCOPE_EMAIL             = 'email';
+	public const SCOPE_OFFLINE_ACCESS    = 'offline_access';
+	public const SCOPE_MANAGE_LIBRARY    = 'manage_library';
+	public const SCOPE_MANAGE_COMMUNITY  = 'manage_community';
+	public const SCOPE_DELETE_LIBRARY    = 'delete_library';
+	public const SCOPE_LISTENING_HISTORY = 'listening_history';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_BASIC,
 		self::SCOPE_EMAIL,
 		self::SCOPE_OFFLINE_ACCESS,
@@ -40,13 +40,14 @@ class Deezer extends OAuth2Provider implements CSRFToken{
 		self::SCOPE_LISTENING_HISTORY,
 	];
 
+	public const AUTH_METHOD = self::AUTH_METHOD_QUERY;
+
 	protected string      $authURL        = 'https://connect.deezer.com/oauth/auth.php';
 	protected string      $accessTokenURL = 'https://connect.deezer.com/oauth/access_token.php';
 	protected string      $apiURL         = 'https://api.deezer.com';
 	protected string|null $userRevokeURL  = 'https://www.deezer.com/account/apps';
 	protected string|null $apiDocs        = 'https://developers.deezer.com/api';
 	protected string|null $applicationURL = 'http://developers.deezer.com/myapps';
-	protected int         $authMethod     = self::AUTH_METHOD_QUERY;
 
 	/**
 	 * @inheritDoc
@@ -61,7 +62,7 @@ class Deezer extends OAuth2Provider implements CSRFToken{
 		$params = array_merge($params, [
 			'app_id'       => $this->options->key,
 			'redirect_uri' => $this->options->callbackURL,
-			'perms'        => implode($this->scopesDelimiter, ($scopes ?? [])),
+			'perms'        => implode($this::SCOPE_DELIMITER, ($scopes ?? [])),
 		]);
 
 		$params = $this->setState($params);

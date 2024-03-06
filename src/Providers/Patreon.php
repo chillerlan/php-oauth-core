@@ -36,7 +36,7 @@ class Patreon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	public const SCOPE_V2_CAMPAIGNS_MEMBERS_EMAIL   = 'campaigns.members[email]';
 	public const SCOPE_V2_CAMPAIGNS_MEMBERS_ADDRESS = 'campaigns.members.address';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_V2_IDENTITY,
 		self::SCOPE_V2_IDENTITY_EMAIL,
 		self::SCOPE_V2_IDENTITY_MEMBERSHIPS,

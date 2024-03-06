@@ -27,7 +27,7 @@ class Google extends OAuth2Provider implements CSRFToken{
 	public const SCOPE_USERINFO_EMAIL   = 'https://www.googleapis.com/auth/userinfo.email';
 	public const SCOPE_USERINFO_PROFILE = 'https://www.googleapis.com/auth/userinfo.profile';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_EMAIL,
 		self::SCOPE_PROFILE,
 	];

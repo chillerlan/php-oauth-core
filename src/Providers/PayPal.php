@@ -27,7 +27,7 @@ class PayPal extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 	public const SCOPE_ADDRESS        = 'address';
 	public const SCOPE_ACCOUNT        = 'https://uri.paypal.com/services/paypalattributes';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_BASIC_AUTH,
 		self::SCOPE_EMAIL,
 	];
@@ -73,7 +73,7 @@ class PayPal extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 		$token->accessToken  = $data['access_token'];
 		$token->expires      = ($data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
 		$token->refreshToken = ($data['refresh_token'] ?? null);
-		$token->scopes       = explode($this->scopesDelimiter, ($data['scope'] ?? ''));
+		$token->scopes       = explode($this::SCOPE_DELIMITER, ($data['scope'] ?? ''));
 
 		unset($data['expires_in'], $data['refresh_token'], $data['access_token'], $data['scope']);
 

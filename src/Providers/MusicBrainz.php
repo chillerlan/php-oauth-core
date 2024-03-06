@@ -30,7 +30,7 @@ class MusicBrainz extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	public const SCOPE_SUBMIT_ISRC    = 'submit_isrc';
 	public const SCOPE_SUBMIT_BARCODE = 'submit_barcode';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_PROFILE,
 		self::SCOPE_EMAIL,
 		self::SCOPE_TAG,

@@ -23,7 +23,7 @@ use Psr\Http\Message\UriInterface;
  */
 class TwitterCC extends OAuth2Provider implements ClientCredentials{
 
-	protected const AUTH_ERRMSG                      = 'TwitterCC only supports Client Credentials Grant, use the Twitter OAuth1 class for authentication instead.';
+	protected const AUTH_ERRMSG = 'TwitterCC only supports Client Credentials Grant, use the Twitter OAuth1 class for authentication instead.';
 
 	protected string      $apiURL                    = 'https://api.twitter.com';
 	protected string|null $clientCredentialsTokenURL = 'https://api.twitter.com/oauth2/token';

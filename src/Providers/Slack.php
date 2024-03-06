@@ -78,7 +78,7 @@ class Slack extends OAuth2Provider implements CSRFToken{
 	public const SCOPE_USERS_READ_EMAIL    = 'users:read.email';
 	public const SCOPE_USERS_WRITE         = 'users:write';
 
-	protected array $defaultScopes         = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_IDENTITY_AVATAR,
 		self::SCOPE_IDENTITY_BASIC,
 		self::SCOPE_IDENTITY_EMAIL,

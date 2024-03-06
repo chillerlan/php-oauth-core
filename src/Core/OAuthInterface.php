@@ -31,6 +31,20 @@ use Psr\Http\Message\{
 interface OAuthInterface extends ClientInterface{
 
 	/**
+	 * additional headers to use during authentication
+	 *
+	 * @var array
+	 */
+	public const HEADERS_AUTH = [];
+
+	/**
+	 * additional headers to use during API access
+	 *
+	 * @var array
+	 */
+	public const HEADERS_API = [];
+
+	/**
 	 * Prepares the URL with optional $params which redirects to the provider's authorization prompt
 	 * and returns a PSR-7 UriInterface with all necessary parameters set
 	 *

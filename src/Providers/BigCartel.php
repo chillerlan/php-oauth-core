@@ -24,6 +24,10 @@ use const SODIUM_BASE64_VARIANT_ORIGINAL;
  */
 class BigCartel extends OAuth2Provider implements CSRFToken, TokenInvalidate{
 
+	public const HEADERS_API = [
+		'Accept' => 'application/vnd.api+json',
+	];
+
 	protected string      $authURL        = 'https://my.bigcartel.com/oauth/authorize';
 	protected string      $accessTokenURL = 'https://api.bigcartel.com/oauth/token';
 	protected string      $revokeURL      = 'https://api.bigcartel.com/oauth/deauthorize/%s'; // sprintf() user id!
@@ -31,7 +35,6 @@ class BigCartel extends OAuth2Provider implements CSRFToken, TokenInvalidate{
 	protected string|null $userRevokeURL  = 'https://my.bigcartel.com/account';
 	protected string|null $apiDocs        = 'https://developers.bigcartel.com/api/v1';
 	protected string|null $applicationURL = 'https://bigcartel.wufoo.com/forms/big-cartel-api-application/';
-	protected array       $apiHeaders     = ['Accept' => 'application/vnd.api+json'];
 
 	/**
 	 * @inheritDoc

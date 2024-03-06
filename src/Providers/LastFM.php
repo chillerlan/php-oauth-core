@@ -28,7 +28,8 @@ class LastFM extends OAuthProvider{
 	public const PERIOD_3MONTH  = '3month';
 	public const PERIOD_6MONTH  = '6month';
 	public const PERIOD_12MONTH = '12month';
-	public const PERIODS        = [
+
+	public const PERIODS = [
 		self::PERIOD_OVERALL,
 		self::PERIOD_7DAY,
 		self::PERIOD_1MONTH,
@@ -169,7 +170,7 @@ class LastFM extends OAuthProvider{
 		/** @phan-suppress-next-line PhanTypeMismatchArgumentNullable */
 		$request = $this->requestFactory->createRequest($method, QueryUtil::merge($this->apiURL, $params));
 
-		foreach(array_merge($this->apiHeaders, ($headers ?? [])) as $header => $value){
+		foreach(array_merge($this::HEADERS_API, ($headers ?? [])) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 

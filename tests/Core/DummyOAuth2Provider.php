@@ -19,14 +19,15 @@ use chillerlan\OAuth\Providers\ProviderException;
  */
 final class DummyOAuth2Provider extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh, TokenInvalidate{
 
-	protected string  $authURL        = 'https://example.com/oauth2/authorize';
-	protected string  $accessTokenURL = 'https://example.com/oauth2/token';
-	protected string  $revokeURL      = 'https://example.com/oauth2/revoke';
-	protected string  $apiURL         = 'https://api.example.com/';
-	protected ?string $userRevokeURL  = 'https://account.example.com/apps/';
-	protected array   $authHeaders    = ['foo' => 'bar'];
-	protected array   $apiHeaders     = ['foo' => 'bar'];
-	protected int     $authMethod     = self::AUTH_METHOD_QUERY;
+	public const AUTH_METHOD  = self::AUTH_METHOD_QUERY;
+	public const HEADERS_AUTH = ['foo' => 'bar'];
+	public const HEADERS_API  = ['foo' => 'bar'];
+
+	protected string      $authURL        = 'https://example.com/oauth2/authorize';
+	protected string      $accessTokenURL = 'https://example.com/oauth2/token';
+	protected string      $revokeURL      = 'https://example.com/oauth2/revoke';
+	protected string      $apiURL         = 'https://api.example.com/';
+	protected string|null $userRevokeURL  = 'https://account.example.com/apps/';
 
 	/**
 	 * @inheritDoc

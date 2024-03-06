@@ -23,12 +23,12 @@ use function in_array, sprintf, strtolower;
  */
 class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 
-	public const SCOPE_OPENID         = 'openid';
-	public const SCOPE_PROFILE_D3     = 'd3.profile';
-	public const SCOPE_PROFILE_SC2    = 'sc2.profile';
-	public const SCOPE_PROFILE_WOW    = 'wow.profile';
+	public const SCOPE_OPENID      = 'openid';
+	public const SCOPE_PROFILE_D3  = 'd3.profile';
+	public const SCOPE_PROFILE_SC2 = 'sc2.profile';
+	public const SCOPE_PROFILE_WOW = 'wow.profile';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_OPENID,
 		self::SCOPE_PROFILE_D3,
 		self::SCOPE_PROFILE_SC2,

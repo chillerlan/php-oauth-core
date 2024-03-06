@@ -49,16 +49,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	protected string $accessTokenURL;
 
-	/**
-	 * additional headers to use during authentication
-	 */
-	protected array $authHeaders = [];
-
-	/**
-	 * additional headers to use during API access
-	 */
-	protected array $apiHeaders = [];
-
 	/*
 	 * magic properties (public readonly would be cool if the implementation wasn't fucking stupid)
 	 */
@@ -249,7 +239,8 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * Prepare request headers
 	 */
 	protected function getRequestHeaders(array|null $headers = null):array{
-		return array_merge($this->apiHeaders, ($headers ?? []));
+		/** @noinspection PhpParamsInspection sup PHPStorm?? */
+		return array_merge($this::HEADERS_API, ($headers ?? []));
 	}
 
 	/**

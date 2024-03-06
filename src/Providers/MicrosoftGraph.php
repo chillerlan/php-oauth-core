@@ -22,7 +22,7 @@ class MicrosoftGraph extends AzureActiveDirectory{
 	public const SCOPE_USER_READ          = 'User.Read';
 	public const SCOPE_USER_READBASIC_ALL = 'User.ReadBasic.All';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_OPENID,
 		self::SCOPE_OPENID_EMAIL,
 		self::SCOPE_OPENID_PROFILE,

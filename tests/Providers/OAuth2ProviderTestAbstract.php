@@ -107,19 +107,19 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$request = $this->requestFactory->createRequest('GET', 'https://foo.bar');
 		$token   = new AccessToken(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token']);
 
-		$authMethod = $this->getReflectionProperty('authMethod');
+		$authMethod = $this->provider::AUTH_METHOD;
 
 		// header (default)
 		if($authMethod === OAuth2Interface::AUTH_METHOD_HEADER){
 			$this::assertStringContainsString(
-				$this->getReflectionProperty('authMethodHeader').' test_token',
+				$this->provider::AUTH_PREFIX_HEADER.' test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization')
 			);
 		}
 		// query
 		elseif($authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
 			$this::assertStringContainsString(
-				$this->getReflectionProperty('authMethodQuery').'=test_token',
+				$this->provider::AUTH_PREFIX_QUERY.'=test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery()
 			);
 		}
@@ -131,18 +131,6 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->provider->storeAccessToken($token);
 
 		$this::assertSame('such data! much wow!', MessageUtil::decodeJSON($this->provider->request('/request'))->data);
-	}
-
-	public function testRequestInvalidAuthTypeException():void{
-		$this->expectException(OAuthException::class);
-		$this->expectExceptionMessage('invalid auth type');
-
-		$this->setReflectionProperty('authMethod', -1);
-
-		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
-		$this->provider->storeAccessToken($token);
-
-		$this->provider->request('/request');
 	}
 
 	public function testCheckCSRFState():void{

@@ -36,14 +36,22 @@ class Vimeo extends OAuth2Provider implements ClientCredentials, CSRFToken, Toke
 	public const SCOPE_PROMO_CODES = 'promo_codes';
 	public const SCOPE_VIDEO_FILES = 'video_files';
 
-	// @see https://developer.vimeo.com/api/changelog
-	protected const API_VERSION    = '3.4';
-
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_PUBLIC,
 		self::SCOPE_PRIVATE,
 		self::SCOPE_INTERACT,
 		self::SCOPE_STATS,
+	];
+
+	// @see https://developer.vimeo.com/api/changelog
+	protected const API_VERSION    = '3.4';
+
+	public const HEADERS_AUTH = [
+		'Accept' => 'application/vnd.vimeo.*+json;version='.self::API_VERSION,
+	];
+
+	public const HEADERS_API  = [
+		'Accept' => 'application/vnd.vimeo.*+json;version='.self::API_VERSION,
 	];
 
 	protected string      $authURL                   = 'https://api.vimeo.com/oauth/authorize';
@@ -54,8 +62,6 @@ class Vimeo extends OAuth2Provider implements ClientCredentials, CSRFToken, Toke
 	protected string|null $clientCredentialsTokenURL = 'https://api.vimeo.com/oauth/authorize/client';
 	protected string|null $apiDocs                   = 'https://developer.vimeo.com';
 	protected string|null $applicationURL            = 'https://developer.vimeo.com/apps';
-	protected array       $authHeaders               = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::API_VERSION];
-	protected array       $apiHeaders                = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::API_VERSION];
 
 	/**
 	 * @inheritDoc

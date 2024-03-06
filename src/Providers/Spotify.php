@@ -59,7 +59,7 @@ class Spotify extends OAuth2Provider implements ClientCredentials, CSRFToken, To
 	public const SCOPE_USER_MANAGE_PARTNER         = 'user-manage-partner';
 	public const SCOPE_USER_CREATE_PARTNER         = 'user-create-partner';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_PLAYLIST_READ_COLLABORATIVE,
 		self::SCOPE_PLAYLIST_MODIFY_PUBLIC,
 		self::SCOPE_USER_FOLLOW_MODIFY,

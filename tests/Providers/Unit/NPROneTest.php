@@ -46,18 +46,6 @@ class NPROneTest extends OAuth2ProviderTestAbstract{
 		return NPROne::class;
 	}
 
-	public function testRequestInvalidAuthTypeException():void{
-		$this->expectException(OAuthException::class);
-		$this->expectExceptionMessage('invalid auth type');
-
-		$this->setReflectionProperty('authMethod', -1);
-
-		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
-		$this->storage->storeAccessToken($token, $this->provider->serviceName);
-
-		$this->provider->request('https://foo.api.npr.org/');
-	}
-
 	public static function requestTargetProvider():array{
 		return [
 			'empty'          => ['', 'https://localhost/api'],

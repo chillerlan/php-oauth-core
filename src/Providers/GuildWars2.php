@@ -23,18 +23,18 @@ use function implode, preg_match, sprintf, str_starts_with, substr;
  */
 class GuildWars2 extends OAuth2Provider{
 
-	public const SCOPE_ACCOUNT        = 'account';
-	public const SCOPE_INVENTORIES    = 'inventories';
-	public const SCOPE_CHARACTERS     = 'characters';
-	public const SCOPE_TRADINGPOST    = 'tradingpost';
-	public const SCOPE_WALLET         = 'wallet';
-	public const SCOPE_UNLOCKS        = 'unlocks';
-	public const SCOPE_PVP            = 'pvp';
-	public const SCOPE_BUILDS         = 'builds';
-	public const SCOPE_PROGRESSION    = 'progression';
-	public const SCOPE_GUILDS         = 'guilds';
+	public const SCOPE_ACCOUNT     = 'account';
+	public const SCOPE_INVENTORIES = 'inventories';
+	public const SCOPE_CHARACTERS  = 'characters';
+	public const SCOPE_TRADINGPOST = 'tradingpost';
+	public const SCOPE_WALLET      = 'wallet';
+	public const SCOPE_UNLOCKS     = 'unlocks';
+	public const SCOPE_PVP         = 'pvp';
+	public const SCOPE_BUILDS      = 'builds';
+	public const SCOPE_PROGRESSION = 'progression';
+	public const SCOPE_GUILDS      = 'guilds';
 
-	protected const AUTH_ERRMSG       = 'GuildWars2 does not support authentication anymore.';
+	protected const AUTH_ERRMSG = 'GuildWars2 does not support authentication anymore.';
 
 	protected string      $authURL        = 'https://api.guildwars2.com/v2/tokeninfo';
 	protected string      $apiURL         = 'https://api.guildwars2.com';
@@ -71,7 +71,7 @@ class GuildWars2 extends OAuth2Provider{
 				'token_type' => 'Bearer',
 				'id'         => $tokeninfo->id,
 				'name'       => $tokeninfo->name,
-				'scope'      => implode($this->scopesDelimiter, $tokeninfo->permissions),
+				'scope'      => implode($this::SCOPE_DELIMITER, $tokeninfo->permissions),
 			];
 
 			$this->storage->storeAccessToken($token, $this->serviceName);

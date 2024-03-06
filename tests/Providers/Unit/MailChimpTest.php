@@ -56,17 +56,6 @@ class MailChimpTest extends OAuth2ProviderTestAbstract{
 		$this::assertSame('such data! much wow! (/3.0/)', MessageUtil::decodeJSON($this->provider->request('/3.0/'))->data);
 	}
 
-	public function testRequestInvalidAuthTypeException():void{
-		$this->expectException(OAuthException::class);
-		$this->expectExceptionMessage('invalid auth type');
-
-		$this->setReflectionProperty('authMethod', -1);
-
-		$this->storage->storeAccessToken($this->token, $this->provider->serviceName);
-
-		$this->provider->request('');
-	}
-
 	public function testGetTokenMetadata():void{
 		$token = $this->provider->getTokenMetadata($this->token);
 

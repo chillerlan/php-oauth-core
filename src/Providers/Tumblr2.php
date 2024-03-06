@@ -26,7 +26,7 @@ class Tumblr2 extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	public const SCOPE_WRITE          = 'write';
 	public const SCOPE_OFFLINE_ACCESS = 'offline_access';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_BASIC,
 		self::SCOPE_WRITE,
 		self::SCOPE_OFFLINE_ACCESS,

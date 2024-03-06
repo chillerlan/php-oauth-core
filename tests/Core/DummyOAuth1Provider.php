@@ -19,14 +19,15 @@ use chillerlan\OAuth\Providers\ProviderException;
  */
 final class DummyOAuth1Provider extends OAuth1Provider implements TokenInvalidate{
 
-	protected string  $authURL         = 'https://example.com/oauth/authorize';
-	protected string  $accessTokenURL  = 'https://example.com/oauth/access_token';
-	protected string  $requestTokenURL = 'https://example.com/oauth/request_token';
-	protected string  $revokeURL       = 'https://example.com/oauth/revoke';
-	protected string  $apiURL          = 'https://api.example.com';
-	protected ?string $userRevokeURL   = 'https://account.example.com/apps/';
-	protected array   $authHeaders     = ['foo' => 'bar'];
-	protected array   $apiHeaders      = ['foo' => 'bar'];
+	public const HEADERS_AUTH = ['foo' => 'bar'];
+	public const HEADERS_API  = ['foo' => 'bar'];
+
+	protected string      $authURL         = 'https://example.com/oauth/authorize';
+	protected string      $accessTokenURL  = 'https://example.com/oauth/access_token';
+	protected string      $requestTokenURL = 'https://example.com/oauth/request_token';
+	protected string      $revokeURL       = 'https://example.com/oauth/revoke';
+	protected string      $apiURL          = 'https://api.example.com';
+	protected string|null $userRevokeURL   = 'https://account.example.com/apps/';
 
 	/**
 	 * @inheritDoc

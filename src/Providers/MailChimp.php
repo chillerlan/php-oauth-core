@@ -22,14 +22,13 @@ use function array_merge, sprintf;
  */
 class MailChimp extends OAuth2Provider implements CSRFToken{
 
-	protected const API_BASE            = 'https://%s.api.mailchimp.com';
-	protected const METADATA_ENDPOINT   = 'https://login.mailchimp.com/oauth2/metadata';
+	protected const API_BASE          = 'https://%s.api.mailchimp.com';
+	protected const METADATA_ENDPOINT = 'https://login.mailchimp.com/oauth2/metadata';
 
-	protected string      $authURL          = 'https://login.mailchimp.com/oauth2/authorize';
-	protected string      $accessTokenURL   = 'https://login.mailchimp.com/oauth2/token';
-	protected string|null $apiDocs          = 'https://developer.mailchimp.com/';
-	protected string|null $applicationURL   = 'https://admin.mailchimp.com/account/oauth2/';
-	protected string      $authMethodHeader = 'OAuth';
+	protected string      $authURL        = 'https://login.mailchimp.com/oauth2/authorize';
+	protected string      $accessTokenURL = 'https://login.mailchimp.com/oauth2/token';
+	protected string|null $apiDocs        = 'https://developer.mailchimp.com/';
+	protected string|null $applicationURL = 'https://admin.mailchimp.com/account/oauth2/';
 
 	/**
 	 * @throws \chillerlan\OAuth\OAuthException

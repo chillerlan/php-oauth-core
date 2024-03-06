@@ -29,11 +29,12 @@ class SteamOpenID extends OAuthProvider{
 	protected string|null $apiDocs        = 'https://developer.valvesoftware.com/wiki/Steam_Web_API';
 
 	/**
+	 * we ignore user supplied params here
+	 *
 	 * @inheritDoc
 	 */
 	public function getAuthURL(array|null $params = null):UriInterface{
 
-		// we ignore user supplied params here
 		$params = [
 			'openid.ns'         => 'http://specs.openid.net/auth/2.0',
 			'openid.mode'       => 'checkid_setup',

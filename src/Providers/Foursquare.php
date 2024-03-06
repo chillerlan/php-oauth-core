@@ -21,6 +21,9 @@ use function array_merge, explode, sprintf;
  */
 class Foursquare extends OAuth2Provider{
 
+	public const AUTH_METHOD       = self::AUTH_METHOD_QUERY;
+	public const AUTH_PREFIX_QUERY = 'oauth_token';
+
 	protected const API_VERSIONDATE = '20190225';
 
 	protected string      $authURL         = 'https://foursquare.com/oauth2/authenticate';
@@ -29,8 +32,6 @@ class Foursquare extends OAuth2Provider{
 	protected string|null $userRevokeURL   = 'https://foursquare.com/settings/connections';
 	protected string|null $apiDocs         = 'https://developer.foursquare.com/docs';
 	protected string|null $applicationURL  = 'https://foursquare.com/developers/apps';
-	protected string      $authMethodQuery = 'oauth_token';
-	protected int         $authMethod      = self::AUTH_METHOD_QUERY;
 
 	/**
 	 * @inheritDoc

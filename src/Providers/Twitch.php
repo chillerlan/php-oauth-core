@@ -45,8 +45,16 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 	public const SCOPE_USER_READ_EMAIL            = 'user:read:email';
 	public const SCOPE_USER_READ_SUBSCRIPTIONS    = 'user:read:subscriptions';
 
-	protected array $defaultScopes = [
+	public const DEFAULT_SCOPES = [
 		self::SCOPE_USER_READ_EMAIL,
+	];
+
+	public const HEADERS_AUTH = [
+		'Accept' => 'application/vnd.twitchtv.v5+json',
+	];
+
+	public const HEADERS_API  = [
+		'Accept' => 'application/vnd.twitchtv.v5+json',
 	];
 
 	protected string      $authURL        = 'https://id.twitch.tv/oauth2/authorize';
@@ -56,8 +64,6 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 	protected string|null $userRevokeURL  = 'https://www.twitch.tv/settings/connections';
 	protected string|null $apiDocs        = 'https://dev.twitch.tv/docs/api/reference/';
 	protected string|null $applicationURL = 'https://dev.twitch.tv/console/apps/create';
-	protected array       $authHeaders    = ['Accept' => 'application/vnd.twitchtv.v5+json'];
-	protected array       $apiHeaders     = ['Accept' => 'application/vnd.twitchtv.v5+json'];
 
 	/**
 	 * @see https://dev.twitch.tv/docs/authentication#oauth-client-credentials-flow-app-access-tokens
@@ -71,7 +77,7 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 		];
 
 		if($scopes !== null){
-			$params['scope'] = implode($this->scopesDelimiter, $scopes);
+			$params['scope'] = implode($this::SCOPE_DELIMITER, $scopes);
 		}
 
 		$request = $this->requestFactory
@@ -80,7 +86,7 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 			->withBody($this->streamFactory->createStream(QueryUtil::build($params, PHP_QUERY_RFC1738)))
 		;
 
-		foreach($this->authHeaders as $header => $value){
+		foreach($this::HEADERS_AUTH as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 
@@ -96,7 +102,7 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
 		return $request
-			->withHeader('Authorization', $this->authMethodHeader.' '.$token->accessToken)
+			->withHeader('Authorization', $this::AUTH_PREFIX_HEADER.' '.$token->accessToken)
 			->withHeader('Client-ID', $this->options->key);
 	}
 
