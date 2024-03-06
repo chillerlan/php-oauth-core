@@ -72,7 +72,7 @@ abstract class OAuthAPITestAbstract extends OAuthProviderTestAbstract{
 		return new OAuthTestMemoryStorage($options, $this->CFG);
 	}
 
-	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger, array $responses):ClientInterface{
+	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger):ClientInterface{
 		return new OAuthTestHttpClient($this->CFG, $logger);
 	}
 

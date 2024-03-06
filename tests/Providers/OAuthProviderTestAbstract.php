@@ -33,8 +33,8 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	protected bool $is_ci;
 
 	// PSR interfaces
-	protected ClientInterface          $http;
-	protected LoggerInterface          $logger;
+	protected ClientInterface $http;
+	protected LoggerInterface $logger;
 
 	// OAuth related properties
 	protected OAuthOptions|SettingsContainerInterface        $options;
@@ -58,10 +58,10 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		// init provider
 		$this->options    = $this->initOptions();
 		$this->storage    = $this->initStorage($this->options);
-		$this->http       = $this->initHttp($this->options, $this->logger, $this::TEST_RESPONSES); // PSR-18 HTTP client
+		$this->http       = $this->initHttp($this->options, $this->logger); // PSR-18 HTTP client
 		$this->provider   = $this->initProvider($this->getProviderFQCN());
 
-		$this->initTestProperties($this::TEST_PROPERTIES);
+		$this->initTestProperties();
 	}
 
 	/**
@@ -97,8 +97,8 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		return new MemoryStorage($options);
 	}
 
-	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger, array $responses):ClientInterface{
-		return new ProviderTestHttpClient($logger, $responses);
+	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger):ClientInterface{
+		return new ProviderTestHttpClient($logger, $this::TEST_RESPONSES);
 	}
 
 	protected function initProvider(string $FQCN):OAuthInterface|OAuth1Interface|OAuth2Interface{
@@ -117,9 +117,9 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		return $this->reflection->newInstanceArgs($args);
 	}
 
-	protected function initTestProperties(array $properties):void{
-		foreach($properties as $property => $value){
-			$this->reflection->getProperty($property)->setValue($this->provider, $value);
+	protected function initTestProperties():void{
+		foreach($this::TEST_PROPERTIES as $property => $value){
+			$this->setReflectionProperty($property, $value);
 		}
 	}
 
