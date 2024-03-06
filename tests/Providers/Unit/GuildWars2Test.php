@@ -19,18 +19,21 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class GuildWars2Test extends OAuth2ProviderTestAbstract{
 
+	protected const TEST_PROPERTIES = [
+		'authURL' => 'https://localhost/gw2/auth',
+		'apiURL'  => 'https://localhost/gw2/api',
+	];
+
+	protected const TEST_RESPONSES = [
+		'/gw2/auth'        => '{"id":"00000000-1111-2222-3333-444444444444","name":"GW2Token","permissions":["foo","bar"]}',
+		'/gw2/api/request' => '{"data":"such data! much wow!"}',
+	];
+
 	protected function getProviderFQCN():string{
 		return GuildWars2::class;
 	}
 
-	protected array $testResponses = [
-		'/gw2/auth/v2/tokeninfo' => '{"id":"00000000-1111-2222-3333-444444444444","name":"GW2Token","permissions":["foo","bar"]}',
-		'/oauth2/api/request'    => '{"data":"such data! much wow!"}',
-	];
-
 	public function testStoreGW2Token():void{
-		$this->reflection->getProperty('apiURL')->setValue($this->provider, 'https://localhost/gw2/auth');
-
 		$id     = '00000000-1111-2222-3333-444444444444';
 		$secret = '55555555-6666-7777-8888-999999999999';
 

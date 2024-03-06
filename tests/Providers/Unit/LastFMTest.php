@@ -21,20 +21,24 @@ use chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract;
  */
 class LastFMTest extends OAuthProviderTestAbstract{
 
-	protected function getProviderFQCN():string{
-		return LastFM::class;
-	}
+	protected const TEST_PROPERTIES = [
+		'apiURL'         => 'https://localhost/lastfm/api',
+		'accessTokenURL' => 'https://localhost/lastfm/token',
+	];
 
-	protected array $testResponses = [
-		'/lastfm/auth'        => '{"session":{"key":"session_key"}}',
-		'/lastfm/api/request' => '{"data":"such data! much wow!"}',
+	protected const TEST_RESPONSES = [
+		'/lastfm/token' => '{"session":{"key":"session_key"}}',
+		'/lastfm/api'   => '{"data":"such data! much wow!"}',
 	];
 
 	public function setUp():void{
 		parent::setUp();
 
 		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
-		$this->reflection->getProperty('apiURL')->setValue($this->provider, '/lastfm/api/request');
+	}
+
+	protected function getProviderFQCN():string{
+		return LastFM::class;
 	}
 
 	public function testGetAuthURL():void{
@@ -99,8 +103,6 @@ class LastFMTest extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetAccessToken():void{
-		$this->reflection->getProperty('apiURL')->setValue($this->provider, '/lastfm/auth');
-
 		$token = $this->provider->getAccessToken('session_token');
 
 		$this::assertSame('session_key', $token->accessToken);

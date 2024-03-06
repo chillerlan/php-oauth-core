@@ -25,17 +25,20 @@ class SteamOpenIDTest extends OAuthProviderTestAbstract{
 	protected const ID_VALID   = "ns:http://specs.openid.net/auth/2.0\x0ais_valid:true\x0a";
 	protected const ID_INVALID = "ns:http://specs.openid.net/auth/2.0\x0ais_valid:false\x0a";
 
-	protected array $testResponses = [
-		'/steam/id'          => self::ID_VALID,
-		'/steam/api/request' => '{"data":"such data! much wow!"}',
+	protected const TEST_PROPERTIES = [
+		'apiURL'         => 'https://localhost/steam/api',
+		'accessTokenURL' => 'https://localhost/steam/id',
+	];
+
+	protected const TEST_RESPONSES = [
+		'/steam/id'  => self::ID_VALID,
+		'/steam/api' => '{"data":"such data! much wow!"}',
 	];
 
 	protected function setUp():void{
 		parent::setUp();
 
 		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
-		$this->reflection->getProperty('accessTokenURL')->setValue($this->provider, 'https://localhost/steam/id');
-		$this->reflection->getProperty('apiURL')->setValue($this->provider, 'https://localhost/steam/api/request');
 	}
 
 	protected function getProviderFQCN():string{

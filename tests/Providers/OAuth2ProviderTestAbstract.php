@@ -23,7 +23,7 @@ use const PHP_URL_QUERY;
  */
 abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 
-	protected array $testProperties = [
+	protected const TEST_PROPERTIES = [
 		'apiURL'                    => 'https://localhost/oauth2/api',
 		'accessTokenURL'            => 'https://localhost/oauth2/access_token',
 		'refreshTokenURL'           => 'https://localhost/oauth2/refresh_token',
@@ -31,7 +31,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		'revokeURL'                 => 'https://localhost/oauth2/revoke_token',
 	];
 
-	protected array $testResponses = [
+	protected const TEST_RESPONSES = [
 		'/oauth2/access_token'       =>
 			'{"access_token":"test_access_token","expires_in":3600,"state":"test_state","scope":"some_scope other_scope"}',
 		'/oauth2/refresh_token'      =>

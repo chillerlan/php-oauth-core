@@ -42,8 +42,8 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	protected OAuthStorageInterface                          $storage;
 	protected ReflectionClass                                $reflection; // reflection of the test subject
 
-	protected array  $testProperties = [];
-	protected array  $testResponses  = [];
+	protected const TEST_PROPERTIES = [];
+	protected const TEST_RESPONSES  = [];
 
 	protected function setUp():void{
 		ini_set('date.timezone', 'UTC');
@@ -58,10 +58,10 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		// init provider
 		$this->options    = $this->initOptions();
 		$this->storage    = $this->initStorage($this->options);
-		$this->http       = $this->initHttp($this->options, $this->logger, $this->testResponses); // PSR-18 HTTP client
+		$this->http       = $this->initHttp($this->options, $this->logger, $this::TEST_RESPONSES); // PSR-18 HTTP client
 		$this->provider   = $this->initProvider($this->getProviderFQCN());
 
-		$this->initTestProperties($this->testProperties);
+		$this->initTestProperties($this::TEST_PROPERTIES);
 	}
 
 	/**
@@ -98,7 +98,7 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	}
 
 	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger, array $responses):ClientInterface{
-		return new ProviderTestHttpClient($responses);
+		return new ProviderTestHttpClient($logger, $responses);
 	}
 
 	protected function initProvider(string $FQCN):OAuthInterface|OAuth1Interface|OAuth2Interface{

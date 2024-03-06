@@ -25,7 +25,12 @@ class DeezerTest extends OAuth2ProviderTestAbstract{
 		return Deezer::class;
 	}
 
-	protected array $testResponses = [
+	protected const TEST_PROPERTIES = [
+		'apiURL'         => 'https://localhost/oauth2/api',
+		'accessTokenURL' => 'https://localhost/oauth2/access_token',
+	];
+
+	protected const TEST_RESPONSES = [
 		'/oauth2/access_token' => 'access_token=test_access_token&expires_in=3600&state=test_state&scope=some_scope%20other_scope',
 		'/oauth2/api/request'  => '{"data":"such data! much wow!"}',
 	];

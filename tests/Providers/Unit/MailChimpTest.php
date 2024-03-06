@@ -21,11 +21,12 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class MailChimpTest extends OAuth2ProviderTestAbstract{
 
-	protected function getProviderFQCN():string{
-		return MailChimp::class;
-	}
+	protected const TEST_PROPERTIES = [
+		'apiURL'         => 'https://localhost/oauth2/api',
+		'accessTokenURL' => 'https://localhost/oauth2/access_token',
+	];
 
-	protected array $testResponses = [
+	protected const TEST_RESPONSES = [
 		'/oauth2/access_token' =>
 			'{"access_token":"test_access_token","expires_in":3600,"state":"test_state","scope":"some_scope other_scope"}',
 		'/oauth2/metadata'     =>
@@ -44,6 +45,10 @@ class MailChimpTest extends OAuth2ProviderTestAbstract{
 			'expires'     => 1,
 			'extraParams' => ['dc' => 'bar'],
 		]);
+	}
+
+	protected function getProviderFQCN():string{
+		return MailChimp::class;
 	}
 
 	public function testRequest():void{

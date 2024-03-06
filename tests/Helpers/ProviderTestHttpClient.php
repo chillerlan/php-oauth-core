@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace chillerlan\OAuthTest\Helpers;
 
 use Psr\Http\Client\ClientInterface;
+use Psr\Log\LoggerInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use function str_contains;
 
@@ -24,7 +25,8 @@ final class ProviderTestHttpClient implements ClientInterface{
 	public const ECHO_REQUEST = '/__echo__';
 
 	public function __construct(
-		protected array $responses,
+		protected LoggerInterface $logger,
+		protected array           $responses,
 	){
 		$this->initFactories();
 	}
@@ -34,6 +36,8 @@ final class ProviderTestHttpClient implements ClientInterface{
 	 */
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 		$path = $request->getUri()->getPath();
+
+		$this->logger->debug($path);
 
 		// echo the request
 		if(str_contains($path, self::ECHO_REQUEST)){

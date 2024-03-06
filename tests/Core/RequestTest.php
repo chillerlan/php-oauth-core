@@ -18,7 +18,7 @@ use chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract;
 
 final class RequestTest extends OAuthProviderTestAbstract{
 
-	protected array $testResponses = [
+	protected const TEST_RESPONSES = [
 		'/api/gimme' => 'much data',
 	];
 

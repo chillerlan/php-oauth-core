@@ -38,6 +38,7 @@ class LastFM extends OAuthProvider{
 	];
 
 	protected string      $authURL        = 'https://www.last.fm/api/auth';
+	protected string      $accessTokenURL = 'https://ws.audioscrobbler.com/2.0';
 	protected string      $apiURL         = 'https://ws.audioscrobbler.com/2.0';
 	protected string|null $userRevokeURL  = 'https://www.last.fm/settings/applications';
 	protected string|null $apiDocs        = 'https://www.last.fm/api/';
@@ -89,7 +90,7 @@ class LastFM extends OAuthProvider{
 
 		$params['api_sig'] = $this->getSignature($params);
 
-		$request = $this->requestFactory->createRequest('GET', QueryUtil::merge($this->apiURL, $params));
+		$request = $this->requestFactory->createRequest('GET', QueryUtil::merge($this->accessTokenURL, $params));
 
 		return $this->parseTokenResponse($this->http->sendRequest($request));
 	}

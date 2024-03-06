@@ -36,7 +36,7 @@ class GuildWars2 extends OAuth2Provider{
 
 	protected const AUTH_ERRMSG       = 'GuildWars2 does not support authentication anymore.';
 
-	protected string      $authURL        = 'https://account.arena.net/applications/create';
+	protected string      $authURL        = 'https://api.guildwars2.com/v2/tokeninfo';
 	protected string      $apiURL         = 'https://api.guildwars2.com';
 	protected string|null $userRevokeURL  = 'https://account.arena.net/applications';
 	protected string|null $apiDocs        = 'https://wiki.guildwars2.com/wiki/API:Main';
@@ -56,7 +56,7 @@ class GuildWars2 extends OAuth2Provider{
 
 		// to verify the token we need to send a request without authentication
 		$request = $this->requestFactory
-			->createRequest('GET', QueryUtil::merge($this->apiURL.'/v2/tokeninfo', ['access_token' => $access_token]))
+			->createRequest('GET', QueryUtil::merge($this->authURL, ['access_token' => $access_token]))
 		;
 
 		$tokeninfo = MessageUtil::decodeJSON($this->http->sendRequest($request));

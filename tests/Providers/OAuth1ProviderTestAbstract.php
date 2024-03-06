@@ -22,14 +22,14 @@ use const PHP_URL_QUERY;
  */
 abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
-	protected array $testProperties = [
+	protected const TEST_PROPERTIES = [
 		'requestTokenURL' => 'https://localhost/oauth1/request_token',
 		'accessTokenURL'  => 'https://localhost/oauth1/access_token',
 		'revokeURL'       => 'https://localhost/oauth1/revoke_token',
 		'apiURL'          => 'https://localhost/oauth1/api',
 	];
 
-	protected array $testResponses =  [
+	protected const TEST_RESPONSES =  [
 		'/oauth1/request_token' =>
 			'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',
 		'/oauth1/access_token'  =>

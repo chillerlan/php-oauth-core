@@ -21,19 +21,29 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 class NPROneTest extends OAuth2ProviderTestAbstract{
 
+	protected const TEST_PROPERTIES = [
+		'apiURL'                    => '/oauth2/api',
+		'accessTokenURL'            => '/oauth2/access_token',
+		'refreshTokenURL'           => '/oauth2/refresh_token',
+		'clientCredentialsTokenURL' => '/oauth2/client_credentials',
+		'revokeURL'                 => '/revoke_token',
+	];
+
+	protected const TEST_RESPONSES = [
+		'/oauth2/access_token'       =>
+			'{"access_token":"test_access_token","expires_in":3600,"state":"test_state","scope":"some_scope other_scope"}',
+		'/oauth2/refresh_token'      =>
+			'{"access_token":"test_refreshed_access_token","expires_in":60,"state":"test_state"}',
+		'/oauth2/api/revoke_token'   =>
+			'{"message":"token revoked"}',
+		'/oauth2/client_credentials' =>
+			'{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
+		'/oauth2/api/request'        =>
+			'{"data":"such data! much wow!"}',
+	];
+
 	protected function getProviderFQCN():string{
 		return NPROne::class;
-	}
-
-	protected function setUp():void{
-		// modify test response data before loading into the test http client
-		// using the api url exit of NPROne::getRequestTarget() because reasons
-		$this->testResponses['/oauth2/api/revoke_token'] = '{"message":"token revoked"}';
-
-		parent::setUp();
-
-		$this->reflection->getProperty('revokeURL')->setValue($this->provider, '/revoke_token');
-
 	}
 
 	public function testRequestInvalidAuthTypeException():void{
@@ -48,9 +58,16 @@ class NPROneTest extends OAuth2ProviderTestAbstract{
 		$this->provider->request('https://foo.api.npr.org/');
 	}
 
-	#[DataProvider('requestTargetProvider')]
-	public function testGetRequestTarget(string $path, string $expected):void{
-		$this::markTestSkipped('N/A');
+	public static function requestTargetProvider():array{
+		return [
+			'empty'          => ['', 'https://localhost/api'],
+			'slash'          => ['/', 'https://localhost/api/'],
+			'no slashes'     => ['a', 'https://localhost/api/a'],
+			'leading slash'  => ['/b', 'https://localhost/api/b'],
+			'trailing slash' => ['c/', 'https://localhost/api/c/'],
+#			'full url given' => ['https://localhost/other/path/d', 'https://localhost/other/path/d'],
+#			'ignore params'  => ['https://localhost/api/e/?with=param#foo', 'https://localhost/api/e/'],
+		];
 	}
 
 	public function testSetAPI():void{
