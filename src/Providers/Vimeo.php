@@ -94,7 +94,7 @@ class Vimeo extends OAuth2Provider implements ClientCredentials, CSRFToken, Toke
 		}
 
 		if($response->getStatusCode() === 204){
-			$this->storage->clearAccessToken();
+			$this->storage->clearAccessToken($this->serviceName);
 
 			return true;
 		}

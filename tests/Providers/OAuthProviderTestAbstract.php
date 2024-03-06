@@ -161,9 +161,9 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 			$this::markTestSkipped('TokenInvalidate N/A');
 		}
 
-		$this::assertTrue($this->storage->hasAccessToken());
+		$this::assertTrue($this->storage->hasAccessToken($this->provider->serviceName));
 		$this::assertTrue($this->provider->invalidateAccessToken());
-		$this::assertFalse($this->storage->hasAccessToken());
+		$this::assertFalse($this->storage->hasAccessToken($this->provider->serviceName));
 	}
 
 	public static function requestTargetProvider():array{

@@ -105,7 +105,6 @@ abstract class OAuthProvider implements OAuthInterface{
 		protected LoggerInterface                         $logger = new NullLogger,
 	){
 		$this->serviceName = (new ReflectionClass($this))->getShortName();
-		$this->storage->setServiceName($this->serviceName);
 
 		$this->construct();
 	}
@@ -136,7 +135,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	public function setStorage(OAuthStorageInterface $storage):static{
 		$this->storage = $storage;
-		$this->storage->setServiceName($this->serviceName);
 
 		return $this;
 	}

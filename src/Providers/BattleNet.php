@@ -79,8 +79,9 @@ class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 	 * @inheritDoc
 	 */
 	public function me():ResponseInterface{
+		$token = $this->storage->getAccessToken($this->serviceName);
 		$request  = $this->requestFactory->createRequest('GET', $this->battleNetOauth.'/oauth/userinfo');
-		$response = $this->sendRequest($this->getRequestAuthorization($request, $this->storage->getAccessToken()));
+		$response = $this->sendRequest($this->getRequestAuthorization($request, $token));
 		$status   = $response->getStatusCode();
 
 		if($status === 200){

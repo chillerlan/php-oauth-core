@@ -15,14 +15,12 @@ use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Log\{LoggerInterface, NullLogger};
-use function is_string, trim;
+use function trim;
 
 /**
  * Implements an abstract OAuth storage adapter
  */
 abstract class OAuthStorageAbstract implements OAuthStorageInterface{
-
-	protected string $serviceName;
 
 	/**
 	 * OAuthStorageAbstract constructor.
@@ -45,30 +43,12 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	}
 
 	/**
-	 * @inheritDoc
+	 * Gets the current service provider name
+	 *
+	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function setServiceName(string $service):static{
-		$service = trim($service);
-
-		if(empty($service)){
-			throw new OAuthStorageException('service name must not be empty');
-		}
-
-		$this->serviceName = $service;
-
-		return $this;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getServiceName(string|null $service = null):string{
-
-		if($service === null && !isset($this->serviceName)){
-			throw new OAuthStorageException('invalid service');
-		}
-
-		$name = trim($service ?? $this->serviceName);
+	protected function getServiceName(string $service):string{
+		$name = trim($service);
 
 		if(empty($name)){
 			throw new OAuthStorageException('service name must not be empty');
@@ -87,12 +67,7 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	/**
 	 * @inheritDoc
 	 */
-	public function fromStorage(mixed $data):AccessToken{
-
-		if(!is_string($data)){
-			throw new OAuthStorageException('invalid data');
-		}
-
+	public function fromStorage(string $data):AccessToken{
 		return (new AccessToken)->fromJSON($data);
 	}
 

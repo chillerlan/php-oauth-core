@@ -77,7 +77,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeAccessToken(AccessToken $token, string|null $service = null):static{
+	public function storeAccessToken(AccessToken $token, string $service):static{
 		$_SESSION[$this->tokenVar][$this->getServiceName($service)] = $this->toStorage($token);
 
 		return $this;
@@ -86,7 +86,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAccessToken(string|null $service = null):AccessToken{
+	public function getAccessToken(string $service):AccessToken{
 
 		if($this->hasAccessToken($service)){
 			return $this->fromStorage($_SESSION[$this->tokenVar][$this->getServiceName($service)]);
@@ -98,14 +98,14 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasAccessToken(string|null $service = null):bool{
+	public function hasAccessToken(string $service):bool{
 		return isset($_SESSION[$this->tokenVar], $_SESSION[$this->tokenVar][$this->getServiceName($service)]);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearAccessToken(string|null $service = null):static{
+	public function clearAccessToken(string $service):static{
 		$serviceName = $this->getServiceName($service);
 
 		if(array_key_exists($serviceName, $_SESSION[$this->tokenVar])){
@@ -132,7 +132,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $state, string|null $service = null):static{
+	public function storeCSRFState(string $state, string $service):static{
 		$_SESSION[$this->stateVar][$this->getServiceName($service)] = $state;
 
 		return $this;
@@ -141,7 +141,7 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function getCSRFState(string|null $service = null):string{
+	public function getCSRFState(string $service):string{
 
 		if($this->hasCSRFState($service)){
 			return $_SESSION[$this->stateVar][$this->getServiceName($service)];
@@ -153,14 +153,14 @@ class SessionStorage extends OAuthStorageAbstract{
 	/**
 	 * @inheritDoc
 	 */
-	public function hasCSRFState(string|null $service = null):bool{
+	public function hasCSRFState(string $service):bool{
 		return isset($_SESSION[$this->stateVar], $_SESSION[$this->stateVar][$this->getServiceName($service)]);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function clearCSRFState(string|null $service = null):static{
+	public function clearCSRFState(string $service):static{
 		$serviceName = $this->getServiceName($service);
 
 		if(array_key_exists($serviceName, $_SESSION[$this->stateVar])){

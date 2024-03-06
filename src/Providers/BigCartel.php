@@ -58,11 +58,11 @@ class BigCartel extends OAuth2Provider implements CSRFToken, TokenInvalidate{
 	 */
 	public function invalidateAccessToken(AccessToken|null $token = null):bool{
 
-		if($token === null && !$this->storage->hasAccessToken()){
+		if($token === null && !$this->storage->hasAccessToken($this->serviceName)){
 			throw new ProviderException('no token given');
 		}
 
-		$token ??= $this->storage->getAccessToken();
+		$token ??= $this->storage->getAccessToken($this->serviceName);
 
 		$auth = sodium_bin2base64(sprintf('%s:%s', $this->options->key, $this->options->secret), SODIUM_BASE64_VARIANT_ORIGINAL);
 
@@ -75,7 +75,7 @@ class BigCartel extends OAuth2Provider implements CSRFToken, TokenInvalidate{
 		$response = $this->http->sendRequest($request);
 
 		if($response->getStatusCode() === 204){
-			$this->storage->clearAccessToken();
+			$this->storage->clearAccessToken($this->serviceName);
 
 			return true;
 		}

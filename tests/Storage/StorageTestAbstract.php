@@ -28,33 +28,6 @@ abstract class StorageTestAbstract extends TestCase{
 
 	abstract protected function initStorage():OAuthStorageInterface;
 
-	public function testSetServiceName():void{
-		$this->storage->setServiceName(' foo ');
-
-		$this::assertSame('foo', $this->storage->getServiceName());
-	}
-
-	public function testSetServiceNameEmptyException():void{
-		$this::expectException(OAuthStorageException::class);
-		$this::expectExceptionMessage('service name must not be empty');
-
-		$this->storage->setServiceName(' ');
-	}
-
-	public function testGetServiceNameInvalidServiceException():void{
-		$this::expectException(OAuthStorageException::class);
-		$this::expectExceptionMessage('invalid service');
-
-		$this->storage->getServiceName();
-	}
-
-	public function testGetServiceNameEmptyServiceException():void{
-		$this::expectException(OAuthStorageException::class);
-		$this::expectExceptionMessage('service name must not be empty');
-
-		$this->storage->getServiceName('');
-	}
-
 	public function testTokenStorage():void{
 		$this->storage->storeAccessToken($this->token, $this->tsn);
 		$this::assertTrue($this->storage->hasAccessToken($this->tsn));
@@ -112,13 +85,6 @@ abstract class StorageTestAbstract extends TestCase{
 		$this::assertIsString($a);
 		$this::assertInstanceOf(AccessToken::class, $b);
 		$this::assertEquals($this->token, $b);
-	}
-
-	public function testFromStorageInvalidInputException():void{
-		$this->expectException(OAuthStorageException::class);
-		$this->expectExceptionMessage('invalid data');
-
-		$this->storage->fromStorage([]);
 	}
 
 	public function testStoreWithExistingToken():void{

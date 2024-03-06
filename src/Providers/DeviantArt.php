@@ -88,12 +88,12 @@ class DeviantArt extends OAuth2Provider implements ClientCredentials, CSRFToken,
 		try{
 			$json = MessageUtil::decodeJSON($response);
 		}
-		catch(Throwable $e){
+		catch(Throwable){
 			return false;
 		}
 
 		if($response->getStatusCode() === 200 && isset($json->success) && $json->success === true){
-			$this->storage->clearAccessToken();
+			$this->storage->clearAccessToken($this->serviceName);
 
 			return true;
 		}
