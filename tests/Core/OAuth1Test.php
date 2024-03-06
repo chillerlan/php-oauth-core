@@ -1,6 +1,6 @@
 <?php
 /**
- * Class DummyOAuth1Test
+ * Class OAuth1Test
  *
  * @created      09.09.2018
  * @author       Smiley <smiley@chillerlan.net>
@@ -9,14 +9,14 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Providers\OAuth1;
+namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuthTest\Providers\OAuth1ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth1Interface $provider
  */
-final class DummyOAuth1Test extends OAuth1ProviderTestAbstract{
+final class OAuth1Test extends OAuth1ProviderTestAbstract{
 
 	protected string $FQN = DummyOAuth1Provider::class;
 

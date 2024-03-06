@@ -8,10 +8,11 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Providers;
+namespace chillerlan\OAuthTest;
 
 use chillerlan\HTTP\HTTPOptions;
 use chillerlan\HTTP\Psr18\CurlClient;
+use chillerlan\OAuthTest\Providers\OAuthTestHttpClientFactoryInterface;
 use Psr\Http\Client\ClientInterface;
 
 final class ChillerlanHttpClientFactory implements OAuthTestHttpClientFactoryInterface{

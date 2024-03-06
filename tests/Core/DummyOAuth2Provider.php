@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Providers\OAuth2;
+namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Provider, TokenInvalidate, TokenRefresh};
 use chillerlan\OAuth\Providers\ProviderException;

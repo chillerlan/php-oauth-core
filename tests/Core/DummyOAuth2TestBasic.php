@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Providers\OAuth2;
+namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;

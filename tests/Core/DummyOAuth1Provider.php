@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Providers\OAuth1;
+namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Provider, TokenInvalidate};
 use chillerlan\OAuth\Providers\ProviderException;

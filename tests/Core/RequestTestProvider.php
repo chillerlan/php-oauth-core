@@ -9,11 +9,11 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Providers\RequestTest;
+namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\{AccessToken, OAuthProvider};
-use Psr\Http\Message\{RequestInterface, UriInterface};
 use Exception;
+use Psr\Http\Message\{RequestInterface, UriInterface};
 
 final class RequestTestProvider extends OAuthProvider{
 

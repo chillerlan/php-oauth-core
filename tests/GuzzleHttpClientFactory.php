@@ -12,8 +12,9 @@
  * @noinspection ALL
  */
 
-namespace chillerlan\OAuthTest\Providers;
+namespace chillerlan\OAuthTest;
 
+use chillerlan\OAuthTest\Providers\OAuthTestHttpClientFactoryInterface;
 use GuzzleHttp\Client;
 use Psr\Http\Client\ClientInterface;
 

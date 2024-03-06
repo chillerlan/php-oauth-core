@@ -1,6 +1,6 @@
 <?php
 /**
- * Class OAuthProviderRequestTest
+ * Class RequestTest
  *
  * @created      17.03.2021
  * @author       smiley <smiley@chillerlan.net>
@@ -9,13 +9,13 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Providers\RequestTest;
+namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\{OAuthProviderTestAbstract, ProviderTestHttpClient};
 
-final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{
+final class RequestTest extends OAuthProviderTestAbstract{
 
 	protected string $FQN = RequestTestProvider::class;
 
