@@ -42,7 +42,7 @@ interface OAuthInterface extends ClientInterface{
 	 * Authorizes the $request with the credentials from the given $token
 	 * and returns a PSR-7 RequestInterface with all necessary headers and/or parameters set
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @internal
 	 */
 	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface;
@@ -51,7 +51,7 @@ interface OAuthInterface extends ClientInterface{
 	 * Prepares an API request to $path with the given parameters, gets authorization, fires the request
 	 * and returns a PSR-7 ResponseInterface with the corresponding API response
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function request(
 		string                            $path,
@@ -106,7 +106,7 @@ interface OAuthInterface extends ClientInterface{
 	 * Returns information about the currently authenticated user (usually a /me or /user endpoint).
 	 * Throws a ProviderException if no such information is available or if the method cannot be implemented.
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function me():ResponseInterface;
 

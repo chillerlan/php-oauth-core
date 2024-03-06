@@ -10,7 +10,7 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\Core\{ClientCredentials, OAuth2Provider, ProviderException, AccessToken};
+use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, OAuth2Provider};
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -33,7 +33,7 @@ class TwitterCC extends OAuth2Provider implements ClientCredentials{
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		throw new ProviderException($this::AUTH_ERRMSG);
@@ -41,7 +41,7 @@ class TwitterCC extends OAuth2Provider implements ClientCredentials{
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAccessToken(string $code, string|null $state = null):AccessToken{
 		throw new ProviderException($this::AUTH_ERRMSG);

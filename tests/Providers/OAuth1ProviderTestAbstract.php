@@ -11,8 +11,9 @@ declare(strict_types=1);
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface, ProviderException};
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
+use chillerlan\OAuth\Core\{AccessToken, OAuth1Interface};
+use chillerlan\OAuth\Providers\ProviderException;
 use function parse_url;
 use const PHP_URL_QUERY;
 

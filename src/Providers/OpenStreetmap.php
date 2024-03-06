@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{OAuth1Provider, ProviderException};
+use chillerlan\OAuth\Core\{OAuth1Provider};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf, strip_tags;
 

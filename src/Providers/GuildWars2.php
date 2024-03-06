@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, OAuth2Provider, ProviderException};
+use chillerlan\OAuth\Core\{AccessToken, OAuth2Provider};
 use Psr\Http\Message\{ResponseInterface, UriInterface};
 use function implode, preg_match, sprintf, str_starts_with, substr;
 
@@ -46,7 +46,7 @@ class GuildWars2 extends OAuth2Provider{
 	 * @param string $access_token
 	 *
 	 * @return \chillerlan\OAuth\Core\AccessToken
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function storeGW2Token(string $access_token):AccessToken{
 
@@ -84,7 +84,7 @@ class GuildWars2 extends OAuth2Provider{
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		throw new ProviderException($this::AUTH_ERRMSG);
@@ -92,7 +92,7 @@ class GuildWars2 extends OAuth2Provider{
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAccessToken(string $code, string|null $state = null):AccessToken{
 		throw new ProviderException($this::AUTH_ERRMSG);

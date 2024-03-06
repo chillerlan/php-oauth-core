@@ -11,9 +11,8 @@ declare(strict_types=1);
 
 namespace chillerlan\OAuthTest\Providers\OAuth2;
 
-use chillerlan\OAuth\Core\{
-	AccessToken, ClientCredentials, CSRFToken, OAuth2Provider, ProviderException, TokenInvalidate, TokenRefresh
-};
+use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Provider, TokenInvalidate, TokenRefresh};
+use chillerlan\OAuth\Providers\ProviderException;
 
 /**
  * An OAuth2 provider implementation that supports token refresh, csrf tokens and client credentials

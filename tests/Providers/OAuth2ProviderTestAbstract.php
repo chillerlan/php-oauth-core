@@ -12,8 +12,9 @@ declare(strict_types=1);
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, ProviderException, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
+use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Interface, TokenRefresh};
+use chillerlan\OAuth\Providers\ProviderException;
 use function explode, parse_url, sleep, time;
 use const PHP_URL_QUERY;
 

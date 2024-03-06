@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider, ProviderException};
+use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider};
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use function in_array, sprintf, strtolower;
@@ -51,7 +51,7 @@ class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 	/**
 	 * Set the datacenter URLs for the given region
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function setRegion(string $region):static{
 		$region = strtolower($region);

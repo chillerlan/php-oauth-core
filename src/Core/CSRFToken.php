@@ -23,7 +23,7 @@ interface CSRFToken{
 	 * Checks whether the CSRF state was set and verifies against the last known state.
 	 * Throws a ProviderException if the given state is empty, unknown or doesn't match the known state.
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @internal
 	 */
 	public function checkState(string|null $state = null):void;
@@ -32,7 +32,7 @@ interface CSRFToken{
 	 * Sets the CSRF state parameter in a given array of query parameters and stores that value
 	 * in the local storage for later verification. Returns the updated array of parameters.
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @internal
 	 */
 	public function setState(array $params):array;

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace chillerlan\OAuthTest\Providers\OAuth2;
 
-use chillerlan\OAuth\Core\ProviderException;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**

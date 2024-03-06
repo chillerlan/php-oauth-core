@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
+use chillerlan\OAuth\Providers\ProviderException;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 use function array_merge, base64_encode, date, explode, hash_equals, implode, is_array, json_decode, random_bytes, sha1, sprintf;
 use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
@@ -97,7 +98,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.4
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @throws \JsonException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
@@ -191,7 +192,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @implements \chillerlan\OAuth\Core\ClientCredentials
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getClientCredentialsToken(array|null $scopes = null):AccessToken{
 
@@ -231,7 +232,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @implements \chillerlan\OAuth\Core\TokenRefresh
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken|null $token = null):AccessToken{
 
@@ -283,7 +284,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @implements \chillerlan\OAuth\Core\CSRFToken
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @internal
 	 */
 	public function checkState(string|null $state = null):void{
@@ -306,7 +307,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @implements \chillerlan\OAuth\Core\CSRFToken
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @internal
 	 */
 	public function setState(array $params):array{

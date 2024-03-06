@@ -11,7 +11,8 @@ declare(strict_types=1);
 
 namespace chillerlan\OAuthTest\Providers\OAuth1;
 
-use chillerlan\OAuth\Core\{AccessToken, OAuth1Provider, ProviderException, TokenInvalidate};
+use chillerlan\OAuth\Core\{AccessToken, OAuth1Provider, TokenInvalidate};
+use chillerlan\OAuth\Providers\ProviderException;
 
 /**
  * An OAuth1 provider implementation

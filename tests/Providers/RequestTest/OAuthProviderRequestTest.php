@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace chillerlan\OAuthTest\Providers\RequestTest;
 
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Core\ProviderException;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\{OAuthProviderTestAbstract, ProviderTestHttpClient};
 
 final class OAuthProviderRequestTest extends OAuthProviderTestAbstract{

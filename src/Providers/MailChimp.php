@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, ProviderException};
+use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider};
 use chillerlan\OAuth\OAuthException;
 use Psr\Http\Message\{ResponseInterface, StreamInterface};
 use function array_merge, sprintf;

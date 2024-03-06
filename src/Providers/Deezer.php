@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, ProviderException};
+use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider};
 use Psr\Http\Message\{ResponseInterface, UriInterface};
 use function array_merge, implode, sprintf;
 use const PHP_QUERY_RFC1738;

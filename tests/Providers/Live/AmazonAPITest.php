@@ -11,10 +11,9 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Amazon;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
-use function preg_match;
 
 /**
  * Amazon API usage tests/examples

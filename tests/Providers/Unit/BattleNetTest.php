@@ -10,8 +10,8 @@
 
 namespace chillerlan\OAuthTest\Providers\Unit;
 
-use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\BattleNet;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**

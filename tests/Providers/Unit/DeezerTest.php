@@ -10,8 +10,9 @@
 
 namespace chillerlan\OAuthTest\Providers\Unit;
 
-use chillerlan\OAuth\Core\{AccessToken, ProviderException};
+use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\Deezer;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 use function time;
 

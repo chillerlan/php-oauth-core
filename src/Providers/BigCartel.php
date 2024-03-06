@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, ProviderException, TokenInvalidate};
+use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, TokenInvalidate};
 use Psr\Http\Message\ResponseInterface;
 use function sodium_bin2base64, sprintf;
 use const SODIUM_BASE64_VARIANT_ORIGINAL;
@@ -86,7 +86,7 @@ class BigCartel extends OAuth2Provider implements CSRFToken, TokenInvalidate{
 	/**
 	 * Try to get the user ID from either the token or the me() endpoint
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function getAccountID(AccessToken $token):string{
 

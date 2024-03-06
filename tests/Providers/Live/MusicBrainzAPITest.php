@@ -11,8 +11,8 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\MusicBrainz;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
 class MusicBrainzAPITest extends OAuth2APITestAbstract{

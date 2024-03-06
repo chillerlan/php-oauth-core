@@ -11,7 +11,8 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{AccessToken, ProviderException};
+use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuth\Providers\SteamOpenID;
 use chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract;
 use function urlencode;

@@ -11,8 +11,8 @@
 namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Flickr;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
 
 /**

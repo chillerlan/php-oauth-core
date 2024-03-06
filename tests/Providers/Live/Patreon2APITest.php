@@ -12,8 +12,8 @@ namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\Patreon;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 use function file_get_contents;
 

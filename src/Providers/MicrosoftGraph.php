@@ -11,7 +11,6 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\ProviderException;
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 

@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuth\Core;
+namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\OAuthException;
 

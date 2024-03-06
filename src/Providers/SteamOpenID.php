@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\QueryUtil;
-use chillerlan\OAuth\Core\{AccessToken, OAuthProvider, ProviderException};
+use chillerlan\OAuth\Core\{AccessToken, OAuthProvider};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 use function explode, intval, preg_replace;
 
@@ -84,7 +84,7 @@ class SteamOpenID extends OAuthProvider{
 	}
 
 	/**
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
 		$data = explode("\x0a", (string)$response->getBody());

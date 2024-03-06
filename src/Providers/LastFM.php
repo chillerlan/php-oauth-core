@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, OAuthProvider, ProviderException};
+use chillerlan\OAuth\Core\{AccessToken, OAuthProvider};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface, UriInterface};
 use Throwable;
 use function array_merge, in_array, is_array, ksort, md5, sprintf, trigger_error;
@@ -95,7 +95,7 @@ class LastFM extends OAuthProvider{
 	}
 
 	/**
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
 

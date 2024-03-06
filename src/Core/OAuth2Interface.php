@@ -28,7 +28,7 @@ interface OAuth2Interface extends OAuthInterface{
 	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
 	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAccessToken(string $code, string|null $state = null):AccessToken;
 

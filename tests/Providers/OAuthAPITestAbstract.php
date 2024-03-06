@@ -11,8 +11,9 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\DotEnv\DotEnv;
-use chillerlan\OAuth\Core\{AccessToken, ProviderException};
 use chillerlan\OAuth\OAuthOptions;
+use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
 use chillerlan\OAuthTest\OAuthTestMemoryStorage;
 use chillerlan\Settings\SettingsContainerInterface;

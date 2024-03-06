@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
+use chillerlan\OAuth\Providers\ProviderException;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 use function array_merge, base64_encode, hash_hmac, implode, in_array, random_bytes, sodium_bin2hex, strtoupper, time;
 
@@ -72,7 +73,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.1
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.3
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed):AccessToken{
 		$data = QueryUtil::parse(MessageUtil::decompress($response));
@@ -123,7 +124,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-3.4
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function getSignature(string $url, array $params, string $method, string|null $accessTokenSecret = null):string{
 		$parsed = $this->uriFactory->createUri($url);

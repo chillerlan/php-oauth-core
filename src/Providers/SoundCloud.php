@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{ClientCredentials, OAuth2Provider, ProviderException, TokenRefresh};
+use chillerlan\OAuth\Core\{ClientCredentials, OAuth2Provider, TokenRefresh};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 

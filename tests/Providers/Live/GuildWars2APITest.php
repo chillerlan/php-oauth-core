@@ -12,8 +12,8 @@ namespace chillerlan\OAuthTest\Providers\Live;
 
 use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Core\ProviderException;
 use chillerlan\OAuth\Providers\GuildWars2;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
 /**

@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{AccessToken, OAuth1Provider, ProviderException};
+use chillerlan\OAuth\Core\{AccessToken, OAuth1Provider};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
@@ -55,7 +55,7 @@ class Tumblr extends OAuth1Provider{
 	 *
 	 * @see https://www.tumblr.com/docs/en/api/v2#v2oauth2exchange---oauth1-to-oauth2-token-exchange
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function exchangeForOAuth2Token():AccessToken{
 		$response = $this->request(path: '/v2/oauth2/exchange', method: 'POST');

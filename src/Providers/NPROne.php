@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, ProviderException, TokenInvalidate, TokenRefresh};
+use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, TokenInvalidate, TokenRefresh};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use function in_array, ltrim, rtrim, sprintf, strtolower, str_contains;
 
@@ -42,7 +42,7 @@ class NPROne extends OAuth2Provider implements CSRFToken, TokenRefresh, TokenInv
 	/**
 	 * Sets the API to work with ("listening" is set as default)
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function setAPI(string $api):static{
 		$api = strtolower($api);

@@ -10,8 +10,8 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\Core\{CSRFToken, OAuth2Provider, ProviderException, TokenRefresh};
 use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\{CSRFToken, OAuth2Provider, TokenRefresh};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 

@@ -23,7 +23,7 @@ interface ClientCredentials{
 	 *
 	 * @param string[]|null $scopes
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getClientCredentialsToken(array|null $scopes = null):AccessToken;
 

@@ -10,8 +10,8 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, ProviderException, TokenRefresh};
 use chillerlan\HTTP\Utils\QueryUtil;
+use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, TokenRefresh};
 use Psr\Http\Message\{ResponseInterface, StreamInterface};
 use function date, explode, in_array, sprintf, strtoupper;
 use const PHP_QUERY_RFC1738;
@@ -47,7 +47,7 @@ class MusicBrainz extends OAuth2Provider implements CSRFToken, TokenRefresh{
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function refreshAccessToken(AccessToken|null $token = null):AccessToken{
 

@@ -13,6 +13,7 @@ namespace chillerlan\OAuth\Core;
 
 use chillerlan\HTTP\Utils\QueryUtil;
 use chillerlan\OAuth\OAuthOptions;
+use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Http\Client\ClientInterface;
@@ -268,7 +269,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * Prepares the request body
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function getRequestBody(StreamInterface|array|string $body, RequestInterface $request):StreamInterface{
 
@@ -312,7 +313,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 *
 	 * @see \chillerlan\OAuth\Core\OAuthInterface::request()
 	 *
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function getRequestTarget(string $uri):string{
 		$parsedURL  = $this->uriFactory->createUri($uri);
@@ -377,7 +378,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * @implements \chillerlan\OAuth\Core\TokenInvalidate
 	 * @codeCoverageIgnore
-	 * @throws \chillerlan\OAuth\Core\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function invalidateAccessToken(AccessToken|null $token = null):bool{
 		throw new ProviderException('not implemented');
