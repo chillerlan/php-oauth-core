@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth1ProviderTestAbstract;
  */
 class OpenCachingTest extends OAuth1ProviderTestAbstract{
 
-	protected string $FQN = OpenCaching::class;
+	protected function getProviderFQCN():string{
+		return OpenCaching::class;
+	}
 
 }

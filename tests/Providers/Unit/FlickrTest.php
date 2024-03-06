@@ -18,7 +18,9 @@ use chillerlan\OAuthTest\Providers\OAuth1ProviderTestAbstract;
  */
 class FlickrTest extends OAuth1ProviderTestAbstract{
 
-	protected string $FQN = Flickr::class;
+	protected function getProviderFQCN():string{
+		return Flickr::class;
+	}
 
 	protected array $testResponses = [
 		'/oauth1/request_token' => 'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',

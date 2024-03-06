@@ -20,7 +20,6 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class BigCartelAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = BigCartel::class;
 	protected string $ENV = 'BIGCARTEL';
 
 	protected int $account_id;
@@ -29,6 +28,10 @@ class BigCartelAPITest extends OAuth2APITestAbstract{
 		parent::setUp();
 
 		$this->account_id = (int)$this->storage->getAccessToken($this->provider->serviceName)->extraParams['account_id'];
+	}
+
+	protected function getProviderFQCN():string{
+		return BigCartel::class;
 	}
 
 	public function testMe():void{

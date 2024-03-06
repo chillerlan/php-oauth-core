@@ -20,8 +20,11 @@ use Throwable;
  */
 class Tumblr2APITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Tumblr2::class;
 	protected string $ENV = 'TUMBLR';
+
+	protected function getProviderFQCN():string{
+		return Tumblr2::class;
+	}
 
 	public function testMe():void{
 		try{

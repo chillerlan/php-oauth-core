@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class MicrosoftGraphTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = MicrosoftGraph::class;
+	protected function getProviderFQCN():string{
+		return MicrosoftGraph::class;
+	}
 
 }

@@ -19,7 +19,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class TwitterCCTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = TwitterCC::class;
+	protected function getProviderFQCN():string{
+		return TwitterCC::class;
+	}
 
 	public function testGetAuthURL():void{
 		$this->markTestSkipped('N/A');

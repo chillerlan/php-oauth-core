@@ -21,8 +21,11 @@ use function is_array;
  */
 class PayPalAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = PayPal::class;
 	protected string $ENV = 'PAYPAL'; // PAYPAL_SANDBOX
+
+	protected function getProviderFQCN():string{
+		return PayPal::class;
+	}
 
 	public function testMe():void{
 		try{

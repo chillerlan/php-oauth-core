@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class DiscordTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Discord::class;
+	protected function getProviderFQCN():string{
+		return Discord::class;
+	}
 
 }

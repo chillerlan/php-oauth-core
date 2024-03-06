@@ -22,8 +22,11 @@ use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
  */
 class DiscogsAPITest extends OAuth1APITestAbstract{
 
-	protected string $FQN = Discogs::class;
 	protected string $ENV = 'DISCOGS';
+
+	protected function getProviderFQCN():string{
+		return Discogs::class;
+	}
 
 	public function testMe():void{
 		try{

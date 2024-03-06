@@ -18,7 +18,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class TwitchTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Twitch::class;
+	protected function getProviderFQCN():string{
+		return Twitch::class;
+	}
 
 	public function testRequestInvalidAuthTypeException():void{
 		$this::markTestSkipped('N/A');

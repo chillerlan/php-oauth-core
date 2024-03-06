@@ -18,8 +18,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class TwitterCCAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = TwitterCC::class;
 	protected string $ENV = 'TWITTER';
+
+	protected function getProviderFQCN():string{
+		return TwitterCC::class;
+	}
 
 	public function testMeErrorException():void{
 		$this::markTestSkipped('not implemented');

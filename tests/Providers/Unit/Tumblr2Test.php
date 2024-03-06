@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class Tumblr2Test extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Tumblr2::class;
+	protected function getProviderFQCN():string{
+		return Tumblr2::class;
+	}
 
 }

@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class FoursquareTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Foursquare::class;
+	protected function getProviderFQCN():string{
+		return Foursquare::class;
+	}
 
 }

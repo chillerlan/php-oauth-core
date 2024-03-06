@@ -21,8 +21,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class DiscordAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Discord::class;
 	protected string $ENV = 'DISCORD';
+
+	protected function getProviderFQCN():string{
+		return Discord::class;
+	}
 
 	public function testRequestCredentialsToken():void{
 		$token = $this->provider->getClientCredentialsToken([Discord::SCOPE_CONNECTIONS, Discord::SCOPE_IDENTIFY]);

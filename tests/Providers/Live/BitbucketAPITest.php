@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class BitbucketAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Bitbucket::class;
 	protected string $ENV = 'BITBUCKET';
+
+	protected function getProviderFQCN():string{
+		return Bitbucket::class;
+	}
 
 	public function testMe():void{
 		try{

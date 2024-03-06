@@ -22,7 +22,6 @@ use function file_get_contents;
  */
 class Patreon1APITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Patreon::class;
 	protected string $ENV = 'PATREON1';
 
 	protected function setUp():void{
@@ -30,6 +29,10 @@ class Patreon1APITest extends OAuth2APITestAbstract{
 		$tokenfile = file_get_contents($this->CFG.'\\'.$this->provider->serviceName.'1.token.json');
 
 		$this->storage->storeAccessToken((new AccessToken)->fromJSON($tokenfile), $this->provider->serviceName);
+	}
+
+	protected function getProviderFQCN():string{
+		return Patreon::class;
 	}
 
 	public function testMe():void{

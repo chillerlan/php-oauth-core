@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class NPROneAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = NPROne::class;
 	protected string $ENV = 'NPRONE';
+
+	protected function getProviderFQCN():string{
+		return NPROne::class;
+	}
 
 	public function testMe():void{
 		try{

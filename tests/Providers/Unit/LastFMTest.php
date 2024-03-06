@@ -21,7 +21,9 @@ use chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract;
  */
 class LastFMTest extends OAuthProviderTestAbstract{
 
-	protected string $FQN = LastFM::class;
+	protected function getProviderFQCN():string{
+		return LastFM::class;
+	}
 
 	protected array $testResponses = [
 		'/lastfm/auth'        => '{"session":{"key":"session_key"}}',

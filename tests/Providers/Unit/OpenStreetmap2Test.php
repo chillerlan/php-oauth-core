@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class OpenStreetmap2Test extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = OpenStreetmap2::class;
+	protected function getProviderFQCN():string{
+		return OpenStreetmap2::class;
+	}
 
 }

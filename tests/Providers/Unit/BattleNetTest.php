@@ -19,7 +19,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class BattleNetTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = BattleNet::class;
+	protected function getProviderFQCN():string{
+		return BattleNet::class;
+	}
 
 	public function testSetRegion():void{
 		$this->provider->setRegion('cn');

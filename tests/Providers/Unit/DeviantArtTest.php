@@ -18,7 +18,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class DeviantArtTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = DeviantArt::class;
+	protected function getProviderFQCN():string{
+		return DeviantArt::class;
+	}
 
 	protected function setUp():void{
 		// modify test response data before loading into the test http client

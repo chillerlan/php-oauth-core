@@ -21,7 +21,6 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class GuildWars2APITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = GuildWars2::class;
 	protected string $ENV = '';
 
 	protected AccessToken $token;
@@ -37,6 +36,10 @@ class GuildWars2APITest extends OAuth2APITestAbstract{
 			: (new AccessToken)->fromJSON(file_get_contents($tokenfile));
 
 		$this->tokenname = $this->dotEnv->GW2_TOKEN_NAME;
+	}
+
+	protected function getProviderFQCN():string{
+		return GuildWars2::class;
 	}
 
 	public function testMe():void{

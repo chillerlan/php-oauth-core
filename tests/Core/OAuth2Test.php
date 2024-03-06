@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 final class OAuth2Test extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = DummyOAuth2Provider::class;
+	protected function getProviderFQCN():string{
+		return DummyOAuth2Provider::class;
+	}
 
 }

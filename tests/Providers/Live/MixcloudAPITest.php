@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class MixcloudAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Mixcloud::class;
 	protected string $ENV = 'MIXCLOUD';
+
+	protected function getProviderFQCN():string{
+		return Mixcloud::class;
+	}
 
 	public function testMe():void{
 		try{

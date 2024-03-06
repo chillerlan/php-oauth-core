@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class MixcloudTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Mixcloud::class;
+	protected function getProviderFQCN():string{
+		return Mixcloud::class;
+	}
 
 }

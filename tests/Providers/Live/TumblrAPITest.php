@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
  */
 class TumblrAPITest extends OAuth1APITestAbstract{
 
-	protected string $FQN = Tumblr::class;
 	protected string $ENV = 'TUMBLR';
+
+	protected function getProviderFQCN():string{
+		return Tumblr::class;
+	}
 
 	public function testMe():void{
 		try{

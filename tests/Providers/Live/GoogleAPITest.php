@@ -24,8 +24,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class GoogleAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Google::class;
 	protected string $ENV = 'GOOGLE';
+
+	protected function getProviderFQCN():string{
+		return Google::class;
+	}
 
 	public function testMe():void{
 		try{

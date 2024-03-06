@@ -18,7 +18,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class BigCartelTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = BigCartel::class;
+	protected function getProviderFQCN():string{
+		return BigCartel::class;
+	}
 
 	protected function setUp():void{
 		// modify test response data before loading into the test http client

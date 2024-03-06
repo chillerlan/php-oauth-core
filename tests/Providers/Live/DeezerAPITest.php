@@ -24,8 +24,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class DeezerAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Deezer::class;
 	protected string $ENV = 'DEEZER';
+
+	protected function getProviderFQCN():string{
+		return Deezer::class;
+	}
 
 	public function testMe():void{
 		try{

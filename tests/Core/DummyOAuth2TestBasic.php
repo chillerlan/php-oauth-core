@@ -21,7 +21,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 final class DummyOAuth2TestBasic extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = DummyOAuth2BasicProvider::class;
+	protected function getProviderFQCN():string{
+		return DummyOAuth2BasicProvider::class;
+	}
 
 	public function testRefreshAccessTokenException():void{
 		$this->expectException(ProviderException::class);

@@ -21,7 +21,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class MailChimpTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = MailChimp::class;
+	protected function getProviderFQCN():string{
+		return MailChimp::class;
+	}
 
 	protected array $testResponses = [
 		'/oauth2/access_token' =>

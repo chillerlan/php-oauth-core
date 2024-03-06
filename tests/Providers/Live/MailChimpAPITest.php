@@ -24,8 +24,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class MailChimpAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = MailChimp::class;
 	protected string $ENV = 'MAILCHIMP';
+
+	protected function getProviderFQCN():string{
+		return MailChimp::class;
+	}
 
 	public function testGetTokenMetadata():void{
 		$token = $this->storage->getAccessToken($this->provider->serviceName);

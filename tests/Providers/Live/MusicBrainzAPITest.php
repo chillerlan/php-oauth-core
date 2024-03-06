@@ -17,8 +17,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
 
 class MusicBrainzAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN         = MusicBrainz::class;
-	protected string $ENV         = 'MUSICBRAINZ';
+	protected string $ENV = 'MUSICBRAINZ';
+
+	protected function getProviderFQCN():string{
+		return MusicBrainz::class;
+	}
 
 	public function testArtistId():void{
 		try{

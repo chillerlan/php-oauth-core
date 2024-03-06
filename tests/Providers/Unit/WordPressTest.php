@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class WordPressTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = WordPress::class;
+	protected function getProviderFQCN():string{
+		return WordPress::class;
+	}
 
 }

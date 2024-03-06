@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class MicrosoftGraphAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = MicrosoftGraph::class;
 	protected string $ENV = 'MICROSOFT_AAD';
+
+	protected function getProviderFQCN():string{
+		return MicrosoftGraph::class;
+	}
 
 	public function testMe():void{
 		try{

@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
  */
 class OpenStreetmapAPITest extends OAuth1APITestAbstract{
 
-	protected string $FQN = OpenStreetmap::class;
 	protected string $ENV = 'OPENSTREETMAP';
+
+	protected function getProviderFQCN():string{
+		return OpenStreetmap::class;
+	}
 
 	public function testMe():void{
 		try{

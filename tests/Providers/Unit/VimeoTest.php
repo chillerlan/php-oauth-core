@@ -18,7 +18,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class VimeoTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Vimeo::class;
+	protected function getProviderFQCN():string{
+		return Vimeo::class;
+	}
 
 	protected function setUp():void{
 		// modify test response data before loading into the test http client

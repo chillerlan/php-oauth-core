@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class StripeTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Stripe::class;
+	protected function getProviderFQCN():string{
+		return Stripe::class;
+	}
 
 }

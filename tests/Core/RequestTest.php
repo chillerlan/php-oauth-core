@@ -18,8 +18,6 @@ use chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract;
 
 final class RequestTest extends OAuthProviderTestAbstract{
 
-	protected string $FQN = RequestTestProvider::class;
-
 	protected array $testResponses = [
 		'/api/gimme' => 'much data',
 	];
@@ -28,6 +26,10 @@ final class RequestTest extends OAuthProviderTestAbstract{
 		parent::setUp();
 
 		$this->provider->storeAccessToken(new AccessToken(['accessToken' => 'foo']));
+	}
+
+	protected function getProviderFQCN():string{
+		return RequestTestProvider::class;
 	}
 
 	public function testRequestURI():void{

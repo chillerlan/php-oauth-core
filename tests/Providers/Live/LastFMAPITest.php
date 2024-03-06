@@ -24,7 +24,6 @@ use chillerlan\OAuthTest\Providers\OAuthAPITestAbstract;
  */
 class LastFMAPITest extends OAuthAPITestAbstract{
 
-	protected string $FQN = LastFM::class;
 	protected string $ENV = 'LASTFM';
 
 	protected function setUp():void{
@@ -33,6 +32,10 @@ class LastFMAPITest extends OAuthAPITestAbstract{
 		// username is stored in the session token
 		$token          = $this->storage->getAccessToken($this->provider->serviceName);
 		$this->testuser = $token->extraParams['session']['name'];
+	}
+
+	protected function getProviderFQCN():string{
+		return LastFM::class;
 	}
 
 	public function testMe():void{

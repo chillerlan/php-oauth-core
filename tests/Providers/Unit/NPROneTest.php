@@ -21,7 +21,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 class NPROneTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = NPROne::class;
+	protected function getProviderFQCN():string{
+		return NPROne::class;
+	}
 
 	protected function setUp():void{
 		// modify test response data before loading into the test http client
@@ -52,7 +54,7 @@ class NPROneTest extends OAuth2ProviderTestAbstract{
 	}
 
 	public function testSetAPI():void{
-		$this->provider = $this->initProvider($this->FQN);
+		$this->provider = $this->initProvider($this->getProviderFQCN());
 
 		$this::assertSame('https://listening.api.npr.org', $this->reflection->getProperty('apiURL')->getValue($this->provider));
 

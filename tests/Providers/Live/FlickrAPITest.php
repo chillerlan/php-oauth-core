@@ -20,7 +20,6 @@ use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
  */
 class FlickrAPITest extends OAuth1APITestAbstract{
 
-	protected string $FQN = Flickr::class;
 	protected string $ENV = 'FLICKR';
 
 	protected string $test_name;
@@ -33,6 +32,10 @@ class FlickrAPITest extends OAuth1APITestAbstract{
 
 		$this->test_name = $tokenParams['username'];
 		$this->test_id   = $tokenParams['user_nsid'];
+	}
+
+	protected function getProviderFQCN():string{
+		return Flickr::class;
 	}
 
 	public function testMe():void{

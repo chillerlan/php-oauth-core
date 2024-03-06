@@ -24,7 +24,6 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class MastodonAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Mastodon::class;
 	protected string $ENV = 'MASTODON';
 
 	protected string $testInstance;
@@ -35,6 +34,10 @@ class MastodonAPITest extends OAuth2APITestAbstract{
 		$this->testInstance = ($this->dotEnv->get($this->ENV.'_INSTANCE') ?? '');
 
 		$this->provider->setInstance($this->testInstance);
+	}
+
+	protected function getProviderFQCN():string{
+		return Mastodon::class;
 	}
 
 	public function testMe():void{

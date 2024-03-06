@@ -22,8 +22,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class AmazonAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Amazon::class;
 	protected string $ENV = 'AMAZON';
+
+	protected function getProviderFQCN():string{
+		return Amazon::class;
+	}
 
 	public function testMe():void{
 		try{

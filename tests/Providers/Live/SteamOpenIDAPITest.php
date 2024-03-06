@@ -18,7 +18,6 @@ use chillerlan\OAuthTest\Providers\OAuthAPITestAbstract;
  */
 class SteamOpenIDAPITest extends OAuthAPITestAbstract{
 
-	protected string $FQN = SteamOpenID::class;
 	protected string $ENV = 'STEAMOPENID';
 
 	protected int $id;
@@ -29,6 +28,10 @@ class SteamOpenIDAPITest extends OAuthAPITestAbstract{
 		$token = $this->storage->getAccessToken($this->provider->serviceName);
 
 		$this->id = $token->extraParams['id_int']; // SteamID64
+	}
+
+	protected function getProviderFQCN():string{
+		return SteamOpenID::class;
 	}
 
 }

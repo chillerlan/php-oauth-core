@@ -24,7 +24,6 @@ use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
  */
 class TwitterAPITest extends OAuth1APITestAbstract{
 
-	protected string $FQN = Twitter::class;
 	protected string $ENV = 'TWITTER';
 
 	protected string $screen_name;
@@ -35,6 +34,10 @@ class TwitterAPITest extends OAuth1APITestAbstract{
 
 		$token             = $this->storage->getAccessToken($this->provider->serviceName);
 		$this->screen_name = $token->extraParams['screen_name'];
+	}
+
+	protected function getProviderFQCN():string{
+		return Twitter::class;
 	}
 
 	public function testMe():void{

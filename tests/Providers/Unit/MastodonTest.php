@@ -19,7 +19,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class MastodonTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Mastodon::class;
+	protected function getProviderFQCN():string{
+		return Mastodon::class;
+	}
 
 	public function testGetAuthURL():void{
 		$this->provider->setInstance('https://localhost');

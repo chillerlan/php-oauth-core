@@ -21,7 +21,9 @@ use function time;
  */
 class DeezerTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Deezer::class;
+	protected function getProviderFQCN():string{
+		return Deezer::class;
+	}
 
 	protected array $testResponses = [
 		'/oauth2/access_token' => 'access_token=test_access_token&expires_in=3600&state=test_state&scope=some_scope%20other_scope',

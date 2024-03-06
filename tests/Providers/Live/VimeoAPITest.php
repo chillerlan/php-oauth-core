@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class VimeoAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Vimeo::class;
 	protected string $ENV = 'VIMEO';
+
+	protected function getProviderFQCN():string{
+		return Vimeo::class;
+	}
 
 	public function testMe():void{
 		try{

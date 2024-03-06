@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class DeviantArtAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = DeviantArt::class;
 	protected string $ENV = 'DEVIANTART';
+
+	protected function getProviderFQCN():string{
+		return DeviantArt::class;
+	}
 
 	public function testMe():void{
 		try{

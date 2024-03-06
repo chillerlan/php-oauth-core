@@ -26,9 +26,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class SpotifyAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Spotify::class;
 	protected string $ENV = 'SPOTIFY';
 
+	protected function getProviderFQCN():string{
+		return Spotify::class;
+	}
 
 	public function testMe():void{
 		try{

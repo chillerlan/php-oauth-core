@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class SlackTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Slack::class;
+	protected function getProviderFQCN():string{
+		return Slack::class;
+	}
 
 }

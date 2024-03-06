@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class PayPalTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = PayPal::class;
+	protected function getProviderFQCN():string{
+		return PayPal::class;
+	}
 
 }

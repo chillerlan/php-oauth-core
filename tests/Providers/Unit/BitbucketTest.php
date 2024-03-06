@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class BitbucketTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Bitbucket::class;
+	protected function getProviderFQCN():string{
+		return Bitbucket::class;
+	}
 
 }

@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class GitHubAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = GitHub::class;
 	protected string $ENV = 'GITHUB';
+
+	protected function getProviderFQCN():string{
+		return GitHub::class;
+	}
 
 	public function testMe():void{
 		try{

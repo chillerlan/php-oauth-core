@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class AmazonTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Amazon::class;
+	protected function getProviderFQCN():string{
+		return Amazon::class;
+	}
 
 }

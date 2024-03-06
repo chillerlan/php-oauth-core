@@ -42,7 +42,6 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	protected OAuthStorageInterface                          $storage;
 	protected ReflectionClass                                $reflection; // reflection of the test subject
 
-	protected string $FQN; // fully qualified class name of the test subject
 	protected array  $testProperties = [];
 	protected array  $testResponses  = [];
 
@@ -60,10 +59,15 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		$this->options    = $this->initOptions();
 		$this->storage    = $this->initStorage($this->options);
 		$this->http       = $this->initHttp($this->options, $this->logger, $this->testResponses); // PSR-18 HTTP client
-		$this->provider   = $this->initProvider($this->FQN);
+		$this->provider   = $this->initProvider($this->getProviderFQCN());
 
 		$this->initTestProperties($this->testProperties);
 	}
+
+	/**
+	 * returns the fully qualified class name (FQCN) of the test subject
+	 */
+	abstract protected function getProviderFQCN():string;
 
 	protected function initLogger(bool $is_ci):LoggerInterface{
 		$logger = new Logger('oauthProviderTest', [new NullHandler]);
@@ -97,8 +101,8 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		return new ProviderTestHttpClient($responses);
 	}
 
-	protected function initProvider(string $FQN):OAuthInterface|OAuth1Interface|OAuth2Interface{
-		$this->reflection = new ReflectionClass($FQN);
+	protected function initProvider(string $FQCN):OAuthInterface|OAuth1Interface|OAuth2Interface{
+		$this->reflection = new ReflectionClass($FQCN);
 
 		$args = [
 			$this->options,
@@ -124,7 +128,7 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	}
 
 	public function testProviderInstance():void{
-		$this::assertInstanceOf($this->FQN, $this->provider);
+		$this::assertInstanceOf($this->getProviderFQCN(), $this->provider);
 	}
 
 	public function testMagicGet():void{

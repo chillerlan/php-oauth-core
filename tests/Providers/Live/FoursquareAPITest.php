@@ -24,8 +24,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class FoursquareAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Foursquare::class;
 	protected string $ENV = 'FOURSQUARE';
+
+	protected function getProviderFQCN():string{
+		return Foursquare::class;
+	}
 
 	public function testMe():void{
 		try{

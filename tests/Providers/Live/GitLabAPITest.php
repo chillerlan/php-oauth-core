@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class GitLabAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = GitLab::class;
 	protected string $ENV = 'GITLAB';
+
+	protected function getProviderFQCN():string{
+		return GitLab::class;
+	}
 
 	public function testMe():void{
 		try{

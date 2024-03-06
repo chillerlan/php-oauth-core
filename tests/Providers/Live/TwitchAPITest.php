@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class TwitchAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Twitch::class;
 	protected string $ENV = 'TWITCH';
+
+	protected function getProviderFQCN():string{
+		return Twitch::class;
+	}
 
 	public function testMe():void{
 		try{

@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class SlackAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Slack::class;
 	protected string $ENV = 'SLACK';
+
+	protected function getProviderFQCN():string{
+		return Slack::class;
+	}
 
 	public function testMe():void{
 		try{

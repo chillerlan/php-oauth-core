@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class WordpressAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = WordPress::class;
 	protected string $ENV = 'WORDPRESS';
+
+	protected function getProviderFQCN():string{
+		return WordPress::class;
+	}
 
 	public function testMe():void{
 		try{

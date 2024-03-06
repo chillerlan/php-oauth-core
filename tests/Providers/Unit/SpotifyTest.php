@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class SpotifyTest extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = Spotify::class;
+	protected function getProviderFQCN():string{
+		return Spotify::class;
+	}
 
 }

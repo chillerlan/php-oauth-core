@@ -20,7 +20,6 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class ImgurAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Imgur::class;
 	protected string $ENV = 'IMGUR';
 
 	protected function setUp():void{
@@ -29,6 +28,10 @@ class ImgurAPITest extends OAuth2APITestAbstract{
 		$token = $this->storage->getAccessToken($this->provider->serviceName);
 
 		$this->testuser = $token->extraParams['account_id'];
+	}
+
+	protected function getProviderFQCN():string{
+		return Imgur::class;
 	}
 
 	public function testMe():void{

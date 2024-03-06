@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class SoundcloudAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = SoundCloud::class;
 	protected string $ENV = 'SOUNDCLOUD';
+
+	protected function getProviderFQCN():string{
+		return SoundCloud::class;
+	}
 
 	public function testMe():void{
 		try{

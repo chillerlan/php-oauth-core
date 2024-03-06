@@ -20,8 +20,11 @@ use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
  */
 class OpenCachingAPITest extends OAuth1APITestAbstract{
 
-	protected string $FQN = OpenCaching::class;
 	protected string $ENV = 'OKAPI';
+
+	protected function getProviderFQCN():string{
+		return OpenCaching::class;
+	}
 
 	public function testMe():void{
 		try{

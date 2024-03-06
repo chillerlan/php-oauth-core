@@ -19,7 +19,9 @@ use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
  */
 class GuildWars2Test extends OAuth2ProviderTestAbstract{
 
-	protected string $FQN = GuildWars2::class;
+	protected function getProviderFQCN():string{
+		return GuildWars2::class;
+	}
 
 	protected array $testResponses = [
 		'/gw2/auth/v2/tokeninfo' => '{"id":"00000000-1111-2222-3333-444444444444","name":"GW2Token","permissions":["foo","bar"]}',

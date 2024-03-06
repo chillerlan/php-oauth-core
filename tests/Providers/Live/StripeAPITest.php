@@ -24,8 +24,11 @@ use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
  */
 class StripeAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = Stripe::class;
 	protected string $ENV = 'STRIPE';
+
+	protected function getProviderFQCN():string{
+		return Stripe::class;
+	}
 
 	public function testMe():void{
 		try{

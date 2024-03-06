@@ -18,6 +18,8 @@ use chillerlan\OAuthTest\Providers\OAuth1ProviderTestAbstract;
  */
 class DiscogsTest extends OAuth1ProviderTestAbstract{
 
-	protected string $FQN = Discogs::class;
+	protected function getProviderFQCN():string{
+		return Discogs::class;
+	}
 
 }

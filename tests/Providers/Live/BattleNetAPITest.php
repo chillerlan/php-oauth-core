@@ -21,8 +21,11 @@ use function explode;
  */
 class BattleNetAPITest extends OAuth2APITestAbstract{
 
-	protected string $FQN = BattleNet::class;
 	protected string $ENV = 'BATTLENET';
+
+	protected function getProviderFQCN():string{
+		return BattleNet::class;
+	}
 
 	public function testMe():void{
 		try{
