@@ -48,9 +48,10 @@ class LastFMTest extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetSignature():void{
-		$signature = $this->reflection
-			->getMethod('getSignature')
-			->invokeArgs($this->provider, [['foo' => 'bar', 'format' => 'whatever', 'callback' => 'nope']]);
+		$signature = $this->invokeReflectionMethod(
+			'getSignature',
+			[['foo' => 'bar', 'format' => 'whatever', 'callback' => 'nope']],
+		);
 
 		$this::assertSame('cb143650fa678449f5492a2aa6fab216', $signature);
 	}
@@ -61,9 +62,7 @@ class LastFMTest extends OAuthProviderTestAbstract{
 			->withBody($this->streamFactory->createStream('{"session":{"key":"whatever"}}'))
 		;
 
-		$token = $this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$r]);
+		$token = $this->invokeReflectionMethod('parseTokenResponse', [$r]);
 
 		$this::assertSame('whatever', $token->accessToken);
 	}
@@ -72,9 +71,7 @@ class LastFMTest extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('unable to parse token response');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$this->responseFactory->createResponse()]);
+		$this->invokeReflectionMethod('parseTokenResponse', [$this->responseFactory->createResponse()]);
 	}
 
 	public function testParseTokenResponseError():void{
@@ -86,9 +83,7 @@ class LastFMTest extends OAuthProviderTestAbstract{
 			->withBody($this->streamFactory->createStream('{"error":42,"message":"whatever"}'))
 		;
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$r]);
+		$this->invokeReflectionMethod('parseTokenResponse', [$r]);
 	}
 
 	public function testParseTokenResponseNoToken():void{
@@ -97,9 +92,7 @@ class LastFMTest extends OAuthProviderTestAbstract{
 
 		$r = $this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"session":[]}'));
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$r]);
+		$this->invokeReflectionMethod('parseTokenResponse', [$r]);
 	}
 
 	public function testGetAccessToken():void{

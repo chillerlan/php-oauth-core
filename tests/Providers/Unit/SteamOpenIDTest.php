@@ -83,9 +83,7 @@ class SteamOpenIDTest extends OAuthProviderTestAbstract{
 			->withBody($this->streamFactory->createStream(self::ID_VALID))
 		;
 
-		$token = $this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$r]);
+		$token = $this->invokeReflectionMethod('parseTokenResponse', [$r]);
 
 		$this::assertSame('SteamID', $token->accessToken);
 	}
@@ -94,9 +92,7 @@ class SteamOpenIDTest extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('unable to parse token response');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$this->responseFactory->createResponse()]);
+		$this->invokeReflectionMethod('parseTokenResponse', [$this->responseFactory->createResponse()]);
 	}
 
 	public function testParseTokenResponseInvalidID():void{
@@ -108,9 +104,7 @@ class SteamOpenIDTest extends OAuthProviderTestAbstract{
 			->withBody($this->streamFactory->createStream(self::ID_INVALID))
 		;
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$r]);
+		$this->invokeReflectionMethod('parseTokenResponse', [$r]);
 	}
 
 	// coverage

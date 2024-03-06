@@ -57,12 +57,10 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetSignature():void{
-		$signature = $this->reflection
-			->getMethod('getSignature')
-			->invokeArgs(
-				$this->provider,
-				['http://localhost/api/whatever', ['foo' => 'bar', 'oauth_signature' => 'should not see me!'], 'GET']
-			);
+		$signature = $this->invokeReflectionMethod(
+			'getSignature',
+			['http://localhost/api/whatever', ['foo' => 'bar', 'oauth_signature' => 'should not see me!'], 'GET'],
+		);
 
 		$this::assertSame('ygg22quLhpyegiyr7yl4hLAP9S8=', $signature);
 	}
@@ -71,9 +69,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('getSignature: invalid url');
 
-		$this->reflection
-			->getMethod('getSignature')
-			->invokeArgs($this->provider, ['whatever', [], 'GET']);
+		$this->invokeReflectionMethod('getSignature', ['whatever', [], 'GET']);
 	}
 
 	public function testGetAccessToken():void{
@@ -90,9 +86,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('unable to parse token response');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$this->responseFactory->createResponse(), false]);
+		$this->invokeReflectionMethod('parseTokenResponse', [$this->responseFactory->createResponse(), false]);
 	}
 
 	public function testParseTokenResponseErrorException():void{
@@ -101,10 +95,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 		$body = $this->streamFactory->createStream('error=whatever');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$this->responseFactory->createResponse()->withBody($body), false])
-		;
+		$this->invokeReflectionMethod('parseTokenResponse', [$this->responseFactory->createResponse()->withBody($body), false]);
 	}
 
 	public function testParseTokenResponseNoTokenException():void{
@@ -113,10 +104,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 		$body = $this->streamFactory->createStream('oauth_token=whatever');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$this->responseFactory->createResponse()->withBody($body), false])
-		;
+		$this->invokeReflectionMethod('parseTokenResponse', [$this->responseFactory->createResponse()->withBody($body), false]);
 	}
 
 	public function testParseTokenResponseCallbackUnconfirmedException():void{
@@ -125,10 +113,7 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 
 		$body = $this->streamFactory->createStream('oauth_token=whatever&oauth_token_secret=whatever_secret');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [$this->responseFactory->createResponse()->withBody($body), true])
-		;
+		$this->invokeReflectionMethod('parseTokenResponse', [$this->responseFactory->createResponse()->withBody($body), true]);
 	}
 
 	public function testGetRequestAuthorization():void{

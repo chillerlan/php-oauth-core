@@ -123,6 +123,10 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		}
 	}
 
+	protected function invokeReflectionMethod(string $method, array $args = []){
+		return $this->reflection->getMethod($method)->invokeArgs($this->provider, $args);
+	}
+
 	public function testOAuthInstance():void{
 		$this::assertInstanceOf(OAuthInterface::class, $this->provider);
 	}
@@ -163,9 +167,8 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	#[DataProvider('requestTargetProvider')]
 	public function testGetRequestTarget(string $path, string $expected):void{
 		$this->reflection->getProperty('apiURL')->setValue($this->provider, 'https://localhost/api/');
-		$requestTarget = $this->reflection->getMethod('getRequestTarget')->invokeArgs($this->provider, [$path]);
 
-		$this::assertSame($expected, $requestTarget);
+		$this::assertSame($expected, $this->invokeReflectionMethod('getRequestTarget', [$path]));
 	}
 
 }

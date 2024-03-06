@@ -77,36 +77,30 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('unable to parse token response');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('""')),
-			])
-		;
+		$this->invokeReflectionMethod(
+			'parseTokenResponse',
+			[$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('""'))],
+		);
 	}
 
 	public function testParseTokenResponseErrorException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('error retrieving access token');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"error":"whatever"}')),
-			])
-		;
+		$this->invokeReflectionMethod(
+			'parseTokenResponse',
+			[$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"error":"whatever"}'))],
+		);
 	}
 
 	public function testParseTokenResponseNoTokenException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('token missing');
 
-		$this->reflection
-			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [
-				$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"foo":"bar"}')),
-			])
-		;
+		$this->invokeReflectionMethod(
+			'parseTokenResponse',
+			[$this->responseFactory->createResponse()->withBody($this->streamFactory->createStream('{"foo":"bar"}'))],
+		);
 	}
 
 	public function testGetRequestAuthorization():void{
@@ -158,9 +152,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		}
 
 		// will throw an exception if it goes wrong
-		$this->reflection
-			->getMethod('checkState')
-			->invokeArgs($this->provider, ['test_state']);
+		$this->invokeReflectionMethod('checkState', ['test_state']);
 
 		$this->expectNotToPerformAssertions();
 	}
@@ -174,9 +166,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid state');
 
-		$this->reflection
-			->getMethod('checkState')
-			->invoke($this->provider);
+		$this->invokeReflectionMethod('checkState');
 	}
 
 	public function testCheckStateInvalidCSRFStateException():void{
@@ -188,9 +178,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid CSRF state');
 
-		$this->reflection
-			->getMethod('checkState')
-			->invokeArgs($this->provider, ['invalid_test_state']);
+		$this->invokeReflectionMethod('checkState', ['invalid_test_state']);
 	}
 
 	public function testRefreshAccessTokenNoRefreshTokenAvailable():void{
