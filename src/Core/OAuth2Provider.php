@@ -283,7 +283,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @implements \chillerlan\OAuth\Core\CSRFToken
+	 * @implements \chillerlan\OAuth\Core\CSRFToken::checkState()
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @internal
 	 */
@@ -306,7 +306,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @implements \chillerlan\OAuth\Core\CSRFToken
+	 * @implements \chillerlan\OAuth\Core\CSRFToken::setState()
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 * @internal
 	 */

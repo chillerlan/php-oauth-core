@@ -60,14 +60,14 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 	/**
 	 * @inheritDoc
 	 */
-	public function toStorage(AccessToken $token):string{
+	public function toStorage(AccessToken $token):mixed{
 		return $token->toJSON();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function fromStorage(string $data):AccessToken{
+	public function fromStorage(mixed $data):AccessToken{
 		return (new AccessToken)->fromJSON($data);
 	}
 

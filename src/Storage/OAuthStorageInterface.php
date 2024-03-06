@@ -108,6 +108,6 @@ interface OAuthStorageInterface{
 	 *
 	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
 	 */
-	public function fromStorage(string $data):AccessToken;
+	public function fromStorage(mixed $data):AccessToken;
 
 }
