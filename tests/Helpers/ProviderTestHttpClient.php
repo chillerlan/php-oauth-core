@@ -9,31 +9,24 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Providers;
+namespace chillerlan\OAuthTest\Helpers;
 
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use function str_contains;
 
 /**
  * a dummy client that returns a prepared set of responses
  */
 final class ProviderTestHttpClient implements ClientInterface{
+	use HTTPFactoryTrait;
 
 	public const ECHO_REQUEST = '/__echo__';
 
-	private array                    $responses;
-	private ResponseFactoryInterface $responseFactory;
-	private StreamFactoryInterface   $streamFactory;
-
 	public function __construct(
-		array $responses,
-		ResponseFactoryInterface $responseFactory,
-		StreamFactoryInterface $streamFactory
+		protected array $responses,
 	){
-		$this->responses       = $responses;
-		$this->responseFactory = $responseFactory;
-		$this->streamFactory   = $streamFactory;
+		$this->initFactories();
 	}
 
 	/**

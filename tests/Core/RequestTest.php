@@ -13,7 +13,8 @@ namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\{OAuthProviderTestAbstract, ProviderTestHttpClient};
+use chillerlan\OAuthTest\Helpers\ProviderTestHttpClient;
+use chillerlan\OAuthTest\Providers\OAuthProviderTestAbstract;
 
 final class RequestTest extends OAuthProviderTestAbstract{
 

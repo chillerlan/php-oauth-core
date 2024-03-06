@@ -14,6 +14,7 @@ namespace chillerlan\OAuthTest\Providers;
 use chillerlan\OAuth\Core\{OAuth1Interface, OAuth2Interface, OAuthInterface, TokenInvalidate};
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
+use chillerlan\OAuthTest\Helpers\{HTTPFactoryTrait, ProviderTestHttpClient};
 use chillerlan\Settings\SettingsContainerInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\{NullHandler, StreamHandler};
@@ -21,21 +22,17 @@ use Monolog\Logger;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface, UriFactoryInterface};
 use Psr\Log\LoggerInterface;
-use Exception, ReflectionClass;
+use ReflectionClass;
 use function constant, defined, ini_set;
 use const JSON_UNESCAPED_SLASHES;
 
 abstract class OAuthProviderTestAbstract extends TestCase{
+	use HTTPFactoryTrait;
 
 	protected bool $is_ci;
 
 	// PSR interfaces
-	protected RequestFactoryInterface  $requestFactory;
-	protected ResponseFactoryInterface $responseFactory;
-	protected StreamFactoryInterface   $streamFactory;
-	protected UriFactoryInterface      $uriFactory;
 	protected ClientInterface          $http;
 	protected LoggerInterface          $logger;
 
@@ -50,7 +47,7 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	protected array  $testResponses  = [];
 
 	protected function setUp():void{
-		ini_set('date.timezone', 'Europe/Amsterdam');
+		ini_set('date.timezone', 'UTC');
 
 		// are we running on CI? (travis, github) -> see phpunit.xml
 		$this->is_ci = defined('TEST_IS_CI') && constant('TEST_IS_CI') === true;
@@ -63,29 +60,9 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 		$this->options    = $this->initOptions();
 		$this->storage    = $this->initStorage($this->options);
 		$this->http       = $this->initHttp($this->options, $this->logger, $this->testResponses); // PSR-18 HTTP client
-		$this->reflection = new ReflectionClass($this->FQN);
-		$this->provider   = $this->initProvider();
+		$this->provider   = $this->initProvider($this->FQN);
 
 		$this->initTestProperties($this->testProperties);
-	}
-
-	protected function initFactories():void{
-
-		$factories = [
-			'requestFactory'  => 'REQUEST_FACTORY',
-			'responseFactory' => 'RESPONSE_FACTORY',
-			'streamFactory'   => 'STREAM_FACTORY',
-			'uriFactory'      => 'URI_FACTORY',
-		];
-
-		foreach($factories as $property => $const){
-
-			if(!defined($const)){
-				throw new Exception('constant "'.$const.'" not defined -> see phpunit.xml');
-			}
-
-			$this->{$property} = new (constant($const));
-		}
 	}
 
 	protected function initLogger(bool $is_ci):LoggerInterface{
@@ -117,10 +94,11 @@ abstract class OAuthProviderTestAbstract extends TestCase{
 	}
 
 	protected function initHttp(SettingsContainerInterface $options, LoggerInterface $logger, array $responses):ClientInterface{
-		return new ProviderTestHttpClient($responses, $this->responseFactory, $this->streamFactory);
+		return new ProviderTestHttpClient($responses);
 	}
 
-	protected function initProvider():OAuthInterface|OAuth1Interface|OAuth2Interface{
+	protected function initProvider(string $FQN):OAuthInterface|OAuth1Interface|OAuth2Interface{
+		$this->reflection = new ReflectionClass($FQN);
 
 		$args = [
 			$this->options,

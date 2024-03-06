@@ -9,6 +9,7 @@
 	<testsuites>
 		<testsuite name="php-oauth-core test suite">
 			<directory>tests</directory>
+			<exclude>tests/Helpers</exclude>
 		</testsuite>
 	</testsuites>
 	<source>
@@ -31,9 +32,9 @@
 		<const name="TEST_ENVFILE" value=".env_example"/>
 		<!-- the http client factory for live api tests -->
 		<!--
-		<const name="TEST_CLIENT_FACTORY" value="chillerlan\OAuthTest\ChillerlanHttpClientFactory"/>
+		<const name="TEST_CLIENT_FACTORY" value="chillerlan\OAuthTest\Helpers\ChillerlanHttpClientFactory"/>
 		 -->
-		<const name="TEST_CLIENT_FACTORY" value="chillerlan\OAuthTest\GuzzleHttpClientFactory"/>
+		<const name="TEST_CLIENT_FACTORY" value="chillerlan\OAuthTest\Helpers\GuzzleHttpClientFactory"/>
 		<!-- PSR-17 factories to use in tests -->
 		<const name="REQUEST_FACTORY" value="GuzzleHttp\Psr7\HttpFactory"/>
 		<const name="RESPONSE_FACTORY" value="GuzzleHttp\Psr7\HttpFactory"/>

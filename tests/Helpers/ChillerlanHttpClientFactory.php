@@ -8,7 +8,7 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest;
+namespace chillerlan\OAuthTest\Helpers;
 
 use chillerlan\HTTP\HTTPOptions;
 use chillerlan\HTTP\Psr18\CurlClient;

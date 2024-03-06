@@ -15,7 +15,7 @@ use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuth\Storage\{MemoryStorage, OAuthStorageInterface};
-use chillerlan\OAuthTest\OAuthTestMemoryStorage;
+use chillerlan\OAuthTest\Helpers\{OAuthTestHttpClient, OAuthTestMemoryStorage};
 use chillerlan\Settings\SettingsContainerInterface;
 use Exception;
 use Psr\Http\Client\ClientInterface;

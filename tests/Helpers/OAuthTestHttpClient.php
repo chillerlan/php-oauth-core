@@ -8,24 +8,25 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Providers;
+namespace chillerlan\OAuthTest\Helpers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
 use Psr\Http\Client\{ClientExceptionInterface, ClientInterface};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
-use Psr\Log\{LoggerAwareInterface, LoggerAwareTrait, LoggerInterface, NullLogger};
+use Psr\Log\{LoggerInterface, NullLogger};
 use Exception, Throwable;
+use function class_exists, constant, defined, get_class, sprintf, usleep;
 
-use function constant, defined, get_class, usleep;
-
-final class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface{
-	use LoggerAwareTrait;
+final class OAuthTestHttpClient implements ClientInterface{
 
 	protected ClientInterface $http;
 
+	/**
+	 * @throws \Exception
+	 */
 	public function __construct(
 		string $cfgdir,
-		LoggerInterface $logger = null
+		protected LoggerInterface $logger = new NullLogger
 	){
 
 		if(!defined('TEST_CLIENT_FACTORY')){
@@ -34,8 +35,11 @@ final class OAuthTestHttpClient implements ClientInterface, LoggerAwareInterface
 
 		$clientFactory = constant('TEST_CLIENT_FACTORY');
 
-		$this->http   = $clientFactory::getClient($cfgdir);
-		$this->logger = ($logger ?? new NullLogger);
+		if(!class_exists($clientFactory)){
+			throw new Exception(sprintf('invalid class: "%s"', $clientFactory));
+		}
+
+		$this->http = $clientFactory::getClient($cfgdir);
 	}
 
 	/**

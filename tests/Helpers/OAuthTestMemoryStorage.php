@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest;
+namespace chillerlan\OAuthTest\Helpers;
 
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\OAuthOptions;

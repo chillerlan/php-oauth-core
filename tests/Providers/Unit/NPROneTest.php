@@ -52,7 +52,7 @@ class NPROneTest extends OAuth2ProviderTestAbstract{
 	}
 
 	public function testSetAPI():void{
-		$this->provider = $this->initProvider();
+		$this->provider = $this->initProvider($this->FQN);
 
 		$this::assertSame('https://listening.api.npr.org', $this->reflection->getProperty('apiURL')->getValue($this->provider));
 
