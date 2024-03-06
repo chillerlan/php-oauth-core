@@ -29,7 +29,15 @@ abstract class OAuthStorageAbstract implements OAuthStorageInterface{
 		protected OAuthOptions|SettingsContainerInterface $options = new OAuthOptions,
 		protected LoggerInterface                         $logger = new NullLogger
 	){
+		$this->construct();
+	}
 
+	/**
+	 * A replacement constructor that you can call in extended classes,
+	 * so that you don't have to implement the monstrous original `__construct()`
+	 */
+	protected function construct():void{
+		// noop
 	}
 
 	/**
