@@ -50,7 +50,7 @@ class NPROneTest extends OAuth2ProviderTestAbstract{
 		$this->expectException(OAuthException::class);
 		$this->expectExceptionMessage('invalid auth type');
 
-		$this->reflection->getProperty('authMethod')->setValue($this->provider, -1);
+		$this->setReflectionProperty('authMethod', -1);
 
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->storage->storeAccessToken($token, $this->provider->serviceName);
@@ -73,11 +73,11 @@ class NPROneTest extends OAuth2ProviderTestAbstract{
 	public function testSetAPI():void{
 		$this->provider = $this->initProvider($this->getProviderFQCN());
 
-		$this::assertSame('https://listening.api.npr.org', $this->reflection->getProperty('apiURL')->getValue($this->provider));
+		$this::assertSame('https://listening.api.npr.org', $this->getReflectionProperty('apiURL'));
 
 		$this->provider->setAPI('station');
 
-		$this::assertSame('https://station.api.npr.org', $this->reflection->getProperty('apiURL')->getValue($this->provider));
+		$this::assertSame('https://station.api.npr.org', $this->getReflectionProperty('apiURL'));
 	}
 
 }

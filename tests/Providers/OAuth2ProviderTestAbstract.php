@@ -62,7 +62,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this::assertArrayNotHasKey('client_secret', $query);
 		$this::assertSame($this->options->key, $query['client_id']);
 		$this::assertSame('code', $query['response_type']);
-		$this::assertSame(explode('?', (string)$url)[0], $this->reflection->getProperty('authURL')->getValue($this->provider));
+		$this::assertSame(explode('?', (string)$url)[0], $this->getReflectionProperty('authURL'));
 	}
 
 	public function testGetAccessToken():void{
@@ -107,19 +107,19 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$request = $this->requestFactory->createRequest('GET', 'https://foo.bar');
 		$token   = new AccessToken(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token']);
 
-		$authMethod = $this->reflection->getProperty('authMethod')->getValue($this->provider);
+		$authMethod = $this->getReflectionProperty('authMethod');
 
 		// header (default)
 		if($authMethod === OAuth2Interface::AUTH_METHOD_HEADER){
 			$this::assertStringContainsString(
-				$this->reflection->getProperty('authMethodHeader')->getValue($this->provider).' test_token',
+				$this->getReflectionProperty('authMethodHeader').' test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getHeaderLine('Authorization')
 			);
 		}
 		// query
 		elseif($authMethod === OAuth2Interface::AUTH_METHOD_QUERY){
 			$this::assertStringContainsString(
-				$this->reflection->getProperty('authMethodQuery')->getValue($this->provider).'=test_token',
+				$this->getReflectionProperty('authMethodQuery').'=test_token',
 				$this->provider->getRequestAuthorization($request, $token)->getUri()->getQuery()
 			);
 		}
@@ -137,7 +137,7 @@ abstract class OAuth2ProviderTestAbstract extends OAuthProviderTestAbstract{
 		$this->expectException(OAuthException::class);
 		$this->expectExceptionMessage('invalid auth type');
 
-		$this->reflection->getProperty('authMethod')->setValue($this->provider, -1);
+		$this->setReflectionProperty('authMethod', -1);
 
 		$token = new AccessToken(['accessToken' => 'test_access_token_secret', 'expires' => 1]);
 		$this->provider->storeAccessToken($token);
