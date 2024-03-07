@@ -33,8 +33,13 @@ class Mastodon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 		self::SCOPE_FOLLOW,
 	];
 
-	protected string|null $apiDocs  = 'https://docs.joinmastodon.org/api/';
-	protected string      $instance = '';
+	protected string      $authURL        = 'https://mastodon.social/oauth/authorize';
+	protected string      $accessTokenURL = 'https://mastodon.social/oauth/token';
+	protected string      $apiURL         = 'https://mastodon.social/api';
+	protected string|null $userRevokeURL  = 'https://mastodon.social/oauth/authorized_applications';
+	protected string|null $apiDocs        = 'https://docs.joinmastodon.org/api/';
+	protected string|null $applicationURL = 'https://mastodon.social/settings/applications';
+	protected string      $instance       = 'mastodon.social';
 
 	/**
 	 * set the internal URLs for the given Mastodon instance
