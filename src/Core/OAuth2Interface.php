@@ -67,8 +67,6 @@ interface OAuth2Interface extends OAuthInterface{
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
 	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3
-	 *
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAccessToken(string $code, string|null $state = null):AccessToken;
 
@@ -77,9 +75,6 @@ interface OAuth2Interface extends OAuthInterface{
 	 * and returns a PSR-7 UriInterface with all necessary parameters set
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
-	 *
-	 * @param array|null    $params
-	 * @param string[]|null $scopes
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface;
 

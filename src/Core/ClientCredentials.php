@@ -20,10 +20,6 @@ interface ClientCredentials{
 
 	/**
 	 * Obtains an OAuth2 client credentials token and returns an AccessToken
-	 *
-	 * @param string[]|null $scopes
-	 *
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getClientCredentialsToken(array|null $scopes = null):AccessToken;
 

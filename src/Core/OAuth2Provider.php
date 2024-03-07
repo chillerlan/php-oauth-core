@@ -41,6 +41,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @inheritDoc
+	 * @param string[] $scopes
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		$params ??= [];
@@ -84,7 +85,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		foreach(['error_description', 'error'] as $field){
 			if(isset($data[$field])){
-				throw new ProviderException('error retrieving access token: "'.$data[$field].'"');
+				throw new ProviderException(sprintf('error retrieving access token: "%s"', $data[$field]));
 			}
 		}
 
@@ -92,21 +93,21 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new ProviderException('token missing');
 		}
 
-		$token = $this->createAccessToken();
+		$scopes = ($data['scope'] ?? $data['scopes'] ?? []);
 
+		if(!is_array($scopes)){
+			$scopes = explode($this::SCOPE_DELIMITER, $scopes);
+		}
+
+		$token               = $this->createAccessToken();
 		$token->accessToken  = $data['access_token'];
 		$token->expires      = ($data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
 		$token->refreshToken = ($data['refresh_token'] ?? null);
+		$token->scopes       = $scopes;
 
-		if(isset($data['scope']) || isset($data['scopes'])){
-			$scope = ($data['scope'] ?? $data['scopes'] ?? []);
+		unset($data['access_token'], $data['refresh_token'], $data['expires_in'], $data['scope'], $data['scopes']);
 
-			$token->scopes = (is_array($scope)) ? $scope : explode($this::SCOPE_DELIMITER, $scope);
-		}
-
-		unset($data['expires_in'], $data['refresh_token'], $data['access_token'], $data['scope'], $data['scopes']);
-
-		$token->extraParams = $data;
+		$token->extraParams  = $data;
 
 		return $token;
 	}
@@ -164,6 +165,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * @param string[] $scopes
 	 * @implements \chillerlan\OAuth\Core\ClientCredentials
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
@@ -188,7 +190,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		;
 
 		foreach($this::HEADERS_AUTH as $header => $value){
-			$request = $request->withAddedHeader($header, $value);
+			$request = $request->withHeader($header, $value);
 		}
 
 		$token = $this->parseTokenResponse($this->http->sendRequest($request));
@@ -241,7 +243,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		;
 
 		foreach($this::HEADERS_AUTH as $header => $value){
-			$request = $request->withAddedHeader($header, $value);
+			$request = $request->withHeader($header, $value);
 		}
 
 		$newToken = $this->parseTokenResponse($this->http->sendRequest($request));
@@ -267,13 +269,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
-			throw new ProviderException('invalid state for '.$this->serviceName);
+			throw new ProviderException(sprintf('invalid state for "%s"', $this->serviceName));
 		}
 
 		$knownState = $this->storage->getCSRFState($this->serviceName);
 
 		if(!hash_equals($knownState, $state)){
-			throw new ProviderException('invalid CSRF state: '.$this->serviceName.' '.$state);
+			throw new ProviderException(sprintf('invalid CSRF state for provider "%s": %s', $this->serviceName, $state));
 		}
 
 	}

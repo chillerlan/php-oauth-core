@@ -108,7 +108,7 @@ class LastFM extends OAuthProvider{
 				trigger_error('');
 			}
 		}
-		catch(Throwable $e){
+		catch(Throwable){
 			throw new ProviderException('unable to parse token response');
 		}
 

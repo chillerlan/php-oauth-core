@@ -14,7 +14,7 @@ namespace chillerlan\OAuth\Core;
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use chillerlan\OAuth\Providers\ProviderException;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_merge, base64_encode, hash_hmac, implode, in_array, random_bytes, sodium_bin2hex, strtoupper, time;
+use function array_merge, base64_encode, hash_hmac, implode, random_bytes, sodium_bin2hex, sprintf, strtoupper, time;
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -61,7 +61,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		;
 
 		foreach($this::HEADERS_AUTH as $header => $value){
-			$request = $request->withAddedHeader($header, $value);
+			$request = $request->withHeader($header, $value);
 		}
 
 		return $this->parseTokenResponse($this->http->sendRequest($request), true);
@@ -75,35 +75,31 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallbackConfirmed):AccessToken{
+	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallback):AccessToken{
 		$data = QueryUtil::parse(MessageUtil::decompress($response));
 
 		if(empty($data)){
 			throw new ProviderException('unable to parse token response');
 		}
 		elseif(isset($data['error'])){
-			throw new ProviderException('error retrieving access token: '.$data['error']);
+			throw new ProviderException(sprintf('error retrieving access token: "%s"', $data['error']));
 		}
 		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
 			throw new ProviderException('invalid token');
 		}
 
-		if(
-			$checkCallbackConfirmed
-			&& (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')
-		){
+		if($checkCallback && (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')){
 			throw new ProviderException('oauth callback unconfirmed');
 		}
 
-		$token = $this->createAccessToken();
-
+		$token                    = $this->createAccessToken();
 		$token->accessToken       = $data['oauth_token'];
 		$token->accessTokenSecret = $data['oauth_token_secret'];
 		$token->expires           = AccessToken::EOL_NEVER_EXPIRES;
 
 		unset($data['oauth_token'], $data['oauth_token_secret']);
 
-		$token->extraParams = $data;
+		$token->extraParams       = $data;
 
 		$this->storage->storeAccessToken($token, $this->serviceName);
 
@@ -126,20 +122,28 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	protected function getSignature(string $url, array $params, string $method, string|null $accessTokenSecret = null):string{
-		$parsed = $this->uriFactory->createUri($url);
+	protected function getSignature(
+		UriInterface|string $url,
+		array               $params,
+		string              $method,
+		string|null         $accessTokenSecret = null
+	):string{
 
-		if($parsed->getHost() == '' || $parsed->getScheme() === '' || !in_array($parsed->getScheme(), ['http', 'https'])){
-			throw new ProviderException('getSignature: invalid url');
+		if(!$url instanceof UriInterface){
+			$url = $this->uriFactory->createUri($url);
 		}
 
-		$signatureParams = array_merge(QueryUtil::parse($parsed->getQuery()), $params);
-		$url             = (string)$parsed->withQuery('')->withFragment('');
+		if($url->getHost() === '' || $url->getScheme() !== 'https'){
+			throw new ProviderException(sprintf('getSignature: invalid url: "%s"', $url));
+		}
+
+		$signatureParams = array_merge(QueryUtil::parse($url->getQuery()), $params);
+		$url             = $url->withQuery('')->withFragment('');
 
 		unset($signatureParams['oauth_signature']);
 
 		// https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.1.1
-		$data = QueryUtil::recursiveRawurlencode([strtoupper($method), $url, QueryUtil::build($signatureParams)]);
+		$data = QueryUtil::recursiveRawurlencode([strtoupper($method), (string)$url, QueryUtil::build($signatureParams)]);
 
 		// https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.2
 		$key  = QueryUtil::recursiveRawurlencode([$this->options->secret, ($accessTokenSecret ?? '')]);
@@ -170,7 +174,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$uri   = $request->getUri();
 		$query = QueryUtil::parse($uri->getQuery());
 
-		$parameters = [
+		$params = [
 			'oauth_consumer_key'     => $this->options->key,
 			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
@@ -179,18 +183,13 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			'oauth_version'          => '1.0',
 		];
 
-		$parameters['oauth_signature'] = $this->getSignature(
-			(string)$uri->withQuery('')->withFragment(''),
-			array_merge($query, $parameters),
-			$request->getMethod(),
-			$token->accessTokenSecret
-		);
+		$params['oauth_signature'] = $this->getSignature($uri, $params, $request->getMethod(), $token->accessTokenSecret);
 
 		if(isset($query['oauth_session_handle'])){
-			$parameters['oauth_session_handle'] = $query['oauth_session_handle']; // @codeCoverageIgnore
+			$params['oauth_session_handle'] = $query['oauth_session_handle']; // @codeCoverageIgnore
 		}
 
-		return $request->withHeader('Authorization', 'OAuth '.QueryUtil::build($parameters, null, ', ', '"'));
+		return $request->withHeader('Authorization', 'OAuth '.QueryUtil::build($params, null, ', ', '"'));
 	}
 
 }

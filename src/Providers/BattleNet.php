@@ -91,7 +91,7 @@ class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 		try{
 			$json = MessageUtil::decodeJSON($response);
 		}
-		catch(Throwable $e){
+		catch(Throwable){
 		}
 
 		if(isset($json->error, $json->error_description)){

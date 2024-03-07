@@ -22,8 +22,6 @@ interface OAuth1Interface extends OAuthInterface{
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.1
 	 *
 	 * @see \chillerlan\OAuth\Core\OAuth1Provider::getAuthURL()
-	 *
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getRequestToken():AccessToken;
 
@@ -31,8 +29,6 @@ interface OAuth1Interface extends OAuthInterface{
 	 * Obtains an OAuth1 access token with the given $token and $verifier and returns an AccessToken object.
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.3
-	 *
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAccessToken(string $token, string $verifier):AccessToken;
 

@@ -57,19 +57,29 @@ abstract class OAuth1ProviderTestAbstract extends OAuthProviderTestAbstract{
 	}
 
 	public function testGetSignature():void{
+		$expected = 'fvkt6r6LhR0TgMvDOGsSlzB7IR4=';
+
 		$signature = $this->invokeReflectionMethod(
 			'getSignature',
-			['http://localhost/api/whatever', ['foo' => 'bar', 'oauth_signature' => 'should not see me!'], 'GET'],
+			['https://localhost/api/whatever', ['foo' => 'bar', 'oauth_signature' => 'should not see me!'], 'GET'],
 		);
 
-		$this::assertSame('ygg22quLhpyegiyr7yl4hLAP9S8=', $signature);
+		$this::assertSame($expected, $signature);
+
+		// the "oauth_signature" parameter should be unset if present
+		$signature = $this->invokeReflectionMethod(
+			'getSignature',
+			['https://localhost/api/whatever', ['foo' => 'bar'], 'GET'],
+		);
+
+		$this::assertSame($expected, $signature);
 	}
 
 	public function testGetSignatureInvalidURLException():void{
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('getSignature: invalid url');
 
-		$this->invokeReflectionMethod('getSignature', ['whatever', [], 'GET']);
+		$this->invokeReflectionMethod('getSignature', ['http://localhost/boo', [], 'GET']);
 	}
 
 	public function testGetAccessToken():void{
