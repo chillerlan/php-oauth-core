@@ -17,12 +17,15 @@ use chillerlan\OAuth\Core\{ClientCredentials, OAuth1Interface, OAuth2Interface, 
 
 require_once __DIR__.'/provider-example-common.php';
 
+const REPLACE_START = '<!-- TABLE-START -->';
+const REPLACE_END   = '<!-- TABLE_END -->';
+
 $table = [
 	'| Provider | API keys | revoke access | OAuth | `ClientCredentials` |',
 	'|----------|----------|---------------|-------|---------------------|',
 ];
 
-foreach(getProviders(__DIR__.'/../src') as $p){
+foreach(getProviders(__DIR__.'/../src/Providers') as $p){
 	/** @var \OAuthProviderFactory $factory */
 	$provider = $factory->getProvider($p['fqcn'], '', false);
 
@@ -44,10 +47,16 @@ foreach(getProviders(__DIR__.'/../src') as $p){
 
 $file   = __DIR__.'/../README.md';
 $readme = file_get_contents($file);
-$start  = (strpos($readme, '<!--A-->') + 8);
-$end    = strpos($readme, '<!--O-->');
+$start  = strpos($readme, REPLACE_START);
+$end    = (strpos($readme, REPLACE_END) + strlen(REPLACE_END));
 
-file_put_contents($file, str_replace(substr($readme, $start, ($end - $start)), "\n".implode("\n", $table)."\n", $readme));
+$readme = str_replace(
+	substr($readme, $start, ($end - $start)),
+	REPLACE_START."\n".implode("\n", $table)."\n".REPLACE_END,
+	$readme,
+);
+
+file_put_contents($file, $readme);
 
 exit;
 
@@ -74,7 +83,7 @@ function getProviders(string $providerDir):array{
 
 			$providers[hash('crc32b', $r->getShortName())] = ['name' => $r->getShortName(), 'fqcn' => $class];
 		}
-		catch(Throwable $e){
+		catch(Throwable){
 			continue;
 		}
 
