@@ -192,7 +192,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function retrieveAccessToken():AccessToken{
+	public function getAccessTokenFromStorage():AccessToken{
 		return $this->storage->getAccessToken($this->serviceName);
 	}
 

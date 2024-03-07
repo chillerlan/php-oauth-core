@@ -94,7 +94,7 @@ interface OAuthInterface extends ClientInterface{
 	/**
 	 * Gets an access token from the current OAuthStorageInterface (shorthand/convenience)
 	 */
-	public function retrieveAccessToken():AccessToken;
+	public function getAccessTokenFromStorage():AccessToken;
 
 	/**
 	 * Sets an optional PSR-3 LoggerInterface

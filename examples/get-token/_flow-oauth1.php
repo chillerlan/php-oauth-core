@@ -34,7 +34,7 @@ elseif(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])){
 elseif(isset($_GET['granted']) && $_GET['granted'] === $name){
 	echo '<pre>'.print_r(MessageUtil::decodeJSON($provider->me()), true).'</pre>'.
 	     '<textarea cols="120" rows="3" onclick="this.select();">'.
-	     $provider->getStorage()->getAccessToken($name)->toJSON().
+	     $provider->getAccessTokenFromStorage()->toJSON().
 	     '</textarea>';
 }
 // step 1 (optional): display a login link

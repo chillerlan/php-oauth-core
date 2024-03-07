@@ -38,7 +38,7 @@ elseif(isset($_GET['openid_error'])){ // openid.error -> https://stackoverflow.c
 }
 // step 4: verify the token and use the API
 elseif(isset($_GET['granted']) && $_GET['granted'] === $name){
-	$token    = $provider->getStorage()->getAccessToken($name); // the user's steamid is stored as access token
+	$token    = $provider->getAccessTokenFromStorage(); // the user's steamid is stored as access token
 	$response = $provider->request('/ISteamUser/GetPlayerSummaries/v2', ['steamids' => $token->accessToken]);
 
 	echo '<pre>'.print_r(MessageUtil::decodeJSON($response), true).'</pre>'.
