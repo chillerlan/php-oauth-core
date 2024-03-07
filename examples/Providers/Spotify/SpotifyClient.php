@@ -9,17 +9,7 @@
  */
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Providers\Spotify;
-use chillerlan\OAuth\Storage\MemoryStorage;
-use chillerlan\OAuth\Storage\OAuthStorageInterface;
-use chillerlan\Settings\SettingsContainerInterface;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\UriFactoryInterface;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 /**
  *
@@ -34,17 +24,7 @@ class SpotifyClient extends Spotify{
 	protected array  $artists = [];
 	protected array  $albums = [];
 
-	public function __construct(
-		OAuthOptions|SettingsContainerInterface $options,
-		ClientInterface                         $http,
-		RequestFactoryInterface                 $requestFactory,
-		StreamFactoryInterface                  $streamFactory,
-		UriFactoryInterface                     $uriFactory,
-		OAuthStorageInterface                   $storage = new MemoryStorage,
-		LoggerInterface                         $logger = new NullLogger
-	){
-		parent::__construct($options, $http, $requestFactory, $streamFactory, $uriFactory, $storage, $logger);
-
+	protected function construct():void{
 		// set the servicename to the original provider's name so that we use the same tokens
 		$this->serviceName = 'Spotify';
 		$this->getMe();
