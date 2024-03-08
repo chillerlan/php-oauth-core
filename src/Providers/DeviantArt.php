@@ -17,6 +17,8 @@ use Throwable;
 use function sprintf;
 
 /**
+ * DeviantArt OAuth2
+ *
  * @see https://www.deviantart.com/developers/
  */
 class DeviantArt extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenInvalidate, TokenRefresh{

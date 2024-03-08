@@ -15,7 +15,9 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
- * @see https://docs.microsoft.com/graph/permissions-reference
+ * Microsoft Graph OAuth2
+ *
+ * @see https://learn.microsoft.com/en-us/graph/permissions-reference
  */
 class MicrosoftGraph extends AzureActiveDirectory{
 
@@ -32,7 +34,7 @@ class MicrosoftGraph extends AzureActiveDirectory{
 	];
 
 	protected string      $apiURL  = 'https://graph.microsoft.com';
-	protected string|null $apiDocs = 'https://docs.microsoft.com/graph/overview';
+	protected string|null $apiDocs = 'https://learn.microsoft.com/graph/overview';
 
 	/**
 	 * @inheritDoc

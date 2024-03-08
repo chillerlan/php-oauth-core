@@ -11,7 +11,9 @@
 namespace chillerlan\OAuth\Providers;
 
 /**
+ * PayPal OAuth2 (sandbox)
  *
+ * @see https://developer.paypal.com/api/rest/
  */
 class PayPalSandbox extends PayPal{
 

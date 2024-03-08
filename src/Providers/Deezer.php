@@ -17,6 +17,8 @@ use function array_merge, implode, sprintf;
 use const PHP_QUERY_RFC1738;
 
 /**
+ * Deezer OAuth2
+ *
  * @see https://developers.deezer.com/api/oauth
  *
  * sure, you *can* use different parameter names than the standard ones... and what about JSON?

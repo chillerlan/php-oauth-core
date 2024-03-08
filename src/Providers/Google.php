@@ -16,8 +16,10 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
- * @see https://developers.google.com/identity/protocols/OAuth2WebServer
- * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+ * Google OAuth2
+ *
+ * @see https://developers.google.com/identity/protocols/oauth2/web-server
+ * @see https://developers.google.com/identity/protocols/oauth2/service-account
  * @see https://developers.google.com/oauthplayground/
  */
 class Google extends OAuth2Provider implements CSRFToken{

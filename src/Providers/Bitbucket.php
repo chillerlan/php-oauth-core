@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Bitbucket OAuth2 (Atlassian)
+ *
  * @see https://developer.atlassian.com/cloud/bitbucket/oauth-2/
  */
 class Bitbucket extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{

@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Vimeo OAuth2
+ *
  * @see https://developer.vimeo.com/
  * @see https://developer.vimeo.com/api/authentication
  */

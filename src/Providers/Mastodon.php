@@ -18,6 +18,8 @@ use function array_merge, sprintf;
 use const PHP_QUERY_RFC1738;
 
 /**
+ * Mastodon OAuth2 (v4.x instances)
+ *
  * @see https://docs.joinmastodon.org/client/intro/
  * @see https://docs.joinmastodon.org/methods/apps/oauth/
  */

@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Spotify OAuth2
+ *
  * @see https://developer.spotify.com/documentation/web-api
  * @see https://developer.spotify.com/documentation/web-api/tutorials/code-flow
  * @see https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow

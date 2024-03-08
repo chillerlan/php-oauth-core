@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function implode, sprintf;
 
 /**
+ * Opencaching OAuth1
+ *
  * @see https://www.opencaching.de/okapi/
  */
 class OpenCaching extends OAuth1Provider{

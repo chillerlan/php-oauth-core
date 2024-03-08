@@ -16,6 +16,8 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 use function explode, intval, preg_replace;
 
 /**
+ * Steam OpenID
+ *
  * @see https://steamcommunity.com/dev
  * @see https://partner.steamgames.com/doc/webapi_overview
  * @see https://steamwebapi.azurewebsites.net/

@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * WordPress OAuth2
+ *
  * @see https://developer.wordpress.com/docs/oauth2/
  */
 class WordPress extends OAuth2Provider implements CSRFToken{

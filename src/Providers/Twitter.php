@@ -17,6 +17,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Twitter OAuth1
+ *
  * @todo: twitter is dead. fuck elon musk.
  *
  * @see https://developer.twitter.com/en/docs/basics/authentication/overview/oauth

@@ -17,7 +17,7 @@ use function sodium_bin2base64, sprintf;
 use const SODIUM_BASE64_VARIANT_ORIGINAL;
 
 /**
- * BigCartel OAuth
+ * BigCartel OAuth2
  *
  * @see https://developers.bigcartel.com/api/v1
  * @see https://bigcartel.wufoo.com/confirm/big-cartel-api-application/
@@ -30,7 +30,7 @@ class BigCartel extends OAuth2Provider implements CSRFToken, TokenInvalidate{
 
 	protected string      $authURL        = 'https://my.bigcartel.com/oauth/authorize';
 	protected string      $accessTokenURL = 'https://api.bigcartel.com/oauth/token';
-	protected string      $revokeURL      = 'https://api.bigcartel.com/oauth/deauthorize/%s'; // sprintf() user id!
+	protected string      $revokeURL      = 'https://api.bigcartel.com/oauth/deauthorize';
 	protected string      $apiURL         = 'https://api.bigcartel.com/v1';
 	protected string|null $userRevokeURL  = 'https://my.bigcartel.com/account';
 	protected string|null $apiDocs        = 'https://developers.bigcartel.com/api/v1';
@@ -70,7 +70,7 @@ class BigCartel extends OAuth2Provider implements CSRFToken, TokenInvalidate{
 		$auth = sodium_bin2base64(sprintf('%s:%s', $this->options->key, $this->options->secret), SODIUM_BASE64_VARIANT_ORIGINAL);
 
 		$request = $this->requestFactory
-			->createRequest('POST', sprintf($this->revokeURL, $this->getAccountID($token)))
+			->createRequest('POST', sprintf('%s/%s', $this->revokeURL, $this->getAccountID($token)))
 			->withHeader('Authorization', sprintf('Basic %s', $auth))
 		;
 

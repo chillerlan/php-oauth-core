@@ -18,6 +18,8 @@ use function array_merge, in_array, is_array, ksort, md5, sprintf, trigger_error
 use const PHP_QUERY_RFC1738;
 
 /**
+ * Last.fm
+ *
  * @see https://www.last.fm/api/authentication
  */
 class LastFM extends OAuthProvider{

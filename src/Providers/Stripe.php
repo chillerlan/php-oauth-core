@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Stripe OAuth2
+ *
  * @see https://stripe.com/docs/api
  * @see https://stripe.com/docs/connect/authentication
  * @see https://stripe.com/docs/connect/oauth-reference

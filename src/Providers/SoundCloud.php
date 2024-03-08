@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * SoundCloud OAuth2
+ *
  * @see https://developers.soundcloud.com/
  * @see https://developers.soundcloud.com/docs/api/guide#authentication
  * @see https://developers.soundcloud.com/blog/security-updates-api

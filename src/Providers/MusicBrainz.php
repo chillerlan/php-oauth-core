@@ -17,6 +17,8 @@ use function date, explode, in_array, sprintf, strtoupper;
 use const PHP_QUERY_RFC1738;
 
 /**
+ * MusicBrainz OAuth2
+ *
  * @see https://musicbrainz.org/doc/Development
  * @see https://musicbrainz.org/doc/Development/OAuth2
  */

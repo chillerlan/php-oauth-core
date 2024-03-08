@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Discord OAuth2
+ *
  * @see https://discord.com/developers/docs/topics/oauth2
  */
 class Discord extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh, TokenInvalidate{
@@ -54,7 +56,7 @@ class Discord extends OAuth2Provider implements ClientCredentials, CSRFToken, To
 	protected string      $accessTokenURL = 'https://discordapp.com/api/oauth2/token';
 	protected string      $revokeURL      = 'https://discordapp.com/api/oauth2/token/revoke';
 	protected string      $apiURL         = 'https://discordapp.com/api';
-	protected string|null $apiDocs        = 'https://discordapp.com/developers/';
+	protected string|null $apiDocs        = 'https://discord.com/developers/';
 	protected string|null $applicationURL = 'https://discordapp.com/developers/applications/';
 
 	/**

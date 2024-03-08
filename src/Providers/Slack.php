@@ -16,9 +16,11 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
- * @see https://api.slack.com/docs/oauth
- * @see https://api.slack.com/docs/sign-in-with-slack
- * @see https://api.slack.com/docs/token-types
+ * Slack v2 OAuth2
+ *
+ * @see https://api.slack.com/authentication/oauth-v2
+ * @see https://api.slack.com/authentication/sign-in-with-slack
+ * @see https://api.slack.com/authentication/token-types
  */
 class Slack extends OAuth2Provider implements CSRFToken{
 
@@ -85,8 +87,8 @@ class Slack extends OAuth2Provider implements CSRFToken{
 		self::SCOPE_IDENTITY_TEAM,
 	];
 
-	protected string      $authURL        = 'https://slack.com/oauth/authorize';
-	protected string      $accessTokenURL = 'https://slack.com/api/oauth.access';
+	protected string      $authURL        = 'https://slack.com/oauth/v2/authorize';
+	protected string      $accessTokenURL = 'https://slack.com/api/oauth.v2.access';
 	protected string      $apiURL         = 'https://slack.com/api';
 	protected string|null $userRevokeURL  = 'https://slack.com/apps/manage';
 	protected string|null $apiDocs        = 'https://api.slack.com';

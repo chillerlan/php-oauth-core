@@ -16,6 +16,8 @@ use Psr\Http\Message\{ResponseInterface, StreamInterface};
 use function array_merge, sprintf;
 
 /**
+ * Flickr OAuth1
+ *
  * @see https://www.flickr.com/services/api/auth.oauth.html
  * @see https://www.flickr.com/services/api/
  */

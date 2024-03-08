@@ -17,6 +17,8 @@ use function implode, sprintf;
 use const PHP_QUERY_RFC1738;
 
 /**
+ * Twitch OAuth2
+ *
  * @see https://dev.twitch.tv/docs/api/reference/
  * @see https://dev.twitch.tv/docs/authentication/
  */

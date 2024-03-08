@@ -17,8 +17,10 @@ use Psr\Http\Message\{ResponseInterface, StreamInterface};
 use function array_merge, sprintf;
 
 /**
- * @see http://developer.mailchimp.com/
- * @see http://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-oauth2/
+ * MailChimp OAuth2
+ *
+ * @see https://mailchimp.com/developer/
+ * @see https://mailchimp.com/developer/marketing/guides/access-user-data-oauth-2/
  */
 class MailChimp extends OAuth2Provider implements CSRFToken{
 
@@ -27,7 +29,7 @@ class MailChimp extends OAuth2Provider implements CSRFToken{
 
 	protected string      $authURL        = 'https://login.mailchimp.com/oauth2/authorize';
 	protected string      $accessTokenURL = 'https://login.mailchimp.com/oauth2/token';
-	protected string|null $apiDocs        = 'https://developer.mailchimp.com/';
+	protected string|null $apiDocs        = 'https://mailchimp.com/developer/';
 	protected string|null $applicationURL = 'https://admin.mailchimp.com/account/oauth2/';
 
 	/**

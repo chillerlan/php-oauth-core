@@ -16,7 +16,9 @@ use Psr\Http\Message\{ResponseInterface, UriInterface};
 use function implode, preg_match, sprintf, str_starts_with, substr;
 
 /**
- * GW2 does not support authentication (anymore) but the API still works like a regular OAUth API, so...
+ * Guild Wars 2
+ *
+ * Note: GW2 does not support authentication (anymore) but the API still works like a regular OAUth API, so...
  *
  * @see https://api.guildwars2.com/v2
  * @see https://wiki.guildwars2.com/wiki/API:Main
@@ -33,8 +35,6 @@ class GuildWars2 extends OAuth2Provider{
 	public const SCOPE_BUILDS      = 'builds';
 	public const SCOPE_PROGRESSION = 'progression';
 	public const SCOPE_GUILDS      = 'guilds';
-
-	protected const AUTH_ERRMSG = 'GuildWars2 does not support authentication anymore.';
 
 	protected string      $authURL        = 'https://api.guildwars2.com/v2/tokeninfo';
 	protected string      $apiURL         = 'https://api.guildwars2.com';
@@ -62,8 +62,7 @@ class GuildWars2 extends OAuth2Provider{
 		$tokeninfo = MessageUtil::decodeJSON($this->http->sendRequest($request));
 
 		if(isset($tokeninfo->id) && str_starts_with($access_token, $tokeninfo->id)){
-			$token = $this->createAccessToken();
-
+			$token                    = $this->createAccessToken();
 			$token->accessToken       = $access_token;
 			$token->accessTokenSecret = substr($access_token, 36, 36); // the actual token
 			$token->expires           = AccessToken::EOL_NEVER_EXPIRES;
@@ -87,7 +86,7 @@ class GuildWars2 extends OAuth2Provider{
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
-		throw new ProviderException($this::AUTH_ERRMSG);
+		throw new ProviderException('GuildWars2 does not support authentication anymore.');
 	}
 
 	/**
@@ -95,7 +94,7 @@ class GuildWars2 extends OAuth2Provider{
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAccessToken(string $code, string|null $state = null):AccessToken{
-		throw new ProviderException($this::AUTH_ERRMSG);
+		throw new ProviderException('GuildWars2 does not support authentication anymore.');
 	}
 
 	/**

@@ -16,6 +16,8 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use function in_array, ltrim, rtrim, sprintf, strtolower, str_contains;
 
 /**
+ * NPR API services (OAuth2)
+ *
  * @see https://dev.npr.org
  * @see https://github.com/npr/npr-one-backend-proxy-php
  */

@@ -16,12 +16,10 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
- * Amazon Login/OAuth
+ * Login with Amazon for Websites (OAuth2)
  *
- * @see https://login.amazon.com/
- * @see https://developer.amazon.com/docs/login-with-amazon/documentation-overview.html
- * @see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
- * @see https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide._V335378063_.pdf
+ * @see https://developer.amazon.com/docs/login-with-amazon/web-docs.html
+ * @see https://developer.amazon.com/docs/login-with-amazon/conceptual-overview.html
  */
 class Amazon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 
@@ -37,7 +35,6 @@ class Amazon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	protected string      $authURL        = 'https://www.amazon.com/ap/oa';
 	protected string      $accessTokenURL = 'https://www.amazon.com/ap/oatoken';
 	protected string      $apiURL         = 'https://api.amazon.com';
-	protected string|null $apiDocs        = 'https://login.amazon.com/';
 	protected string|null $applicationURL = 'https://sellercentral.amazon.com/hz/home';
 
 	/**

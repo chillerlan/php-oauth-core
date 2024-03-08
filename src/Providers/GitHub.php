@@ -16,9 +16,11 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
- * @see https://developer.github.com/apps/building-integrations/setting-up-and-registering-oauth-apps/
- * @see https://developer.github.com/v3/
- * @see https://docs.github.com/en/developers/apps/building-github-apps/refreshing-user-to-server-access-tokens
+ * GitHub OAuth2
+ *
+ * @see https://docs.github.com/en/apps/oauth-apps/building-oauth-apps
+ * @see https://docs.github.com/rest
+ * @see https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/refreshing-user-access-tokens
  */
 class GitHub extends OAuth2Provider implements CSRFToken, TokenRefresh{
 
@@ -66,7 +68,7 @@ class GitHub extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	protected string      $accessTokenURL = 'https://github.com/login/oauth/access_token';
 	protected string      $apiURL         = 'https://api.github.com';
 	protected string|null $userRevokeURL  = 'https://github.com/settings/applications';
-	protected string|null $apiDocs        = 'https://developer.github.com/';
+	protected string|null $apiDocs        = 'https://docs.github.com/rest';
 	protected string|null $applicationURL = 'https://github.com/settings/developers';
 
 	/**

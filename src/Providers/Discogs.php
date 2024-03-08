@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Discogs OAuth1
+ *
  * @see https://www.discogs.com/developers/
  * @see https://www.discogs.com/developers/#page:authentication,header:authentication-oauth-flow
  */

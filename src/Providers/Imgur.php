@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
 /**
+ * Imgur OAuth2
+ *
  * Note: imgur sends an "expires_in" of 315360000 (10 years!) for access tokens,
  *       but states in the docs that tokens expire after one month.
  *       Either manually saving the expiry with the token to trigger auto refresh

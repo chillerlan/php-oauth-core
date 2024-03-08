@@ -17,7 +17,9 @@ use function array_column, base64_encode, explode, implode, is_array, json_decod
 use const PHP_QUERY_RFC1738;
 
 /**
- * @see https://developer.paypal.com/docs/connect-with-paypal/integrate/
+ * PayPal OAuth2
+ *
+ * @see https://developer.paypal.com/api/rest/
  */
 class PayPal extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
 

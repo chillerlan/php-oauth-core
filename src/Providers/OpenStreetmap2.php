@@ -16,11 +16,11 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf, strip_tags;
 
 /**
+ * OpenStreetmap OAuth2
+ *
  * @see https://wiki.openstreetmap.org/wiki/API
  * @see https://wiki.openstreetmap.org/wiki/OAuth
  * @see https://www.openstreetmap.org/.well-known/oauth-authorization-server
- *
- * @see https://github.com/chillerlan/php-oauth-providers/issues/2
  */
 class OpenStreetmap2 extends OAuth2Provider implements CSRFToken{
 

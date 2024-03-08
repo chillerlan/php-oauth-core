@@ -17,9 +17,9 @@ use Throwable;
 use function in_array, sprintf, strtolower;
 
 /**
- * Battle.net OAuth
+ * Battle.net OAuth2
  *
- * @see https://develop.battle.net/documentation
+ * @see https://develop.battle.net/documentation/guides/using-oauth
  */
 class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 

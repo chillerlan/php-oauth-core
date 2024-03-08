@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function explode, in_array, sprintf;
 
 /**
+ * Patreon v2 OAuth2
+ *
  * @see https://docs.patreon.com/
  * @see https://docs.patreon.com/#oauth
  * @see https://docs.patreon.com/#apiv2-oauth

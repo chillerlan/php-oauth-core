@@ -16,8 +16,9 @@ use Psr\Http\Message\{ResponseInterface, StreamInterface};
 use function array_merge, explode, sprintf;
 
 /**
- * @see https://developer.foursquare.com/docs/
- * @see https://developer.foursquare.com/overview/auth
+ * Foursquare OAuth2
+ *
+ * @see https://location.foursquare.com/developer/reference/personalization-apis-authentication
  */
 class Foursquare extends OAuth2Provider{
 
@@ -30,7 +31,7 @@ class Foursquare extends OAuth2Provider{
 	protected string      $accessTokenURL  = 'https://foursquare.com/oauth2/access_token';
 	protected string      $apiURL          = 'https://api.foursquare.com';
 	protected string|null $userRevokeURL   = 'https://foursquare.com/settings/connections';
-	protected string|null $apiDocs         = 'https://developer.foursquare.com/docs';
+	protected string|null $apiDocs         = 'https://location.foursquare.com/developer/reference/foursquare-apis-overview';
 	protected string|null $applicationURL  = 'https://foursquare.com/developers/apps';
 
 	/**

@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use function sprintf, strip_tags;
 
 /**
+ * OpenStreetmap OAuth1 (deprecated)
+ *
  * @see https://wiki.openstreetmap.org/wiki/API
  * @see https://wiki.openstreetmap.org/wiki/OAuth
  *
