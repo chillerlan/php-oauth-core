@@ -44,7 +44,6 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: ast, ${{ env.PHP_EXTENSIONS }}
           ini-values: ${{ env.PHP_INI_VALUES }}
-          tools: pecl
           coverage: none
 
       - name: "Update dependencies with composer"
