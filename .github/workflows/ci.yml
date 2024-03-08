@@ -12,7 +12,7 @@ on:
       - main
 
 env:
-  PHP_EXTENSIONS: ast, curl, fileinfo, intl, json, mbstring, simplexml, sodium, zlib
+  PHP_EXTENSIONS: curl, fileinfo, intl, json, mbstring, simplexml, sodium, zlib
   PHP_INI_VALUES: memory_limit=-1, error_reporting=-1, display_errors=On
 
 
@@ -42,7 +42,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: ${{ env.PHP_EXTENSIONS }}
+          extensions: ast, ${{ env.PHP_EXTENSIONS }}
           ini-values: ${{ env.PHP_INI_VALUES }}
           tools: pecl
           coverage: none
