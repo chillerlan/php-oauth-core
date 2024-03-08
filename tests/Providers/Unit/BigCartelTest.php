@@ -27,7 +27,7 @@ class BigCartelTest extends OAuth2ProviderTestAbstract{
 			'{"data":"such data! much wow!"}',
 		'/oauth2/api/accounts'       =>
 			'{"data":[{"id":"12345"}]}',
-		'/oauth2/revoke_token'       =>
+		'/oauth2/revoke_token/12345' =>
 			'',
 	];
 
