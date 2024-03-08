@@ -41,7 +41,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @inheritDoc
-	 * @param string[] $scopes
+	 * @param string[]|null $scopes
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		$params ??= [];
@@ -165,7 +165,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param string[] $scopes
+	 * @param string[]|null $scopes
 	 * @implements \chillerlan\OAuth\Core\ClientCredentials
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
