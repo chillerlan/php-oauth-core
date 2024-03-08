@@ -271,10 +271,10 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020access\u0020token\u0020in\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
             "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_storeAccessToken"
         },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003AretrieveAccessToken\u0028\u0029",
-            "name": "retrieveAccessToken",
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003AgetAccessTokenFromStorage\u0028\u0029",
+            "name": "getAccessTokenFromStorage",
             "summary": "Gets\u0020an\u0020access\u0020token\u0020from\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_retrieveAccessToken"
+            "url": "classes/chillerlan-OAuth-Core-OAuthInterface.html#method_getAccessTokenFromStorage"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthInterface\u003A\u003AsetLogger\u0028\u0029",
             "name": "setLogger",
@@ -366,10 +366,10 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020access\u0020token\u0020in\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
             "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_storeAccessToken"
         },                {
-            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AretrieveAccessToken\u0028\u0029",
-            "name": "retrieveAccessToken",
+            "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AgetAccessTokenFromStorage\u0028\u0029",
+            "name": "getAccessTokenFromStorage",
             "summary": "Gets\u0020an\u0020access\u0020token\u0020from\u0020the\u0020current\u0020OAuthStorageInterface\u0020\u0028shorthand\/convenience\u0029",
-            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_retrieveAccessToken"
+            "url": "classes/chillerlan-OAuth-Core-OAuthProvider.html#method_getAccessTokenFromStorage"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Core\\OAuthProvider\u003A\u003AcreateAccessToken\u0028\u0029",
             "name": "createAccessToken",
@@ -583,7 +583,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Amazon",
             "name": "Amazon",
-            "summary": "Amazon\u0020Login\/OAuth",
+            "summary": "Login\u0020with\u0020Amazon\u0020for\u0020Websites\u0020\u0028OAuth2\u0029",
             "url": "classes/chillerlan-OAuth-Providers-Amazon.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Amazon\u003A\u003Ame\u0028\u0029",
@@ -626,11 +626,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuth-Providers-Amazon.html#property_apiURL"
         },                {
-            "fqsen": "\\chillerlan\\OAuth\\Providers\\Amazon\u003A\u003A\u0024apiDocs",
-            "name": "apiDocs",
-            "summary": "",
-            "url": "classes/chillerlan-OAuth-Providers-Amazon.html#property_apiDocs"
-        },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Amazon\u003A\u003A\u0024applicationURL",
             "name": "applicationURL",
             "summary": "",
@@ -638,7 +633,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\AzureActiveDirectory",
             "name": "AzureActiveDirectory",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Microsoft\u0020identity\u0020platform\u0020\u0028OAuth2\u0029",
             "url": "classes/chillerlan-OAuth-Providers-AzureActiveDirectory.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\AzureActiveDirectory\u003A\u003ASCOPE_OPENID",
@@ -683,7 +678,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\BattleNet",
             "name": "BattleNet",
-            "summary": "Battle.net\u0020OAuth",
+            "summary": "Battle.net\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-BattleNet.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\BattleNet\u003A\u003AsetRegion\u0028\u0029",
@@ -763,7 +758,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\BigCartel",
             "name": "BigCartel",
-            "summary": "BigCartel\u0020OAuth",
+            "summary": "BigCartel\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-BigCartel.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\BigCartel\u003A\u003Ame\u0028\u0029",
@@ -823,7 +818,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Bitbucket",
             "name": "Bitbucket",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Bitbucket\u0020OAuth2\u0020\u0028Atlassian\u0029",
             "url": "classes/chillerlan-OAuth-Providers-Bitbucket.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Bitbucket\u003A\u003Ame\u0028\u0029",
@@ -858,7 +853,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Deezer",
             "name": "Deezer",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Deezer\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Deezer.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Deezer\u003A\u003AgetAuthURL\u0028\u0029",
@@ -958,7 +953,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\DeviantArt",
             "name": "DeviantArt",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "DeviantArt\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-DeviantArt.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\DeviantArt\u003A\u003Ame\u0028\u0029",
@@ -1073,7 +1068,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Discogs",
             "name": "Discogs",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth1\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth1Interface.",
+            "summary": "Discogs\u0020OAuth1",
             "url": "classes/chillerlan-OAuth-Providers-Discogs.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Discogs\u003A\u003Ame\u0028\u0029",
@@ -1123,7 +1118,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Discord",
             "name": "Discord",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Discord\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Discord.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Discord\u003A\u003Ame\u0028\u0029",
@@ -1268,7 +1263,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Flickr",
             "name": "Flickr",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth1\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth1Interface.",
+            "summary": "Flickr\u0020OAuth1",
             "url": "classes/chillerlan-OAuth-Providers-Flickr.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Flickr\u003A\u003Arequest\u0028\u0029",
@@ -1333,7 +1328,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Foursquare",
             "name": "Foursquare",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Foursquare\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Foursquare.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Foursquare\u003A\u003Arequest\u0028\u0029",
@@ -1393,7 +1388,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GitHub",
             "name": "GitHub",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "GitHub\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-GitHub.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GitHub\u003A\u003Ame\u0028\u0029",
@@ -1568,7 +1563,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GitLab",
             "name": "GitLab",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "GitLab\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-GitLab.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GitLab\u003A\u003Ame\u0028\u0029",
@@ -1591,11 +1586,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuth-Providers-GitLab.html#property_apiURL"
         },                {
-            "fqsen": "\\chillerlan\\OAuth\\Providers\\GitLab\u003A\u003A\u0024apiDocs",
-            "name": "apiDocs",
-            "summary": "",
-            "url": "classes/chillerlan-OAuth-Providers-GitLab.html#property_apiDocs"
-        },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GitLab\u003A\u003A\u0024applicationURL",
             "name": "applicationURL",
             "summary": "",
@@ -1603,7 +1593,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Google",
             "name": "Google",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Google\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Google.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Google\u003A\u003Ame\u0028\u0029",
@@ -1668,7 +1658,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GuildWars2",
             "name": "GuildWars2",
-            "summary": "GW2\u0020does\u0020not\u0020support\u0020authentication\u0020\u0028anymore\u0029\u0020but\u0020the\u0020API\u0020still\u0020works\u0020like\u0020a\u0020regular\u0020OAUth\u0020API,\u0020so.",
+            "summary": "Guild\u0020Wars\u00202",
             "url": "classes/chillerlan-OAuth-Providers-GuildWars2.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GuildWars2\u003A\u003AstoreGW2Token\u0028\u0029",
@@ -1741,11 +1731,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuth-Providers-GuildWars2.html#constant_SCOPE_GUILDS"
         },                {
-            "fqsen": "\\chillerlan\\OAuth\\Providers\\GuildWars2\u003A\u003AAUTH_ERRMSG",
-            "name": "AUTH_ERRMSG",
-            "summary": "",
-            "url": "classes/chillerlan-OAuth-Providers-GuildWars2.html#constant_AUTH_ERRMSG"
-        },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\GuildWars2\u003A\u003A\u0024authURL",
             "name": "authURL",
             "summary": "",
@@ -1773,7 +1758,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Imgur",
             "name": "Imgur",
-            "summary": "Note\u003A\u0020imgur\u0020sends\u0020an\u0020\u0022expires_in\u0022\u0020of\u0020315360000\u0020\u002810\u0020years\u0021\u0029\u0020for\u0020access\u0020tokens,\n\u0020\u0020\u0020\u0020\u0020\u0020but\u0020states\u0020in\u0020the\u0020docs\u0020that\u0020tokens\u0020expire\u0020after\u0020one\u0020month.",
+            "summary": "Imgur\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Imgur.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Imgur\u003A\u003Ame\u0028\u0029",
@@ -1813,7 +1798,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\LastFM",
             "name": "LastFM",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuthInterface.",
+            "summary": "Last.fm",
             "url": "classes/chillerlan-OAuth-Providers-LastFM.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\LastFM\u003A\u003AgetAuthURL\u0028\u0029",
@@ -1918,7 +1903,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\MailChimp",
             "name": "MailChimp",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "MailChimp\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-MailChimp.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\MailChimp\u003A\u003AgetTokenMetadata\u0028\u0029",
@@ -1968,7 +1953,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon",
             "name": "Mastodon",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Mastodon\u0020OAuth2\u0020\u0028v4.x\u0020instances\u0029",
             "url": "classes/chillerlan-OAuth-Providers-Mastodon.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003AsetInstance\u0028\u0029",
@@ -2011,10 +1996,35 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/chillerlan-OAuth-Providers-Mastodon.html#constant_DEFAULT_SCOPES"
         },                {
+            "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003A\u0024authURL",
+            "name": "authURL",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-Providers-Mastodon.html#property_authURL"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003A\u0024accessTokenURL",
+            "name": "accessTokenURL",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-Providers-Mastodon.html#property_accessTokenURL"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003A\u0024apiURL",
+            "name": "apiURL",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-Providers-Mastodon.html#property_apiURL"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003A\u0024userRevokeURL",
+            "name": "userRevokeURL",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-Providers-Mastodon.html#property_userRevokeURL"
+        },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003A\u0024apiDocs",
             "name": "apiDocs",
             "summary": "",
             "url": "classes/chillerlan-OAuth-Providers-Mastodon.html#property_apiDocs"
+        },                {
+            "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003A\u0024applicationURL",
+            "name": "applicationURL",
+            "summary": "",
+            "url": "classes/chillerlan-OAuth-Providers-Mastodon.html#property_applicationURL"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Mastodon\u003A\u003A\u0024instance",
             "name": "instance",
@@ -2023,7 +2033,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\MicrosoftGraph",
             "name": "MicrosoftGraph",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Microsoft\u0020Graph\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-MicrosoftGraph.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\MicrosoftGraph\u003A\u003Ame\u0028\u0029",
@@ -2058,7 +2068,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Mixcloud",
             "name": "Mixcloud",
-            "summary": "note\u003A\u0020a\u0020missing\u0020slash\u0020at\u0020the\u0020end\u0020of\u0020the\u0020path\u0020will\u0020end\u0020up\u0020in\u0020an\u0020HTTP\/301",
+            "summary": "Mixcloud\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Mixcloud.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Mixcloud\u003A\u003Ame\u0028\u0029",
@@ -2103,7 +2113,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\MusicBrainz",
             "name": "MusicBrainz",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "MusicBrainz\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-MusicBrainz.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\MusicBrainz\u003A\u003ArefreshAccessToken\u0028\u0029",
@@ -2188,7 +2198,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\NPROne",
             "name": "NPROne",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "NPR\u0020API\u0020services\u0020\u0028OAuth2\u0029",
             "url": "classes/chillerlan-OAuth-Providers-NPROne.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\NPROne\u003A\u003AsetAPI\u0028\u0029",
@@ -2278,7 +2288,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\OpenCaching",
             "name": "OpenCaching",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth1\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth1Interface.",
+            "summary": "Opencaching\u0020OAuth1",
             "url": "classes/chillerlan-OAuth-Providers-OpenCaching.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\OpenCaching\u003A\u003Ame\u0028\u0029",
@@ -2328,7 +2338,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\OpenStreetmap",
             "name": "OpenStreetmap",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth1\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth1Interface.",
+            "summary": "OpenStreetmap\u0020OAuth1\u0020\u0028deprecated\u0029",
             "url": "classes/chillerlan-OAuth-Providers-OpenStreetmap.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\OpenStreetmap\u003A\u003Ame\u0028\u0029",
@@ -2368,7 +2378,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\OpenStreetmap2",
             "name": "OpenStreetmap2",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "OpenStreetmap\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-OpenStreetmap2.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\OpenStreetmap2\u003A\u003Ame\u0028\u0029",
@@ -2453,7 +2463,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Patreon",
             "name": "Patreon",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Patreon\u0020v2\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Patreon.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Patreon\u003A\u003Ame\u0028\u0029",
@@ -2548,7 +2558,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\PayPal",
             "name": "PayPal",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "PayPal\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-PayPal.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\PayPal\u003A\u003AparseTokenResponse\u0028\u0029",
@@ -2623,7 +2633,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\PayPalSandbox",
             "name": "PayPalSandbox",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "PayPal\u0020OAuth2\u0020\u0028sandbox\u0029",
             "url": "classes/chillerlan-OAuth-Providers-PayPalSandbox.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\PayPalSandbox\u003A\u003A\u0024authURL",
@@ -2648,7 +2658,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Slack",
             "name": "Slack",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Slack\u0020v2\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Slack.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Slack\u003A\u003Ame\u0028\u0029",
@@ -2943,7 +2953,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\SoundCloud",
             "name": "SoundCloud",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "SoundCloud\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-SoundCloud.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\SoundCloud\u003A\u003Ame\u0028\u0029",
@@ -2998,7 +3008,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Spotify",
             "name": "Spotify",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Spotify\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Spotify.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Spotify\u003A\u003Ame\u0028\u0029",
@@ -3158,7 +3168,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\SteamOpenID",
             "name": "SteamOpenID",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuthInterface.",
+            "summary": "Steam\u0020OpenID",
             "url": "classes/chillerlan-OAuth-Providers-SteamOpenID.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\SteamOpenID\u003A\u003AgetAuthURL\u0028\u0029",
@@ -3208,7 +3218,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Stripe",
             "name": "Stripe",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Stripe\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Stripe.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Stripe\u003A\u003Ame\u0028\u0029",
@@ -3383,7 +3393,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Twitch",
             "name": "Twitch",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Twitch\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Twitch.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Twitch\u003A\u003AgetClientCredentialsToken\u0028\u0029",
@@ -3568,7 +3578,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Twitter",
             "name": "Twitter",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth1\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth1Interface.",
+            "summary": "Twitter\u0020OAuth1",
             "url": "classes/chillerlan-OAuth-Providers-Twitter.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Twitter\u003A\u003Ame\u0028\u0029",
@@ -3613,7 +3623,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\TwitterCC",
             "name": "TwitterCC",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Twitter\u0020OAuth2\u0020\u0028client\u0020credentials\u0029",
             "url": "classes/chillerlan-OAuth-Providers-TwitterCC.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\TwitterCC\u003A\u003AgetAuthURL\u0028\u0029",
@@ -3658,7 +3668,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Vimeo",
             "name": "Vimeo",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "Vimeo\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-Vimeo.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\Vimeo\u003A\u003Ame\u0028\u0029",
@@ -3788,7 +3798,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\WordPress",
             "name": "WordPress",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "WordPress\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-WordPress.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\WordPress\u003A\u003Ame\u0028\u0029",
@@ -3843,7 +3853,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\YouTube",
             "name": "YouTube",
-            "summary": "Implements\u0020an\u0020abstract\u0020OAuth2\u0020provider\u0020with\u0020all\u0020methods\u0020required\u0020by\u0020the\u0020OAuth2Interface.",
+            "summary": "YouTube\u0020OAuth2",
             "url": "classes/chillerlan-OAuth-Providers-YouTube.html"
         },                {
             "fqsen": "\\chillerlan\\OAuth\\Providers\\YouTube\u003A\u003ASCOPE_YOUTUBE",
