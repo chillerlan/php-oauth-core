@@ -12,8 +12,8 @@ namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, TokenInvalidate, TokenRefresh};
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
-use function in_array, ltrim, rtrim, sprintf, strtolower, str_contains;
+use Psr\Http\Message\{ResponseInterface};
+use function in_array, sprintf, strtolower;
 
 /**
  * NPR API services (OAuth2)
