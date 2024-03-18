@@ -13,8 +13,12 @@ namespace chillerlan\OAuth\Providers;
 use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider};
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
-use function in_array, sprintf, strtolower;
+use function in_array;
+use function ltrim;
+use function rtrim;
+use function sprintf;
+use function str_contains;
+use function strtolower;
 
 /**
  * Battle.net OAuth2
@@ -47,6 +51,55 @@ class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 	protected string $apiURL              = 'https://eu.api.blizzard.com';
 	protected string $authURL             = 'https://oauth.battle.net/authorize';
 	protected string $accessTokenURL      = 'https://oauth.battle.net/token';
+
+	protected const KNOWN_DOMAINS = [
+		'oauth.battle.net',
+		'eu.api.blizzard.com',
+		'kr.api.blizzard.com',
+		'tw.api.blizzard.com',
+		'us.api.blizzard.com',
+		'gateway.battlenet.com.cn',
+		'oauth.battlenet.com.cn',
+	];
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function getRequestTarget(string $uri):string{
+		$parsedURL  = $this->uriFactory->createUri($uri);
+		$parsedHost = $parsedURL->getHost();
+		$api        = $this->uriFactory->createUri($this->apiURL);
+
+		if($parsedHost === ''){
+			$parsedPath = $parsedURL->getPath();
+			$apiURL     = rtrim((string)$api, '/');
+
+			if($parsedPath === ''){
+				return $apiURL;
+			}
+
+			return sprintf('%s/%s', $apiURL, ltrim($parsedPath, '/'));
+		}
+
+		// for some reason we were given a host name
+
+		if($parsedURL->getScheme() !== 'https'){
+			throw new ProviderException(sprintf('scheme of the URL (%s) must be "https" if host is given', $parsedURL));
+		}
+
+		// shortcut here for the known domains
+		if(in_array($parsedHost, $this::KNOWN_DOMAINS, true)){
+			// we explicitly ignore any existing parameters here
+			return (string)$parsedURL->withQuery('')->withFragment('');
+		}
+
+		// back out if it doesn't match
+		throw new ProviderException(sprintf(
+			'given host (%s) does not match provider (%s)',
+			$parsedHost,
+			$api->getHost(),
+		));
+	}
 
 	/**
 	 * Set the datacenter URLs for the given region

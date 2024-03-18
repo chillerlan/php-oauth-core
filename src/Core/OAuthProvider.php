@@ -23,7 +23,8 @@ use Psr\Http\Message\{
 };
 use Psr\Log\{LoggerInterface, NullLogger};
 use ReflectionClass;
-use function array_merge, in_array, is_array, is_string, json_encode, ltrim, rtrim, sprintf, str_starts_with, strtolower;
+use function array_merge, array_shift, explode, implode, in_array, is_array, is_string,
+	json_encode, ltrim, rtrim, sprintf, str_starts_with, strtolower;
 use const PHP_QUERY_RFC1738;
 
 /**
@@ -313,27 +314,48 @@ abstract class OAuthProvider implements OAuthInterface{
 		$parsedHost = $parsedURL->getHost();
 		$api        = $this->uriFactory->createUri($this->apiURL);
 
-		// for some reason we were given a host name
-		if($parsedHost !== ''){
-			$apiHost = $api->getHost();
+		if($parsedHost === ''){
+			$parsedPath = $parsedURL->getPath();
+			$apiURL     = rtrim((string)$api, '/');
 
-			// back out if it doesn't match
-			if($parsedHost !== $apiHost){
-				throw new ProviderException(sprintf('given host (%s) does not match provider (%s)', $parsedHost , $apiHost));
+			if($parsedPath === ''){
+				return $apiURL;
 			}
 
-			// we explicitly ignore any existing parameters here
-			return (string)$parsedURL->withQuery('')->withFragment('');
+			return sprintf('%s/%s', $apiURL, ltrim($parsedPath, '/'));
 		}
 
-		$parsedPath = $parsedURL->getPath();
-		$apiURL     = rtrim((string)$api, '/');
+		// for some reason we were given a host name
 
-		if($parsedPath === ''){
-			return $apiURL;
+		if($parsedURL->getScheme() !== 'https'){
+			throw new ProviderException(sprintf('scheme of the URL (%s) must be "https" if host is given', $parsedURL));
 		}
 
-		return sprintf('%s/%s', $apiURL, ltrim($parsedPath, '/'));
+		// we explicitly ignore any existing parameters here
+		$parsedURL = $parsedURL->withQuery('')->withFragment('');
+		$apiHost   = $api->getHost();
+
+		if($parsedHost === $apiHost){
+			return (string)$parsedURL;
+		}
+
+		// ok, one last chance - we might have a subdomain in any of the hosts (messy)
+		$strip_subdomains = function(string $host):string{
+			$host = explode('.', $host);
+			// don't come at me with .co.uk
+			while(count($host) > 2){
+				array_shift($host);
+			}
+
+			return implode('.', $host);
+		};
+
+		if($strip_subdomains($parsedHost) === $strip_subdomains($apiHost)){
+			return (string)$parsedURL;
+		}
+
+		// back out if it doesn't match
+		throw new ProviderException(sprintf('given host (%s) does not match provider (%s)', $parsedHost , $apiHost));
 	}
 
 	/**
@@ -373,7 +395,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @codeCoverageIgnore
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function invalidateAccessToken(AccessToken|null $token = null):bool{
+	public function InvalidateAccessToken(AccessToken|null $token = null):bool{
 		throw new ProviderException('not implemented');
 	}
 

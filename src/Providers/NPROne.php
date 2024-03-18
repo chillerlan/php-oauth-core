@@ -61,54 +61,6 @@ class NPROne extends OAuth2Provider implements CSRFToken, TokenRefresh, TokenInv
 	/**
 	 * @inheritDoc
 	 */
-	protected function getRequestTarget(string $uri):string{
-		$parsedURL = $this->uriFactory->createUri($uri);
-
-		// for some reason we were given a host name
-		if($parsedURL->getHost() !== ''){
-
-			// back out if it doesn't match
-			if(!str_contains($parsedURL->getHost(), '.api.npr.org')){
-				throw new ProviderException('given host does not match provider host'); // @codeCoverageIgnore
-			}
-
-			// we explicitly ignore any existing parameters here
-			return (string)$parsedURL->withQuery('')->withFragment('');
-		}
-
-		$parsedPath = $parsedURL->getPath();
-		$apiURL     = rtrim($this->apiURL, '/');
-
-		if($parsedPath === ''){
-			return $apiURL;
-		}
-
-		return sprintf('%s/%s', $apiURL, ltrim($parsedPath, '/'));
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function sendRequest(RequestInterface $request):ResponseInterface{
-
-		// get authorization only if we request the provider API
-		if(str_contains((string)$request->getUri(), '.api.npr.org')){
-			$token = $this->storage->getAccessToken($this->serviceName);
-
-			// attempt to refresh an expired token
-			if($this->options->tokenAutoRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
-				$token = $this->refreshAccessToken($token); // @codeCoverageIgnore
-			}
-
-			$request = $this->getRequestAuthorization($request, $token);
-		}
-
-		return $this->http->sendRequest($request);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function me():ResponseInterface{
 		$response = $this->request('https://identity.api.npr.org/v2/user');
 		$status   = $response->getStatusCode();
