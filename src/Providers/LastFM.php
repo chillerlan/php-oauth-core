@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, OAuthProvider};
+use chillerlan\OAuth\Core\{AccessToken, OAuthProvider, UnauthorizedAccessException};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface, UriInterface};
 use Throwable;
 use function array_merge, in_array, is_array, ksort, md5, sprintf, trigger_error;
@@ -172,6 +172,7 @@ class LastFM extends OAuthProvider{
 		/** @phan-suppress-next-line PhanTypeMismatchArgumentNullable */
 		$request = $this->requestFactory->createRequest($method, QueryUtil::merge($this->apiURL, $params));
 
+		/** @noinspection PhpParamsInspection */
 		foreach(array_merge($this::HEADERS_API, ($headers ?? [])) as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
@@ -182,7 +183,14 @@ class LastFM extends OAuthProvider{
 			$request = $request->withBody($body);
 		}
 
-		return $this->http->sendRequest($request);
+		$response = $this->sendRequest($request);
+
+		// we're throwing here immideately on unauthorized/forbidden
+		if(in_array($response->getStatusCode(), [401, 403], true)){
+			throw new UnauthorizedAccessException;
+		}
+
+		return $response;
 	}
 
 	/**

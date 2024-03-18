@@ -237,6 +237,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * @inheritDoc
+	 * @throws \chillerlan\OAuth\Core\UnauthorizedAccessException
 	 */
 	public function request(
 		string                            $path,
@@ -264,7 +265,14 @@ abstract class OAuthProvider implements OAuthInterface{
 			$request = $request->withProtocolVersion($protocolVersion);
 		}
 
-		return $this->sendRequest($request);
+		$response = $this->sendRequest($request);
+
+		// we're throwing here immideately on unauthorized/forbidden
+		if(in_array($response->getStatusCode(), [401, 403], true)){
+			throw new UnauthorizedAccessException;
+		}
+
+		return $response;
 	}
 
 	/**
@@ -360,6 +368,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * @inheritDoc
+	 * @throws \chillerlan\OAuth\Core\InvalidAccessTokenException
 	 */
 	public function sendRequest(RequestInterface $request):ResponseInterface{
 
@@ -368,12 +377,15 @@ abstract class OAuthProvider implements OAuthInterface{
 			$token = $this->storage->getAccessToken($this->serviceName);
 
 			// attempt to refresh an expired token
-			if(
-				$this instanceof TokenRefresh
-				&& $this->options->tokenAutoRefresh
-				&& ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)
-			){
-				$token = $this->refreshAccessToken($token);
+			if($token->isExpired() || $token->expires === $token::EOL_UNKNOWN){
+
+				if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh){
+					$token = $this->refreshAccessToken($token);
+				}
+				else{
+					throw new InvalidAccessTokenException;
+				}
+
 			}
 
 			$request = $this->getRequestAuthorization($request, $token);

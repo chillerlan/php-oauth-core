@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{OAuth1Provider};
+use chillerlan\OAuth\Core\{InvalidAccessTokenException, OAuth1Provider};
 use Psr\Http\Message\{ResponseInterface, StreamInterface};
 use function array_merge, sprintf;
 
@@ -63,6 +63,8 @@ class Flickr extends OAuth1Provider{
 	}
 
 	/**
+	 * hi flickr, can i have a 401 on invalid token???
+	 *
 	 * @inheritDoc
 	 */
 	public function me():ResponseInterface{
@@ -75,6 +77,11 @@ class Flickr extends OAuth1Provider{
 		}
 
 		if(isset($json->message)){
+
+			if($json->message === 'Invalid auth token'){
+				throw new InvalidAccessTokenException($json->message);
+			}
+
 			throw new ProviderException($json->message);
 		}
 

@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider};
+use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, InvalidAccessTokenException, OAuth2Provider};
 use Psr\Http\Message\ResponseInterface;
 use function in_array;
 use function ltrim;
@@ -141,13 +141,19 @@ class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 			return $response;
 		}
 
-		try{
+		$json = null;
+
+		// response may be html in some cases
+		if(str_contains($response->getHeaderLine('Content-Type'), 'application/json')){
 			$json = MessageUtil::decodeJSON($response);
-		}
-		catch(Throwable){
 		}
 
 		if(isset($json->error, $json->error_description)){
+
+			if($status === 401){
+				throw new InvalidAccessTokenException($json->error_description);
+			}
+
 			throw new ProviderException($json->error_description);
 		}
 

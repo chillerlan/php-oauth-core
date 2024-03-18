@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{CSRFToken, OAuth2Provider};
+use chillerlan\OAuth\Core\{CSRFToken, InvalidAccessTokenException, OAuth2Provider};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
@@ -50,6 +50,11 @@ class WordPress extends OAuth2Provider implements CSRFToken{
 		$json = MessageUtil::decodeJSON($response);
 
 		if(isset($json->error, $json->message)){
+
+			if($status === 400 && $json->error === 'invalid_token'){
+				throw new InvalidAccessTokenException($json->message);
+			}
+
 			throw new ProviderException($json->message);
 		}
 

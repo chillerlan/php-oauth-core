@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider};
+use chillerlan\OAuth\Core\{AccessToken, CSRFToken, InvalidAccessTokenException, OAuth2Provider};
 use Psr\Http\Message\{ResponseInterface, UriInterface};
 use function array_merge, implode, sprintf;
 use const PHP_QUERY_RFC1738;
@@ -140,6 +140,11 @@ class Deezer extends OAuth2Provider implements CSRFToken{
 		}
 
 		if(isset($json->error)){
+
+			if($json->error->code === 300){
+				throw new InvalidAccessTokenException($json->error->message);
+			}
+
 			throw new ProviderException($json->error->message);
 		}
 

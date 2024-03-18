@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{CSRFToken, OAuth2Provider, TokenRefresh};
+use chillerlan\OAuth\Core\{CSRFToken, InvalidAccessTokenException, OAuth2Provider, TokenRefresh};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
@@ -35,7 +35,7 @@ class Amazon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	protected string      $authURL        = 'https://www.amazon.com/ap/oa';
 	protected string      $accessTokenURL = 'https://www.amazon.com/ap/oatoken';
 	protected string      $apiURL         = 'https://api.amazon.com';
-	protected string|null $applicationURL = 'https://sellercentral.amazon.com/hz/home';
+	protected string|null $applicationURL = 'https://developer.amazon.com/loginwithamazon/console/site/lwa/overview.html';
 
 	/**
 	 * @inheritDoc
@@ -51,6 +51,11 @@ class Amazon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 		$json = MessageUtil::decodeJSON($response);
 
 		if(isset($json->error, $json->error_description)){
+
+			if($json->error === 'invalid_token'){
+				throw new InvalidAccessTokenException($json->error_description);
+			}
+
 			throw new ProviderException($json->error_description);
 		}
 

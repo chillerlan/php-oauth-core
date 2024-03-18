@@ -11,7 +11,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{CSRFToken, OAuth2Provider};
+use chillerlan\OAuth\Core\{CSRFToken, InvalidAccessTokenException, OAuth2Provider};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
 
@@ -107,6 +107,11 @@ class Slack extends OAuth2Provider implements CSRFToken{
 		}
 
 		if(isset($json->error)){
+
+			if($json->error === 'invalid_auth'){
+				throw new InvalidAccessTokenException;
+			}
+
 			throw new ProviderException($json->error);
 		}
 

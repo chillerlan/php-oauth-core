@@ -11,9 +11,10 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Core\{OAuth2Provider};
+use chillerlan\OAuth\Core\{InvalidAccessTokenException, OAuth2Provider};
 use Psr\Http\Message\ResponseInterface;
 use function sprintf;
+use function str_contains;
 
 /**
  * Mixcloud OAuth2
@@ -47,6 +48,11 @@ class Mixcloud extends OAuth2Provider{
 		$json = MessageUtil::decodeJSON($response);
 
 		if(isset($json->error, $json->error->message)){
+
+			if($status === 400 && str_contains($json->error->message, 'invalid access token')){
+				throw new InvalidAccessTokenException($json->error->message);
+			}
+
 			throw new ProviderException($json->error->message);
 		}
 
