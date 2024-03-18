@@ -53,9 +53,17 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$params['oauth_signature'] = $this->getSignature($this->requestTokenURL, $params, 'POST');
 
+		return $this->parseTokenResponse($this->sendRequestTokenRequest($params), true);
+	}
+
+	/**
+	 * Sends a request to the request token endpoint with the given params
+	 */
+	protected function sendRequestTokenRequest(array $requestTokenRequestParams):ResponseInterface{
+
 		$request = $this->requestFactory
 			->createRequest('POST', $this->requestTokenURL)
-			->withHeader('Authorization', 'OAuth '.QueryUtil::build($params, null, ', ', '"'))
+			->withHeader('Authorization', 'OAuth '.QueryUtil::build($requestTokenRequestParams, null, ', ', '"'))
 			->withHeader('Accept-Encoding', 'identity') // try to avoid compression
 			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
 		;
@@ -64,7 +72,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$request = $request->withHeader($header, $value);
 		}
 
-		return $this->parseTokenResponse($this->http->sendRequest($request), true);
+		return $this->http->sendRequest($request);
 	}
 
 	/**
@@ -153,8 +161,22 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 	/**
 	 * @inheritDoc
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function getAccessToken(string $token, string $verifier):AccessToken{
+	public function getAccessToken(string $requestToken, string $verifier):AccessToken{
+		$token = $this->storage->getAccessToken($this->serviceName);
+
+		if($requestToken !== $token->accessToken){
+			throw new ProviderException('request token mismatch');
+		}
+
+		return $this->parseTokenResponse($this->sendAccessTokenRequest($token, $verifier), false);
+	}
+
+	/**
+	 * Sends the access token request
+	 */
+	protected function sendAccessTokenRequest(AccessToken $token, string $verifier):ResponseInterface{
 
 		$request = $this->requestFactory
 			->createRequest('POST', QueryUtil::merge($this->accessTokenURL, ['oauth_verifier' => $verifier]))
@@ -162,9 +184,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			->withHeader('Content-Length', '0')
 		;
 
-		$request = $this->getRequestAuthorization($request, $this->storage->getAccessToken($this->serviceName));
-
-		return $this->parseTokenResponse($this->http->sendRequest($request), false);
+		return $this->http->sendRequest($this->getRequestAuthorization($request, $token));
 	}
 
 	/**

@@ -32,6 +32,6 @@ interface OAuth1Interface extends OAuthInterface{
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.3
 	 */
-	public function getAccessToken(string $token, string $verifier):AccessToken;
+	public function getAccessToken(string $requestToken, string $verifier):AccessToken;
 
 }
