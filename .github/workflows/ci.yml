@@ -81,6 +81,9 @@ jobs:
           ini-values: ${{ env.PHP_INI_VALUES }}
           coverage: pcov
 
+      - name: "Fetch cacert.pem from curl.se"
+        run: curl -o ./tests/cacert.pem https://curl.se/ca/cacert.pem
+
       - name: "Install dependencies with composer"
         uses: ramsey/composer-install@v3
 
