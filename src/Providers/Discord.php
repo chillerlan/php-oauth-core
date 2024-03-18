@@ -82,7 +82,7 @@ class Discord extends OAuth2Provider implements ClientCredentials, CSRFToken, To
 	/**
 	 * @inheritDoc
 	 */
-	public function invalidateAccessToken(AccessToken $token = null):bool{
+	public function InvalidateAccessToken(AccessToken $token = null):bool{
 
 		if($token === null && !$this->storage->hasAccessToken($this->serviceName)){
 			throw new ProviderException('no token given');

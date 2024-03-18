@@ -31,6 +31,8 @@ class MailChimp extends OAuth2Provider implements CSRFToken{
 	protected string      $accessTokenURL = 'https://login.mailchimp.com/oauth2/token';
 	protected string|null $apiDocs        = 'https://mailchimp.com/developer/';
 	protected string|null $applicationURL = 'https://admin.mailchimp.com/account/oauth2/';
+	// set to empty so that we don't run into "uninitialized" errors in mock tests, as the datacenter is in the token
+	protected string      $apiURL         = '';
 
 	/**
 	 * @throws \chillerlan\OAuth\OAuthException

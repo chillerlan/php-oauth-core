@@ -54,7 +54,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 
 	/** @var string[] */
-	protected const ALLOWED_PROPERTIES = [
+	protected const MAGIC_PROPERTIES = [
 		'apiDocs', 'apiURL', 'applicationURL', 'serviceName', 'userRevokeURL',
 	];
 
@@ -113,7 +113,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	public function __get(string $name):string|null{
 
-		if(in_array($name, $this::ALLOWED_PROPERTIES, true)){
+		if(in_array($name, $this::MAGIC_PROPERTIES, true)){
 			return $this->{$name};
 		}
 
@@ -198,9 +198,40 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * Creates an access token with the provider set to $this->serviceName
+	 *
+	 * @codeCoverageIgnore
 	 */
 	protected function createAccessToken():AccessToken{
 		return new AccessToken(['provider' => $this->serviceName]);
+	}
+
+	/**
+	 * Prepare request headers
+	 */
+	protected function getRequestHeaders(array|null $headers = null):array{
+		/** @noinspection PhpParamsInspection sup PHPStorm?? */
+		return array_merge($this::HEADERS_API, ($headers ?? []));
+	}
+
+	/**
+	 * Prepares the request URL
+	 */
+	protected function getRequestURL(string $path, array|null $params = null):string{
+		return QueryUtil::merge($this->getRequestTarget($path), $this->cleanQueryParams(($params ?? [])));
+	}
+
+	/**
+	 * Cleans an array of query parameters
+	 */
+	protected function cleanQueryParams(iterable $params):array{
+		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_INT_STRING, true);
+	}
+
+	/**
+	 * Cleans an array of body parameters
+	 */
+	protected function cleanBodyParams(iterable $params):array{
+		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_BOOL, true);
 	}
 
 	/**
@@ -236,28 +267,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * Prepare request headers
-	 */
-	protected function getRequestHeaders(array|null $headers = null):array{
-		/** @noinspection PhpParamsInspection sup PHPStorm?? */
-		return array_merge($this::HEADERS_API, ($headers ?? []));
-	}
-
-	/**
-	 * Prepares the request URL
-	 */
-	protected function getRequestURL(string $path, array|null $params = null):string{
-		return QueryUtil::merge($this->getRequestTarget($path), $this->cleanQueryParams(($params ?? [])));
-	}
-
-	/**
-	 * Cleans an array of query parameters
-	 */
-	protected function cleanQueryParams(iterable $params):array{
-		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_INT_STRING, true);
-	}
-
-	/**
 	 * Prepares the request body
 	 *
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
@@ -265,7 +274,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	protected function getRequestBody(StreamInterface|array|string $body, RequestInterface $request):StreamInterface{
 
 		if($body instanceof StreamInterface){
-			return $body; // @codeCoverageIgnore
+			return $body;
 		}
 
 		if(is_string($body)){
@@ -288,13 +297,6 @@ abstract class OAuthProvider implements OAuthInterface{
 		}
 
 		throw new ProviderException('invalid body/content-type');  // @codeCoverageIgnore
-	}
-
-	/**
-	 * Cleans an array of body parameters
-	 */
-	protected function cleanBodyParams(iterable $params):array{
-		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_BOOL, true);
 	}
 
 	/**

@@ -64,7 +64,7 @@ class Stripe extends OAuth2Provider implements CSRFToken, TokenRefresh, TokenInv
 	/**
 	 * @inheritDoc
 	 */
-	public function invalidateAccessToken(AccessToken|null $token = null):bool{
+	public function InvalidateAccessToken(AccessToken|null $token = null):bool{
 
 		if($token === null && !$this->storage->hasAccessToken($this->serviceName)){
 			throw new ProviderException('no token given');

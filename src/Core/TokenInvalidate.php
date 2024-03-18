@@ -27,6 +27,6 @@ interface TokenInvalidate{
 	 *
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function invalidateAccessToken(AccessToken|null $token = null):bool;
+	public function InvalidateAccessToken(AccessToken|null $token = null):bool;
 
 }
