@@ -1,7 +1,9 @@
 /.build            export-ignore
 /.github           export-ignore
+/.idea             export-ignore
 /.phan             export-ignore
 /.phpdoc           export-ignore
+/config            export-ignore
 /docs              export-ignore
 /examples          export-ignore
 /tests             export-ignore
