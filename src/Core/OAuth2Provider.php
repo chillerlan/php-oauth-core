@@ -269,13 +269,15 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
-			throw new ProviderException(sprintf('invalid state for "%s"', $this->serviceName));
+			throw new ProviderException(sprintf('invalid CSRF state for "%s"', $this->serviceName));
 		}
 
 		if(!hash_equals($this->storage->getCSRFState($this->serviceName), $state)){
 			throw new ProviderException(sprintf('invalid CSRF state for provider "%s": %s', $this->serviceName, $state));
 		}
 
+		// delete the used token
+		$this->storage->clearCSRFState($this->serviceName);
 	}
 
 	/**
