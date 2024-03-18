@@ -10,29 +10,27 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\DeviantArt;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property \chillerlan\OAuth\Providers\DeviantArt $provider
  */
-class DeviantArtAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'DEVIANTART';
+#[Group('shortTokenExpiry')]
+#[Group('providerLiveTest')]
+class DeviantArtAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return DeviantArt::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->username);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'DEVIANTART';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->username);
 	}
 
 }

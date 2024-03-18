@@ -10,41 +10,27 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\NPROne;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property \chillerlan\OAuth\Providers\NPROne $provider
  */
-class NPROneAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'NPRONE';
+#[Group('shortTokenExpiry')]
+#[Group('providerLiveTest')]
+class NPROneAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return NPROne::class;
 	}
 
-	public static function requestTargetProvider():array{
-		return [
-			'empty'          => ['', 'https://localhost/api'],
-			'slash'          => ['/', 'https://localhost/api/'],
-			'no slashes'     => ['a', 'https://localhost/api/a'],
-			'leading slash'  => ['/b', 'https://localhost/api/b'],
-			'trailing slash' => ['c/', 'https://localhost/api/c/'],
-#			'full url given' => ['https://localhost/other/path/d', 'https://localhost/other/path/d'],
-#			'ignore params'  => ['https://localhost/api/e/?with=param#foo', 'https://localhost/api/e/'],
-		];
+	protected function getEnvPrefix():string{
+		return 'NPRONE';
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->attributes->email);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->attributes->email);
 	}
 
 }

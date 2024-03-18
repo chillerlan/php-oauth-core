@@ -10,33 +10,26 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\Foursquare;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Foursquare API usage tests/examples
- *
- * @link https://developer.foursquare.com/docs
- *
  * @property \chillerlan\OAuth\Providers\Foursquare $provider
  */
-class FoursquareAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'FOURSQUARE';
+#[Group('providerLiveTest')]
+class FoursquareAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Foursquare::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->response->user->id);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'FOURSQUARE';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->response->user->id);
 	}
 
 }

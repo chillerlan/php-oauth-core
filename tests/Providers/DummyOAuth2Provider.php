@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Core;
+namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Provider, TokenInvalidate, TokenRefresh};
 use chillerlan\OAuth\Providers\ProviderException;
@@ -32,7 +32,7 @@ final class DummyOAuth2Provider extends OAuth2Provider implements ClientCredenti
 	/**
 	 * @inheritDoc
 	 */
-	public function invalidateAccessToken(AccessToken $token = null):bool{
+	public function InvalidateAccessToken(AccessToken $token = null):bool{
 
 		if($token === null && !$this->storage->hasAccessToken($this->serviceName)){
 			throw new ProviderException('no token given');

@@ -11,12 +11,11 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\Twitter;
-use chillerlan\OAuthTest\Providers\OAuth1ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\Twitter $provider
  */
-class TwitterTest extends OAuth1ProviderTestAbstract{
+final class TwitterTest extends OAuth1ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Twitter::class;

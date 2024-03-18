@@ -11,12 +11,11 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\YouTube;
-use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\YouTube $provider
  */
-class YouTubeTest extends OAuth2ProviderTestAbstract{
+final class YouTubeTest extends OAuth2ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return YouTube::class;

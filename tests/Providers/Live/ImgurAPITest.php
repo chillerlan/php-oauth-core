@@ -10,37 +10,34 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\Imgur;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property \chillerlan\OAuth\Providers\Imgur $provider
  */
-class ImgurAPITest extends OAuth2APITestAbstract{
+#[Group('providerLiveTest')]
+class ImgurAPITest extends OAuth2ProviderLiveTestAbstract{
 
-	protected string $ENV = 'IMGUR';
+	protected function getProviderFQCN():string{
+		return Imgur::class;
+	}
+
+	protected function getEnvPrefix():string{
+		return 'IMGUR';
+	}
 
 	protected function setUp():void{
 		parent::setUp();
 
 		$token = $this->storage->getAccessToken($this->provider->serviceName);
 
-		$this->testuser = $token->extraParams['account_id'];
+		$this->TEST_USER = $token->extraParams['account_id'];
 	}
 
-	protected function getProviderFQCN():string{
-		return Imgur::class;
-	}
-
-	public function testMe():void{
-		try{
-			$this::assertSame((int)$this->testuser, MessageUtil::decodeJSON($this->provider->me())->data->id);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame((int)$this->TEST_USER, $json->data->id);
 	}
 
 }

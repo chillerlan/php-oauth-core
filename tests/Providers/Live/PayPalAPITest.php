@@ -10,41 +10,39 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\PayPal;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 use function is_array;
 
 /**
  * @property \chillerlan\OAuth\Providers\PayPal $provider
  */
-class PayPalAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'PAYPAL'; // PAYPAL_SANDBOX
+#[Group('shortTokenExpiry')]
+#[Group('providerLiveTest')]
+class PayPalAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return PayPal::class;
 	}
 
-	public function testMe():void{
-		try{
-			$json = MessageUtil::decodeJSON($this->provider->me());
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'PAYPAL'; // PAYPAL_SANDBOX
+	}
 
-		if(!isset($json->emails) || !is_array($json->emails) || empty($json->emails)){
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+
+		if(empty($json->emails) || !is_array($json->emails)){
 			$this->markTestSkipped('no email found');
 		}
 
 		foreach($json->emails as $email){
 			if($email->primary){
-				$this::assertSame($this->testuser, $email->value);
+				$this::assertSame($this->TEST_USER, $email->value);
 				return;
 			}
 		}
+
 	}
 
 }

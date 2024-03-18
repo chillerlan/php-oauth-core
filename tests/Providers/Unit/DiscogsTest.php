@@ -11,12 +11,11 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\Discogs;
-use chillerlan\OAuthTest\Providers\OAuth1ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\Discogs $provider
  */
-class DiscogsTest extends OAuth1ProviderTestAbstract{
+final class DiscogsTest extends OAuth1ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Discogs::class;

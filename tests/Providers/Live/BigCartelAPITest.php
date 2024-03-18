@@ -10,19 +10,25 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\BigCartel;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property \chillerlan\OAuth\Providers\BigCartel $provider
  */
-class BigCartelAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'BIGCARTEL';
+#[Group('providerLiveTest')]
+class BigCartelAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected int $account_id;
+
+	protected function getProviderFQCN():string{
+		return BigCartel::class;
+	}
+
+	protected function getEnvPrefix():string{
+		return 'BIGCARTEL';
+	}
 
 	protected function setUp():void{
 		parent::setUp();
@@ -30,17 +36,8 @@ class BigCartelAPITest extends OAuth2APITestAbstract{
 		$this->account_id = (int)$this->storage->getAccessToken($this->provider->serviceName)->extraParams['account_id'];
 	}
 
-	protected function getProviderFQCN():string{
-		return BigCartel::class;
-	}
-
-	public function testMe():void{
-		try{
-			$this::assertSame($this->account_id, (int)MessageUtil::decodeJSON($this->provider->me())->data[0]->id);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->account_id, (int)$json->data[0]->id);
 	}
 
 }

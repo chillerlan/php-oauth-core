@@ -10,29 +10,26 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\OpenCaching;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property \chillerlan\OAuth\Providers\OpenCaching $provider
  */
-class OpenCachingAPITest extends OAuth1APITestAbstract{
-
-	protected string $ENV = 'OKAPI';
+#[Group('providerLiveTest')]
+class OpenCachingAPITest extends OAuth1ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return OpenCaching::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->username);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'OKAPI';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->username);
 	}
 
 }

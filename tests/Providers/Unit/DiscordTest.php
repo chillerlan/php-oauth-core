@@ -11,12 +11,11 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\Discord;
-use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\Discord $provider
  */
-class DiscordTest extends OAuth2ProviderTestAbstract{
+final class DiscordTest extends OAuth2ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Discord::class;

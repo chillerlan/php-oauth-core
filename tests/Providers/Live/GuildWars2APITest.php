@@ -10,26 +10,32 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\GuildWars2;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property \chillerlan\OAuth\Providers\GuildWars2 $provider
  */
-class GuildWars2APITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = '';
+#[Group('providerLiveTest')]
+class GuildWars2APITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected AccessToken $token;
 	protected string      $tokenname;
 
+	protected function getProviderFQCN():string{
+		return GuildWars2::class;
+	}
+
+	protected function getEnvPrefix():string{
+		return '';
+	}
+
 	protected function setUp():void{
 		parent::setUp();
 
-		$tokenfile = $this->CFG.'/GuildWars2.token.json';
+		$tokenfile = $this->CFG_DIR.'/'.$this->provider->servicename.'.token.json';
 
 		$this->token = !file_exists($tokenfile)
 			? $this->provider->storeGW2Token($this->dotEnv->GW2_TOKEN)
@@ -38,17 +44,8 @@ class GuildWars2APITest extends OAuth2APITestAbstract{
 		$this->tokenname = $this->dotEnv->GW2_TOKEN_NAME;
 	}
 
-	protected function getProviderFQCN():string{
-		return GuildWars2::class;
-	}
-
-	public function testMe():void{
-		try{
-			$this::assertSame($this->tokenname, MessageUtil::decodeJSON($this->provider->me())->name);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->tokenname, $json->name);
 	}
 
 }

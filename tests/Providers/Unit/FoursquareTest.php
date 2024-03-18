@@ -11,12 +11,11 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\Foursquare;
-use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\Foursquare $provider
  */
-class FoursquareTest extends OAuth2ProviderTestAbstract{
+final class FoursquareTest extends OAuth2ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Foursquare::class;

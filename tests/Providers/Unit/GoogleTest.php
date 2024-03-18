@@ -11,12 +11,11 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\Google;
-use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\Google $provider
  */
-class GoogleTest extends OAuth2ProviderTestAbstract{
+final class GoogleTest extends OAuth2ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Google::class;

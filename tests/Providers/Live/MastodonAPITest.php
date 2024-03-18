@@ -10,43 +10,36 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\Mastodon;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Spotify API usage tests/examples
- *
- * @link https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md
- *
  * @property \chillerlan\OAuth\Providers\Mastodon $provider
  */
-class MastodonAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'MASTODON';
+#[Group('providerLiveTest')]
+class MastodonAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected string $testInstance;
-
-	protected function setUp():void{
-		parent::setUp();
-
-		$this->testInstance = ($this->dotEnv->get($this->ENV.'_INSTANCE') ?? '');
-
-		$this->provider->setInstance($this->testInstance);
-	}
 
 	protected function getProviderFQCN():string{
 		return Mastodon::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->acct);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'MASTODON';
+	}
+
+	protected function setUp():void{
+		parent::setUp();
+
+		$this->testInstance = ($this->dotEnv->get($this->ENV_PREFIX.'_INSTANCE') ?? '');
+
+		$this->provider->setInstance($this->testInstance);
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->acct);
 	}
 
 }

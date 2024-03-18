@@ -10,35 +10,26 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuth\Providers\Spotify;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Spotify API usage tests/examples
- *
- * Please note that Spotify ids may change and so these test may fail at times
- *
- * @link https://developer.spotify.com/web-api/endpoint-reference/
- *
  * @property \chillerlan\OAuth\Providers\Spotify $provider
  */
-class SpotifyAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'SPOTIFY';
+#[Group('providerLiveTest')]
+class SpotifyAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Spotify::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->id);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'SPOTIFY';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->id);
 	}
 
 }

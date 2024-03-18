@@ -14,7 +14,8 @@ namespace chillerlan\OAuthTest\Core;
 use chillerlan\OAuth\Core\AccessToken;
 use PHPUnit\Framework\Attributes\{DataProvider, Group};
 use PHPUnit\Framework\TestCase;
-use function sleep, time;
+use function sleep;
+use function time;
 
 /**
  * Tests the AccessToken class

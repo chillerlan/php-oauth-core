@@ -10,31 +10,26 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\Discogs;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Discogs API test
- *
  * @property \chillerlan\OAuth\Providers\Discogs $provider
  */
-class DiscogsAPITest extends OAuth1APITestAbstract{
-
-	protected string $ENV = 'DISCOGS';
+#[Group('providerLiveTest')]
+class DiscogsAPITest extends OAuth1ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Discogs::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->username);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'DISCOGS';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->username);
 	}
 
 }

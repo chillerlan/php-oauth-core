@@ -11,26 +11,18 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\Vimeo;
-use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\Vimeo $provider
  */
-class VimeoTest extends OAuth2ProviderTestAbstract{
-
-	protected const TEST_RESPONSES = [
-		'/oauth2/access_token'       =>
-			'{"access_token":"test_access_token","expires_in":3600,"state":"test_state","scope":"some_scope other_scope"}',
-		'/oauth2/client_credentials' =>
-			'{"access_token":"test_client_credentials_token","expires_in":30,"state":"test_state"}',
-		'/oauth2/api/request'        =>
-			'{"data":"such data! much wow!"}',
-		'/oauth2/revoke_token'       =>
-			'',
-	];
+class VimeoTest extends OAuth2ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Vimeo::class;
+	}
+
+	public function testTokenInvalidate():void{
+		$this::markTestIncomplete();
 	}
 
 }

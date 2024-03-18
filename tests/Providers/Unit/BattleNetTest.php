@@ -12,12 +12,12 @@ namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\BattleNet;
 use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @property \chillerlan\OAuth\Providers\BattleNet $provider
  */
-class BattleNetTest extends OAuth2ProviderTestAbstract{
+final class BattleNetTest extends OAuth2ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return BattleNet::class;
@@ -36,6 +36,23 @@ class BattleNetTest extends OAuth2ProviderTestAbstract{
 		$this->expectExceptionMessage('invalid region: foo');
 
 		$this->provider->setRegion('foo');
+	}
+
+	public static function requestTargetProvider():array{
+		return [
+			'empty'          => ['', 'https://eu.api.blizzard.com'],
+			'slash'          => ['/', 'https://eu.api.blizzard.com/'],
+			'no slashes'     => ['a', 'https://eu.api.blizzard.com/a'],
+			'leading slash'  => ['/b', 'https://eu.api.blizzard.com/b'],
+			'trailing slash' => ['c/', 'https://eu.api.blizzard.com/c/'],
+			'full url given' => ['https://oauth.battle.net/other/path/d', 'https://oauth.battle.net/other/path/d'],
+			'ignore params'  => ['https://oauth.battle.net/api/e/?with=param#foo', 'https://oauth.battle.net/api/e/'],
+		];
+	}
+
+	#[DataProvider('requestTargetProvider')]
+	public function testGetRequestTarget(string $path, string $expected):void{
+		$this::assertSame($expected, $this->invokeReflectionMethod('getRequestTarget', [$path]));
 	}
 
 }

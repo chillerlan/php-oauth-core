@@ -11,65 +11,14 @@
 namespace chillerlan\OAuthTest\Providers\Unit;
 
 use chillerlan\OAuth\Providers\GuildWars2;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2ProviderTestAbstract;
 
 /**
  * @property \chillerlan\OAuth\Providers\GuildWars2 $provider
  */
-class GuildWars2Test extends OAuth2ProviderTestAbstract{
-
-	protected const TEST_PROPERTIES = [
-		'authURL' => 'https://localhost/gw2/auth',
-		'apiURL'  => 'https://localhost/gw2/api',
-	];
-
-	protected const TEST_RESPONSES = [
-		'/gw2/auth'        => '{"id":"00000000-1111-2222-3333-444444444444","name":"GW2Token","permissions":["foo","bar"]}',
-		'/gw2/api/request' => '{"data":"such data! much wow!"}',
-	];
+class GuildWars2Test extends OAuth2ProviderUnitTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return GuildWars2::class;
-	}
-
-	public function testStoreGW2Token():void{
-		$id     = '00000000-1111-2222-3333-444444444444';
-		$secret = '55555555-6666-7777-8888-999999999999';
-
-		$token = $this->provider->storeGW2Token($id.$secret);
-
-		$this::assertSame($id.$secret, $token->accessToken);
-		$this::assertSame($secret, $token->accessTokenSecret);
-	}
-
-	public function testStoreGW2InvalidToken():void{
-		$this->expectException(ProviderException::class);
-		$this->expectExceptionMessage('invalid token');
-
-		$this->provider->storeGW2Token('foo');
-	}
-
-	public function testGetAuthURL():void{
-		$this->markTestSkipped('N/A');
-	}
-
-	public function testGetAccessToken():void{
-		$this->markTestSkipped('N/A');
-	}
-
-	public function testRequestGetAuthURLNotSupportedException():void{
-		$this->expectException(ProviderException::class);
-		$this->expectExceptionMessage('GuildWars2 does not support authentication anymore.');
-
-		$this->provider->getAuthURL();
-	}
-
-	public function testRequestGetAccessTokenNotSupportedException():void{
-		$this->expectException(ProviderException::class);
-		$this->expectExceptionMessage('GuildWars2 does not support authentication anymore.');
-
-		$this->provider->getAccessToken('foo');
 	}
 
 }

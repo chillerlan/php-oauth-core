@@ -1,30 +1,26 @@
 <?php
 /**
- * Class OAuth2APITestAbstract
+ * Class OAuth2ProviderLiveTestAbstract
  *
- * @created      02.08.2019
+ * @created      17.03.2024
  * @author       smiley <smiley@chillerlan.net>
- * @copyright    2019 smiley
+ * @copyright    2024 smiley
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Providers;
+namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, OAuth2Interface};
+use chillerlan\OAuth\Core\AccessToken;
+use chillerlan\OAuth\Core\ClientCredentials;
 use chillerlan\OAuth\Storage\MemoryStorage;
-
 use function time;
 
 /**
  * @property \chillerlan\OAuth\Core\OAuth2Interface $provider
  */
-abstract class OAuth2APITestAbstract extends OAuthAPITestAbstract{
+abstract class OAuth2ProviderLiveTestAbstract extends OAuthProviderLiveTestAbstract{
 
 	protected array $clientCredentialsScopes = [];
-
-	public function testOAuth2Instance():void{
-		$this::assertInstanceOf(OAuth2Interface::class, $this->provider);
-	}
 
 	public function testRequestCredentialsToken():void{
 

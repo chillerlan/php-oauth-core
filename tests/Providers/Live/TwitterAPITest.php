@@ -10,24 +10,26 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
-use chillerlan\OAuth\Providers\ProviderException;
 use chillerlan\OAuth\Providers\Twitter;
-use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Twitter API tests & examples
- *
- * @link https://developer.twitter.com/en/docs/api-reference-index
- *
  * @property \chillerlan\OAuth\Providers\Twitter $provider
  */
-class TwitterAPITest extends OAuth1APITestAbstract{
-
-	protected string $ENV = 'TWITTER';
+#[Group('providerLiveTest')]
+class TwitterAPITest extends OAuth1ProviderLiveTestAbstract{
 
 	protected string $screen_name;
 	protected int $user_id;
+
+	protected function getProviderFQCN():string{
+		return Twitter::class;
+	}
+
+	protected function getEnvPrefix():string{
+		return 'TWITTER';
+	}
 
 	protected function setUp():void{
 		parent::setUp();
@@ -36,17 +38,8 @@ class TwitterAPITest extends OAuth1APITestAbstract{
 		$this->screen_name = $token->extraParams['screen_name'];
 	}
 
-	protected function getProviderFQCN():string{
-		return Twitter::class;
-	}
-
-	public function testMe():void{
-		try{
-			$this::assertSame($this->screen_name, MessageUtil::decodeJSON($this->provider->me())->screen_name);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->screen_name, $json->screen_name);
 	}
 
 }

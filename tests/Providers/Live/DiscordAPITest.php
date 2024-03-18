@@ -10,21 +10,27 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\Discord;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * @property  \chillerlan\OAuth\Providers\Discord $provider
+ * @property \chillerlan\OAuth\Providers\Discord $provider
  */
-class DiscordAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'DISCORD';
+#[Group('providerLiveTest')]
+class DiscordAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Discord::class;
+	}
+
+	protected function getEnvPrefix():string{
+		return 'DISCORD';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->username);
 	}
 
 	public function testRequestCredentialsToken():void{
@@ -38,15 +44,6 @@ class DiscordAPITest extends OAuth2APITestAbstract{
 		}
 
 		$this->logger->debug('APITestSupportsOAuth2ClientCredentials', $token->toArray());
-	}
-
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->username);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
 	}
 
 }

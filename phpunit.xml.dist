@@ -5,11 +5,20 @@
          cacheDirectory=".build/phpunit.cache"
          cacheResultFile=".build/phpunit.result.cache"
          colors="true"
+         beStrictAboutCoverageMetadata="true"
 >
 	<testsuites>
-		<testsuite name="php-oauth-core test suite">
-			<directory>tests</directory>
-			<exclude>tests/Helpers</exclude>
+		<testsuite name="php-oauth-core">
+			<directory>tests/Core</directory>
+		</testsuite>
+		<testsuite name="php-oauth-core token storage">
+			<directory>tests/Core</directory>
+		</testsuite>
+		<testsuite name="php-oauth-providers unit tests">
+			<directory>tests/Providers/Unit</directory>
+		</testsuite>
+		<testsuite name="php-oauth-providers live API tests">
+			<directory>tests/Providers/Live</directory>
 		</testsuite>
 	</testsuites>
 	<source>
@@ -23,18 +32,24 @@
 			<xml outputDirectory=".build/coverage/coverage-xml"/>
 		</report>
 	</coverage>
+	<groups>
+		<exclude>
+			<!--
+			<group>slow</group>
+			<group>shortTokenExpiry</group>
+			-->
+			<group>providerLiveTest</group>
+		</exclude>
+	</groups>
 	<php>
 		<!-- whether the test runs on CI - set to false to allow live API tests to run -->
 		<const name="TEST_IS_CI" value="true"/>
 		<!-- the config directory, where .env, cacert.pem and test oauth tokens reside, relative from project root -->
-		<const name="TEST_CFGDIR" value="./config"/>
+		<const name="TEST_CFGDIR" value="config"/>
 		<!-- the filename of your .env file -->
 		<const name="TEST_ENVFILE" value=".env_example"/>
 		<!-- the http client factory for live api tests -->
-		<!--
-		<const name="TEST_CLIENT_FACTORY" value="chillerlan\OAuthTest\Helpers\ChillerlanHttpClientFactory"/>
-		 -->
-		<const name="TEST_CLIENT_FACTORY" value="chillerlan\OAuthTest\Helpers\GuzzleHttpClientFactory"/>
+		<const name="HTTP_CLIENT_FACTORY" value="chillerlan\PHPUnitHttp\GuzzleHttpClientFactory"/>
 		<!-- PSR-17 factories to use in tests -->
 		<const name="REQUEST_FACTORY" value="GuzzleHttp\Psr7\HttpFactory"/>
 		<const name="RESPONSE_FACTORY" value="GuzzleHttp\Psr7\HttpFactory"/>

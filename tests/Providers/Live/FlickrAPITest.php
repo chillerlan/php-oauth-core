@@ -10,20 +10,26 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\Flickr;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth1APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property  \chillerlan\OAuth\Providers\Flickr $provider
  */
-class FlickrAPITest extends OAuth1APITestAbstract{
-
-	protected string $ENV = 'FLICKR';
+#[Group('providerLiveTest')]
+class FlickrAPITest extends OAuth1ProviderLiveTestAbstract{
 
 	protected string $test_name;
 	protected string $test_id;
+
+	protected function getProviderFQCN():string{
+		return Flickr::class;
+	}
+
+	protected function getEnvPrefix():string{
+		return 'FLICKR';
+	}
 
 	protected function setUp():void{
 		parent::setUp();
@@ -34,21 +40,9 @@ class FlickrAPITest extends OAuth1APITestAbstract{
 		$this->test_id   = $tokenParams['user_nsid'];
 	}
 
-	protected function getProviderFQCN():string{
-		return Flickr::class;
-	}
-
-	public function testMe():void{
-		try{
-			$j = MessageUtil::decodeJSON($this->provider->me());
-
-			$this::assertSame($this->test_name, $j->user->username->_content);
-			$this::assertSame($this->test_id, $j->user->id);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
-
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->test_name, $json->user->username->_content);
+		$this::assertSame($this->test_id, $json->user->id);
 	}
 
 }

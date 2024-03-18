@@ -10,29 +10,26 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\Tumblr2;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
-use Throwable;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @property \chillerlan\OAuth\Providers\Tumblr2 $provider
  */
-class Tumblr2APITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'TUMBLR';
+#[Group('providerLiveTest')]
+class Tumblr2APITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Tumblr2::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->response->user->name);
-		}
-		catch(Throwable){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'TUMBLR';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->response->user->name);
 	}
 
 }

@@ -13,23 +13,46 @@ namespace chillerlan\OAuthTest\Providers\Live;
 use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\MusicBrainz;
 use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
-class MusicBrainzAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'MUSICBRAINZ';
+/**
+ * @property \chillerlan\OAuth\Providers\MusicBrainz $provider
+ */
+#[Group('providerLiveTest')]
+class MusicBrainzAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return MusicBrainz::class;
 	}
 
+	protected function getEnvPrefix():string{
+		return 'MUSICBRAINZ';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		// noop
+	}
+
+	public function testMe():void{
+		$this::markTestSkipped('user endpoint N/A');
+	}
+
+	public function testMeErrorException():void{
+		$this::markTestSkipped('not implemented');
+	}
+
 	public function testArtistId():void{
 		try{
-			$r = $this->provider->request('/artist/573510d6-bb5d-4d07-b0aa-ea6afe39e28d', ['inc' => 'url-rels work-rels']);
-			$j = MessageUtil::decodeJSON($r);
+			$response = $this->provider->request(
+				'/artist/573510d6-bb5d-4d07-b0aa-ea6afe39e28d',
+				['inc' => 'url-rels work-rels'],
+			);
 
-			$this::assertSame('Helium', $j->name);
-			$this::assertSame('573510d6-bb5d-4d07-b0aa-ea6afe39e28d', $j->id);
+			$json = MessageUtil::decodeJSON($response);
+
+			$this::assertSame('Helium', $json->name);
+			$this::assertSame('573510d6-bb5d-4d07-b0aa-ea6afe39e28d', $json->id);
 		}
 		catch(ProviderException){
 			$this::markTestSkipped('token is missing or expired');
@@ -38,16 +61,19 @@ class MusicBrainzAPITest extends OAuth2APITestAbstract{
 
 	public function testArtistIdXML():void{
 		try{
-			$r = $this->provider->request('/artist/573510d6-bb5d-4d07-b0aa-ea6afe39e28d', ['inc' => 'url-rels work-rels', 'fmt' => 'xml']);
-			$x = MessageUtil::decodeXML($r);
+			$response = $this->provider->request(
+				'/artist/573510d6-bb5d-4d07-b0aa-ea6afe39e28d',
+				['inc' => 'url-rels work-rels', 'fmt' => 'xml'],
+			);
 
-			$this::assertSame('Helium', (string)$x->artist[0]->name);
-			$this::assertSame('573510d6-bb5d-4d07-b0aa-ea6afe39e28d', (string)$x->artist[0]->attributes()['id']);
+			$xml = MessageUtil::decodeXML($response);
+
+			$this::assertSame('Helium', (string)$xml->artist[0]->name);
+			$this::assertSame('573510d6-bb5d-4d07-b0aa-ea6afe39e28d', (string)$xml->artist[0]->attributes()['id']);
 		}
 		catch(ProviderException){
 			$this::markTestSkipped('token is missing or expired');
 		}
 	}
-
 
 }

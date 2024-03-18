@@ -10,40 +10,33 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\MailChimp;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * MailChimp API usage tests/examples
- *
- * @link http://developer.mailchimp.com/documentation/mailchimp/reference/overview/
- *
  * @property \chillerlan\OAuth\Providers\MailChimp $provider
  */
-class MailChimpAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'MAILCHIMP';
+#[Group('providerLiveTest')]
+class MailChimpAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return MailChimp::class;
+	}
+
+	protected function getEnvPrefix():string{
+		return 'MAILCHIMP';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->account_name);
 	}
 
 	public function testGetTokenMetadata():void{
 		$token = $this->storage->getAccessToken($this->provider->serviceName);
 		$token = $this->provider->getTokenMetadata($token);
 
-		$this::assertSame($this->testuser, $token->extraParams['accountname']);
-	}
-
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->account_name);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+		$this::assertSame($this->TEST_USER, $token->extraParams['accountname']);
 	}
 
 }

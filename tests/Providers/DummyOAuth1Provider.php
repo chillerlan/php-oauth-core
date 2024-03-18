@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace chillerlan\OAuthTest\Core;
+namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\Core\{AccessToken, OAuth1Provider, TokenInvalidate};
 use chillerlan\OAuth\Providers\ProviderException;
@@ -26,13 +26,13 @@ final class DummyOAuth1Provider extends OAuth1Provider implements TokenInvalidat
 	protected string      $accessTokenURL  = 'https://example.com/oauth/access_token';
 	protected string      $requestTokenURL = 'https://example.com/oauth/request_token';
 	protected string      $revokeURL       = 'https://example.com/oauth/revoke';
-	protected string      $apiURL          = 'https://api.example.com';
+	protected string      $apiURL          = 'https://api.sub.example.com';
 	protected string|null $userRevokeURL   = 'https://account.example.com/apps/';
 
 	/**
 	 * @inheritDoc
 	 */
-	public function invalidateAccessToken(AccessToken $token = null):bool{
+	public function InvalidateAccessToken(AccessToken $token = null):bool{
 
 		if($token === null && !$this->storage->hasAccessToken($this->serviceName)){
 			throw new ProviderException('no token given');

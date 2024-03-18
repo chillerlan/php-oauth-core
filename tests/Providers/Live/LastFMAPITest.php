@@ -10,41 +10,34 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Providers\LastFM;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuthAPITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * last.fm API test & examples
- *
- * @link https://www.last.fm/api/intro
- *
  * @property \chillerlan\OAuth\Providers\LastFM $provider
  */
-class LastFMAPITest extends OAuthAPITestAbstract{
-
-	protected string $ENV = 'LASTFM';
-
-	protected function setUp():void{
-		parent::setUp();
-
-		// username is stored in the session token
-		$token          = $this->storage->getAccessToken($this->provider->serviceName);
-		$this->testuser = $token->extraParams['session']['name'];
-	}
+#[Group('providerLiveTest')]
+class LastFMAPITest extends OAuthProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return LastFM::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertSame($this->testuser, MessageUtil::decodeJSON($this->provider->me())->user->name);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'LASTFM';
+	}
+
+	protected function setUp():void{
+		parent::setUp();
+
+		// username is stored in the session token
+		$token           = $this->storage->getAccessToken($this->provider->serviceName);
+		$this->TEST_USER = $token->extraParams['session']['name'];
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertSame($this->TEST_USER, $json->user->name);
 	}
 
 }

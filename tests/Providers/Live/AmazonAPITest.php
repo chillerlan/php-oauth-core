@@ -10,31 +10,38 @@
 
 namespace chillerlan\OAuthTest\Providers\Live;
 
-use chillerlan\HTTP\Utils\MessageUtil;
+use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\Amazon;
-use chillerlan\OAuth\Providers\ProviderException;
-use chillerlan\OAuthTest\Providers\OAuth2APITestAbstract;
+use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Amazon API usage tests/examples
-  *
  * @property \chillerlan\OAuth\Providers\Amazon $provider
  */
-class AmazonAPITest extends OAuth2APITestAbstract{
-
-	protected string $ENV = 'AMAZON';
+#[Group('providerLiveTest')]
+class AmazonAPITest extends OAuth2ProviderLiveTestAbstract{
 
 	protected function getProviderFQCN():string{
 		return Amazon::class;
 	}
 
-	public function testMe():void{
-		try{
-			$this::assertMatchesRegularExpression('/[a-z\d.]+/i', MessageUtil::decodeJSON($this->provider->me())->user_id);
-		}
-		catch(ProviderException){
-			$this::markTestSkipped('token is missing or expired');
-		}
+	protected function getEnvPrefix():string{
+		return 'AMAZON';
+	}
+
+	protected function assertMeResponse(ResponseInterface $response, object|null $json):void{
+		$this::assertMatchesRegularExpression('/[a-z\d.]+/i', $json->user_id);
+	}
+
+	public function testMeErrorException():void{
+		$token                    = $this->storage->getAccessToken($this->provider->serviceName);
+		// avoid refresh
+		$token->expires           = AccessToken::EOL_NEVER_EXPIRES;
+		$token->refreshToken      = null;
+		// invalidate token
+		$token->accessToken       = 'Atza|nope'; // amazon tokens are prefixed
+
+		$this->assertMeErrorException($token);
 	}
 
 }
