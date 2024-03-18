@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace chillerlan\OAuthTest\Core;
 
 use chillerlan\OAuth\Core\AccessToken;
-use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\{DataProvider, Group};
 use PHPUnit\Framework\TestCase;
 use function sleep, time;
 
@@ -79,6 +79,7 @@ final class AccessTokenTest extends TestCase{
 		$this::assertSame($isExpired, $this->token->isExpired());
 	}
 
+	#[Group('slow')]
 	public function testIsExpiredVariable():void{
 		$expiry = (time() + 3600);
 		$this->token->setExpiry($expiry);

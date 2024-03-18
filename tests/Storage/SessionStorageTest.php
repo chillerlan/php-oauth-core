@@ -14,7 +14,7 @@ namespace chillerlan\OAuthTest\Storage;
 use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{OAuthStorageInterface, SessionStorage};
 
-class SessionStorageTest extends StorageTestAbstract{
+final class SessionStorageTest extends StorageTestAbstract{
 
 	protected function initStorage():OAuthStorageInterface{
 		return new SessionStorage(new OAuthOptions(['sessionStart' => true]));
