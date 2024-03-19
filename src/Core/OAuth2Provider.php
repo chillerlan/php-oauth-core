@@ -259,25 +259,27 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @implements \chillerlan\OAuth\Core\CSRFToken::checkState()
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException|\chillerlan\OAuth\Core\CSRFStateMismatchException
 	 * @internal
 	 */
 	public function checkState(string|null $state = null):void{
 
 		if(!$this instanceof CSRFToken){
-			throw new ProviderException('CSRF protection not supported');
+			throw new ProviderException('CSRF protection not supported'); // @codeCoverageIgnore
 		}
 
 		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
-			throw new ProviderException(sprintf('invalid CSRF state for "%s"', $this->serviceName));
+			throw new ProviderException(sprintf('invalid CSRF state for provider "%s"', $this->serviceName));
 		}
 
-		if(!hash_equals($this->storage->getCSRFState($this->serviceName), $state)){
-			throw new ProviderException(sprintf('invalid CSRF state for provider "%s": %s', $this->serviceName, $state));
-		}
-
+		$knownState = $this->storage->getCSRFState($this->serviceName);
 		// delete the used token
 		$this->storage->clearCSRFState($this->serviceName);
+
+		if(!hash_equals($knownState, $state)){
+			throw new CSRFStateMismatchException(sprintf('CSRF state mismatch for provider "%s": %s', $this->serviceName, $state));
+		}
+
 	}
 
 	/**

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace chillerlan\OAuthTest\Providers\Unit;
 
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Interface, OAuthInterface, TokenRefresh};
+use chillerlan\OAuth\Core\{AccessToken, CSRFStateMismatchException, CSRFToken, OAuth2Interface, OAuthInterface, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
 use chillerlan\OAuth\Providers\ProviderException;
 
@@ -67,7 +67,7 @@ abstract class OAuth2ProviderUnitTestAbstract extends OAuthProviderUnitTestAbstr
 		$this::assertTrue($this->storage->hasCSRFState($this->provider->serviceName));
 
 		// will delete the state after a successful check
-		$this->invokeReflectionMethod('checkState', ['test_state']);
+		$this->provider->checkState('test_state');
 
 		$this::assertFalse($this->storage->hasCSRFState($this->provider->serviceName));
 	}
@@ -81,7 +81,7 @@ abstract class OAuth2ProviderUnitTestAbstract extends OAuthProviderUnitTestAbstr
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid CSRF state');
 
-		$this->invokeReflectionMethod('checkState');
+		$this->provider->checkState();
 	}
 
 	public function testCheckCSRFStateInvalidStateException():void{
@@ -93,7 +93,34 @@ abstract class OAuth2ProviderUnitTestAbstract extends OAuthProviderUnitTestAbstr
 		$this->expectException(ProviderException::class);
 		$this->expectExceptionMessage('invalid CSRF state');
 
-		$this->invokeReflectionMethod('checkState', ['invalid_test_state']);
+		$this->provider->checkState('invalid_test_state');
+	}
+
+	public function testCheckCSRFStateMismatchException():void{
+
+		if(!$this->provider instanceof CSRFToken){
+			$this->markTestSkipped('CSRFToken N/A');
+		}
+
+		$this->expectException(CSRFStateMismatchException::class);
+		$this->expectExceptionMessage('CSRF state mismatch');
+
+		$this->storage->storeCSRFState('known_state', $this->provider->serviceName);
+
+		$this->provider->checkState('unknown_state');
+	}
+
+	public function testSetState():void{
+
+		if(!$this->provider instanceof CSRFToken){
+			$this->markTestSkipped('CSRFToken N/A');
+		}
+
+		$params = $this->provider->setState(['foo' => 'bar']);
+
+		$this::assertArrayHasKey('state', $params);
+		$this::assertTrue($this->storage->hasCSRFState($this->provider->serviceName));
+		$this::assertSame($params['state'], $this->storage->getCSRFState($this->provider->serviceName));
 	}
 
 	/*
