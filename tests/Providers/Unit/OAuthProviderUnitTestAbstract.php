@@ -97,7 +97,7 @@ abstract class OAuthProviderUnitTestAbstract extends ProviderUnitTestAbstract{
 		$this->storage->storeAccessToken(new AccessToken(['expires' => 42]), $this->provider->serviceName);
 
 		$this::assertTrue($this->storage->hasAccessToken($this->provider->serviceName));
-		$this::assertTrue($this->provider->InvalidateAccessToken());
+		$this::assertTrue($this->provider->invalidateAccessToken());
 		$this::assertFalse($this->storage->hasAccessToken($this->provider->serviceName));
 	}
 

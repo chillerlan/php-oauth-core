@@ -131,7 +131,7 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 	/**
 	 * @inheritDoc
 	 */
-	public function InvalidateAccessToken(AccessToken|null $token = null):bool{
+	public function invalidateAccessToken(AccessToken|null $token = null):bool{
 
 		if($token === null && !$this->storage->hasAccessToken($this->serviceName)){
 			throw new ProviderException('no token given');
