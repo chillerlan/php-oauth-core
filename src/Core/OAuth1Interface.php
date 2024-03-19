@@ -21,7 +21,7 @@ interface OAuth1Interface extends OAuthInterface{
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.1
 	 *
-	 * @see \chillerlan\OAuth\Core\OAuth1Provider::getAuthURL()
+	 * @see \chillerlan\OAuth\Core\OAuthProviderInterface::getAuthURL()
 	 */
 	public function getRequestToken():AccessToken;
 

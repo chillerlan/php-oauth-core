@@ -53,8 +53,9 @@ interface OAuthInterface extends ClientInterface{
 	 * and returns a PSR-7 UriInterface with all necessary parameters set
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.2
+	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
 	 */
-	public function getAuthURL(array|null $params = null):UriInterface;
+	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface;
 
 	/**
 	 * Authorizes the $request with the credentials from the given $token

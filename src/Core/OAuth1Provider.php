@@ -31,7 +31,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	/**
 	 * @inheritDoc
 	 */
-	public function getAuthURL(array|null $params = null):UriInterface{
+	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		$params = array_merge(($params ?? []), ['oauth_token' => $this->getRequestToken()->accessToken]);
 
 		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $params));
@@ -134,7 +134,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		UriInterface|string $url,
 		array               $params,
 		string              $method,
-		string|null         $accessTokenSecret = null
+		string|null         $accessTokenSecret = null,
 	):string{
 
 		if(!$url instanceof UriInterface){
