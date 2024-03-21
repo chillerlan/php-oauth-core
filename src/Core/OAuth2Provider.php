@@ -298,7 +298,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if(!isset($params['state'])){
-			$params['state'] = sha1(random_bytes(256));
+			$params['state'] = $this->nonce();
 		}
 
 		$this->storage->storeCSRFState($params['state'], $this->serviceName);

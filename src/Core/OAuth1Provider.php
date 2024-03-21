@@ -14,7 +14,7 @@ namespace chillerlan\OAuth\Core;
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use chillerlan\OAuth\Providers\ProviderException;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_merge, base64_encode, hash_hmac, implode, random_bytes, sodium_bin2hex, sprintf, strtoupper, time;
+use function array_merge, base64_encode, hash_hmac, implode, sprintf, strtoupper, time;
 
 /**
  * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
@@ -112,15 +112,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $token;
-	}
-
-	/**
-	 * returns a 32 byte random string (in hexadecimal representation) for use as a nonce
-	 *
-	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-3.3
-	 */
-	protected function nonce():string{
-		return sodium_bin2hex(random_bytes(32));
 	}
 
 	/**

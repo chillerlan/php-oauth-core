@@ -24,7 +24,7 @@ use Psr\Http\Message\{
 use Psr\Log\{LoggerInterface, NullLogger};
 use ReflectionClass;
 use function array_merge, array_shift, explode, implode, in_array, is_array, is_string,
-	json_encode, ltrim, rtrim, sprintf, str_starts_with, strtolower;
+	json_encode, ltrim, random_bytes, rtrim, sodium_bin2hex, sprintf, str_starts_with, strtolower;
 use const PHP_QUERY_RFC1738;
 
 /**
@@ -233,6 +233,16 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	protected function cleanBodyParams(iterable $params):array{
 		return QueryUtil::cleanParams($params, QueryUtil::BOOLEANS_AS_BOOL, true);
+	}
+
+	/**
+	 * returns a 32 byte random string (in hexadecimal representation) for use as a nonce
+	 *
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-3.3
+	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-10.12
+	 */
+	protected function nonce(int $bytes = 32):string{
+		return sodium_bin2hex(random_bytes($bytes));
 	}
 
 	/**
