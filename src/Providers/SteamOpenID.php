@@ -112,7 +112,7 @@ class SteamOpenID extends OAuthProvider{
 	/**
 	 *
 	 */
-	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
+	public function getRequestAuthorization(RequestInterface $request, AccessToken|null $token = null):RequestInterface{
 		$uri    = (string)$request->getUri();
 		$params = ['key' => $this->options->secret];
 

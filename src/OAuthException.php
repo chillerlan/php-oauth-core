@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace chillerlan\OAuth;
 
-use Exception;
+use RuntimeException;
 
-class OAuthException extends Exception{
+class OAuthException extends RuntimeException{
 
 }

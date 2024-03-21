@@ -197,7 +197,7 @@ class LastFM extends OAuthProvider{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
+	public function getRequestAuthorization(RequestInterface $request, AccessToken|null $token = null):RequestInterface{
 		return $request;
 	}
 

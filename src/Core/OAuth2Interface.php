@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace chillerlan\OAuth\Core;
 
-use Psr\Http\Message\UriInterface;
-
 /**
  * Specifies the basic methods for an OAuth2 provider.
  */
