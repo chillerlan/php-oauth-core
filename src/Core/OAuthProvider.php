@@ -375,27 +375,27 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @throws \chillerlan\OAuth\Core\InvalidAccessTokenException
 	 */
-	public function sendRequest(RequestInterface $request):ResponseInterface{
+	final public function sendRequest(RequestInterface $request):ResponseInterface{
+		// get authorization only if we request the provider API,
+		// shortcut reroute to the http client otherwise.
+		// avoid sending bearer tokens to unknown hosts
+		if(!str_starts_with((string)$request->getUri(), $this->apiURL)){
+			return $this->http->sendRequest($request);
+		}
 
-		// get authorization only if we request the provider API
-		if(str_starts_with((string)$request->getUri(), $this->apiURL)){
-			$token = $this->storage->getAccessToken($this->serviceName);
+		$token = $this->storage->getAccessToken($this->serviceName);
 
-			// attempt to refresh an expired token
-			if($token->isExpired() || $token->expires === $token::EOL_UNKNOWN){
+		// attempt to refresh an expired token
+		if($token->isExpired()){
 
-				if($this instanceof TokenRefresh && $this->options->tokenAutoRefresh){
-					$token = $this->refreshAccessToken($token);
-				}
-				else{
-					throw new InvalidAccessTokenException;
-				}
-
+			if(!$this instanceof TokenRefresh || $this->options->tokenAutoRefresh !== true){
+				throw new InvalidAccessTokenException;
 			}
 
-			$request = $this->getRequestAuthorization($request, $token);
-	final public function sendRequest(RequestInterface $request):ResponseInterface{
+			$token = $this->refreshAccessToken($token);
 		}
+
+		$request = $this->getRequestAuthorization($request, $token);
 
 		return $this->http->sendRequest($request);
 	}
