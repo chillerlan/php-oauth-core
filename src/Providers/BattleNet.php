@@ -83,14 +83,10 @@ class BattleNet extends OAuth2Provider implements ClientCredentials, CSRFToken{
 
 		// for some reason we were given a host name
 
-		if($parsedURL->getScheme() !== 'https'){
-			throw new ProviderException(sprintf('scheme of the URL (%s) must be "https" if host is given', $parsedURL));
-		}
-
 		// shortcut here for the known domains
 		if(in_array($parsedHost, $this::KNOWN_DOMAINS, true)){
 			// we explicitly ignore any existing parameters here
-			return (string)$parsedURL->withQuery('')->withFragment('');
+			return (string)$parsedURL->withScheme('https')->withQuery('')->withFragment('');
 		}
 
 		// back out if it doesn't match

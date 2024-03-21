@@ -311,7 +311,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * Determine the request target from the given URI (path segment or URL) with respect to $apiURL,
 	 * anything except host and path will be ignored, scheme will always be set to "https".
-	 * Throws if the given path is invalid or if the host of a given URL does not match $apiURL.
+	 * Throws if the host of a given URL does not match the host of $apiURL.
 	 *
 	 * @see \chillerlan\OAuth\Core\OAuthInterface::request()
 	 *
@@ -335,12 +335,8 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		// for some reason we were given a host name
 
-		if($parsedURL->getScheme() !== 'https'){
-			throw new ProviderException(sprintf('scheme of the URL (%s) must be "https" if host is given', $parsedURL));
-		}
-
-		// we explicitly ignore any existing parameters here
-		$parsedURL = $parsedURL->withQuery('')->withFragment('');
+		// we explicitly ignore any existing parameters here and enforce https
+		$parsedURL = $parsedURL->withScheme('https')->withQuery('')->withFragment('');
 		$apiHost   = $api->getHost();
 
 		if($parsedHost === $apiHost){
@@ -362,7 +358,6 @@ abstract class OAuthProvider implements OAuthInterface{
 			return (string)$parsedURL;
 		}
 
-		// back out if it doesn't match
 		throw new ProviderException(sprintf('given host (%s) does not match provider (%s)', $parsedHost , $apiHost));
 	}
 
