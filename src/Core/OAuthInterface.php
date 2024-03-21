@@ -63,7 +63,7 @@ interface OAuthInterface extends ClientInterface{
 	 *
 	 * @internal
 	 */
-	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface;
+	public function getRequestAuthorization(RequestInterface $request, AccessToken|null $token = null):RequestInterface;
 
 	/**
 	 * Prepares an API request to $path with the given parameters, gets authorization, fires the request

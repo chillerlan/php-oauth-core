@@ -190,7 +190,12 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	/**
 	 * @inheritDoc
 	 */
-	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
+	public function getRequestAuthorization(RequestInterface $request, AccessToken|null $token = null):RequestInterface{
+
+		if($token === null){
+			$token = $this->storage->getAccessToken($this->serviceName);
+		}
+
 		$uri   = $request->getUri();
 		$query = QueryUtil::parse($uri->getQuery());
 

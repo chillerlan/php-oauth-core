@@ -149,7 +149,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @inheritDoc
 	 */
-	public function getRequestAuthorization(RequestInterface $request, AccessToken $token):RequestInterface{
+	public function getRequestAuthorization(RequestInterface $request, AccessToken|null $token = null):RequestInterface{
+
+		if($token === null){
+			$token = $this->storage->getAccessToken($this->serviceName);
+		}
 
 		if($this::AUTH_METHOD === OAuth2Interface::AUTH_METHOD_HEADER){
 			return $request->withHeader('Authorization', $this::AUTH_PREFIX_HEADER.' '.$token->accessToken);
