@@ -112,7 +112,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * Magic getter for the properties specified in self::ALLOWED_PROPERTIES
 	 */
-	public function __get(string $name):string|null{
+	final public function __get(string $name):string|null{
 
 		if(in_array($name, $this::MAGIC_PROPERTIES, true)){
 			return $this->{$name};
@@ -125,7 +125,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setStorage(OAuthStorageInterface $storage):static{
+	final public function setStorage(OAuthStorageInterface $storage):static{
 		$this->storage = $storage;
 
 		return $this;
@@ -135,7 +135,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function getStorage():OAuthStorageInterface{
+	final public function getStorage():OAuthStorageInterface{
 		return $this->storage;
 	}
 
@@ -143,7 +143,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setLogger(LoggerInterface $logger):static{
+	final public function setLogger(LoggerInterface $logger):static{
 		$this->logger = $logger;
 
 		return $this;
@@ -153,7 +153,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setRequestFactory(RequestFactoryInterface $requestFactory):static{
+	final public function setRequestFactory(RequestFactoryInterface $requestFactory):static{
 		$this->requestFactory = $requestFactory;
 
 		return $this;
@@ -163,7 +163,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setStreamFactory(StreamFactoryInterface $streamFactory):static{
+	final public function setStreamFactory(StreamFactoryInterface $streamFactory):static{
 		$this->streamFactory = $streamFactory;
 
 		return $this;
@@ -173,7 +173,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @inheritDoc
 	 * @codeCoverageIgnore
 	 */
-	public function setUriFactory(UriFactoryInterface $uriFactory):static{
+	final public function setUriFactory(UriFactoryInterface $uriFactory):static{
 		$this->uriFactory = $uriFactory;
 
 		return $this;
@@ -394,6 +394,7 @@ abstract class OAuthProvider implements OAuthInterface{
 			}
 
 			$request = $this->getRequestAuthorization($request, $token);
+	final public function sendRequest(RequestInterface $request):ResponseInterface{
 		}
 
 		return $this->http->sendRequest($request);
