@@ -31,7 +31,7 @@
 		"ext-simplexml": "*",
 		"ext-sodium": "*",
 		"ext-zlib": "*",
-		"chillerlan/php-http-message-utils": "^2.2",
+		"chillerlan/php-http-message-utils": "^2.2.1",
 		"chillerlan/php-settings-container": "^3.2",
 		"psr/http-client": "^1.0",
 		"psr/http-message": "^1.1 || ^2.0",
