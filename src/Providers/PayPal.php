@@ -11,9 +11,9 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, ClientCredentials, CSRFToken, OAuth2Provider, TokenRefresh};
+use chillerlan\OAuth\Core\{ClientCredentials, CSRFToken, OAuth2Provider, TokenRefresh};
 use Psr\Http\Message\ResponseInterface;
-use function array_column, base64_encode, explode, implode, is_array, json_decode, sprintf;
+use function base64_encode, sprintf;
 use const PHP_QUERY_RFC1738;
 
 /**
@@ -43,71 +43,28 @@ class PayPal extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 	/**
 	 * @inheritDoc
 	 */
-	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
-		$data = json_decode(MessageUtil::decompress($response), true);
-
-		if(!is_array($data)){
-			throw new ProviderException('unable to parse token response');
-		}
-
-		if(isset($data['error'])){
-			throw new ProviderException(sprintf('error retrieving access token: "%s"',  $data['error']));
-		}
-
-		// @codeCoverageIgnoreStart
-		if(isset($data['name'], $data['message'])){
-			$msg = sprintf('error retrieving access token: "%s" [%s]', $data['message'], $data['name']);
-
-			if(isset($data['links']) && is_array($data['links'])){
-				$msg .= "\n".implode("\n", array_column($data['links'], 'href'));
-			}
-
-			throw new ProviderException($msg);
-		}
-		// @codeCoverageIgnoreEnd
-
-		if(!isset($data['access_token'])){
-			throw new ProviderException('token missing');
-		}
-
-		$token = $this->createAccessToken();
-
-		$token->accessToken  = $data['access_token'];
-		$token->expires      = ($data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
-		$token->refreshToken = ($data['refresh_token'] ?? null);
-		$token->scopes       = explode($this::SCOPE_DELIMITER, ($data['scope'] ?? ''));
-
-		unset($data['expires_in'], $data['refresh_token'], $data['access_token'], $data['scope']);
-
-		$token->extraParams = $data;
-
-		return $token;
+	protected function getAccessTokenRequestBodyParams(string $code):array{
+		return [
+			'code'         => $code,
+			'grant_type'   => 'authorization_code',
+			'redirect_uri' => $this->options->callbackURL,
+		];
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getAccessToken(string $code, string|null $state = null):AccessToken{
-		$this->checkState($state); // we're an instance of CSRFToken
-
-		$body = [
-			'code'         => $code,
-			'grant_type'   => 'authorization_code',
-			'redirect_uri' => $this->options->callbackURL,
-		];
+	protected function sendAccessTokenRequest(string $url, array $body):ResponseInterface{
 
 		$request = $this->requestFactory
-			->createRequest('POST', $this->accessTokenURL)
-			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->createRequest('POST', $url)
 			->withHeader('Accept-Encoding', 'identity')
 			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
-			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)));
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
+		;
 
-		$token = $this->parseTokenResponse($this->http->sendRequest($request));
-
-		$this->storage->storeAccessToken($token, $this->serviceName);
-
-		return $token;
+		return $this->http->sendRequest($request);
 	}
 
 	/**

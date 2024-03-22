@@ -21,6 +21,7 @@ use const PHP_QUERY_RFC1738;
  *
  * @see https://dev.twitch.tv/docs/api/reference/
  * @see https://dev.twitch.tv/docs/authentication/
+ * @see https://dev.twitch.tv/docs/authentication#oauth-client-credentials-flow-app-access-tokens
  */
 class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenInvalidate, TokenRefresh{
 
@@ -68,9 +69,9 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 	protected string|null $applicationURL = 'https://dev.twitch.tv/console/apps/create';
 
 	/**
-	 * @see https://dev.twitch.tv/docs/authentication#oauth-client-credentials-flow-app-access-tokens
+	 * @inheritDoc
 	 */
-	public function getClientCredentialsToken(array|null $scopes = null):AccessToken{
+	protected function getClientCredentialsTokenRequestBodyParams(array|null $scopes):array{
 
 		$params = [
 			'client_id'     => $this->options->key,
@@ -82,21 +83,26 @@ class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, Tok
 			$params['scope'] = implode($this::SCOPE_DELIMITER, $scopes);
 		}
 
+		return $params;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function sendClientCredentialsTokenRequest(string $url, array $body):ResponseInterface{
+
 		$request = $this->requestFactory
-			->createRequest('POST', ($this->clientCredentialsTokenURL ?? $this->accessTokenURL))
+			->createRequest('POST', $url)
+			->withHeader('Accept-Encoding', 'identity')
 			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
-			->withBody($this->streamFactory->createStream(QueryUtil::build($params, PHP_QUERY_RFC1738)))
+			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
 		;
 
 		foreach($this::HEADERS_AUTH as $header => $value){
 			$request = $request->withAddedHeader($header, $value);
 		}
 
-		$token = $this->parseTokenResponse($this->http->sendRequest($request));
-
-		$this->storage->storeAccessToken($token, $this->serviceName);
-
-		return $token;
+		return $this->http->sendRequest($request);
 	}
 
 	/**

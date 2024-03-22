@@ -10,12 +10,11 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
+use chillerlan\HTTP\Utils\MessageUtil;
 use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, TokenRefresh};
 use chillerlan\OAuth\OAuthException;
 use Psr\Http\Message\ResponseInterface;
 use function array_merge, sprintf;
-use const PHP_QUERY_RFC1738;
 
 /**
  * Mastodon OAuth2 (v4.x instances)
@@ -70,22 +69,12 @@ class Mastodon extends OAuth2Provider implements CSRFToken, TokenRefresh{
 	 * @inheritDoc
 	 */
 	public function getAccessToken(string $code, string|null $state = null):AccessToken{
+		$this->checkState($state);  // we're an instance of CSRFToken
 
-		$body = [
-			'client_id'     => $this->options->key,
-			'client_secret' => $this->options->secret,
-			'code'          => $code,
-			'grant_type'    => 'authorization_code',
-			'redirect_uri'  => $this->options->callbackURL,
-		];
+		$body     = $this->getAccessTokenRequestBodyParams($code);
+		$response = $this->sendAccessTokenRequest($this->accessTokenURL, $body);
+		$token    = $this->parseTokenResponse($response);
 
-		$request = $this->requestFactory
-			->createRequest('POST', $this->accessTokenURL)
-			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
-			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)));
-
-		$token = $this->parseTokenResponse($this->http->sendRequest($request));
 		// store the instance the token belongs to
 		$token->extraParams = array_merge($token->extraParams, ['instance' => $this->instance]);
 

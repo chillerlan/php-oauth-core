@@ -11,18 +11,14 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, InvalidAccessTokenException, OAuth2Provider};
-use Psr\Http\Message\{ResponseInterface, UriInterface};
-use function array_merge, implode, sprintf;
-use const PHP_QUERY_RFC1738;
+use chillerlan\OAuth\Core\{CSRFToken, InvalidAccessTokenException, OAuth2Provider};
+use Psr\Http\Message\ResponseInterface;
+use function array_merge, implode, sprintf, trim;
 
 /**
  * Deezer OAuth2
  *
  * @see https://developers.deezer.com/api/oauth
- *
- * sure, you *can* use different parameter names than the standard ones... and what about JSON?
- * https://xkcd.com/927/
  */
 class Deezer extends OAuth2Provider implements CSRFToken{
 
@@ -53,76 +49,43 @@ class Deezer extends OAuth2Provider implements CSRFToken{
 
 	/**
 	 * @inheritDoc
+	 *
+	 * sure, you *can* use different parameter names than the standard ones... https://xkcd.com/927/
 	 */
-	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
-		$params ??= [];
-
-		if(isset($params['client_secret'])){
-			unset($params['client_secret']);
-		}
-
-		$params = array_merge($params, [
+	protected function getAuthURLRequestParams(array $params, array $scopes):array{
+		return array_merge($params, [
 			'app_id'       => $this->options->key,
 			'redirect_uri' => $this->options->callbackURL,
-			'perms'        => implode($this::SCOPE_DELIMITER, ($scopes ?? [])),
+			'perms'        => implode($this::SCOPE_DELIMITER, $scopes),
 		]);
-
-		$params = $this->setState($params);
-
-		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $params));
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getAccessToken(string $code, string|null $state = null):AccessToken{
-		$this->checkState($state);
-
-		$body = [
+	protected function getAccessTokenRequestBodyParams(string $code):array{
+		return [
 			'app_id' => $this->options->key,
 			'secret' => $this->options->secret,
 			'code'   => $code,
-			'output' => 'json',
+			'output' => 'json', // for some reason this has no effect
 		];
-
-		$request = $this->requestFactory
-			->createRequest('POST', $this->accessTokenURL)
-			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
-			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)));
-
-		$token = $this->parseTokenResponse($this->http->sendRequest($request));
-
-		$this->storage->storeAccessToken($token, $this->serviceName);
-
-		return $token;
 	}
 
 	/**
 	 * @inheritDoc
+	 *
+	 * hey deezer, I suggest re-reading the OAuth2 spec!
+	 * also the content-type of "text/html" here is... bad.
 	 */
-	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
-		$data = QueryUtil::parse(MessageUtil::decompress($response));
+	protected function getTokenResponseData(ResponseInterface $response):array{
+		$data = trim(MessageUtil::getContents($response));
 
-		if(isset($data['error_reason'])){
-			throw new ProviderException('error retrieving access token: "'.$data['error_reason'].'"');
+		if(empty($data)){
+			throw new ProviderException('invalid response');
 		}
 
-		if(!isset($data['access_token'])){
-			throw new ProviderException('token missing');
-		}
-
-		$token = $this->createAccessToken();
-
-		$token->accessToken  = $data['access_token'];
-		$token->expires      = (int)($data['expires'] ?? $data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
-		$token->refreshToken = ($data['refresh_token'] ?? null);
-
-		unset($data['expires'], $data['expires_in'], $data['refresh_token'], $data['access_token']);
-
-		$token->extraParams = $data;
-
-		return $token;
+		return QueryUtil::parse($data);
 	}
 
 	/**

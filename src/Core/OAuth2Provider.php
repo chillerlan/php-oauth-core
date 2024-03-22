@@ -14,14 +14,16 @@ namespace chillerlan\OAuth\Core;
 use chillerlan\HTTP\Utils\{MessageUtil, QueryUtil};
 use chillerlan\OAuth\Providers\ProviderException;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
-use function array_merge, base64_encode, date, explode, hash_equals, implode, is_array, json_decode, random_bytes, sha1, sprintf;
-use const JSON_THROW_ON_ERROR, PHP_QUERY_RFC1738;
+use Throwable;
+use function array_merge, base64_encode, date, explode, hash_equals, implode, is_array, sprintf;
+use const PHP_QUERY_RFC1738;
 
 /**
  * Implements an abstract OAuth2 provider with all methods required by the OAuth2Interface.
  * It also implements the ClientCredentials, CSRFToken and TokenRefresh interfaces in favor over traits.
 
- *  @see https://datatracker.ietf.org/doc/html/rfc6749
+ * @see https://oauth.net/2/
+ * @see https://datatracker.ietf.org/doc/html/rfc6749
  */
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
@@ -41,13 +43,28 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
 	 * @inheritDoc
+	 *
 	 * @param string[]|null $scopes
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
 		$params ??= [];
-		$scopes ??= $this::DEFAULT_SCOPES;
 
+		// this should NEVER be set in the given params
 		unset($params['client_secret']);
+
+		$queryParams = $this->getAuthURLRequestParams($params, ($scopes ?? $this::DEFAULT_SCOPES));
+
+		if($this instanceof CSRFToken){
+			$queryParams = $this->setState($queryParams);
+		}
+
+		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $queryParams));
+	}
+
+	/**
+	 * prepares the query parameters for the auth URL
+	 */
+	protected function getAuthURLRequestParams(array $params, array $scopes):array{
 
 		$params = array_merge($params, [
 			'client_id'     => $this->options->key,
@@ -60,37 +77,35 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$params['scope'] = implode($this::SCOPE_DELIMITER, $scopes);
 		}
 
-		if($this instanceof CSRFToken){
-			$params = $this->setState($params);
-		}
-
-		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $params));
+		return $params;
 	}
 
 	/**
 	 * Parses the response from a request to the token endpoint
 	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.4
+	 * @see https://datatracker.ietf.org/doc/html/rfc6749#section-5.1
 	 *
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
-	 * @throws \JsonException
 	 */
 	protected function parseTokenResponse(ResponseInterface $response):AccessToken{
-		// silly amazon sends compressed data...
-		$data = json_decode(MessageUtil::decompress($response), true, 512, JSON_THROW_ON_ERROR);
 
-		if(!is_array($data)){
-			throw new ProviderException('unable to parse token response');
+		try{
+			$data = $this->getTokenResponseData($response);
+		}
+		catch(Throwable $e){
+			throw new ProviderException(sprintf('unable to parse token response: %s', $e->getMessage()));
 		}
 
-		foreach(['error_description', 'error'] as $field){
+		// deezer: "error_reason", paypal: "message" (along with "links", "name")
+		foreach(['error', 'error_description', 'error_reason', 'message'] as $field){
 			if(isset($data[$field])){
 				throw new ProviderException(sprintf('error retrieving access token: "%s"', $data[$field]));
 			}
 		}
 
 		if(!isset($data['access_token'])){
-			throw new ProviderException('token missing');
+			throw new ProviderException('access token missing');
 		}
 
 		$scopes = ($data['scope'] ?? $data['scopes'] ?? []);
@@ -101,15 +116,40 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$token               = $this->createAccessToken();
 		$token->accessToken  = $data['access_token'];
-		$token->expires      = ($data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
+		$token->expires      = (int)($data['expires'] ?? $data['expires_in'] ?? AccessToken::EOL_NEVER_EXPIRES);
 		$token->refreshToken = ($data['refresh_token'] ?? null);
 		$token->scopes       = $scopes;
 
-		unset($data['access_token'], $data['refresh_token'], $data['expires_in'], $data['scope'], $data['scopes']);
+		foreach(['access_token', 'refresh_token', 'expires', 'expires_in', 'scope', 'scopes'] as $var){
+			unset($data[$var]);
+		}
 
 		$token->extraParams  = $data;
 
 		return $token;
+	}
+
+	/**
+	 * extracts the data from the access token response and returns an array with the key->value pairs contained
+	 *
+	 * we don't bother checking the content type here as it's sometimes vendor specific, not set or plain wrong:
+	 * the spec mandates a JSON body which is what almost all providers send - weird exceptions:
+	 *
+	 *   - mixcloud sends JSON with a "text/javascript" header
+	 *   - deezer sends form-data with a "text/html" header (???)
+	 *   - silly amazon sends gzip compressed data... (handled by decodeJSON)
+	 *
+	 * @throws \JsonException
+	 */
+	protected function getTokenResponseData(ResponseInterface $response):array{
+		$data = MessageUtil::decodeJSON($response, true);
+
+		if(!is_array($data)){
+			// nearly impossible to run into this as json_decode() would throw first
+			throw new ProviderException('decoded json is not an array');
+		}
+
+		return $data;
 	}
 
 	/**
@@ -121,29 +161,45 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$this->checkState($state);
 		}
 
-		$body = [
+		$body     = $this->getAccessTokenRequestBodyParams($code);
+		$response = $this->sendAccessTokenRequest($this->accessTokenURL, $body);
+		$token    = $this->parseTokenResponse($response);
+
+		$this->storage->storeAccessToken($token, $this->serviceName);
+
+		return $token;
+	}
+
+	/**
+	 * prepares the request body parameters for the access token request
+	 */
+	protected function getAccessTokenRequestBodyParams(string $code):array{
+		return [
 			'client_id'     => $this->options->key,
 			'client_secret' => $this->options->secret,
 			'code'          => $code,
 			'grant_type'    => 'authorization_code',
 			'redirect_uri'  => $this->options->callbackURL,
 		];
+	}
+
+	/**
+	 * sends a request to the access/refresh token endpoint $url with the given $body as form data
+	 */
+	protected function sendAccessTokenRequest(string $url, array $body):ResponseInterface{
 
 		$request = $this->requestFactory
-			->createRequest('POST', $this->accessTokenURL)
-			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->createRequest('POST', $url)
 			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)));
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
+		;
 
 		foreach($this::HEADERS_AUTH as $header => $value){
 			$request = $request->withHeader($header, $value);
 		}
 
-		$token = $this->parseTokenResponse($this->http->sendRequest($request));
-
-		$this->storage->storeAccessToken($token, $this->serviceName);
-
-		return $token;
+		return $this->http->sendRequest($request);
 	}
 
 	/**
@@ -165,7 +221,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			return $request->withUri($this->uriFactory->createUri($uri));
 		}
 
-		throw new ProviderException('invalid auth AUTH_METHOD');
+		// it's near impossible to run into this in any other scenario than development...
+		throw new ProviderException('invalid auth AUTH_METHOD'); // @codeCoverageIgnore
 	}
 
 	/**
@@ -179,25 +236,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new ProviderException('client credentials token not supported');
 		}
 
-		$params = ['grant_type' => 'client_credentials'];
-
-		if(!empty($scopes)){
-			$params['scope'] = implode($this::SCOPE_DELIMITER, $scopes);
-		}
-
-		$request = $this->requestFactory
-			->createRequest('POST', ($this->clientCredentialsTokenURL ?? $this->accessTokenURL))
-			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
-			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
-			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(QueryUtil::build($params, PHP_QUERY_RFC1738)))
-		;
-
-		foreach($this::HEADERS_AUTH as $header => $value){
-			$request = $request->withHeader($header, $value);
-		}
-
-		$token = $this->parseTokenResponse($this->http->sendRequest($request));
+		$body     = $this->getClientCredentialsTokenRequestBodyParams($scopes);
+		$response = $this->sendClientCredentialsTokenRequest(($this->clientCredentialsTokenURL ?? $this->accessTokenURL), $body);
+		$token    = $this->parseTokenResponse($response);
 
 		// provider didn't send a set of scopes with the token response, so add the given ones manually
 		if(empty($token->scopes)){
@@ -207,6 +248,41 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$this->storage->storeAccessToken($token, $this->serviceName);
 
 		return $token;
+	}
+
+	/**
+	 * prepares the request body parameters for the client credentials token request
+	 *
+	 * @param string[]|null $scopes
+	 */
+	protected function getClientCredentialsTokenRequestBodyParams(array|null $scopes):array{
+		$body = ['grant_type' => 'client_credentials'];
+
+		if(!empty($scopes)){
+			$body['scope'] = implode($this::SCOPE_DELIMITER, $scopes);
+		}
+
+		return $body;
+	}
+
+	/**
+	 * sends a request to the client credentials endpoint, using basic authentication
+	 */
+	protected function sendClientCredentialsTokenRequest(string $url, array $body):ResponseInterface{
+
+		$request = $this->requestFactory
+			->createRequest('POST', $url)
+			->withHeader('Accept-Encoding', 'identity')
+			->withHeader('Authorization', 'Basic '.base64_encode($this->options->key.':'.$this->options->secret))
+			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
+		;
+
+		foreach($this::HEADERS_AUTH as $header => $value){
+			$request = $request->withHeader($header, $value);
+		}
+
+		return $this->http->sendRequest($request);
 	}
 
 	/**
@@ -226,31 +302,14 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$refreshToken = $token->refreshToken;
 
 		if(empty($refreshToken)){
-			throw new ProviderException(
-				sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires))
-			);
+			$msg = 'no refresh token available, token expired [%s]';
+
+			throw new ProviderException(sprintf($msg, date('Y-m-d h:i:s A', $token->expires)));
 		}
 
-		$body = [
-			'client_id'     => $this->options->key,
-			'client_secret' => $this->options->secret,
-			'grant_type'    => 'refresh_token',
-			'refresh_token' => $refreshToken,
-			'type'          => 'web_server',
-		];
-
-		$request = $this->requestFactory
-			->createRequest('POST', ($this->refreshTokenURL ?? $this->accessTokenURL))
-			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
-			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
-		;
-
-		foreach($this::HEADERS_AUTH as $header => $value){
-			$request = $request->withHeader($header, $value);
-		}
-
-		$newToken = $this->parseTokenResponse($this->http->sendRequest($request));
+		$body     = $this->getRefreshAccessTokenRequestBodyParams($refreshToken);
+		$response = $this->sendAccessTokenRequest(($this->refreshTokenURL ?? $this->accessTokenURL), $body);
+		$newToken = $this->parseTokenResponse($response);
 
 		if(empty($newToken->refreshToken)){
 			$newToken->refreshToken = $refreshToken;
@@ -262,6 +321,19 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * prepares the request body parameters for the token refresh
+	 */
+	protected function getRefreshAccessTokenRequestBodyParams(string $refreshToken):array{
+		return [
+			'client_id'     => $this->options->key,
+			'client_secret' => $this->options->secret,
+			'grant_type'    => 'refresh_token',
+			'refresh_token' => $refreshToken,
+			'type'          => 'web_server',
+		];
+	}
+
+	/**
 	 * @implements \chillerlan\OAuth\Core\CSRFToken::checkState()
 	 * @throws \chillerlan\OAuth\Providers\ProviderException|\chillerlan\OAuth\Core\CSRFStateMismatchException
 	 * @internal
@@ -269,7 +341,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	public function checkState(string|null $state = null):void{
 
 		if(!$this instanceof CSRFToken){
-			throw new ProviderException('CSRF protection not supported'); // @codeCoverageIgnore
+			throw new ProviderException('CSRF protection not supported');
 		}
 
 		if(empty($state) || !$this->storage->hasCSRFState($this->serviceName)){
@@ -297,6 +369,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new ProviderException('CSRF protection not supported');
 		}
 
+		// don't touch the parameter if it has been deliberately set
 		if(!isset($params['state'])){
 			$params['state'] = $this->nonce();
 		}

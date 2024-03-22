@@ -17,9 +17,10 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface, UriInterface};
 use function array_merge, base64_encode, hash_hmac, implode, sprintf, strtoupper, time;
 
 /**
- * Implements an abstract OAuth1 provider with all methods required by the OAuth1Interface.
-
- *  @see https://datatracker.ietf.org/doc/html/rfc5849
+ * Implements an abstract OAuth1 (1.0a) provider with all methods required by the OAuth1Interface.
+ *
+ * @see https://oauth.net/core/1.0a/
+ * @see https://datatracker.ietf.org/doc/html/rfc5849
  */
 abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
@@ -32,15 +33,19 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @inheritDoc
 	 */
 	public function getAuthURL(array|null $params = null, array|null $scopes = null):UriInterface{
-		$params = array_merge(($params ?? []), ['oauth_token' => $this->getRequestToken()->accessToken]);
+		$response = $this->sendRequestTokenRequest($this->requestTokenURL);
+		$token    = $this->parseTokenResponse($response, true);
+		$params   = array_merge(($params ?? []), ['oauth_token' => $token->accessToken]);
 
 		return $this->uriFactory->createUri(QueryUtil::merge($this->authURL, $params));
 	}
 
 	/**
-	 * @inheritDoc
+	 * prepares the parameters for the request token request header
+	 *
+	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.1
 	 */
-	public function getRequestToken():AccessToken{
+	protected function getRequestTokenRequestParams():array{
 
 		$params = [
 			'oauth_callback'         => $this->options->callbackURL,
@@ -53,19 +58,22 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		$params['oauth_signature'] = $this->getSignature($this->requestTokenURL, $params, 'POST');
 
-		return $this->parseTokenResponse($this->sendRequestTokenRequest($params), true);
+		return $params;
 	}
 
 	/**
-	 * Sends a request to the request token endpoint with the given params
+	 * Sends a request to the request token endpoint
 	 */
-	protected function sendRequestTokenRequest(array $requestTokenRequestParams):ResponseInterface{
+	protected function sendRequestTokenRequest(string $url):ResponseInterface{
+		$params  = $this->getRequestTokenRequestParams();
 
 		$request = $this->requestFactory
-			->createRequest('POST', $this->requestTokenURL)
-			->withHeader('Authorization', 'OAuth '.QueryUtil::build($requestTokenRequestParams, null, ', ', '"'))
-			->withHeader('Accept-Encoding', 'identity') // try to avoid compression
-			->withHeader('Content-Length', '0') // tumblr requires a content-length header set
+			->createRequest('POST', $url)
+			->withHeader('Authorization', 'OAuth '.QueryUtil::build($params, null, ', ', '"'))
+			// try to avoid compression
+			->withHeader('Accept-Encoding', 'identity')
+			// tumblr requires a content-length header set
+			->withHeader('Content-Length', '0')
 		;
 
 		foreach($this::HEADERS_AUTH as $header => $value){
@@ -78,25 +86,29 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	/**
 	 * Parses the response from a request to the token endpoint
 	 *
+	 * Note: "oauth_callback_confirmed" is only sent in request token response
+	 *
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.1
 	 * @see https://datatracker.ietf.org/doc/html/rfc5849#section-2.3
 	 *
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	protected function parseTokenResponse(ResponseInterface $response, bool $checkCallback):AccessToken{
+	protected function parseTokenResponse(ResponseInterface $response, bool $confirmCallback = false):AccessToken{
 		$data = QueryUtil::parse(MessageUtil::decompress($response));
 
 		if(empty($data)){
 			throw new ProviderException('unable to parse token response');
 		}
-		elseif(isset($data['error'])){
+
+		if(isset($data['error'])){
 			throw new ProviderException(sprintf('error retrieving access token: "%s"', $data['error']));
 		}
-		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
+
+		if(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
 			throw new ProviderException('invalid token');
 		}
 
-		if($checkCallback && (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')){
+		if($confirmCallback && (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')){
 			throw new ProviderException('oauth callback unconfirmed');
 		}
 
@@ -161,13 +173,15 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('request token mismatch');
 		}
 
-		return $this->parseTokenResponse($this->sendAccessTokenRequest($token, $verifier), false);
+		$response = $this->sendAccessTokenRequest($verifier);
+
+		return $this->parseTokenResponse($response);
 	}
 
 	/**
 	 * Sends the access token request
 	 */
-	protected function sendAccessTokenRequest(AccessToken $token, string $verifier):ResponseInterface{
+	protected function sendAccessTokenRequest(string $verifier):ResponseInterface{
 
 		$request = $this->requestFactory
 			->createRequest('POST', QueryUtil::merge($this->accessTokenURL, ['oauth_verifier' => $verifier]))
@@ -175,7 +189,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			->withHeader('Content-Length', '0')
 		;
 
-		return $this->http->sendRequest($this->getRequestAuthorization($request, $token));
+		$request = $this->getRequestAuthorization($request);
+
+		return $this->http->sendRequest($request);
 	}
 
 	/**
@@ -205,7 +221,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$params['oauth_session_handle'] = $query['oauth_session_handle']; // @codeCoverageIgnore
 		}
 
-		return $request->withHeader('Authorization', 'OAuth '.QueryUtil::build($params, null, ', ', '"'));
+		return $request->withHeader('Authorization', sprintf('OAuth %s', QueryUtil::build($params, null, ', ', '"')));
 	}
 
 }

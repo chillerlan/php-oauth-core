@@ -10,11 +10,9 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\HTTP\Utils\QueryUtil;
-use chillerlan\OAuth\Core\{AccessToken, CSRFToken, OAuth2Provider, TokenRefresh};
+use chillerlan\OAuth\Core\{CSRFToken, OAuth2Provider, TokenRefresh};
 use Psr\Http\Message\{ResponseInterface, StreamInterface};
-use function date, explode, in_array, sprintf, strtoupper;
-use const PHP_QUERY_RFC1738;
+use function explode, in_array, strtoupper;
 
 /**
  * MusicBrainz OAuth2
@@ -49,45 +47,14 @@ class MusicBrainz extends OAuth2Provider implements CSRFToken, TokenRefresh{
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function refreshAccessToken(AccessToken|null $token = null):AccessToken{
-
-		if($token === null){
-			$token = $this->storage->getAccessToken($this->serviceName);
-		}
-
-		$refreshToken = $token->refreshToken;
-
-		if(empty($refreshToken)){
-			throw new ProviderException(
-				sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires))
-			);
-		}
-
-		$body = [
+	protected function getRefreshAccessTokenRequestBodyParams(string $refreshToken):array{
+		return [
 			'client_id'     => $this->options->key,
 			'client_secret' => $this->options->secret,
 			'grant_type'    => 'refresh_token',
 			'refresh_token' => $refreshToken,
 		];
-
-		$request = $this->requestFactory
-			->createRequest('POST', ($this->refreshTokenURL ?? $this->accessTokenURL)) // refreshTokenURL is used in tests
-			->withHeader('Content-Type', 'application/x-www-form-urlencoded')
-			->withHeader('Accept-Encoding', 'identity')
-			->withBody($this->streamFactory->createStream(QueryUtil::build($body, PHP_QUERY_RFC1738)))
-		;
-
-		$newToken = $this->parseTokenResponse($this->http->sendRequest($request));
-
-		if(empty($newToken->refreshToken)){
-			$newToken->refreshToken = $refreshToken;
-		}
-
-		$this->storage->storeAccessToken($newToken, $this->serviceName);
-
-		return $newToken;
 	}
 
 	/**
