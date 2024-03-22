@@ -19,7 +19,7 @@ use Psr\Http\Message\ResponseInterface;
 use function str_contains;
 
 /**
- *
+ * @property \chillerlan\OAuth\Core\OAuthInterface $provider
  */
 abstract class OAuthProviderLiveTestAbstract extends ProviderLiveTestAbstract{
 

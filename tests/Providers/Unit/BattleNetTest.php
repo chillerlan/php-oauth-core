@@ -47,6 +47,7 @@ final class BattleNetTest extends OAuth2ProviderUnitTestAbstract{
 			'trailing slash' => ['c/', 'https://eu.api.blizzard.com/c/'],
 			'full url given' => ['https://oauth.battle.net/other/path/d', 'https://oauth.battle.net/other/path/d'],
 			'ignore params'  => ['https://oauth.battle.net/api/e/?with=param#foo', 'https://oauth.battle.net/api/e/'],
+			'enforce https'  => ['wtf://eu.api.blizzard.com/a/b/c', 'https://eu.api.blizzard.com/a/b/c'],
 		];
 	}
 

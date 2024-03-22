@@ -66,6 +66,7 @@ abstract class ProviderUnitTestAbstract extends TestCase{
 
 	}
 
+
 	/*
 	 * abstract methods
 	 */
@@ -75,13 +76,14 @@ abstract class ProviderUnitTestAbstract extends TestCase{
 	 */
 	abstract protected function getProviderFQCN():string;
 
+
 	/*
 	 * init provider & dependencies
 	 */
 
 	protected function initOptions():OAuthOptions{
 		return new OAuthOptions([
-			'key'              => 'testkey',
+			'key'              => 'testclient',
 			'secret'           => 'testsecret',
 			'callbackURL'      => 'https://localhost/callback',
 			'tokenAutoRefresh' => true,
@@ -107,25 +109,26 @@ abstract class ProviderUnitTestAbstract extends TestCase{
 		return $this->invokeReflection($FQCN, $args);
 	}
 
+
 	/*
 	 * Reflection utilities
 	 */
 
-	protected function invokeReflection(string $FQCN, array $args = []):object{
+	final protected function invokeReflection(string $FQCN, array $args = []):object{
 		$this->reflection = new ReflectionClass($FQCN);
 
 		return $this->reflection->newInstanceArgs($args);
 	}
 
-	protected function setReflectionProperty(string $property, mixed $value):void{
+	final protected function setReflectionProperty(string $property, mixed $value):void{
 		$this->reflection->getProperty($property)->setValue($this->provider, $value);
 	}
 
-	protected function getReflectionProperty(string $property):mixed{
+	final protected function getReflectionProperty(string $property):mixed{
 		return $this->reflection->getProperty($property)->getValue($this->provider);
 	}
 
-	protected function invokeReflectionMethod(string $method, array $args = []):mixed{
+	final protected function invokeReflectionMethod(string $method, array $args = []):mixed{
 		return $this->reflection->getMethod($method)->invokeArgs($this->provider, $args);
 	}
 

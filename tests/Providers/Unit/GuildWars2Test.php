@@ -21,4 +21,8 @@ class GuildWars2Test extends OAuth2ProviderUnitTestAbstract{
 		return GuildWars2::class;
 	}
 
+	public function testGetAuthURL():void{
+		$this::markTestSkipped('N/A');
+	}
+
 }
