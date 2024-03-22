@@ -34,6 +34,8 @@ trait OAuthOptionsTrait{
 	/**
 	 * Whether to start the session when session storage is used
 	 *
+	 * Note: this will only start a session if there is no active session present
+	 *
 	 * @see \chillerlan\OAuth\Storage\SessionStorage
 	 */
 	protected bool $sessionStart = true;

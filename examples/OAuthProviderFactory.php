@@ -43,9 +43,9 @@ class OAuthProviderFactory{
 		protected UriFactoryInterface     $uriFactory,
 		protected string                  $cfgDir = __DIR__.'/../config',
 		string                            $envFile = '.env',
-		string                            $logLevel = null,
+		string|null                       $logLevel = null,
 	){
-		ini_set('date.timezone', 'Europe/Amsterdam');
+		ini_set('date.timezone', 'UTC');
 
 		$this->dotEnv = (new DotEnv($this->cfgDir, $envFile, false))->load();
 		$this->logger = $this->initLogger($logLevel);

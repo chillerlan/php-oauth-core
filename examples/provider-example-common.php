@@ -20,16 +20,16 @@ require_once __DIR__.'/OAuthProviderFactory.php';
 /**
  * these vars are supposed to be set before this file is included to ease testing
  *
+ * @var string     $CFGDIR - the directory where configuration is stored (.env, cacert, tokens)
  * @var string     $ENVFILE  - the name of the .env file in case it differs from the default
  * @var string     $ENVVAR   - name prefix for the environment variable
- * @var string     $CFGDIR   - the directory where configuration is stored (.env, cacert, tokens)
  * @var string     $LOGLEVEL - log level for the test logger, use 'none' to suppress logging
  * @var array|null $PARAMS   - additional params to pass to getAuthURL()
  * @var array|null $SCOPES   - a set of scopes for the current provider (OAuth2 only)
  */
+$CFGDIR   ??= __DIR__.'/../config';
 $ENVFILE  ??= '.env';
 $ENVVAR   ??= '';
-$CFGDIR   ??= __DIR__.'/../config';
 $LOGLEVEL ??= 'info';
 $PARAMS   ??= null;
 $SCOPES   ??= null;

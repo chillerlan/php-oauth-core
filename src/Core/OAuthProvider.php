@@ -315,7 +315,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		}
 
-		throw new ProviderException('invalid body/content-type');  // @codeCoverageIgnore
+		throw new ProviderException('invalid body/content-type');
 	}
 
 	/**
