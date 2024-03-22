@@ -208,13 +208,6 @@
 and returns a PSR-7 UriInterface with all necessary parameters set</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html#method_getRequestToken">getRequestToken()</a>
-    <span>
-                                &nbsp;: <a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a>    </span>
-</dt>
-<dd>Obtains an OAuth1 request token and returns an AccessToken object for use in the authentication request.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/chillerlan-OAuth-Core-OAuthInterface.html#method_getStorage">getStorage()</a>
     <span>
                                 &nbsp;: <a href="classes/chillerlan-OAuth-Storage-OAuthStorageInterface.html"><abbr title="\chillerlan\OAuth\Storage\OAuthStorageInterface">OAuthStorageInterface</abbr></a>    </span>
@@ -374,7 +367,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuth1Interface.php"><a href="files/src-core-oauth1interface.html"><abbr title="src/Core/OAuth1Interface.php">OAuth1Interface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -444,7 +437,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -480,7 +473,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -489,7 +482,7 @@ and returns a PSR-7 UriInterface with all necessary parameters set</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAuthURL</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\UriInterface">UriInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">getAuthURL</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$scopes</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\UriInterface">UriInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -498,6 +491,13 @@ and returns a PSR-7 UriInterface with all necessary parameters set</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$scopes</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -520,70 +520,19 @@ and returns a PSR-7 UriInterface with all necessary parameters set</p>
                                         
                                              
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1">https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1</a></span>
+                                        
+                                             
+                                    </dd>
                                             </dl>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\UriInterface">UriInterface</abbr></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getRequestToken">
-        getRequestToken()
-        <a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html#method_getRequestToken" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuth1Interface.php"><a href="files/src-core-oauth1interface.html"><abbr title="src/Core/OAuth1Interface.php">OAuth1Interface.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">26</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Obtains an OAuth1 request token and returns an AccessToken object for use in the authentication request.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getRequestToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html#method_getRequestToken#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://datatracker.ietf.org/doc/html/rfc5849#section-2.1">https://datatracker.ietf.org/doc/html/rfc5849#section-2.1</a></span>
-                                        
-                                             
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/chillerlan-OAuth-Core-OAuth1Provider.html#method_getAuthURL"><abbr title="\chillerlan\OAuth\Core\OAuth1Provider::getAuthURL()">OAuth1Provider::getAuthURL()</abbr></a></span>
-                                        
-                                             
-                                    </dd>
-                                            </dl>
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/chillerlan-OAuth-Core-AccessToken.html"><abbr title="\chillerlan\OAuth\Core\AccessToken">AccessToken</abbr></a></span>
             </section>
 
 </article>
@@ -601,7 +550,7 @@ and returns a PSR-7 UriInterface with all necessary parameters set</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -637,7 +586,7 @@ and returns a PSR-7 UriInterface with all necessary parameters set</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -675,7 +624,7 @@ and returns a PSR-7 UriInterface with all necessary parameters set</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -757,7 +706,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -803,7 +752,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -849,7 +798,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -895,7 +844,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -941,7 +890,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -987,7 +936,7 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Core/OAuthInterface.php"><a href="files/src-core-oauthinterface.html"><abbr title="src/Core/OAuthInterface.php">OAuthInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -1134,7 +1083,6 @@ and returns a PSR-7 ResponseInterface with the corresponding API response</p>
                                                     <li><a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html#method_getAccessToken">getAccessToken()</a></li>
                                                     <li><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html#method_getAccessTokenFromStorage">getAccessTokenFromStorage()</a></li>
                                                     <li><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html#method_getAuthURL">getAuthURL()</a></li>
-                                                    <li><a href="classes/chillerlan-OAuth-Core-OAuth1Interface.html#method_getRequestToken">getRequestToken()</a></li>
                                                     <li><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html#method_getStorage">getStorage()</a></li>
                                                     <li><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html#method_me">me()</a></li>
                                                     <li><a href="classes/chillerlan-OAuth-Core-OAuthInterface.html#method_request">request()</a></li>
