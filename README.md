@@ -1,5 +1,7 @@
 # chillerlan/php-oauth-core
 
+**ATTENTION: This library has been abandoned and archive in favor of [chillerlan/php-oauth](https://github.com/chillerlan/php-oauth)**
+
 A framework.agnostic PHP OAuth1/2 client that acts as a [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client, fully [PSR-7](https://www.php-fig.org/psr/psr-7/)/[PSR-17](https://www.php-fig.org/psr/psr-17/) compatible.
 
 [![PHP Version Support][php-badge]][php]
